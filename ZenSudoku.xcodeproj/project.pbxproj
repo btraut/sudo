@@ -1,0 +1,561 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8449D9571481D77D003F6FB3 /* ZSGameAnswerOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8449D9561481D77D003F6FB3 /* ZSGameAnswerOptionsViewController.m */; };
+		8449D95A1481E518003F6FB3 /* ZSGameAnswerOptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8449D9591481E518003F6FB3 /* ZSGameAnswerOptionViewController.m */; };
+		84AC26C51480836600E966A5 /* board.png in Resources */ = {isa = PBXBuildFile; fileRef = 84AC26C41480836600E966A5 /* board.png */; };
+		84AC26C91480950F00E966A5 /* ZSGameBoardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC26C71480950F00E966A5 /* ZSGameBoardViewController.m */; };
+		84AC26CE1480986900E966A5 /* ZSGameBoardTileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC26CC1480986900E966A5 /* ZSGameBoardTileViewController.m */; };
+		84AC26DD1480D9C700E966A5 /* ZSGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC26DC1480D9C700E966A5 /* ZSGame.m */; };
+		84AC26E01480DDBA00E966A5 /* ZSGameTile.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC26DF1480DDBA00E966A5 /* ZSGameTile.m */; };
+		84AC26E41480EB7E00E966A5 /* ZSGameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC26E31480EB7D00E966A5 /* ZSGameController.m */; };
+		84B300C21484C7E800E568CE /* ZSGameSolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B300C11484C7E800E568CE /* ZSGameSolver.m */; };
+		84B300DF1487866E00E568CE /* ZSGameGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B300DE1487866E00E568CE /* ZSGameGenerator.m */; };
+		84B300E3148793AD00E568CE /* ZSGameCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B300E2148793AD00E568CE /* ZSGameCalculator.m */; };
+		84B300F4148AF6FF00E568CE /* ZSGameHistoryEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B300F3148AF6FD00E568CE /* ZSGameHistoryEntry.m */; };
+		84D55014147F1C4A00A7934E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D55013147F1C4A00A7934E /* UIKit.framework */; };
+		84D55016147F1C4A00A7934E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D55015147F1C4A00A7934E /* Foundation.framework */; };
+		84D55018147F1C4A00A7934E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D55017147F1C4A00A7934E /* CoreGraphics.framework */; };
+		84D5501E147F1C4A00A7934E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84D5501C147F1C4A00A7934E /* InfoPlist.strings */; };
+		84D55020147F1C4A00A7934E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D5501F147F1C4A00A7934E /* main.m */; };
+		84D55024147F1C4A00A7934E /* ZSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D55023147F1C4A00A7934E /* ZSAppDelegate.m */; };
+		84D5505C147F227C00A7934E /* ZSMainMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D5505A147F227C00A7934E /* ZSMainMenuViewController.m */; };
+		84D5505D147F227C00A7934E /* ZSMainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84D5505B147F227C00A7934E /* ZSMainMenu.xib */; };
+		84D55065147F2EFA00A7934E /* ZSNewGameOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D55064147F2EFA00A7934E /* ZSNewGameOptionsViewController.m */; };
+		84D55069147F3D7500A7934E /* ZSGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D55068147F3D7400A7934E /* ZSGameViewController.m */; };
+		84EE86271494ADEA004C0A16 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D5503A147F1C4B00A7934E /* SenTestingKit.framework */; };
+		84EE86281494ADEA004C0A16 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D55013147F1C4A00A7934E /* UIKit.framework */; };
+		84EE86291494ADEA004C0A16 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D55015147F1C4A00A7934E /* Foundation.framework */; };
+		84EE862F1494ADEA004C0A16 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84EE862D1494ADEA004C0A16 /* InfoPlist.strings */; };
+		84EE86321494ADEA004C0A16 /* ZenSudokuLogicTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EE86311494ADEA004C0A16 /* ZenSudokuLogicTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		8449D9551481D77C003F6FB3 /* ZSGameAnswerOptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSGameAnswerOptionsViewController.h; sourceTree = "<group>"; };
+		8449D9561481D77D003F6FB3 /* ZSGameAnswerOptionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSGameAnswerOptionsViewController.m; sourceTree = "<group>"; };
+		8449D9581481E518003F6FB3 /* ZSGameAnswerOptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSGameAnswerOptionViewController.h; sourceTree = "<group>"; };
+		8449D9591481E518003F6FB3 /* ZSGameAnswerOptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSGameAnswerOptionViewController.m; sourceTree = "<group>"; };
+		84AC26C41480836600E966A5 /* board.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = board.png; sourceTree = "<group>"; };
+		84AC26C61480950F00E966A5 /* ZSGameBoardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSGameBoardViewController.h; sourceTree = "<group>"; };
+		84AC26C71480950F00E966A5 /* ZSGameBoardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSGameBoardViewController.m; sourceTree = "<group>"; };
+		84AC26CB1480986900E966A5 /* ZSGameBoardTileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSGameBoardTileViewController.h; sourceTree = "<group>"; };
+		84AC26CC1480986900E966A5 /* ZSGameBoardTileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSGameBoardTileViewController.m; sourceTree = "<group>"; };
+		84AC26DB1480D9C700E966A5 /* ZSGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ZSGame.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		84AC26DC1480D9C700E966A5 /* ZSGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ZSGame.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		84AC26DE1480DDBA00E966A5 /* ZSGameTile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSGameTile.h; sourceTree = "<group>"; };
+		84AC26DF1480DDBA00E966A5 /* ZSGameTile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSGameTile.m; sourceTree = "<group>"; };
+		84AC26E21480EB7D00E966A5 /* ZSGameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSGameController.h; sourceTree = "<group>"; };
+		84AC26E31480EB7D00E966A5 /* ZSGameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSGameController.m; sourceTree = "<group>"; };
+		84B300C01484C7E800E568CE /* ZSGameSolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSGameSolver.h; sourceTree = "<group>"; };
+		84B300C11484C7E800E568CE /* ZSGameSolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ZSGameSolver.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		84B300DD1487866E00E568CE /* ZSGameGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSGameGenerator.h; sourceTree = "<group>"; };
+		84B300DE1487866E00E568CE /* ZSGameGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSGameGenerator.m; sourceTree = "<group>"; };
+		84B300E1148793AD00E568CE /* ZSGameCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSGameCalculator.h; sourceTree = "<group>"; };
+		84B300E2148793AD00E568CE /* ZSGameCalculator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSGameCalculator.m; sourceTree = "<group>"; };
+		84B300F2148AF6FD00E568CE /* ZSGameHistoryEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSGameHistoryEntry.h; sourceTree = "<group>"; };
+		84B300F3148AF6FD00E568CE /* ZSGameHistoryEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSGameHistoryEntry.m; sourceTree = "<group>"; };
+		84D5500F147F1C4A00A7934E /* ZenSudoku.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZenSudoku.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		84D55013147F1C4A00A7934E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		84D55015147F1C4A00A7934E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		84D55017147F1C4A00A7934E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		84D5501B147F1C4A00A7934E /* ZenSudoku-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ZenSudoku-Info.plist"; sourceTree = "<group>"; };
+		84D5501D147F1C4A00A7934E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		84D5501F147F1C4A00A7934E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		84D55021147F1C4A00A7934E /* ZenSudoku-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ZenSudoku-Prefix.pch"; sourceTree = "<group>"; };
+		84D55022147F1C4A00A7934E /* ZSAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSAppDelegate.h; sourceTree = "<group>"; };
+		84D55023147F1C4A00A7934E /* ZSAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSAppDelegate.m; sourceTree = "<group>"; };
+		84D5503A147F1C4B00A7934E /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		84D55059147F227C00A7934E /* ZSMainMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSMainMenuViewController.h; sourceTree = "<group>"; };
+		84D5505A147F227C00A7934E /* ZSMainMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSMainMenuViewController.m; sourceTree = "<group>"; };
+		84D5505B147F227C00A7934E /* ZSMainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZSMainMenu.xib; sourceTree = "<group>"; };
+		84D55063147F2EFA00A7934E /* ZSNewGameOptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSNewGameOptionsViewController.h; sourceTree = "<group>"; };
+		84D55064147F2EFA00A7934E /* ZSNewGameOptionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSNewGameOptionsViewController.m; sourceTree = "<group>"; };
+		84D55067147F3D7400A7934E /* ZSGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSGameViewController.h; sourceTree = "<group>"; };
+		84D55068147F3D7400A7934E /* ZSGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSGameViewController.m; sourceTree = "<group>"; };
+		84EE86261494ADEA004C0A16 /* ZenSudokuLogicTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZenSudokuLogicTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		84EE862C1494ADEA004C0A16 /* ZenSudokuLogicTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ZenSudokuLogicTests-Info.plist"; sourceTree = "<group>"; };
+		84EE862E1494ADEA004C0A16 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		84EE86301494ADEA004C0A16 /* ZenSudokuLogicTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZenSudokuLogicTests.h; sourceTree = "<group>"; };
+		84EE86311494ADEA004C0A16 /* ZenSudokuLogicTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZenSudokuLogicTests.m; sourceTree = "<group>"; };
+		84EE86331494ADEA004C0A16 /* ZenSudokuLogicTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ZenSudokuLogicTests-Prefix.pch"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		84D5500C147F1C4A00A7934E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84D55014147F1C4A00A7934E /* UIKit.framework in Frameworks */,
+				84D55016147F1C4A00A7934E /* Foundation.framework in Frameworks */,
+				84D55018147F1C4A00A7934E /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84EE86221494ADEA004C0A16 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84EE86271494ADEA004C0A16 /* SenTestingKit.framework in Frameworks */,
+				84EE86281494ADEA004C0A16 /* UIKit.framework in Frameworks */,
+				84EE86291494ADEA004C0A16 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		8449D95B14833649003F6FB3 /* External */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = External;
+			sourceTree = "<group>";
+		};
+		84AC26C21480834B00E966A5 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				84AC26C31480835600E966A5 /* Images */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		84AC26C31480835600E966A5 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				84AC26C41480836600E966A5 /* board.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		84AC26D71480D52000E966A5 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				84AC26DB1480D9C700E966A5 /* ZSGame.h */,
+				84AC26DC1480D9C700E966A5 /* ZSGame.m */,
+				84AC26DE1480DDBA00E966A5 /* ZSGameTile.h */,
+				84AC26DF1480DDBA00E966A5 /* ZSGameTile.m */,
+				84B300F2148AF6FD00E568CE /* ZSGameHistoryEntry.h */,
+				84B300F3148AF6FD00E568CE /* ZSGameHistoryEntry.m */,
+				84B300E1148793AD00E568CE /* ZSGameCalculator.h */,
+				84B300E2148793AD00E568CE /* ZSGameCalculator.m */,
+				84B300C01484C7E800E568CE /* ZSGameSolver.h */,
+				84B300C11484C7E800E568CE /* ZSGameSolver.m */,
+				84B300DD1487866E00E568CE /* ZSGameGenerator.h */,
+				84B300DE1487866E00E568CE /* ZSGameGenerator.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		84AC26E11480EB5E00E966A5 /* Model Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				84AC26E21480EB7D00E966A5 /* ZSGameController.h */,
+				84AC26E31480EB7D00E966A5 /* ZSGameController.m */,
+			);
+			name = "Model Controllers";
+			sourceTree = "<group>";
+		};
+		84D55004147F1C4A00A7934E = {
+			isa = PBXGroup;
+			children = (
+				84D55019147F1C4A00A7934E /* ZenSudoku */,
+				84EE862A1494ADEA004C0A16 /* ZenSudokuLogicTests */,
+				84D55012147F1C4A00A7934E /* Frameworks */,
+				84D55010147F1C4A00A7934E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		84D55010147F1C4A00A7934E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				84D5500F147F1C4A00A7934E /* ZenSudoku.app */,
+				84EE86261494ADEA004C0A16 /* ZenSudokuLogicTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		84D55012147F1C4A00A7934E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				84D55013147F1C4A00A7934E /* UIKit.framework */,
+				84D55015147F1C4A00A7934E /* Foundation.framework */,
+				84D55017147F1C4A00A7934E /* CoreGraphics.framework */,
+				84D5503A147F1C4B00A7934E /* SenTestingKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		84D55019147F1C4A00A7934E /* ZenSudoku */ = {
+			isa = PBXGroup;
+			children = (
+				84AC26D71480D52000E966A5 /* Models */,
+				84AC26E11480EB5E00E966A5 /* Model Controllers */,
+				84D55066147F2F1600A7934E /* View Controllers */,
+				84D5501A147F1C4A00A7934E /* Supporting Files */,
+				84AC26C21480834B00E966A5 /* Resources */,
+				8449D95B14833649003F6FB3 /* External */,
+				84D55022147F1C4A00A7934E /* ZSAppDelegate.h */,
+				84D55023147F1C4A00A7934E /* ZSAppDelegate.m */,
+				84D5505B147F227C00A7934E /* ZSMainMenu.xib */,
+			);
+			path = ZenSudoku;
+			sourceTree = "<group>";
+		};
+		84D5501A147F1C4A00A7934E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				84D5501B147F1C4A00A7934E /* ZenSudoku-Info.plist */,
+				84D5501C147F1C4A00A7934E /* InfoPlist.strings */,
+				84D5501F147F1C4A00A7934E /* main.m */,
+				84D55021147F1C4A00A7934E /* ZenSudoku-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		84D55066147F2F1600A7934E /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				84D55059147F227C00A7934E /* ZSMainMenuViewController.h */,
+				84D5505A147F227C00A7934E /* ZSMainMenuViewController.m */,
+				84D55063147F2EFA00A7934E /* ZSNewGameOptionsViewController.h */,
+				84D55064147F2EFA00A7934E /* ZSNewGameOptionsViewController.m */,
+				84D55067147F3D7400A7934E /* ZSGameViewController.h */,
+				84D55068147F3D7400A7934E /* ZSGameViewController.m */,
+				84AC26C61480950F00E966A5 /* ZSGameBoardViewController.h */,
+				84AC26C71480950F00E966A5 /* ZSGameBoardViewController.m */,
+				84AC26CB1480986900E966A5 /* ZSGameBoardTileViewController.h */,
+				84AC26CC1480986900E966A5 /* ZSGameBoardTileViewController.m */,
+				8449D9551481D77C003F6FB3 /* ZSGameAnswerOptionsViewController.h */,
+				8449D9561481D77D003F6FB3 /* ZSGameAnswerOptionsViewController.m */,
+				8449D9581481E518003F6FB3 /* ZSGameAnswerOptionViewController.h */,
+				8449D9591481E518003F6FB3 /* ZSGameAnswerOptionViewController.m */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		84EE862A1494ADEA004C0A16 /* ZenSudokuLogicTests */ = {
+			isa = PBXGroup;
+			children = (
+				84EE86301494ADEA004C0A16 /* ZenSudokuLogicTests.h */,
+				84EE86311494ADEA004C0A16 /* ZenSudokuLogicTests.m */,
+				84EE862B1494ADEA004C0A16 /* Supporting Files */,
+			);
+			path = ZenSudokuLogicTests;
+			sourceTree = "<group>";
+		};
+		84EE862B1494ADEA004C0A16 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				84EE862C1494ADEA004C0A16 /* ZenSudokuLogicTests-Info.plist */,
+				84EE862D1494ADEA004C0A16 /* InfoPlist.strings */,
+				84EE86331494ADEA004C0A16 /* ZenSudokuLogicTests-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		84D5500E147F1C4A00A7934E /* ZenSudoku */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 84D5504B147F1C4B00A7934E /* Build configuration list for PBXNativeTarget "ZenSudoku" */;
+			buildPhases = (
+				84D5500B147F1C4A00A7934E /* Sources */,
+				84D5500C147F1C4A00A7934E /* Frameworks */,
+				84D5500D147F1C4A00A7934E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ZenSudoku;
+			productName = ZenSudoku;
+			productReference = 84D5500F147F1C4A00A7934E /* ZenSudoku.app */;
+			productType = "com.apple.product-type.application";
+		};
+		84EE86251494ADEA004C0A16 /* ZenSudokuLogicTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 84EE86341494ADEA004C0A16 /* Build configuration list for PBXNativeTarget "ZenSudokuLogicTests" */;
+			buildPhases = (
+				84EE86211494ADEA004C0A16 /* Sources */,
+				84EE86221494ADEA004C0A16 /* Frameworks */,
+				84EE86231494ADEA004C0A16 /* Resources */,
+				84EE86241494ADEA004C0A16 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ZenSudokuLogicTests;
+			productName = ZenSudokuLogicTests;
+			productReference = 84EE86261494ADEA004C0A16 /* ZenSudokuLogicTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		84D55006147F1C4A00A7934E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
+			buildConfigurationList = 84D55009147F1C4A00A7934E /* Build configuration list for PBXProject "ZenSudoku" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 84D55004147F1C4A00A7934E;
+			productRefGroup = 84D55010147F1C4A00A7934E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				84D5500E147F1C4A00A7934E /* ZenSudoku */,
+				84EE86251494ADEA004C0A16 /* ZenSudokuLogicTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		84D5500D147F1C4A00A7934E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84D5501E147F1C4A00A7934E /* InfoPlist.strings in Resources */,
+				84D5505D147F227C00A7934E /* ZSMainMenu.xib in Resources */,
+				84AC26C51480836600E966A5 /* board.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84EE86231494ADEA004C0A16 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84EE862F1494ADEA004C0A16 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		84EE86241494ADEA004C0A16 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		84D5500B147F1C4A00A7934E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84D55020147F1C4A00A7934E /* main.m in Sources */,
+				84D55024147F1C4A00A7934E /* ZSAppDelegate.m in Sources */,
+				84D5505C147F227C00A7934E /* ZSMainMenuViewController.m in Sources */,
+				84D55065147F2EFA00A7934E /* ZSNewGameOptionsViewController.m in Sources */,
+				84D55069147F3D7500A7934E /* ZSGameViewController.m in Sources */,
+				84AC26C91480950F00E966A5 /* ZSGameBoardViewController.m in Sources */,
+				84AC26CE1480986900E966A5 /* ZSGameBoardTileViewController.m in Sources */,
+				84AC26DD1480D9C700E966A5 /* ZSGame.m in Sources */,
+				84AC26E01480DDBA00E966A5 /* ZSGameTile.m in Sources */,
+				84AC26E41480EB7E00E966A5 /* ZSGameController.m in Sources */,
+				8449D9571481D77D003F6FB3 /* ZSGameAnswerOptionsViewController.m in Sources */,
+				8449D95A1481E518003F6FB3 /* ZSGameAnswerOptionViewController.m in Sources */,
+				84B300C21484C7E800E568CE /* ZSGameSolver.m in Sources */,
+				84B300DF1487866E00E568CE /* ZSGameGenerator.m in Sources */,
+				84B300E3148793AD00E568CE /* ZSGameCalculator.m in Sources */,
+				84B300F4148AF6FF00E568CE /* ZSGameHistoryEntry.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84EE86211494ADEA004C0A16 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84EE86321494ADEA004C0A16 /* ZenSudokuLogicTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		84D5501C147F1C4A00A7934E /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				84D5501D147F1C4A00A7934E /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		84EE862D1494ADEA004C0A16 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				84EE862E1494ADEA004C0A16 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		84D55049147F1C4B00A7934E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Brent Traut (3J5X57PB42)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PROVISIONING_PROFILE = "17188AE0-57A8-413D-B243-0BDA7174A74F";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		84D5504A147F1C4B00A7934E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Brent Traut (3J5X57PB42)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "17188AE0-57A8-413D-B243-0BDA7174A74F";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		84D5504C147F1C4B00A7934E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ZenSudoku/ZenSudoku-Prefix.pch";
+				INFOPLIST_FILE = "ZenSudoku/ZenSudoku-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		84D5504D147F1C4B00A7934E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ZenSudoku/ZenSudoku-Prefix.pch";
+				INFOPLIST_FILE = "ZenSudoku/ZenSudoku-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		84EE86351494ADEA004C0A16 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/ZenSudoku.app/ZenSudoku";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ZenSudokuLogicTests/ZenSudokuLogicTests-Prefix.pch";
+				INFOPLIST_FILE = "ZenSudokuLogicTests/ZenSudokuLogicTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		84EE86361494ADEA004C0A16 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/ZenSudoku.app/ZenSudoku";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ZenSudokuLogicTests/ZenSudokuLogicTests-Prefix.pch";
+				INFOPLIST_FILE = "ZenSudokuLogicTests/ZenSudokuLogicTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		84D55009147F1C4A00A7934E /* Build configuration list for PBXProject "ZenSudoku" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				84D55049147F1C4B00A7934E /* Debug */,
+				84D5504A147F1C4B00A7934E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		84D5504B147F1C4B00A7934E /* Build configuration list for PBXNativeTarget "ZenSudoku" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				84D5504C147F1C4B00A7934E /* Debug */,
+				84D5504D147F1C4B00A7934E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		84EE86341494ADEA004C0A16 /* Build configuration list for PBXNativeTarget "ZenSudokuLogicTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				84EE86351494ADEA004C0A16 /* Debug */,
+				84EE86361494ADEA004C0A16 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 84D55006147F1C4A00A7934E /* Project object */;
+}
