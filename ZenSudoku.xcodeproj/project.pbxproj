@@ -28,6 +28,9 @@
 		84D5505D147F227C00A7934E /* ZSMainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84D5505B147F227C00A7934E /* ZSMainMenu.xib */; };
 		84D55065147F2EFA00A7934E /* ZSNewGameOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D55064147F2EFA00A7934E /* ZSNewGameOptionsViewController.m */; };
 		84D55069147F3D7500A7934E /* ZSGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D55068147F3D7400A7934E /* ZSGameViewController.m */; };
+		84E18C961498B0F6009717D4 /* ZSFastGameGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E18C931498B0F6009717D4 /* ZSFastGameGenerator.m */; };
+		84E18C971498B0F6009717D4 /* ZSFastGameSolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E18C951498B0F6009717D4 /* ZSFastGameSolver.m */; };
+		84E18C9E1498B57F009717D4 /* ZSFastGameBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E18C9D1498B57F009717D4 /* ZSFastGameBoard.m */; };
 		84EE86271494ADEA004C0A16 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D5503A147F1C4B00A7934E /* SenTestingKit.framework */; };
 		84EE86281494ADEA004C0A16 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D55013147F1C4A00A7934E /* UIKit.framework */; };
 		84EE86291494ADEA004C0A16 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D55015147F1C4A00A7934E /* Foundation.framework */; };
@@ -76,6 +79,12 @@
 		84D55064147F2EFA00A7934E /* ZSNewGameOptionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSNewGameOptionsViewController.m; sourceTree = "<group>"; };
 		84D55067147F3D7400A7934E /* ZSGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSGameViewController.h; sourceTree = "<group>"; };
 		84D55068147F3D7400A7934E /* ZSGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSGameViewController.m; sourceTree = "<group>"; };
+		84E18C921498B0F6009717D4 /* ZSFastGameGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSFastGameGenerator.h; sourceTree = "<group>"; };
+		84E18C931498B0F6009717D4 /* ZSFastGameGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSFastGameGenerator.m; sourceTree = "<group>"; };
+		84E18C941498B0F6009717D4 /* ZSFastGameSolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSFastGameSolver.h; sourceTree = "<group>"; };
+		84E18C951498B0F6009717D4 /* ZSFastGameSolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSFastGameSolver.m; sourceTree = "<group>"; };
+		84E18C9C1498B57F009717D4 /* ZSFastGameBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSFastGameBoard.h; sourceTree = "<group>"; };
+		84E18C9D1498B57F009717D4 /* ZSFastGameBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSFastGameBoard.m; sourceTree = "<group>"; };
 		84EE86261494ADEA004C0A16 /* ZenSudokuLogicTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZenSudokuLogicTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		84EE862C1494ADEA004C0A16 /* ZenSudokuLogicTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ZenSudokuLogicTests-Info.plist"; sourceTree = "<group>"; };
 		84EE862E1494ADEA004C0A16 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -148,6 +157,12 @@
 				84B300C11484C7E800E568CE /* ZSGameSolver.m */,
 				84B300DD1487866E00E568CE /* ZSGameGenerator.h */,
 				84B300DE1487866E00E568CE /* ZSGameGenerator.m */,
+				84E18C9C1498B57F009717D4 /* ZSFastGameBoard.h */,
+				84E18C9D1498B57F009717D4 /* ZSFastGameBoard.m */,
+				84E18C921498B0F6009717D4 /* ZSFastGameGenerator.h */,
+				84E18C931498B0F6009717D4 /* ZSFastGameGenerator.m */,
+				84E18C941498B0F6009717D4 /* ZSFastGameSolver.h */,
+				84E18C951498B0F6009717D4 /* ZSFastGameSolver.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -381,6 +396,9 @@
 				84B300DF1487866E00E568CE /* ZSGameGenerator.m in Sources */,
 				84B300F4148AF6FF00E568CE /* ZSGameHistoryEntry.m in Sources */,
 				84F9EFFE1495CC81003DD297 /* ZSGameBoard.m in Sources */,
+				84E18C961498B0F6009717D4 /* ZSFastGameGenerator.m in Sources */,
+				84E18C971498B0F6009717D4 /* ZSFastGameSolver.m in Sources */,
+				84E18C9E1498B57F009717D4 /* ZSFastGameBoard.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
