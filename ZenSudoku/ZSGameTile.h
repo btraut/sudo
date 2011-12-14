@@ -8,10 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
-@class ZSGame;
+@class ZSGameBoard;
 
 @interface ZSGameTile : NSObject {
-	ZSGame *game;
+	ZSGameBoard *gameBoard;
 	
 	NSInteger row;
 	NSInteger col;
@@ -26,7 +26,7 @@
 	NSMutableArray *_pencils;
 }
 
-@property (strong) ZSGame *game;
+@property (strong) ZSGameBoard *gameBoard;
 
 @property (nonatomic, assign) NSInteger row;
 @property (nonatomic, assign) NSInteger col;
@@ -36,8 +36,8 @@
 @property (nonatomic, assign) NSInteger answer;
 @property (nonatomic, assign) BOOL locked;
 
-- (id)initWithGame:(ZSGame *)newGame;
-- (id)initWithGame:(ZSGame *)newGame dictionaryRepresentation:(NSDictionary *)dict;
+- (id)initWithBoard:(ZSGameBoard *)gameBoard;
+- (id)initWithBoard:(ZSGameBoard *)gameBoard dictionaryRepresentation:(NSDictionary *)dict;
 
 - (NSDictionary *)getDictionaryRepresentation;
 

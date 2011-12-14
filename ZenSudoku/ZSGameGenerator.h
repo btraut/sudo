@@ -10,7 +10,12 @@
 #import "ZSGameCalculator.h"
 #import "ZSGame.h"
 
-@interface ZSGameGenerator : ZSGameCalculator
+@interface ZSGameGenerator : NSObject {
+	@private
+	
+	ZSGameBoard *_reductionGameBoard;
+	ZSGameBoard *_scratchGameBoard;
+}
 
 - (ZSGame *)generateGameWithDifficulty:(ZSGameDifficulty)difficulty;
 - (ZSGame *)generateStandard9x9Game;

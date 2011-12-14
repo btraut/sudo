@@ -17,29 +17,23 @@ typedef enum {
 
 @class ZSGame;
 
-@interface ZSGameSolver : ZSGameCalculator {
+@interface ZSGameSolver : NSObject {
 	@private
 	
-	NSInteger **solutionTiles;
-	BOOL ***pencils;
+	ZSGameBoard *_gameBoard;
+	ZSGameBoard *_solvedGameBoard;
 }
 
-- (ZSGameSolveResult)solveGame:(ZSGame *)game;
-- (ZSGameSolveResult)solveTiles:(NSInteger **)newTiles groupMap:(NSInteger **)newGroupMap size:(NSInteger)newSize;
+- (ZSGameSolveResult)solveGameBoard:(ZSGameBoard *)gameBoard;
 
 - (ZSGameSolveResult)solve;
-
-- (void)setGuess:(NSInteger)guess forX:(NSInteger)x y:(NSInteger)y;
-
-- (NSInteger)getTotalAnswers;
-- (NSInteger)getTotalDigits;
 
 - (NSInteger)solveOnlyChoice;
 - (NSInteger)solveSinglePossibility;
 - (NSInteger)eliminatePencilsHiddenSubGroup;
 - (ZSGameSolveResult)solveBruteForce;
 
-- (ZSGameSolveResult)solveForX:(NSInteger)x y:(NSInteger)y;
+- (ZSGameSolveResult)solveBruteForceForRow:(NSInteger)row col:(NSInteger)col;
 
 @end
 

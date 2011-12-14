@@ -10,6 +10,7 @@
 #import "ZSGameBoardViewController.h"
 #import "ZSGameAnswerOptionsViewController.h"
 #import "ZSGame.h"
+#import "ZSGameBoard.h"
 #import "ZSAppDelegate.h"
 #import "ZSGameHistoryEntry.h"
 
@@ -73,10 +74,10 @@
 	
 	// Debug
 	if (game.difficulty == ZSGameDifficultyEasy) {
-		NSInteger totalUnsolved = game.size * game.size;
+		NSInteger totalUnsolved = game.gameBoard.size * game.gameBoard.size;
 		
-		for (NSInteger row = 0; row < game.size; ++row) {
-			for (NSInteger col = 0; col < game.size; ++col) {
+		for (NSInteger row = 0; row < game.gameBoard.size; ++row) {
+			for (NSInteger col = 0; col < game.gameBoard.size; ++col) {
 				ZSGameTile *tile = [game getTileAtRow:row col:col];
 				
 				if (tile.guess) {
@@ -85,8 +86,8 @@
 			}
 		}
 		
-		for (NSInteger row = 0; row < game.size && totalUnsolved > 2; ++row) {
-			for (NSInteger col = 0; col < game.size && totalUnsolved > 2; ++col) {
+		for (NSInteger row = 0; row < game.gameBoard.size && totalUnsolved > 2; ++row) {
+			for (NSInteger col = 0; col < game.gameBoard.size && totalUnsolved > 2; ++col) {
 				ZSGameTile *tile = [game getTileAtRow:row col:col];
 				
 				if (!tile.guess) {
@@ -98,7 +99,7 @@
 	}
 	
 	// Disable any answer option buttons that are at quota.
-//	for (NSInteger i = 0; i < game.size; ++i) {
+//	for (NSInteger i = 0; i < game.gameBoard.size; ++i) {
 //		if (![game allowsGuess:(i + 1)]) {
 //			ZSGameAnswerOptionViewController *gameAnswerOptionViewController = [gameAnswerOptionsViewController.gameAnswerOptionViewControllers objectAtIndex:i];
 //			gameAnswerOptionViewController.enabled = NO;
@@ -293,8 +294,8 @@
 	ZSShowErrorsOption showErrorsOption = [[NSUserDefaults standardUserDefaults] integerForKey:kShowErrorsOptionKey];
 	
 	// Loop over all tiles and check errors on the users' guesses.
-	for (NSInteger row = 0; row < game.size; row++) {
-		for (NSInteger col = 0; col < game.size; col++) {
+	for (NSInteger row = 0; row < game.gameBoard.size; row++) {
+		for (NSInteger col = 0; col < game.gameBoard.size; col++) {
 			ZSGameBoardTileViewController *tileView = [gameBoardViewController getGameBoardTileViewControllerAtRow:row col:col];
 			
 			// Start by assuming no error.

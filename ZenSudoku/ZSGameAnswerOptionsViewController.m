@@ -10,6 +10,7 @@
 #import "ZSGameAnswerOptionViewController.h"
 #import "ZSGameViewController.h"
 #import "ZSGame.h"
+#import "ZSGameBoard.h"
 
 @implementation ZSGameAnswerOptionsViewController
 
@@ -50,7 +51,7 @@
 	
 	NSInteger xOffset = 1;
 	
-	for (NSInteger i = 0; i <= game.size; i++) {
+	for (NSInteger i = 0; i <= game.gameBoard.size; i++) {
 		gameAnswerOptionViewController = [[ZSGameAnswerOptionViewController alloc] initWithGameAnswerOption:(ZSGameAnswerOption)i];
 		gameAnswerOptionViewController.view.frame = CGRectMake(xOffset, 0, gameAnswerOptionViewController.view.frame.size.width, gameAnswerOptionViewController.view.frame.size.height);
 		gameAnswerOptionViewController.delegate = self;

@@ -9,6 +9,8 @@
 #import "ZSGameBoardViewController.h"
 #import "ZSGameBoardTileViewController.h"
 #import "ZSGameViewController.h"
+#import "ZSGame.h"
+#import "ZSGameBoard.h"
 #import "ZSGameTile.h"
 
 @implementation ZSGameBoardViewController
@@ -61,12 +63,12 @@
 	NSMutableArray *rows = [NSMutableArray array];
 	NSInteger yOffset = 2;
 	
-	for (NSInteger row = 0; row < game.size; row++) {
+	for (NSInteger row = 0; row < game.gameBoard.size; row++) {
 		NSInteger xOffset = 2;
 		
 		NSMutableArray *rowTiles = [NSMutableArray array];
 		
-		for (NSInteger col = 0; col < game.size; col++) {
+		for (NSInteger col = 0; col < game.gameBoard.size; col++) {
 			ZSGameBoardTileViewController *tileViewController = [[ZSGameBoardTileViewController alloc] initWithTile:[game getTileAtRow:row col:col]];
 			tileViewController.view.frame = CGRectMake(xOffset, yOffset, tileViewController.view.frame.size.width, tileViewController.view.frame.size.height);
 			tileViewController.delegate = self;
@@ -94,8 +96,8 @@
 #pragma mark - Board Changes
 
 - (void)reloadView {
-	for (NSInteger row = 0; row < game.size; row++) {
-		for (NSInteger col = 0; col < game.size; col++) {
+	for (NSInteger row = 0; row < game.gameBoard.size; row++) {
+		for (NSInteger col = 0; col < game.gameBoard.size; col++) {
 			[[self getGameBoardTileViewControllerAtRow:row col:col] reloadView];
 		}
 	}
@@ -141,8 +143,8 @@
 
 - (void)addHighlightsForTilesInfluencedByTileView:(ZSGameBoardTileViewController *)tileView {
 	if (tileView.tile.guess) {
-		for (NSInteger row = 0; row < game.size; row++) {
-			for (NSInteger col = 0; col < game.size; col++) {
+		for (NSInteger row = 0; row < game.gameBoard.size; row++) {
+			for (NSInteger col = 0; col < game.gameBoard.size; col++) {
 				ZSGameBoardTileViewController *iteratedTileView = [self getGameBoardTileViewControllerAtRow:row col:col];
 				
 				if (iteratedTileView.tile.guess == selectedTileView.tile.guess || [iteratedTileView.tile getPencilForGuess:tileView.tile.guess]) {

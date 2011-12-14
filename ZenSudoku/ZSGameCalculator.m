@@ -8,56 +8,34 @@
 
 #import "ZSGameCalculator.h"
 #import "ZSGameController.h"
+#import "ZSGameBoard.h"
+#import "ZSGameTile.h"
 
 @implementation ZSGameCalculator
 
 #pragma mark - Memory Handling
 
 - (void)setSize:(NSInteger)newSize {
-	if (_size != newSize) {
-		// Free old memory.
-		if (_allocated) {
-			[self deallocComponents];
-		}
-		
-		// Save the board size.
-		_size = newSize;
-		
-		// Initialize new memory.
-		[self allocComponents];
+	if (newSize != _gameBoard.size) {
+		_gameBoard = [[ZSGameBoard alloc] initWithSize:newSize];
 	}
-}
-
-- (void)allocComponents {
-	_tiles = [ZSGameController alloc2DIntGridWithSize:_size];
-	_groupMap = [ZSGameController alloc2DIntGridWithSize:_size];
-	_allocated = YES;
-}
-
-- (void)deallocComponents {
-	[ZSGameController free2DIntGrid:_tiles withSize:_size];
-	[ZSGameController free2DIntGrid:_groupMap withSize:_size];
-	_allocated = NO;
-}
-
-- (void)dealloc {
-	[self deallocComponents];
-	_size = 0;
 }
 
 #pragma mark - Querying
 
 - (BOOL)isGuessValid:(NSInteger)guess atX:(NSInteger)x y:(NSInteger)y {
 	// Cache the target tile's group.
-	NSInteger targetGroup = _groupMap[x][y];
+	NSInteger targetGroup = [_gameBoard getTileAtRow:x col:y].groupId;
 	
 	// Loop over the entire puzzle to find tiles in the same group.
-	for (NSInteger row = 0; row < _size; ++row) {
-		for (NSInteger col = 0; col < _size; ++col) {
+	for (NSInteger row = 0; row < _gameBoard.size; ++row) {
+		for (NSInteger col = 0; col < _gameBoard.size; ++col) {
+			ZSGameTile *iteratedTile = [_gameBoard getTileAtRow:row col:col];
+			
 			// Find all the tiles in the same row, col, or group as the target tile.
-			if (row == x || col == y || _groupMap[row][col] == targetGroup) {
+			if (row == x || col == y || iteratedTile.groupId == targetGroup) {
 				// If the current tile matches the target's guess, the guess is invalid.
-				if (_tiles[row][col] == guess) {
+				if (iteratedTile.guess == guess) {
 					return NO;
 				}
 			}
@@ -70,7 +48,7 @@
 
 - (BOOL)isGuessValid:(int)guess rowAtX:(int)x {
 	for (NSInteger col = 0; col < 9; col++) {
-		if (_tiles[x][col] == guess) {
+		if ([_gameBoard getTileAtRow:x col:col].guess == guess) {
 			return NO;
 		}
 	}
@@ -80,7 +58,7 @@
 
 - (BOOL)isGuessValid:(int)guess colAtY:(int)y {
 	for (NSInteger row = 0; row < 9; row++) {
-		if (_tiles[row][y] == guess) {
+		if ([_gameBoard getTileAtRow:row col:y].guess == guess) {
 			return NO;
 		}
 	}
@@ -89,14 +67,17 @@
 }
 
 - (BOOL)isGuessValid:(int)guess groupAtX:(int)x y:(int)y {
-	NSInteger targetGroup = _groupMap[x][y];
-	
+	// Cache the target tile's group.
+	NSInteger targetGroup = [_gameBoard getTileAtRow:x col:y].groupId;
+		
 	// Loop over the entire puzzle to find tiles in the same group.
-	for (NSInteger row = 0; row < _size; ++row) {
-		for (NSInteger col = 0; col < _size; ++col) {
+	for (NSInteger row = 0; row < _gameBoard.size; ++row) {
+		for (NSInteger col = 0; col < _gameBoard.size; ++col) {
+			ZSGameTile *iteratedTile = [_gameBoard getTileAtRow:row col:col];
+			
 			// Find all the tiles in the same group (excluding the target tile itself).
-			if (_groupMap[row][col] == targetGroup && !(row == x && col == y)) {
-				if (_tiles[row][col] == guess) {
+			if (iteratedTile.groupId == targetGroup && !(row == x && col == y)) {
+				if (iteratedTile.guess == guess) {
 					return NO;
 				}
 			}
@@ -104,20 +85,6 @@
 	}
 	
 	return YES;
-}
-
-#pragma mark - Presentation
-
-- (void)print9x9Puzzle:(NSInteger **)tiles {
-	NSLog(@" ");
-	for (NSInteger row = 0; row < 9; ++row) {
-		NSLog(@" %i %i %i | %i %i %i | %i %i %i", tiles[row][0], tiles[row][1], tiles[row][2], tiles[row][3], tiles[row][4], tiles[row][5], tiles[row][6], tiles[row][7], tiles[row][8]);
-		
-		if (row == 2 || row == 5) {
-			NSLog(@"-------+-------+-------");
-		}
-	}
-	NSLog(@" ");
 }
 
 @end

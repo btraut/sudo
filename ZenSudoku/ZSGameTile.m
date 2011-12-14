@@ -7,7 +7,9 @@
 //
 
 #import "ZSGameTile.h"
+#import "ZSGameBoard.h"
 #import "ZSGame.h"
+#import "ZSGameBoard.h"
 #import "ZSGameHistoryEntry.h"
 
 NSString * const kDictionaryRepresentationGameTileGuessKey = @"kDictionaryRepresentationGameTileGuessKey";
@@ -18,7 +20,7 @@ NSString * const kDictionaryRepresentationGameTilePencilsKey = @"kDictionaryRepr
 
 @implementation ZSGameTile
 
-@synthesize game;
+@synthesize gameBoard;
 @synthesize row, col, groupId;
 @synthesize guess, answer, locked;
 
@@ -29,15 +31,15 @@ NSString * const kDictionaryRepresentationGameTilePencilsKey = @"kDictionaryRepr
 	return nil;
 }
 
-- (id)initWithGame:(ZSGame *)newGame {
+- (id)initWithBoard:(ZSGameBoard *)newGameBoard {
 	self = [super init];
 	
 	if (self) {
-		game = newGame;
+		gameBoard = newGameBoard;
 		
 		_pencils = [NSMutableArray array];
 		
-		for (NSInteger i = 0; i < game.size; ++i) {
+		for (NSInteger i = 0; i < gameBoard.size; ++i) {
 			[_pencils addObject:[NSNumber numberWithBool:NO]];
 		}
 	}
@@ -45,8 +47,8 @@ NSString * const kDictionaryRepresentationGameTilePencilsKey = @"kDictionaryRepr
 	return self;
 }
 
-- (id)initWithGame:(ZSGame *)newGame dictionaryRepresentation:(NSDictionary *)dict {
-	self = [self initWithGame:newGame];
+- (id)initWithBoard:(ZSGameBoard *)newGameBoard dictionaryRepresentation:(NSDictionary *)dict {
+	self = [self initWithBoard:newGameBoard];
 	
 	if (self) {
 		guess = [[dict objectForKey:kDictionaryRepresentationGameTileGuessKey] intValue];
@@ -55,7 +57,7 @@ NSString * const kDictionaryRepresentationGameTilePencilsKey = @"kDictionaryRepr
 		
 		groupId = [[dict objectForKey:kDictionaryRepresentationGameTileGroupIdKey] boolValue];
 		
-		for (NSInteger i = 0; i < game.size; ++i) {
+		for (NSInteger i = 0; i < gameBoard.size; ++i) {
 			NSNumber *pencilNumber = [[dict objectForKey:kDictionaryRepresentationGameTilePencilsKey] objectAtIndex:i];
 			[self setPencil:[pencilNumber boolValue] forGuess:(i + 1)];
 		}
@@ -95,7 +97,7 @@ NSString * const kDictionaryRepresentationGameTilePencilsKey = @"kDictionaryRepr
 }
 
 - (void)setAllPencils:(BOOL)isset {
-	for (NSInteger i = 1; i <= game.size; ++i) {
+	for (NSInteger i = 1; i <= gameBoard.size; ++i) {
 		[self setPencil:isset forGuess:i];
 	}
 }

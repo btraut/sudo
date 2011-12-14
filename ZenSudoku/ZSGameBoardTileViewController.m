@@ -9,6 +9,7 @@
 #import "ZSGameBoardTileViewController.h"
 #import "ZSGameTile.h"
 #import "ZSGame.h"
+#import "ZSGameBoard.h"
 
 @implementation ZSGameBoardTileViewController
 
@@ -106,7 +107,7 @@
 		guessView.hidden = NO;
 		
 		// Set visibility on all the pencil views.
-		for (NSInteger i = 0; i < tile.game.size; ++i) {
+		for (NSInteger i = 0; i < tile.gameBoard.size; ++i) {
 			UILabel *pencilLabel = [pencilViews objectAtIndex:i];
 			pencilLabel.hidden = YES;
 		}		
@@ -126,7 +127,7 @@
 		guessView.hidden = YES;
 		
 		// Set visibility on all the pencil views.
-		for (NSInteger i = 0; i < tile.game.size; ++i) {
+		for (NSInteger i = 0; i < tile.gameBoard.size; ++i) {
 			UILabel *pencilLabel = [pencilViews objectAtIndex:i];
 			pencilLabel.hidden = ![tile getPencilForGuess:(i + 1)];
 		}

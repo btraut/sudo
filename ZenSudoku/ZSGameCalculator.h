@@ -8,22 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@class ZSGameBoard;
+
 @interface ZSGameCalculator : UITextView {
 	@protected
 	
-	NSInteger _size;
-	
-	NSInteger **_groupMap;
-	NSInteger **_tiles;
-	
-	BOOL _allocated;
+	ZSGameBoard *_gameBoard;
 }
 
 - (void)setSize:(NSInteger)newSize;
-- (void)allocComponents;
-- (void)deallocComponents;
-
-- (void)print9x9Puzzle:(NSInteger **)tiles;
 
 - (BOOL)isGuessValid:(NSInteger)guess atX:(NSInteger)x y:(NSInteger)y;
 - (BOOL)isGuessValid:(NSInteger)guess rowAtX:(NSInteger)x;

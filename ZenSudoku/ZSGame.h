@@ -7,8 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ZSGameTile.h"
-
+#import "ZSGameBoard.h"
 
 typedef enum {
 	ZSGameDifficultyEasy,
@@ -54,10 +53,12 @@ typedef enum {
 
 
 @class ZSGameHistoryEntry;
+@class ZSGameBoard;
+@class ZSGameTile;
 
-@interface ZSGame : NSObject {
-	NSInteger size;
+@interface ZSGame : NSObject <ZSGameBoardDelegate> {
 	ZSGameDifficulty difficulty;
+	ZSGameBoard *gameBoard;
 	
 	BOOL recordingHistory;
 	
@@ -69,17 +70,14 @@ typedef enum {
 	
 	@private
 	
-	NSArray *_groupMap;
-	NSArray *_tiles;
-	
 	NSMutableArray *_undoStack;
 	NSMutableArray *_redoStack;
 	
 	NSTimer *_countdownTimer;
 }
 
-@property (nonatomic, readonly) NSInteger size;
 @property (nonatomic, assign) ZSGameDifficulty difficulty;
+@property (nonatomic, strong) ZSGameBoard *gameBoard;
 
 @property (nonatomic, assign) BOOL recordingHistory;
 
@@ -95,17 +93,6 @@ typedef enum {
 
 - (id)initWithSize:(NSInteger)size;
 - (id)initWithSize:(NSInteger)size answers:(NSInteger **)answers groupMap:(NSInteger **)groupMap;
-- (void)createTiles;
-
-- (void)applyAnswersString:(NSString *)answersString;
-- (void)applyAnswersArray:(NSInteger **)answersArray;
-- (void)applyGroupMapArray:(NSInteger **)groupMapArray;
-
-// Timer Methods
-
-- (void)startGameTimer;
-- (void)stopGameTimer;
-- (void)advanceGameTimer:(NSTimer *)timer;
 
 // Persistant Storage Methods
 
@@ -113,9 +100,6 @@ typedef enum {
 - (NSDictionary *)getDictionaryRepresentation;
 
 // Tile Methods
-
-- (NSInteger)getAnswerForTileAtRow:(NSInteger)row col:(NSInteger)col;
-- (void)setAnswer:(NSInteger)answer forTileAtRow:(NSInteger)row col:(NSInteger)col;
 
 - (NSInteger)getGuessForTileAtRow:(NSInteger)row col:(NSInteger)col;
 - (void)setGuess:(NSInteger)guess forTileAtRow:(NSInteger)row col:(NSInteger)col;
@@ -127,6 +111,9 @@ typedef enum {
 - (BOOL)getPencilForPencilNumber:(NSInteger)pencilNumber forTileAtRow:(NSInteger)row col:(NSInteger)col;
 - (void)setPencil:(BOOL)isSet forPencilNumber:(NSInteger)pencilNumber forTileAtRow:(NSInteger)row col:(NSInteger)col;
 - (void)togglePencilForPencilNumber:(NSInteger)pencilNumber forTileAtRow:(NSInteger)row col:(NSInteger)col;
+
+- (void)guessDidChangeForTile:(ZSGameTile *)tile previousGuess:(NSInteger)previousGuess;
+- (void)pencilDidChangeForTile:(ZSGameTile *)tile pencilNumber:(NSInteger)pencilNumber previousSet:(NSInteger)previousSet;
 
 - (NSInteger)getGroupIdForTileAtRow:(NSInteger)row col:(NSInteger)col;
 
@@ -140,11 +127,17 @@ typedef enum {
 
 - (BOOL)allowsGuess:(NSInteger)guess;
 
+- (void)solve;
 - (BOOL)isSolved;
 
-- (void)solve;
 - (void)addAutoPencils;
 - (void)clearInfluencedPencilsForTileAtRow:(NSInteger)row col:(NSInteger)col;
+
+// Timer Methods
+
+- (void)startGameTimer;
+- (void)stopGameTimer;
+- (void)advanceGameTimer:(NSTimer *)timer;
 
 // Undo / Redo Helpers
 
