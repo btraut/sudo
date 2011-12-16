@@ -8,12 +8,12 @@
 
 #import <SenTestingKit/SenTestingKit.h>
 
-@class ZSGameSolver;
+@class ZSFastGameSolver;
 
 @interface ZenSudokuLogicTests : SenTestCase {
 	@private
 	
-	ZSGameSolver *_solver;
+	ZSFastGameSolver *_solver;
 }
 
 @end

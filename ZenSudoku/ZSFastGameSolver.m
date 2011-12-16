@@ -1,58 +1,51 @@
 //
-//  ZSGameSolver.m
+//  ZSFastGameSolver.m
 //  ZenSudoku
 //
 //  Created by Brent Traut on 11/28/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "ZSGameSolver.h"
-#import "ZSGameController.h"
-#import "ZSGame.h"
-#import "ZSGameBoard.h"
-#import "ZSGameTile.h"
+#import "ZSFastGameSolver.h"
+#import "ZSFastGameBoard.h"
 
 NSString * const kExceptionPuzzleHasNoSolution = @"kExceptionPuzzleHasNoSolution";
 NSString * const kExceptionPuzzleHasMultipleSolutions = @"kExceptionPuzzleHasMultipleSolutions";
 
-@implementation ZSGameSolver
+@implementation ZSFastGameSolver
 
 #pragma mark - Object Lifecycle
 
-- (ZSGameSolveResult)solveGameBoard:(ZSGameBoard *)gameBoard {
+- (ZSGameSolveResult)solveFastGameBoard:(ZSFastGameBoard *)gameBoard {
 	if (!_gameBoard || _gameBoard.size != gameBoard.size) {
 		// Create some game boards to store the answers.
-		_gameBoard = [[ZSGameBoard alloc] initWithSize:gameBoard.size];
-		_solvedGameBoard = [[ZSGameBoard alloc] initWithSize:gameBoard.size];
+		_gameBoard = [[ZSFastGameBoard alloc] initWithSize:gameBoard.size];
+		_solvedGameBoard = [[ZSFastGameBoard alloc] initWithSize:gameBoard.size];
 	}
 	
 	// Set all the group ids from the game board.
-	[_gameBoard copyGroupMapFromGameBoard:gameBoard];
-	[_solvedGameBoard copyGroupMapFromGameBoard:gameBoard];
+	[_gameBoard copyGroupMapFromFastGameBoard:gameBoard];
+	[_solvedGameBoard copyGroupMapFromFastGameBoard:gameBoard];
 	
 	// Copy the game board's answers into our guesses.
-	for (NSInteger row = 0; row < gameBoard.size; ++row) {
-		for (NSInteger col = 0; col < gameBoard.size; ++col) {
-			[_gameBoard getTileAtRow:row col:col].guess = [gameBoard getTileAtRow:row col:col].answer;
-		}
-	}
+	[_gameBoard copyGuessesFromFastGameBoard:gameBoard];
 	
 	// Copy the guesses from the game board and add our own pencils.
 	[_gameBoard addAutoPencils];
 	
+//	[_gameBoard print9x9Grid];
+	
 	// Solve the puzzle.
 	ZSGameSolveResult solveResults = [self solve];
+	
+//	[_solvedGameBoard print9x9Grid];
 	
 	if (solveResults != ZSGameSolveResultSucceeded) {
 		return solveResults;
 	}
 	
 	// Save the solution back into the game board's answers.
-	for (NSInteger row = 0; row < gameBoard.size; ++row) {
-		for (NSInteger col = 0; col < gameBoard.size; ++col) {
-			[gameBoard getTileAtRow:row col:col].answer = [_solvedGameBoard getTileAtRow:row col:col].guess;
-		}
-	}
+	[gameBoard copyGuessesFromFastGameBoard:_solvedGameBoard];
 	
 	// All looks good at this point.
 	return ZSGameSolveResultSucceeded;
@@ -66,7 +59,7 @@ NSString * const kExceptionPuzzleHasMultipleSolutions = @"kExceptionPuzzleHasMul
 	
 	for (NSInteger row = 0; row < _gameBoard.size; ++row) {
 		for (NSInteger col = 0; col < _gameBoard.size; ++col) {
-			if ([_gameBoard getTileAtRow:row col:col].answer) {
+			if (_gameBoard.grid[row][col].guess) {
 				--totalUnsolved;
 			}
 		}
@@ -82,14 +75,14 @@ NSString * const kExceptionPuzzleHasMultipleSolutions = @"kExceptionPuzzleHasMul
 			continue;
 		}
 		
-		// Single Possibility
-		NSInteger solvedSinglePossibility = [self solveSinglePossibility];
-		
-		if (solvedSinglePossibility) {
-			totalUnsolved -= solvedSinglePossibility;
-			continue;
-		}
-		
+//		// Single Possibility
+//		NSInteger solvedSinglePossibility = [self solveSinglePossibility];
+//		
+//		if (solvedSinglePossibility) {
+//			totalUnsolved -= solvedSinglePossibility;
+//			continue;
+//		}
+//		
 //		// Hidden Sub-Groups
 //		NSInteger eliminatedPencilsHiddenSubGroup = [self eliminatePencilsHiddenSubGroup];
 //		
@@ -113,7 +106,7 @@ NSString * const kExceptionPuzzleHasMultipleSolutions = @"kExceptionPuzzleHasMul
 		}
 	} else {
 		// We managed to solve the puzzle without the need to brute force. Copy the solution into the solution array.
-		[_solvedGameBoard copyAnswersFromGameBoard:_gameBoard];
+		[_solvedGameBoard copyGuessesFromFastGameBoard:_gameBoard];
 	}
 	
 	// All looks good at this point.
@@ -127,26 +120,20 @@ NSString * const kExceptionPuzzleHasMultipleSolutions = @"kExceptionPuzzleHasMul
 	for (NSInteger row = 0; row < _gameBoard.size; ++row) {
 		for (NSInteger col = 0; col < _gameBoard.size; ++col) {
 			// Skip the solved tiles.
-			if ([_gameBoard getTileAtRow:row col:col].guess) {
+			if (_gameBoard.grid[row][col].guess) {
 				continue;
 			}
 			
-			// Keep track of how many pencil marks the tile has.
-			NSInteger totalPencils = 0;
-			NSInteger answer = 0;
-			
-			for (NSInteger guess = 1; guess <= _gameBoard.size; ++guess) {
-				if ([[_gameBoard getTileAtRow:row col:col] getPencilForGuess:guess]) {
-					++totalPencils;
-					answer = guess;
-				}
-			}
-			
 			// If the tile only has one pencil mark, it has to be that answer.
-			if (totalPencils == 1) {
-				[_gameBoard setGuess:answer forTileAtRow:row col:col];
-				[_gameBoard clearInfluencedPencilsForTileAtRow:row col:col];
-				++totalSolved;
+			if (_gameBoard.grid[row][col].totalPencils == 1) {
+				// Search through the pencils and find the lone YES.
+				for (NSInteger guess = 1; guess <= _gameBoard.size; ++guess) {
+					if (_gameBoard.grid[row][col].pencils[guess - 1]) {
+						[_gameBoard setGuess:guess forTileAtRow:row col:col];
+						[_gameBoard clearInfluencedPencilsForTileAtRow:row col:col];
+						break;
+					}
+				}
 			}
 		}
 	}
@@ -158,38 +145,42 @@ NSString * const kExceptionPuzzleHasMultipleSolutions = @"kExceptionPuzzleHasMul
 	NSInteger totalSolved = 0;
 	
 	// Make a list of all tile sets in the game.
-	NSMutableArray *sets = [NSMutableArray array];
+	ZSGameTileStub ***sets = malloc(3 * _gameBoard.size * sizeof(ZSGameTileStub **));
 	
 	for (NSInteger i = 0; i < _gameBoard.size; ++i) {
-		[sets addObject:[_gameBoard getTileSetForRow:i]];
-		[sets addObject:[_gameBoard getTileSetForCol:i]];
-		[sets addObject:[_gameBoard getTileSetForGroup:i]];
+		sets[3 * i + 0] = _gameBoard.rows[i];
+		sets[3 * i + 1] = _gameBoard.cols[i];
+		sets[3 * i + 2] = _gameBoard.groups[i];
 	}
 	
 	// Iterate over each tile set.
-	for (NSArray *set in sets) {
+	for (NSInteger setIndex = 0, totalSets = 3 * _gameBoard.size; setIndex < totalSets; ++setIndex) {
+		ZSGameTileStub **set = sets[setIndex];
+		
 		// Iterate over each guess.
 		for (NSInteger guess = 1; guess <= _gameBoard.size; ++guess) {
 			// Keep track of how many instances of the target pencil are found in the set.
 			NSInteger totalPencilsFound = 0;
-			ZSGameTile *lastTileFound = nil;
+			ZSGameTileStub *lastTileFound = NULL;
 			
 			// Iterate over the tiles in the set making note of the occurrances of the target pencil.
-			for (ZSGameTile *tile in set) {
-				if (!tile.guess && [tile getPencilForGuess:guess]) {
-					totalPencilsFound++;
-					lastTileFound = tile;
+			for (NSInteger i = 0; i < _gameBoard.size; ++i) {
+				if (!set[i]->guess && set[i]->pencils[guess - 1]) {
+					++totalPencilsFound;
+					lastTileFound = set[i];
 				}
 			}
 			
 			// If only one tile in the set contained the target pencil, it has to be that answer.
 			if (totalPencilsFound == 1) {
-				[_gameBoard setGuess:guess forTileAtRow:lastTileFound.row col:lastTileFound.col];
-				[_gameBoard clearInfluencedPencilsForTileAtRow:lastTileFound.row col:lastTileFound.col];
+				[_gameBoard setGuess:guess forTileAtRow:lastTileFound->row col:lastTileFound->col];
+				[_gameBoard clearInfluencedPencilsForTileAtRow:lastTileFound->row col:lastTileFound->col];
 				++totalSolved;
 			}
 		}
 	}
+	
+	free(sets);
 	
 	return totalSolved;
 }
@@ -198,7 +189,7 @@ NSString * const kExceptionPuzzleHasMultipleSolutions = @"kExceptionPuzzleHasMul
 	// Start by searching for a tile with no answer.
 	for (NSInteger row = 0; row < _gameBoard.size; ++row) {
 		for (NSInteger col = 0; col < _gameBoard.size; ++col) {
-			if (![_gameBoard getTileAtRow:row col:col].answer) {
+			if (!_gameBoard.grid[row][col].guess) {
 				
 				// Okay, we've found an empty tile.
 				
@@ -224,7 +215,7 @@ NSString * const kExceptionPuzzleHasMultipleSolutions = @"kExceptionPuzzleHasMul
 	// If we've already iterated off the end, the puzzle is complete.
 	if (col >= _gameBoard.size) {
 		// Copy the solution.
-		[_solvedGameBoard copyGuessesFromGameBoard:_gameBoard];
+		[_solvedGameBoard copyGuessesFromFastGameBoard:_gameBoard];
 		
 		return ZSGameSolveResultSucceeded;
 	}
@@ -235,7 +226,7 @@ NSString * const kExceptionPuzzleHasMultipleSolutions = @"kExceptionPuzzleHasMul
 	}
 	
 	// If the tile is already solved, move on to the next one to the right.
-	if ([_gameBoard getTileAtRow:row col:col].guess) {
+	if (_gameBoard.grid[row][col].guess) {
 		return [self solveBruteForceForRow:(row + 1) col:col];
 	}
 	

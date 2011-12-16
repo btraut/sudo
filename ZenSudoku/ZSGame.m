@@ -8,7 +8,7 @@
 
 #import "ZSGame.h"
 #import "ZSAppDelegate.h"
-#import "ZSGameSolver.h"
+#import "ZSFastGameSolver.h"
 #import "ZSGameController.h"
 #import "ZSGameHistoryEntry.h"
 #import "ZSGameBoard.h"

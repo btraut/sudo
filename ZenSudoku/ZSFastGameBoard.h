@@ -14,20 +14,38 @@ typedef struct {
 	NSInteger groupId;
 	
     NSInteger guess;
+	
+	NSInteger totalPencils;
     BOOL *pencils;
 } ZSGameTileStub;
+
+@class ZSGameBoard;
 
 @interface ZSFastGameBoard : NSObject {
 	NSInteger size;
 	
 	ZSGameTileStub **grid;
 	
-	ZSGameTileStub **groupCache;
+	ZSGameTileStub ***rows;
+	ZSGameTileStub ***cols;
+	ZSGameTileStub ***groups;
 	
 	BOOL **rowContainsAnswer;
 	BOOL **colContainsAnswer;
 	BOOL **groupContainsAnswer;
 }
+
+@property (nonatomic, assign) NSInteger size;
+
+@property (nonatomic, assign) ZSGameTileStub **grid;
+
+@property (nonatomic, assign) ZSGameTileStub ***rows;
+@property (nonatomic, assign) ZSGameTileStub ***cols;
+@property (nonatomic, assign) ZSGameTileStub ***groups;
+
+@property (nonatomic, assign) BOOL **rowContainsAnswer;
+@property (nonatomic, assign) BOOL **colContainsAnswer;
+@property (nonatomic, assign) BOOL **groupContainsAnswer;
 
 // Initialization and Memory Management
 
@@ -37,16 +55,21 @@ typedef struct {
 
 - (void)allocGrid;
 - (void)freeGrid;
-- (void)allocGroupCache;
-- (void)freeGroupCache;
 - (void)allocSetCaches;
 - (void)freeSetCaches;
 
+- (void)rebuildRowAndSetCaches;
+- (void)rebuildGroupCache;
+
 // Data Migration
 
-- (void)loadStandard9x9GroupMap;
+- (void)copyGroupMapFromGameBoard:(ZSGameBoard *)gameBoard;
 
-- (void)copyGuessesFromGrid:(ZSGameTileStub **)grid;
+- (void)copyGroupMapFromFastGameBoard:(ZSFastGameBoard *)gameBoard;
+- (void)copyGuessesFromFastGameBoard:(ZSFastGameBoard *)gameBoard;
+
+- (void)copyGuessesToGameBoardAnswers:(ZSGameBoard *)gameBoard;
+- (void)copyGuessesToGameBoardGuesses:(ZSGameBoard *)gameBoard;
 
 // Setters
 

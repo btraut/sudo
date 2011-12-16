@@ -9,7 +9,7 @@
 #import "ZenSudokuLogicTests.h"
 
 #import "ZSGame.h"
-#import "ZSGameSolver.h"
+#import "ZSFastGameSolver.h"
 #import "ZSGameController.h"
 
 NSInteger standard9x9GroupMap[9][9] = {
@@ -30,7 +30,7 @@ NSInteger standard9x9GroupMap[9][9] = {
     [super setUp];
     
 	// Create a game solver.
-    _solver = [[ZSGameSolver alloc] init];
+    _solver = [[ZSFastGameSolver alloc] init];
 }
 
 - (void)tearDown {

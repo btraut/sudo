@@ -1,19 +1,17 @@
 //
-//  ZSGameGenerator.m
+//  ZSFastGameGenerator.m
 //  ZenSudoku
 //
 //  Created by Brent Traut on 12/1/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "ZSGameGenerator.h"
-#import "ZSGameSolver.h"
-#import "ZSGameController.h"
+#import "ZSFastGameGenerator.h"
+#import "ZSFastGameBoard.h"
+#import "ZSFastGameSolver.h"
 #import "ZSGame.h"
-#import "ZSGameBoard.h"
-#import "ZSGameTile.h"
 
-@implementation ZSGameGenerator
+@implementation ZSFastGameGenerator
 
 - (ZSGame *)generateGameWithDifficulty:(ZSGameDifficulty)difficulty {
 	ZSGame *game = [self generateStandard9x9Game];
@@ -27,21 +25,23 @@
 	ZSGame *newGame = [ZSGame emptyStandard9x9Game];
 	
 	// Allocate puzzle memory.
-	_reductionGameBoard = [[ZSGameBoard alloc] initWithSize:newGame.gameBoard.size];
-	_scratchGameBoard = [[ZSGameBoard alloc] initWithSize:newGame.gameBoard.size];
+	_reductionGameBoard = [[ZSFastGameBoard alloc] initWithSize:newGame.gameBoard.size];
+	_scratchGameBoard = [[ZSFastGameBoard alloc] initWithSize:newGame.gameBoard.size];
 	
 	[_reductionGameBoard copyGroupMapFromGameBoard:newGame.gameBoard];
-	[_scratchGameBoard copyGroupMapFromGameBoard:newGame.gameBoard];
+	[_scratchGameBoard copyGroupMapFromFastGameBoard:_reductionGameBoard];
 	
 	// Build a whole puzzle.
 	[self buildPuzzleForX:0 y:0];
+	
+	[_reductionGameBoard print9x9Grid];
 	
 	// Generate a random string of rows and columns to act as our reduction guide.
 	NSInteger *reductionCoords = malloc(_reductionGameBoard.size * _reductionGameBoard.size * sizeof(NSInteger));
 	[self populateRandomNumberArray:reductionCoords withSize:(_reductionGameBoard.size * _reductionGameBoard.size)];
 	
 	// Create a solver to use in the loop.
-	ZSGameSolver *gameSolver = [[ZSGameSolver alloc] init];
+	ZSFastGameSolver *gameSolver = [[ZSFastGameSolver alloc] init];
 	
 	// As long as it doesn't make the solution ambiguous, keep removing tiles.
 	for (NSInteger i = 0, iMax = _reductionGameBoard.size * _reductionGameBoard.size; i < iMax; ++i) {
@@ -49,31 +49,31 @@
 		NSInteger reductionCol = reductionCoords[i] % _reductionGameBoard.size;
 		
 		// Copy the puzzle to the scratch board. We have to keep doing this because the solver keeps solving it.
-		[_scratchGameBoard copyAnswersFromGameBoard:_reductionGameBoard];
+		[_scratchGameBoard copyGuessesFromFastGameBoard:_reductionGameBoard];
 		
 		// If the puzzle is still valid, we can poke another hole in it.
 		// If none of the later guesses worked out, set the guess back to 0.
-		[_scratchGameBoard clearAnswerForTileAtRow:reductionRow col:reductionCol];
+		[_scratchGameBoard clearGuessForTileAtRow:reductionRow col:reductionCol];
 		
 		// Attempt to solve the puzzle.
-		ZSGameSolveResult solveResults = [gameSolver solveGameBoard:_scratchGameBoard];
+		ZSGameSolveResult solveResults = [gameSolver solveFastGameBoard:_scratchGameBoard];
 		
 		// If a single solution is found in the scratch board, apply the reduction to the reduction board.
 		if (solveResults == ZSGameSolveResultSucceeded) {
-			[_reductionGameBoard clearAnswerForTileAtRow:reductionRow col:reductionCol];
+			[_reductionGameBoard clearGuessForTileAtRow:reductionRow col:reductionCol];
 		}
 	}
 	
 	// Do one last copy and solve in the scratch board.
-	[_scratchGameBoard copyAnswersFromGameBoard:_reductionGameBoard];
-	[gameSolver solveGameBoard:_scratchGameBoard];
+	[_scratchGameBoard copyGuessesFromFastGameBoard:_reductionGameBoard];
+	[gameSolver solveFastGameBoard:_scratchGameBoard];
 	
 	// Save the puzzle data into the new game.
-	[newGame.gameBoard copyAnswersFromGameBoard:_scratchGameBoard];
+	[_scratchGameBoard copyGuessesToGameBoardAnswers:newGame.gameBoard];
 	
 	for (NSInteger row = 0; row < newGame.gameBoard.size; ++row) {
 		for (NSInteger col = 0; col < newGame.gameBoard.size; ++col) {
-			if ([_reductionGameBoard getTileAtRow:row col:col].answer) {
+			if (_reductionGameBoard.grid[row][col].guess) {
 				[newGame.gameBoard lockTileAtRow:row col:col];
 			}
 		}
@@ -97,7 +97,7 @@
 	}
 	
 	// If the tile is already solved, move on to the next one to the right.
-	if ([_reductionGameBoard getTileAtRow:row col:col].answer != 0) {
+	if (_reductionGameBoard.grid[row][col].guess != 0) {
 		return [self buildPuzzleForX:(row + 1) y:col];
 	}
 	
@@ -108,15 +108,15 @@
 	for (NSInteger i = 0; i < _reductionGameBoard.size; ++i) {
 		NSInteger guess = randomGuesses[i] + 1;
 		
-		if ([_reductionGameBoard isAnswer:guess validInRow:row col:col]) {
-			[_reductionGameBoard setAnswer:guess forTileAtRow:row col:col];
+		if ([_reductionGameBoard isGuess:guess validInRow:row col:col]) {
+			[_reductionGameBoard setGuess:guess forTileAtRow:row col:col];
 			
 			if ([self buildPuzzleForX:(row + 1) y:col]) {
 				return YES;
 			}
 			
 			// If none of the later guesses worked out, set the guess back to 0.
-			[_reductionGameBoard clearAnswerForTileAtRow:row col:col];
+			[_reductionGameBoard clearGuessForTileAtRow:row col:col];
 		}
 	}
 	

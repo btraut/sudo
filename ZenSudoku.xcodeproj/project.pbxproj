@@ -15,8 +15,6 @@
 		84AC26DD1480D9C700E966A5 /* ZSGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC26DC1480D9C700E966A5 /* ZSGame.m */; };
 		84AC26E01480DDBA00E966A5 /* ZSGameTile.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC26DF1480DDBA00E966A5 /* ZSGameTile.m */; };
 		84AC26E41480EB7E00E966A5 /* ZSGameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC26E31480EB7D00E966A5 /* ZSGameController.m */; };
-		84B300C21484C7E800E568CE /* ZSGameSolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B300C11484C7E800E568CE /* ZSGameSolver.m */; };
-		84B300DF1487866E00E568CE /* ZSGameGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B300DE1487866E00E568CE /* ZSGameGenerator.m */; };
 		84B300F4148AF6FF00E568CE /* ZSGameHistoryEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B300F3148AF6FD00E568CE /* ZSGameHistoryEntry.m */; };
 		84D55014147F1C4A00A7934E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D55013147F1C4A00A7934E /* UIKit.framework */; };
 		84D55016147F1C4A00A7934E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D55015147F1C4A00A7934E /* Foundation.framework */; };
@@ -55,10 +53,6 @@
 		84AC26DF1480DDBA00E966A5 /* ZSGameTile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSGameTile.m; sourceTree = "<group>"; };
 		84AC26E21480EB7D00E966A5 /* ZSGameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSGameController.h; sourceTree = "<group>"; };
 		84AC26E31480EB7D00E966A5 /* ZSGameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSGameController.m; sourceTree = "<group>"; };
-		84B300C01484C7E800E568CE /* ZSGameSolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSGameSolver.h; sourceTree = "<group>"; };
-		84B300C11484C7E800E568CE /* ZSGameSolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ZSGameSolver.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		84B300DD1487866E00E568CE /* ZSGameGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSGameGenerator.h; sourceTree = "<group>"; };
-		84B300DE1487866E00E568CE /* ZSGameGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSGameGenerator.m; sourceTree = "<group>"; };
 		84B300F2148AF6FD00E568CE /* ZSGameHistoryEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSGameHistoryEntry.h; sourceTree = "<group>"; };
 		84B300F3148AF6FD00E568CE /* ZSGameHistoryEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSGameHistoryEntry.m; sourceTree = "<group>"; };
 		84D5500F147F1C4A00A7934E /* ZenSudoku.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZenSudoku.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -153,10 +147,6 @@
 				84AC26DF1480DDBA00E966A5 /* ZSGameTile.m */,
 				84B300F2148AF6FD00E568CE /* ZSGameHistoryEntry.h */,
 				84B300F3148AF6FD00E568CE /* ZSGameHistoryEntry.m */,
-				84B300C01484C7E800E568CE /* ZSGameSolver.h */,
-				84B300C11484C7E800E568CE /* ZSGameSolver.m */,
-				84B300DD1487866E00E568CE /* ZSGameGenerator.h */,
-				84B300DE1487866E00E568CE /* ZSGameGenerator.m */,
 				84E18C9C1498B57F009717D4 /* ZSFastGameBoard.h */,
 				84E18C9D1498B57F009717D4 /* ZSFastGameBoard.m */,
 				84E18C921498B0F6009717D4 /* ZSFastGameGenerator.h */,
@@ -392,8 +382,6 @@
 				84AC26E41480EB7E00E966A5 /* ZSGameController.m in Sources */,
 				8449D9571481D77D003F6FB3 /* ZSGameAnswerOptionsViewController.m in Sources */,
 				8449D95A1481E518003F6FB3 /* ZSGameAnswerOptionViewController.m in Sources */,
-				84B300C21484C7E800E568CE /* ZSGameSolver.m in Sources */,
-				84B300DF1487866E00E568CE /* ZSGameGenerator.m in Sources */,
 				84B300F4148AF6FF00E568CE /* ZSGameHistoryEntry.m in Sources */,
 				84F9EFFE1495CC81003DD297 /* ZSGameBoard.m in Sources */,
 				84E18C961498B0F6009717D4 /* ZSFastGameGenerator.m in Sources */,

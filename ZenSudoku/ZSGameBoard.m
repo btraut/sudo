@@ -10,7 +10,7 @@
 #import "ZSGame.h"
 #import "ZSGameTile.h"
 #import "ZSGameController.h"
-#import "ZSGameSolver.h"
+#import "ZSFastGameSolver.h"
 
 NSInteger standard9x9GroupMap[9][9] = {
 	{0, 0, 0, 1, 1, 1, 2, 2, 2},
@@ -446,7 +446,7 @@ NSInteger standard9x9GroupMap[9][9] = {
 }
 
 - (void)solve {
-	[[ZSGameSolver alloc] solveGameBoard:self];
+//	[[ZSFastGameSolver alloc] solveGameBoard:self];
 }
 
 #pragma mark - Validitiy Checks

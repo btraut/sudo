@@ -1,5 +1,5 @@
 //
-//  ZSGameSolver.h
+//  ZSFastGameSolver.h
 //  ZenSudoku
 //
 //  Created by Brent Traut on 11/28/11.
@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ZSGameCalculator.h"
 
 typedef enum {
 	ZSGameSolveResultSucceeded,
@@ -15,16 +14,16 @@ typedef enum {
 	ZSGameSolveResultFailedMultipleSolutions
 } ZSGameSolveResult;
 
-@class ZSGame;
+@class ZSFastGameBoard;
 
-@interface ZSGameSolver : NSObject {
+@interface ZSFastGameSolver : NSObject {
 	@private
 	
-	ZSGameBoard *_gameBoard;
-	ZSGameBoard *_solvedGameBoard;
+	ZSFastGameBoard *_gameBoard;
+	ZSFastGameBoard *_solvedGameBoard;
 }
 
-- (ZSGameSolveResult)solveGameBoard:(ZSGameBoard *)gameBoard;
+- (ZSGameSolveResult)solveFastGameBoard:(ZSFastGameBoard *)gameBoard;
 
 - (ZSGameSolveResult)solve;
 

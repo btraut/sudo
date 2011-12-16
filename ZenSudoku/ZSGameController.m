@@ -9,7 +9,7 @@
 #import "ZSGameController.h"
 #import "ZSAppDelegate.h"
 #import "ZSGame.h"
-#import "ZSGameGenerator.h"
+#import "ZSFastGameGenerator.h"
 
 @implementation ZSGameController
 
@@ -28,7 +28,7 @@
 #pragma mark Game Creation
 
 - (void)generateGameWithDifficulty:(ZSGameDifficulty)difficulty {
-	ZSGameGenerator *gameGenerator = [[ZSGameGenerator alloc] init];
+	ZSFastGameGenerator *gameGenerator = [[ZSFastGameGenerator alloc] init];
 	currentGame = [gameGenerator generateGameWithDifficulty:difficulty];
 }
 

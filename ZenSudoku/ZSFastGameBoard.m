@@ -7,20 +7,15 @@
 //
 
 #import "ZSFastGameBoard.h"
-
-NSInteger standard9x9GroupMap[9][9] = {
-	{0, 0, 0, 1, 1, 1, 2, 2, 2},
-	{0, 0, 0, 1, 1, 1, 2, 2, 2},
-	{0, 0, 0, 1, 1, 1, 2, 2, 2},
-	{3, 3, 3, 4, 4, 4, 5, 5, 5},
-	{3, 3, 3, 4, 4, 4, 5, 5, 5},
-	{3, 3, 3, 4, 4, 4, 5, 5, 5},
-	{6, 6, 6, 7, 7, 7, 8, 8, 8},
-	{6, 6, 6, 7, 7, 7, 8, 8, 8},
-	{6, 6, 6, 7, 7, 7, 8, 8, 8},
-};
+#import "ZSGameBoard.h"
+#import "ZSGameTile.h"
 
 @implementation ZSFastGameBoard
+
+@synthesize size;
+@synthesize grid;
+@synthesize rows, cols, groups;
+@synthesize rowContainsAnswer, colContainsAnswer, groupContainsAnswer;
 
 #pragma mark - Initialization and Memory Management
 
@@ -35,16 +30,47 @@ NSInteger standard9x9GroupMap[9][9] = {
 		size = newSize;
 		
 		[self allocGrid];
-		[self allocGroupCache];
 		[self allocSetCaches];
+		
+		[self rebuildRowAndSetCaches];
 	}
 	
 	return self;
 }
 
+- (void)rebuildRowAndSetCaches {
+	for (NSInteger row = 0; row < size; ++row) {
+		for (NSInteger col = 0; col < size; ++col) {
+			// Add the tile to row and col caches.
+			rows[row][col] = &grid[row][col];
+			cols[col][row] = &grid[row][col];
+		}
+	}
+}
+
+- (void)rebuildGroupCache {
+	NSInteger *totalTilesInEachGroup = malloc(size * sizeof(NSInteger));
+	
+	for (NSInteger i = 0; i < size; ++i) {
+		totalTilesInEachGroup[i] = 0;
+	}
+	
+	for (NSInteger row = 0; row < 9; ++row) {
+		for (NSInteger col = 0; col < 9; ++col) {
+			// Get the groupId on the standard group map.
+			NSInteger groupId = grid[row][col].groupId;
+			
+			// Add the tile to the group cache.
+			groups[groupId][totalTilesInEachGroup[groupId]] = &grid[row][col];
+			++totalTilesInEachGroup[groupId];
+		}
+	}
+	
+	free(totalTilesInEachGroup);
+}
+
 - (void)dealloc {
 	[self freeSetCaches];
-	[self freeGroupCache];
 	[self freeGrid];
 }
 
@@ -54,15 +80,26 @@ NSInteger standard9x9GroupMap[9][9] = {
 	for (NSInteger i = 0; i < size; ++i) {
 		grid[i] = malloc(size * sizeof(ZSGameTileStub));
 		
-		for (NSInteger j = 0; i < size; ++j) {
+		for (NSInteger j = 0; j < size; ++j) {
+			grid[i][j].row = 0;
+			grid[i][j].col = 0;
+			grid[i][j].groupId = 0;
+			
+			grid[i][j].guess = 0;
+			
+			grid[i][j].totalPencils = 0;
 			grid[i][j].pencils = malloc(size * sizeof(BOOL));
+			
+			for (NSInteger p = 0; p < size; ++p) {
+				grid[i][j].pencils[p] = NO;
+			}
 		}
 	}
 }
 
 - (void)freeGrid {
 	for (NSInteger i = 0; i < size; ++i) {
-		for (NSInteger j = 0; i < size; ++j) {
+		for (NSInteger j = 0; j < size; ++j) {
 			free(grid[i][j].pencils);
 		}
 		
@@ -72,23 +109,29 @@ NSInteger standard9x9GroupMap[9][9] = {
 	free(grid);
 }
 
-- (void)allocGroupCache {
-	groupCache = malloc(size * sizeof(ZSGameTileStub *));
-}
-
-- (void)freeGroupCache {
-	free(groupCache);
-}
-
 - (void)allocSetCaches {
+	rows = malloc(size * sizeof(ZSGameTileStub **));
+	cols = malloc(size * sizeof(ZSGameTileStub **));
+	groups = malloc(size * sizeof(ZSGameTileStub **));
+	
 	rowContainsAnswer = malloc(size * sizeof(BOOL *));
 	colContainsAnswer = malloc(size * sizeof(BOOL *));
 	groupContainsAnswer = malloc(size * sizeof(BOOL *));
 	
 	for (NSInteger i = 0; i < size; ++i) {
+		rows[i] = malloc(size * sizeof(ZSGameTileStub *));
+		cols[i] = malloc(size * sizeof(ZSGameTileStub *));
+		groups[i] = malloc(size * sizeof(ZSGameTileStub *));
+		
 		rowContainsAnswer[i] = malloc(size * sizeof(BOOL));
 		colContainsAnswer[i] = malloc(size * sizeof(BOOL));
 		groupContainsAnswer[i] = malloc(size * sizeof(BOOL));
+		
+		for (NSInteger j = 0; j < size; ++j) {
+			rowContainsAnswer[i][j] = NO;
+			colContainsAnswer[i][j] = NO;
+			groupContainsAnswer[i][j] = NO;
+		}
 	}
 }
 
@@ -97,38 +140,63 @@ NSInteger standard9x9GroupMap[9][9] = {
 		free(rowContainsAnswer[i]);
 		free(colContainsAnswer[i]);
 		free(groupContainsAnswer[i]);
+		
+		free(rows[i]);
+		free(cols[i]);
+		free(groups[i]);
 	}
 	
 	free(rowContainsAnswer);
 	free(colContainsAnswer);
 	free(groupContainsAnswer);
+
+	free(rows);
+	free(cols);
+	free(groups);
 }
 
 #pragma mark - Data Migration
 
-- (void)loadStandard9x9GroupMap {
-	NSInteger *totalTilesInGroupCache = malloc(size * sizeof(NSInteger));
-	
-	for (NSInteger i = 0; i < size; ++i) {
-		totalTilesInGroupCache[0] = 0;
-	}
-	
+- (void)copyGroupMapFromFastGameBoard:(ZSFastGameBoard *)gameBoard {
 	for (NSInteger row = 0; row < 9; ++row) {
 		for (NSInteger col = 0; col < 9; ++col) {
-			NSInteger groupId = standard9x9GroupMap[row][col];
-			
-			grid[row][col].groupId = groupId;
-			
-			groupCache[groupId][totalTilesInGroupCache[standard9x9GroupMap[row][col]]] = grid[row][col];
-			++totalTilesInGroupCache[standard9x9GroupMap[row][col]];
+			grid[row][col].groupId = gameBoard.grid[row][col].groupId;
+		}
+	}
+	
+	[self rebuildGroupCache];
+}
+
+- (void)copyGuessesFromFastGameBoard:(ZSFastGameBoard *)gameBoard {
+	for (NSInteger row = 0; row < 9; ++row) {
+		for (NSInteger col = 0; col < 9; ++col) {
+			[self setGuess:gameBoard.grid[row][col].guess forTileAtRow:row col:col];
 		}
 	}
 }
 
-- (void)copyGuessesFromGrid:(ZSGameTileStub **)sourceGrid {
-	for (NSInteger row = 0; row < 9; ++row) {
-		for (NSInteger col = 0; col < 9; ++col) {
-			[self setGuess:sourceGrid[row][col].guess forTileAtRow:row col:col];
+- (void)copyGroupMapFromGameBoard:(ZSGameBoard *)gameBoard {
+	for (NSInteger row = 0; row < size; ++row) {
+		for (NSInteger col = 0; col < size; ++col) {
+			grid[row][col].groupId = [gameBoard getTileAtRow:row col:col].groupId;
+		}
+	}
+	
+	[self rebuildGroupCache];
+}
+
+- (void)copyGuessesToGameBoardAnswers:(ZSGameBoard *)gameBoard {
+	for (NSInteger row = 0; row < size; ++row) {
+		for (NSInteger col = 0; col < size; ++col) {
+			[gameBoard setAnswer:grid[row][col].guess forTileAtRow:row col:col];
+		}
+	}
+}
+
+- (void)copyGuessesToGameBoardGuesses:(ZSGameBoard *)gameBoard {
+	for (NSInteger row = 0; row < size; ++row) {
+		for (NSInteger col = 0; col < size; ++col) {
+			[gameBoard setGuess:grid[row][col].guess forTileAtRow:row col:col];
 		}
 	}
 }
@@ -136,13 +204,20 @@ NSInteger standard9x9GroupMap[9][9] = {
 #pragma mark - Setters
 
 - (void)setGuess:(NSInteger)guess forTileAtRow:(NSInteger)row col:(NSInteger)col {
+	NSInteger formerGuess = grid[row][col].guess;
 	grid[row][col].guess = guess;
 	
-	BOOL isSet = (BOOL)guess;
+	if (formerGuess) {
+		rowContainsAnswer[row][formerGuess - 1] = NO;
+		colContainsAnswer[col][formerGuess - 1] = NO;
+		groupContainsAnswer[grid[row][col].groupId][formerGuess - 1] = NO;
+	}
 	
-	rowContainsAnswer[row][guess - 1] = isSet;
-	colContainsAnswer[col][guess - 1] = isSet;
-	groupContainsAnswer[grid[row][col].groupId][guess - 1] = isSet;
+	if (guess) {
+		rowContainsAnswer[row][guess - 1] = YES;
+		colContainsAnswer[col][guess - 1] = YES;
+		groupContainsAnswer[grid[row][col].groupId][guess - 1] = YES;
+	}
 }
 
 - (void)clearGuessForTileAtRow:(NSInteger)row col:(NSInteger)col {
@@ -150,6 +225,12 @@ NSInteger standard9x9GroupMap[9][9] = {
 }
 
 - (void)setPencil:(BOOL)isSet forPencilNumber:(NSInteger)pencilNumber forTileAtRow:(NSInteger)row col:(NSInteger)col {
+	if (!grid[row][col].pencils[pencilNumber - 1] && isSet) {
+		grid[row][col].totalPencils++;
+	} else if (grid[row][col].pencils[pencilNumber - 1] && !isSet) {
+		grid[row][col].totalPencils--;
+	}
+	
 	grid[row][col].pencils[pencilNumber - 1] = isSet;
 }
 
@@ -181,7 +262,7 @@ NSInteger standard9x9GroupMap[9][9] = {
 	}
 	
 	for (NSInteger i = 0; i < size; ++i) {
-		[self setPencil:NO forPencilNumber:guess forTileAtRow:groupCache[tile->groupId][i].row col:groupCache[tile->groupId][i].col];
+		[self setPencil:NO forPencilNumber:guess forTileAtRow:groups[tile->groupId][i]->row col:groups[tile->groupId][i]->col];
 	}
 }
 
@@ -190,32 +271,31 @@ NSInteger standard9x9GroupMap[9][9] = {
 	
 	for (NSInteger guess = 1; guess <= size; ++guess) {
 		for (NSInteger row = 0; row < size; ++row) {
-			BOOL validInRow = [self isGuess:guess validInRow:row];
-			
-			for (NSInteger i = 0; i < size; ++i) {
-				if (validInRow) {
-					[self setPencil:YES forPencilNumber:guess forTileAtRow:row col:i];
+			if ([self isGuess:guess validInRow:row]) {
+				for (NSInteger i = 0; i < size; ++i) {
+					if (!rows[row][i]->guess) {
+						[self setPencil:YES forPencilNumber:guess forTileAtRow:row col:i];
+					}
 				}
 			}
 		}
 
 		for (NSInteger col = 0; col < size; ++col) {
-			BOOL validInCol = [self isGuess:guess validInCol:col];
-			
-			for (NSInteger i = 0; i < size; ++i) {
-				if (validInCol) {
-					[self setPencil:YES forPencilNumber:guess forTileAtRow:i col:col];
+			if ([self isGuess:guess validInCol:col]) {
+				for (NSInteger i = 0; i < size; ++i) {
+					if (!cols[col][i]->guess) {
+						[self setPencil:YES forPencilNumber:guess forTileAtRow:i col:col];
+					}
 				}
 			}
 		}
 
 		for (NSInteger groupId = 0; groupId < size; ++groupId) {
-			BOOL validInGroup = [self isGuess:guess validInGroup:groupId];
-			ZSGameTileStub *group = groupCache[guess - 1];
-			
-			for (NSInteger i = 0; i < size; ++i) {
-				if (validInGroup) {
-					[self setPencil:YES forPencilNumber:guess forTileAtRow:group[i].row col:group[i].col];
+			if ([self isGuess:guess validInGroup:groupId]) {
+				for (NSInteger i = 0; i < size; ++i) {
+					if (!groups[groupId][i]->guess) {
+						[self setPencil:YES forPencilNumber:guess forTileAtRow:groups[groupId][i]->row col:groups[groupId][i]->col];
+					}
 				}
 			}
 		}

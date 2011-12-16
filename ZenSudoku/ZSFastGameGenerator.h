@@ -1,5 +1,5 @@
 //
-//  ZSGameGenerator.h
+//  ZSFastGameGenerator.h
 //  ZenSudoku
 //
 //  Created by Brent Traut on 12/1/11.
@@ -7,14 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ZSGameCalculator.h"
+
 #import "ZSGame.h"
 
-@interface ZSGameGenerator : NSObject {
+@class ZSFastGameBoard;
+
+@interface ZSFastGameGenerator : NSObject {
 	@private
 	
-	ZSGameBoard *_reductionGameBoard;
-	ZSGameBoard *_scratchGameBoard;
+	ZSFastGameBoard *_reductionGameBoard;
+	ZSFastGameBoard *_scratchGameBoard;
 }
 
 - (ZSGame *)generateGameWithDifficulty:(ZSGameDifficulty)difficulty;
