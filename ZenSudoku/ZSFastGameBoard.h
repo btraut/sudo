@@ -67,6 +67,8 @@ typedef struct {
 
 - (void)copyGroupMapFromFastGameBoard:(ZSFastGameBoard *)gameBoard;
 - (void)copyGuessesFromFastGameBoard:(ZSFastGameBoard *)gameBoard;
+- (void)copyGuessesFromString:(NSString *)guessesString;
+- (void)copyGroupMapFromString:(NSString *)groupMapString;
 
 - (void)copyGuessesToGameBoardAnswers:(ZSGameBoard *)gameBoard;
 - (void)copyGuessesToGameBoardGuesses:(ZSGameBoard *)gameBoard;
@@ -75,6 +77,7 @@ typedef struct {
 
 - (void)setGuess:(NSInteger)guess forTileAtRow:(NSInteger)row col:(NSInteger)col;
 - (void)clearGuessForTileAtRow:(NSInteger)row col:(NSInteger)col;
+- (void)clearAllGuesses;
 
 - (void)setPencil:(BOOL)isSet forPencilNumber:(NSInteger)pencilNumber forTileAtRow:(NSInteger)row col:(NSInteger)col;
 - (void)setAllPencils:(BOOL)isSet;

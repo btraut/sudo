@@ -81,8 +81,8 @@
 		grid[i] = malloc(size * sizeof(ZSGameTileStub));
 		
 		for (NSInteger j = 0; j < size; ++j) {
-			grid[i][j].row = 0;
-			grid[i][j].col = 0;
+			grid[i][j].row = i;
+			grid[i][j].col = j;
 			grid[i][j].groupId = 0;
 			
 			grid[i][j].guess = 0;
@@ -185,6 +185,90 @@
 	[self rebuildGroupCache];
 }
 
+- (void)copyGuessesFromString:(NSString *)guessesString {
+	NSInteger currentRow = 0;
+	NSInteger currentCol = 0;
+	
+	NSInteger intEquivalent;
+	
+	for (NSInteger i = 0, l = guessesString.length; i < l; ++i) {
+		unichar currentChar = [guessesString characterAtIndex:i];
+		
+		switch (currentChar) {
+			case '.':
+			case '0':
+				[self clearGuessForTileAtRow:currentRow col:currentCol];
+				break;
+				
+			case '1':
+			case '2':
+			case '3':
+			case '4':
+			case '5':
+			case '6':
+			case '7':
+			case '8':
+			case '9':
+				intEquivalent = (NSInteger)currentChar - 48;
+				[self setGuess:intEquivalent forTileAtRow:currentRow col:currentCol];
+				break;
+				
+			default:
+				continue;
+		}
+		
+		if (++currentCol >= size) {
+			currentCol -= size;
+			++currentRow;
+		}
+		
+		if (currentRow == size) {
+			break;
+		}
+	}
+}
+
+- (void)copyGroupMapFromString:(NSString *)groupMapString {
+	NSInteger currentRow = 0;
+	NSInteger currentCol = 0;
+	
+	NSInteger intEquivalent;
+	
+	for (NSInteger i = 0, l = groupMapString.length; i < l; ++i) {
+		unichar currentChar = [groupMapString characterAtIndex:i];
+		
+		switch (currentChar) {
+			case '0':
+			case '1':
+			case '2':
+			case '3':
+			case '4':
+			case '5':
+			case '6':
+			case '7':
+			case '8':
+			case '9':
+				intEquivalent = (NSInteger)currentChar - 48;
+				grid[currentRow][currentCol].groupId = intEquivalent;
+				break;
+				
+			default:
+				continue;
+		}
+		
+		if (++currentCol >= size) {
+			currentCol -= size;
+			++currentRow;
+		}
+		
+		if (currentRow == size) {
+			break;
+		}
+	}
+	
+	[self rebuildGroupCache];
+}
+
 - (void)copyGuessesToGameBoardAnswers:(ZSGameBoard *)gameBoard {
 	for (NSInteger row = 0; row < size; ++row) {
 		for (NSInteger col = 0; col < size; ++col) {
@@ -207,6 +291,8 @@
 	NSInteger formerGuess = grid[row][col].guess;
 	grid[row][col].guess = guess;
 	
+	[self setAllPencils:NO forTileAtRow:row col:col];
+	
 	if (formerGuess) {
 		rowContainsAnswer[row][formerGuess - 1] = NO;
 		colContainsAnswer[col][formerGuess - 1] = NO;
@@ -222,6 +308,14 @@
 
 - (void)clearGuessForTileAtRow:(NSInteger)row col:(NSInteger)col {
 	[self setGuess:0 forTileAtRow:row col:col];
+}
+
+- (void)clearAllGuesses {
+	for (NSInteger row = 0; row < size; ++row) {
+		for (NSInteger col = 0; col < size; ++col) {
+			[self clearGuessForTileAtRow:row col:col];
+		}
+	}
 }
 
 - (void)setPencil:(BOOL)isSet forPencilNumber:(NSInteger)pencilNumber forTileAtRow:(NSInteger)row col:(NSInteger)col {
@@ -261,6 +355,8 @@
 		[self setPencil:NO forPencilNumber:guess forTileAtRow:i col:tile->col];
 	}
 	
+	
+	
 	for (NSInteger i = 0; i < size; ++i) {
 		[self setPencil:NO forPencilNumber:guess forTileAtRow:groups[tile->groupId][i]->row col:groups[tile->groupId][i]->col];
 	}
@@ -269,33 +365,17 @@
 - (void)addAutoPencils {
 	[self setAllPencils:NO];
 	
-	for (NSInteger guess = 1; guess <= size; ++guess) {
-		for (NSInteger row = 0; row < size; ++row) {
-			if ([self isGuess:guess validInRow:row]) {
-				for (NSInteger i = 0; i < size; ++i) {
-					if (!rows[row][i]->guess) {
-						[self setPencil:YES forPencilNumber:guess forTileAtRow:row col:i];
-					}
-				}
-			}
-		}
-
+	for (NSInteger row = 0; row < size; ++row) {
 		for (NSInteger col = 0; col < size; ++col) {
-			if ([self isGuess:guess validInCol:col]) {
-				for (NSInteger i = 0; i < size; ++i) {
-					if (!cols[col][i]->guess) {
-						[self setPencil:YES forPencilNumber:guess forTileAtRow:i col:col];
-					}
-				}
+			// Skip the ones with answers.
+			if (grid[row][col].guess) {
+				continue;
 			}
-		}
-
-		for (NSInteger groupId = 0; groupId < size; ++groupId) {
-			if ([self isGuess:guess validInGroup:groupId]) {
-				for (NSInteger i = 0; i < size; ++i) {
-					if (!groups[groupId][i]->guess) {
-						[self setPencil:YES forPencilNumber:guess forTileAtRow:groups[groupId][i]->row col:groups[groupId][i]->col];
-					}
+			
+			// For each possible guess, check to see if it is valid in that tile.
+			for (NSInteger guess = 1; guess <= size; ++guess) {
+				if ([self isGuess:guess validInRow:row col:col]) {
+					[self setPencil:YES forPencilNumber:guess forTileAtRow:row col:col];
 				}
 			}
 		}

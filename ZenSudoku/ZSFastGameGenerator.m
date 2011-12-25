@@ -43,6 +43,8 @@
 	// Create a solver to use in the loop.
 	ZSFastGameSolver *gameSolver = [[ZSFastGameSolver alloc] init];
 	
+	[gameSolver copyGroupMapFromFastGameBoard:_reductionGameBoard];
+	
 	// As long as it doesn't make the solution ambiguous, keep removing tiles.
 	for (NSInteger i = 0, iMax = _reductionGameBoard.size * _reductionGameBoard.size; i < iMax; ++i) {
 		NSInteger reductionRow = reductionCoords[i] / _reductionGameBoard.size;
@@ -55,8 +57,11 @@
 		// If none of the later guesses worked out, set the guess back to 0.
 		[_scratchGameBoard clearGuessForTileAtRow:reductionRow col:reductionCol];
 		
+		// Copy the reduction into the solver.
+		[gameSolver copyGuessesFromFastGameBoard:_scratchGameBoard];
+		
 		// Attempt to solve the puzzle.
-		ZSGameSolveResult solveResults = [gameSolver solveFastGameBoard:_scratchGameBoard];
+		ZSGameSolveResult solveResults = [gameSolver solve];
 		
 		// If a single solution is found in the scratch board, apply the reduction to the reduction board.
 		if (solveResults == ZSGameSolveResultSucceeded) {
@@ -65,8 +70,9 @@
 	}
 	
 	// Do one last copy and solve in the scratch board.
-	[_scratchGameBoard copyGuessesFromFastGameBoard:_reductionGameBoard];
-	[gameSolver solveFastGameBoard:_scratchGameBoard];
+	[gameSolver copyGuessesFromFastGameBoard:_reductionGameBoard];
+	[gameSolver solve];
+	[gameSolver copySolutionToFastGameBoard:_scratchGameBoard];
 	
 	// Save the puzzle data into the new game.
 	[_scratchGameBoard copyGuessesToGameBoardAnswers:newGame.gameBoard];

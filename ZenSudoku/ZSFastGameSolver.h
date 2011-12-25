@@ -23,7 +23,13 @@ typedef enum {
 	ZSFastGameBoard *_solvedGameBoard;
 }
 
-- (ZSGameSolveResult)solveFastGameBoard:(ZSFastGameBoard *)gameBoard;
+- (id)init;
+- (id)initWithSize:(NSInteger)size;
+
+- (void)copyGroupMapFromFastGameBoard:(ZSFastGameBoard *)gameBoard;
+- (void)copyGuessesFromFastGameBoard:(ZSFastGameBoard *)gameBoard;
+
+- (void)copySolutionToFastGameBoard:(ZSFastGameBoard *)gameBoard;
 
 - (ZSGameSolveResult)solve;
 

@@ -7,9 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		843BEDEF149DC4E800D1D19B /* ZSIconNew57.png in Resources */ = {isa = PBXBuildFile; fileRef = 843BEDEE149DC4E800D1D19B /* ZSIconNew57.png */; };
+		843BEDF1149DC4F100D1D19B /* ZSIconNew114.png in Resources */ = {isa = PBXBuildFile; fileRef = 843BEDF0149DC4F100D1D19B /* ZSIconNew114.png */; };
+		843BEDF3149DC90E00D1D19B /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 843BEDF2149DC90E00D1D19B /* Default.png */; };
+		843BEDF5149DC91200D1D19B /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 843BEDF4149DC91200D1D19B /* Default@2x.png */; };
+		843BEDF814A6E0AC00D1D19B /* board.png in Resources */ = {isa = PBXBuildFile; fileRef = 843BEDF614A6DFE100D1D19B /* board.png */; };
+		843BEDFA14A6E0F900D1D19B /* board@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 843BEDF914A6E0F900D1D19B /* board@2x.png */; };
 		8449D9571481D77D003F6FB3 /* ZSGameAnswerOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8449D9561481D77D003F6FB3 /* ZSGameAnswerOptionsViewController.m */; };
 		8449D95A1481E518003F6FB3 /* ZSGameAnswerOptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8449D9591481E518003F6FB3 /* ZSGameAnswerOptionViewController.m */; };
-		84AC26C51480836600E966A5 /* board.png in Resources */ = {isa = PBXBuildFile; fileRef = 84AC26C41480836600E966A5 /* board.png */; };
 		84AC26C91480950F00E966A5 /* ZSGameBoardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC26C71480950F00E966A5 /* ZSGameBoardViewController.m */; };
 		84AC26CE1480986900E966A5 /* ZSGameBoardTileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC26CC1480986900E966A5 /* ZSGameBoardTileViewController.m */; };
 		84AC26DD1480D9C700E966A5 /* ZSGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC26DC1480D9C700E966A5 /* ZSGame.m */; };
@@ -38,11 +43,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		843BEDEE149DC4E800D1D19B /* ZSIconNew57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ZSIconNew57.png; path = Resources/Images/ZSIconNew57.png; sourceTree = "<group>"; };
+		843BEDF0149DC4F100D1D19B /* ZSIconNew114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ZSIconNew114.png; path = Resources/Images/ZSIconNew114.png; sourceTree = "<group>"; };
+		843BEDF2149DC90E00D1D19B /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../Default.png; sourceTree = "<group>"; };
+		843BEDF4149DC91200D1D19B /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "../Default@2x.png"; sourceTree = "<group>"; };
+		843BEDF614A6DFE100D1D19B /* board.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = board.png; path = Resources/Images/board.png; sourceTree = "<group>"; };
+		843BEDF914A6E0F900D1D19B /* board@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "board@2x.png"; path = "Resources/Images/board@2x.png"; sourceTree = "<group>"; };
 		8449D9551481D77C003F6FB3 /* ZSGameAnswerOptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSGameAnswerOptionsViewController.h; sourceTree = "<group>"; };
 		8449D9561481D77D003F6FB3 /* ZSGameAnswerOptionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSGameAnswerOptionsViewController.m; sourceTree = "<group>"; };
 		8449D9581481E518003F6FB3 /* ZSGameAnswerOptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSGameAnswerOptionViewController.h; sourceTree = "<group>"; };
 		8449D9591481E518003F6FB3 /* ZSGameAnswerOptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSGameAnswerOptionViewController.m; sourceTree = "<group>"; };
-		84AC26C41480836600E966A5 /* board.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = board.png; sourceTree = "<group>"; };
 		84AC26C61480950F00E966A5 /* ZSGameBoardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSGameBoardViewController.h; sourceTree = "<group>"; };
 		84AC26C71480950F00E966A5 /* ZSGameBoardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSGameBoardViewController.m; sourceTree = "<group>"; };
 		84AC26CB1480986900E966A5 /* ZSGameBoardTileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSGameBoardTileViewController.h; sourceTree = "<group>"; };
@@ -131,7 +141,12 @@
 		84AC26C31480835600E966A5 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				84AC26C41480836600E966A5 /* board.png */,
+				843BEDF614A6DFE100D1D19B /* board.png */,
+				843BEDF914A6E0F900D1D19B /* board@2x.png */,
+				843BEDF2149DC90E00D1D19B /* Default.png */,
+				843BEDF4149DC91200D1D19B /* Default@2x.png */,
+				843BEDF0149DC4F100D1D19B /* ZSIconNew114.png */,
+				843BEDEE149DC4E800D1D19B /* ZSIconNew57.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -335,7 +350,12 @@
 			files = (
 				84D5501E147F1C4A00A7934E /* InfoPlist.strings in Resources */,
 				84D5505D147F227C00A7934E /* ZSMainMenu.xib in Resources */,
-				84AC26C51480836600E966A5 /* board.png in Resources */,
+				843BEDEF149DC4E800D1D19B /* ZSIconNew57.png in Resources */,
+				843BEDF1149DC4F100D1D19B /* ZSIconNew114.png in Resources */,
+				843BEDF3149DC90E00D1D19B /* Default.png in Resources */,
+				843BEDF5149DC91200D1D19B /* Default@2x.png in Resources */,
+				843BEDF814A6E0AC00D1D19B /* board.png in Resources */,
+				843BEDFA14A6E0F900D1D19B /* board@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -420,6 +440,59 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		843BEDCD149C8FE200D1D19B /* Ad Hoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Brent Traut (3J5X57PB42)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "E061C60A-E852-4BE3-A3BC-27645E2E9CBC";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "Ad Hoc";
+		};
+		843BEDCE149C8FE200D1D19B /* Ad Hoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ZenSudoku/ZenSudoku-Prefix.pch";
+				INFOPLIST_FILE = "ZenSudoku/ZenSudoku-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
+				WRAPPER_EXTENSION = app;
+			};
+			name = "Ad Hoc";
+		};
+		843BEDCF149C8FE200D1D19B /* Ad Hoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/ZenSudoku.app/ZenSudoku";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ZenSudokuLogicTests/ZenSudokuLogicTests-Prefix.pch";
+				INFOPLIST_FILE = "ZenSudokuLogicTests/ZenSudokuLogicTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = "Ad Hoc";
+		};
 		84D55049147F1C4B00A7934E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -442,7 +515,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				PROVISIONING_PROFILE = "17188AE0-57A8-413D-B243-0BDA7174A74F";
+				PROVISIONING_PROFILE = "E061C60A-E852-4BE3-A3BC-27645E2E9CBC";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -464,7 +537,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "17188AE0-57A8-413D-B243-0BDA7174A74F";
+				PROVISIONING_PROFILE = "E061C60A-E852-4BE3-A3BC-27645E2E9CBC";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -487,6 +560,10 @@
 		84D5504D147F1C4B00A7934E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					armv6,
+					armv7,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ZenSudoku/ZenSudoku-Prefix.pch";
 				INFOPLIST_FILE = "ZenSudoku/ZenSudoku-Info.plist";
@@ -539,6 +616,7 @@
 			buildConfigurations = (
 				84D55049147F1C4B00A7934E /* Debug */,
 				84D5504A147F1C4B00A7934E /* Release */,
+				843BEDCD149C8FE200D1D19B /* Ad Hoc */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -548,6 +626,7 @@
 			buildConfigurations = (
 				84D5504C147F1C4B00A7934E /* Debug */,
 				84D5504D147F1C4B00A7934E /* Release */,
+				843BEDCE149C8FE200D1D19B /* Ad Hoc */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -557,6 +636,7 @@
 			buildConfigurations = (
 				84EE86351494ADEA004C0A16 /* Debug */,
 				84EE86361494ADEA004C0A16 /* Release */,
+				843BEDCF149C8FE200D1D19B /* Ad Hoc */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

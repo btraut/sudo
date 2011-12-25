@@ -16,39 +16,37 @@ NSString * const kExceptionPuzzleHasMultipleSolutions = @"kExceptionPuzzleHasMul
 
 #pragma mark - Object Lifecycle
 
-- (ZSGameSolveResult)solveFastGameBoard:(ZSFastGameBoard *)gameBoard {
-	if (!_gameBoard || _gameBoard.size != gameBoard.size) {
+- (id)init {
+	return [self initWithSize:9];
+}
+
+- (id)initWithSize:(NSInteger)size {
+	self = [super init];
+	
+	if (self) {
 		// Create some game boards to store the answers.
-		_gameBoard = [[ZSFastGameBoard alloc] initWithSize:gameBoard.size];
-		_solvedGameBoard = [[ZSFastGameBoard alloc] initWithSize:gameBoard.size];
+		_gameBoard = [[ZSFastGameBoard alloc] initWithSize:size];
+		_solvedGameBoard = [[ZSFastGameBoard alloc] initWithSize:size];
 	}
 	
+	return self;
+}
+
+- (void)copyGroupMapFromFastGameBoard:(ZSFastGameBoard *)gameBoard {
 	// Set all the group ids from the game board.
 	[_gameBoard copyGroupMapFromFastGameBoard:gameBoard];
-	[_solvedGameBoard copyGroupMapFromFastGameBoard:gameBoard];
-	
+	// [_solvedGameBoard copyGroupMapFromFastGameBoard:gameBoard];
+}
+
+- (void)copyGuessesFromFastGameBoard:(ZSFastGameBoard *)gameBoard {
 	// Copy the game board's answers into our guesses.
 	[_gameBoard copyGuessesFromFastGameBoard:gameBoard];
-	
-	// Copy the guesses from the game board and add our own pencils.
 	[_gameBoard addAutoPencils];
-	
-//	[_gameBoard print9x9Grid];
-	
-	// Solve the puzzle.
-	ZSGameSolveResult solveResults = [self solve];
-	
-//	[_solvedGameBoard print9x9Grid];
-	
-	if (solveResults != ZSGameSolveResultSucceeded) {
-		return solveResults;
-	}
-	
+}
+
+- (void)copySolutionToFastGameBoard:(ZSFastGameBoard *)gameBoard {
 	// Save the solution back into the game board's answers.
 	[gameBoard copyGuessesFromFastGameBoard:_solvedGameBoard];
-	
-	// All looks good at this point.
-	return ZSGameSolveResultSucceeded;
 }
 
 #pragma mark - Solving
@@ -72,17 +70,19 @@ NSString * const kExceptionPuzzleHasMultipleSolutions = @"kExceptionPuzzleHasMul
 		
 		if (solvedOnlyChoice) {
 			totalUnsolved -= solvedOnlyChoice;
+//			NSLog(@"solveOnlyChoice solved: %i", solvedOnlyChoice);
 			continue;
 		}
 		
-//		// Single Possibility
-//		NSInteger solvedSinglePossibility = [self solveSinglePossibility];
-//		
-//		if (solvedSinglePossibility) {
-//			totalUnsolved -= solvedSinglePossibility;
-//			continue;
-//		}
-//		
+		// Single Possibility
+		NSInteger solvedSinglePossibility = [self solveSinglePossibility];
+		
+		if (solvedSinglePossibility) {
+			totalUnsolved -= solvedSinglePossibility;
+//			NSLog(@"solveSinglePossibility solved: %i", solvedSinglePossibility);
+			continue;
+		}
+		
 //		// Hidden Sub-Groups
 //		NSInteger eliminatedPencilsHiddenSubGroup = [self eliminatePencilsHiddenSubGroup];
 //		
@@ -98,6 +98,7 @@ NSString * const kExceptionPuzzleHasMultipleSolutions = @"kExceptionPuzzleHasMul
 	if (totalUnsolved) {
 		// Brute Force: Last change to solve the puzzle!
 		ZSGameSolveResult bruteForceResult = [self solveBruteForce];
+//		NSLog(@"solveBruteForce solved: %i", totalUnsolved);
 		totalUnsolved = 0;
 		
 		// If the brute force failed, return the failure.
@@ -131,6 +132,7 @@ NSString * const kExceptionPuzzleHasMultipleSolutions = @"kExceptionPuzzleHasMul
 					if (_gameBoard.grid[row][col].pencils[guess - 1]) {
 						[_gameBoard setGuess:guess forTileAtRow:row col:col];
 						[_gameBoard clearInfluencedPencilsForTileAtRow:row col:col];
+						++totalSolved;
 						break;
 					}
 				}

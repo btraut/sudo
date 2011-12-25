@@ -10,10 +10,6 @@
 
 @class ZSFastGameSolver;
 
-@interface ZenSudokuLogicTests : SenTestCase {
-	@private
-	
-	ZSFastGameSolver *_solver;
-}
+@interface ZenSudokuLogicTests : SenTestCase
 
 @end

@@ -8,96 +8,235 @@
 
 #import "ZenSudokuLogicTests.h"
 
-#import "ZSGame.h"
+#import "ZSFastGameBoard.h"
 #import "ZSFastGameSolver.h"
-#import "ZSGameController.h"
-
-NSInteger standard9x9GroupMap[9][9] = {
-	{0, 0, 0, 1, 1, 1, 2, 2, 2},
-	{0, 0, 0, 1, 1, 1, 2, 2, 2},
-	{0, 0, 0, 1, 1, 1, 2, 2, 2},
-	{3, 3, 3, 4, 4, 4, 5, 5, 5},
-	{3, 3, 3, 4, 4, 4, 5, 5, 5},
-	{3, 3, 3, 4, 4, 4, 5, 5, 5},
-	{6, 6, 6, 7, 7, 7, 8, 8, 8},
-	{6, 6, 6, 7, 7, 7, 8, 8, 8},
-	{6, 6, 6, 7, 7, 7, 8, 8, 8},
-};
 
 @implementation ZenSudokuLogicTests
 
 - (void)setUp {
     [super setUp];
-    
-	// Create a game solver.
-    _solver = [[ZSFastGameSolver alloc] init];
 }
 
 - (void)tearDown {
-    // Tear-down code here.
-    
     [super tearDown];
 }
 
+# pragma mark - Test Fast Game Boards
+
+- (void)testSettingGuessesFromString {
+	ZSFastGameBoard *gameBoard = [[ZSFastGameBoard alloc] initWithSize:9];
+	[gameBoard copyGroupMapFromString:@"000111222 000111222 000111222 333444555 333444555 333444555 666777888 666777888 666777888"];
+	[gameBoard copyGuessesFromString:@"....8..1. ..81..2.3 ...359... ..5.7.... 4...1.... .....253. ......4.. .9...6.28 ..6...9.5"];
+	
+	STAssertTrue(gameBoard.grid[0][4].guess == 8, nil);
+	STAssertTrue(gameBoard.grid[0][7].guess == 1, nil);
+	STAssertTrue(gameBoard.grid[3][4].guess == 7, nil);
+	STAssertTrue(gameBoard.grid[6][6].guess == 4, nil);
+	STAssertTrue(gameBoard.grid[0][0].guess == 0, nil);
+	STAssertTrue(gameBoard.grid[8][7].guess == 0, nil);
+}
+
+- (void)testAutoPencil {
+	ZSFastGameBoard *gameBoard = [[ZSFastGameBoard alloc] initWithSize:9];
+	[gameBoard copyGroupMapFromString:@"000111222 000111222 000111222 333444555 333444555 333444555 666777888 666777888 666777888"];
+	[gameBoard copyGuessesFromString:@"....8..1. ..81..2.3 ...359... ..5.7.... 4...1.... .....253. ......4.. .9...6.28 ..6...9.5"];
+	
+	[gameBoard addAutoPencils];
+	
+	// Check tile 8-7.
+	STAssertTrue(gameBoard.grid[8][7].guess == 0, nil);
+	
+	STAssertTrue(gameBoard.grid[8][7].totalPencils == 1, nil);
+	
+	STAssertFalse(gameBoard.grid[8][7].pencils[0], nil);
+	STAssertFalse(gameBoard.grid[8][7].pencils[5], nil);
+	STAssertTrue(gameBoard.grid[8][7].pencils[6], nil);
+	STAssertFalse(gameBoard.grid[8][7].pencils[7], nil);
+	
+	// Check tile 8-5.
+	STAssertTrue(gameBoard.grid[8][5].guess == 0, nil);
+	
+	STAssertTrue(gameBoard.grid[8][5].totalPencils == 5, nil);
+	
+	STAssertTrue(gameBoard.grid[8][5].pencils[0], nil);
+	STAssertTrue(gameBoard.grid[8][5].pencils[2], nil);
+	STAssertTrue(gameBoard.grid[8][5].pencils[3], nil);
+	STAssertTrue(gameBoard.grid[8][5].pencils[6], nil);
+	STAssertTrue(gameBoard.grid[8][5].pencils[7], nil);
+	STAssertFalse(gameBoard.grid[8][5].pencils[8], nil);
+}
+
+- (void)testGuessValidation {
+	ZSFastGameBoard *gameBoard = [[ZSFastGameBoard alloc] initWithSize:9];
+	[gameBoard copyGroupMapFromString:@"000111222 000111222 000111222 333444555 333444555 333444555 666777888 666777888 666777888"];
+	[gameBoard copyGuessesFromString:@"....8..1. ..81..2.3 ...359... ..5.7.... 4...1.... .....253. ......4.. .9...6.28 ..6...9.5"];
+	
+	STAssertTrue([gameBoard isGuess:7 validInRow:8], nil);
+	STAssertTrue([gameBoard isGuess:7 validInCol:7], nil);
+	STAssertTrue([gameBoard isGuess:7 validInGroup:8], nil);
+	STAssertTrue([gameBoard isGuess:7 validInRow:8 col:7], nil);
+	
+	STAssertTrue([gameBoard isGuess:4 validInRow:8], nil);
+	STAssertTrue([gameBoard isGuess:4 validInCol:7], nil);
+	STAssertFalse([gameBoard isGuess:4 validInGroup:8], nil);
+	STAssertFalse([gameBoard isGuess:4 validInRow:8 col:7], nil);
+	
+	STAssertFalse([gameBoard isGuess:3 validInRow:2], nil);
+	STAssertFalse([gameBoard isGuess:3 validInCol:3], nil);
+	STAssertFalse([gameBoard isGuess:3 validInGroup:1], nil);
+	STAssertFalse([gameBoard isGuess:3 validInRow:2 col:3], nil);
+}
+
+# pragma mark - Test Solver
+
+- (void)testSingleSolution {
+	ZSFastGameBoard *gameBoard = [[ZSFastGameBoard alloc] initWithSize:9];
+	[gameBoard copyGroupMapFromString:@"000111222 000111222 000111222 333444555 333444555 333444555 666777888 666777888 666777888"];
+	[gameBoard copyGuessesFromString:@"...7..4.1 9.1..5.3. ....8.... .......7. .3....2.8 7...54... .16.7.... .24.1..5. ...6...2."];
+	
+	ZSFastGameSolver *solver = [[ZSFastGameSolver alloc] initWithSize:gameBoard.size];
+	[solver copyGroupMapFromFastGameBoard:gameBoard];
+	[solver copyGuessesFromFastGameBoard:gameBoard];
+	
+	ZSGameSolveResult result = [solver solve];
+	
+	STAssertTrue(result == ZSGameSolveResultSucceeded, nil);
+	
+	[solver copySolutionToFastGameBoard:gameBoard];
+	
+	NSLog(@"Answer for 4:5 = %i", gameBoard.grid[4][5].guess);
+	
+	/*
+	 258739461
+	 971465832
+	 463281597
+	 149826375
+	 635197248
+	 782354619
+	 316572984
+	 824913756
+	 597648123
+	*/
+}
+
 - (void)testNoSolutions {
-	NSInteger **groupMapArray = [ZSGameController alloc2DIntGridWithSize:9];
+	ZSFastGameBoard *gameBoard = [[ZSFastGameBoard alloc] initWithSize:9];
+	[gameBoard copyGroupMapFromString:@"000111222 000111222 000111222 333444555 333444555 333444555 666777888 666777888 666777888"];
+	[gameBoard copyGuessesFromString:@"123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 12345678."];
 	
-	for (NSInteger row = 0; row < 9; ++row) {
-		for (NSInteger col = 0; col < 9; ++col) {
-			groupMapArray[row][col] = standard9x9GroupMap[row][col];
-		}
-	}
+	ZSFastGameSolver *solver = [[ZSFastGameSolver alloc] initWithSize:gameBoard.size];
+	[solver copyGroupMapFromFastGameBoard:gameBoard];
+	[solver copyGuessesFromFastGameBoard:gameBoard];
 	
-	ZSGame *newGame = [[ZSGame alloc] initWithSize:9];
-	[newGame applyGroupMapArray:groupMapArray];
-	[newGame applyAnswersString:@"123456789   123456789   123456789   123456789   123456789   123456789   123456789   123456789   12345678."];
-	
-	ZSGameSolveResult result = [_solver solveGame:newGame];
+	ZSGameSolveResult result = [solver solve];
 	
 	STAssertTrue(result == ZSGameSolveResultFailedNoSolution, nil);
-	
-	[ZSGameController free2DIntGrid:groupMapArray withSize:9];
 }
 
 - (void)testMultipleSolutions {
-	NSInteger **groupMapArray = [ZSGameController alloc2DIntGridWithSize:9];
+	ZSFastGameBoard *gameBoard = [[ZSFastGameBoard alloc] initWithSize:9];
+	[gameBoard copyGroupMapFromString:@"000111222 000111222 000111222 333444555 333444555 333444555 666777888 666777888 666777888"];
+	[gameBoard copyGuessesFromString:@"......... ......... ......... ......... ......... ......... ......... ......... ........."];
 	
-	for (NSInteger row = 0; row < 9; ++row) {
-		for (NSInteger col = 0; col < 9; ++col) {
-			groupMapArray[row][col] = standard9x9GroupMap[row][col];
-		}
-	}
+	ZSFastGameSolver *solver = [[ZSFastGameSolver alloc] initWithSize:gameBoard.size];
+	[solver copyGroupMapFromFastGameBoard:gameBoard];
+	[solver copyGuessesFromFastGameBoard:gameBoard];
 	
-	ZSGame *newGame = [[ZSGame alloc] initWithSize:9];
-	[newGame applyGroupMapArray:groupMapArray];
-	[newGame applyAnswersString:@".........   .........   .........   .........   .........   .........   .........   .........   ........."];
-	
-	ZSGameSolveResult result = [_solver solveGame:newGame];
+	ZSGameSolveResult result = [solver solve];
 	
 	STAssertTrue(result == ZSGameSolveResultFailedMultipleSolutions, nil);
-	
-	[ZSGameController free2DIntGrid:groupMapArray withSize:9];
 }
 
 - (void)testMultipleSolutions2 {
-	NSInteger **groupMapArray = [ZSGameController alloc2DIntGridWithSize:9];
+	ZSFastGameBoard *gameBoard = [[ZSFastGameBoard alloc] initWithSize:9];
+	[gameBoard copyGroupMapFromString:@"000111222 000111222 000111222 333444555 333444555 333444555 666777888 666777888 666777888"];
+	[gameBoard copyGuessesFromString:@"347...291 .1.....3. ..2.....8 2...4.8.. .8513.... ....7.... 5287.9... ......... ...68.9.2"];
 	
-	for (NSInteger row = 0; row < 9; ++row) {
-		for (NSInteger col = 0; col < 9; ++col) {
-			groupMapArray[row][col] = standard9x9GroupMap[row][col];
-		}
-	}
+	ZSFastGameSolver *solver = [[ZSFastGameSolver alloc] initWithSize:gameBoard.size];
+	[solver copyGroupMapFromFastGameBoard:gameBoard];
+	[solver copyGuessesFromFastGameBoard:gameBoard];
 	
-	ZSGame *newGame = [[ZSGame alloc] initWithSize:9];
-	[newGame applyGroupMapArray:groupMapArray];
-	[newGame applyAnswersString:@"347...291.1.....3...2.....82...4.8...8513........7....5287.9...............68.9.2"];
-	
-	ZSGameSolveResult result = [_solver solveGame:newGame];
+	ZSGameSolveResult result = [solver solve];
 	
 	STAssertTrue(result == ZSGameSolveResultFailedMultipleSolutions, nil);
+}
+
+- (void)testEasySolutionOrder {
+	ZSFastGameBoard *gameBoard = [[ZSFastGameBoard alloc] initWithSize:9];
+	[gameBoard copyGroupMapFromString:@"000111222 000111222 000111222 333444555 333444555 333444555 666777888 666777888 666777888"];
+	[gameBoard copyGuessesFromString:@"....8..1. ..81..2.3 ...359... ..5.7.... 4...1.... .....253. ......4.. .9...6.28 ..6...9.5"];
 	
-	[ZSGameController free2DIntGrid:groupMapArray withSize:9];
+	ZSFastGameSolver *solver = [[ZSFastGameSolver alloc] initWithSize:gameBoard.size];
+	[solver copyGroupMapFromFastGameBoard:gameBoard];
+	[solver copyGuessesFromFastGameBoard:gameBoard];
 	
+	NSInteger solved;
+	
+	// Solve 7 in 8-7.
+	solved = [solver solveOnlyChoice];
+	STAssertTrue(solved == 1, nil);
+	
+	// Solve 6 in 6-7.
+	// Solve 1 in 6-8.
+	// Solve 3 in 7-6.
+	solved = [solver solveOnlyChoice];
+	STAssertTrue(solved == 3, nil);
+	
+	// Solve 4 in 7-4.
+	solved = [solver solveOnlyChoice];
+	STAssertTrue(solved == 1, nil);
+	
+	// Solve 6 in 1-4.
+	// Solve 9 in 5-4.
+	solved = [solver solveOnlyChoice];
+	STAssertTrue(solved == 2, nil);
+	
+	// Nothing left to solve.
+	solved = [solver solveOnlyChoice];
+	STAssertTrue(solved == 0, nil);
+}
+
+- (void)testSinglePossibility {
+	ZSFastGameBoard *gameBoard = [[ZSFastGameBoard alloc] initWithSize:9];
+	[gameBoard copyGroupMapFromString:@"000111222 000111222 000111222 333444555 333444555 333444555 666777888 666777888 666777888"];
+	[gameBoard copyGuessesFromString:@"....8..1. ..816.2.3 ...359... ..5.7.... 4...1.... ....9253. ......461 .9..46328 ..6..1975"];
+	
+	ZSFastGameSolver *solver = [[ZSFastGameSolver alloc] initWithSize:gameBoard.size];
+	[solver copyGroupMapFromFastGameBoard:gameBoard];
+	[solver copyGuessesFromFastGameBoard:gameBoard];
+	
+	NSInteger solved;
+	
+	// Solve 7 in 8-7.
+	solved = [solver solveSinglePossibility];
+	STAssertTrue(solved == 6, nil);
+}
+
+- (void)testBruteForce {
+	ZSFastGameBoard *gameBoard = [[ZSFastGameBoard alloc] initWithSize:9];
+	[gameBoard copyGroupMapFromString:@"000111222 000111222 000111222 333444555 333444555 333444555 666777888 666777888 666777888"];
+	[gameBoard copyGuessesFromString:@"....8..1. ..81..2.3 ...359... ..5.7.... 4...1.... .....253. ......4.. .9...6.28 ..6...9.5"];
+	
+	ZSFastGameSolver *solver = [[ZSFastGameSolver alloc] initWithSize:gameBoard.size];
+	[solver copyGroupMapFromFastGameBoard:gameBoard];
+	[solver copyGuessesFromFastGameBoard:gameBoard];
+	
+	ZSGameSolveResult result = [solver solveBruteForce];
+	
+	STAssertTrue(result == ZSGameSolveResultSucceeded, nil);
+	
+	[solver copySolutionToFastGameBoard:gameBoard];
+	
+	STAssertTrue(gameBoard.grid[8][5].guess == 1, nil);
+	STAssertTrue(gameBoard.grid[8][6].guess == 9, nil);
+	STAssertTrue(gameBoard.grid[8][7].guess == 7, nil);
+	STAssertTrue(gameBoard.grid[8][8].guess == 5, nil);
+	
+	for (NSInteger row = 0; row < gameBoard.size; ++row) {
+		for (NSInteger col = 0; col < gameBoard.size; ++col) {
+			STAssertTrue(gameBoard.grid[row][col].guess, nil);
+		}
+	}
 }
 
 @end
