@@ -100,11 +100,21 @@
 	
 	ZSGameSolveResult result = [solver solve];
 	
+	// Make sure the solver worked properly.
 	STAssertTrue(result == ZSGameSolveResultSucceeded, nil);
 	
 	[solver copySolutionToFastGameBoard:gameBoard];
 	
-	NSLog(@"Answer for 4:5 = %i", gameBoard.grid[4][5].guess);
+	// Make sure the full top row is correct.
+	STAssertTrue(gameBoard.grid[0][0].guess == 2, nil);
+	STAssertTrue(gameBoard.grid[0][1].guess == 5, nil);
+	STAssertTrue(gameBoard.grid[0][2].guess == 8, nil);
+	STAssertTrue(gameBoard.grid[0][3].guess == 7, nil);
+	STAssertTrue(gameBoard.grid[0][4].guess == 3, nil);
+	STAssertTrue(gameBoard.grid[0][5].guess == 9, nil);
+	STAssertTrue(gameBoard.grid[0][6].guess == 4, nil);
+	STAssertTrue(gameBoard.grid[0][7].guess == 6, nil);
+	STAssertTrue(gameBoard.grid[0][8].guess == 1, nil);
 	
 	/*
 	 258739461

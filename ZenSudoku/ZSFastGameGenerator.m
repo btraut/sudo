@@ -71,7 +71,10 @@
 	
 	// Do one last copy and solve in the scratch board.
 	[gameSolver copyGuessesFromFastGameBoard:_reductionGameBoard];
-	[gameSolver solve];
+	
+	ZSGameSolveResult finalSolveResults = [gameSolver solve];
+	assert(finalSolveResults == ZSGameSolveResultSucceeded);
+	
 	[gameSolver copySolutionToFastGameBoard:_scratchGameBoard];
 	
 	// Save the puzzle data into the new game.
