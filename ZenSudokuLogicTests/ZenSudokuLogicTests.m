@@ -313,6 +313,72 @@
 	STAssertTrue(solverGameBoard.grid[0][4].pencils[6], nil);
 }
 
+- (void)testEliminatingPencilsViaNakedPairs {
+	ZSFastGameBoard *gameBoard = [[ZSFastGameBoard alloc] initWithSize:9];
+	[gameBoard copyGroupMapFromString:@"000111222 000111222 000111222 333444555 333444555 333444555 666777888 666777888 666777888"];
+	[gameBoard copyGuessesFromString:@"4..27.6.. 798156234 .2.84...7 237468951 849531726 561792843 .82.15479 .7..243.. ..4.87..2"];
+	
+	ZSFastGameSolver *solver = [[ZSFastGameSolver alloc] initWithSize:gameBoard.size];
+	[solver copyGroupMapFromFastGameBoard:gameBoard];
+	[solver copyGuessesFromFastGameBoard:gameBoard];
+	
+	ZSFastGameBoard *solverGameBoard = [solver getGameBoard];
+	
+	STAssertTrue(solverGameBoard.grid[8][0].pencils[0], nil);
+	STAssertTrue(solverGameBoard.grid[8][0].pencils[2], nil);
+	STAssertTrue(solverGameBoard.grid[8][0].pencils[5], nil);
+	STAssertTrue(solverGameBoard.grid[8][0].pencils[8], nil);
+	
+	STAssertTrue(solverGameBoard.grid[8][7].pencils[0], nil);
+	STAssertTrue(solverGameBoard.grid[8][7].pencils[5], nil);
+	
+	NSInteger totalEliminatedPencils = [solver eliminatePencilsNakedSubgroupForSize:2];
+	
+	STAssertEquals(totalEliminatedPencils, 2, nil);
+	
+	STAssertFalse(solverGameBoard.grid[8][0].pencils[0], nil);
+	STAssertTrue(solverGameBoard.grid[8][0].pencils[2], nil);
+	STAssertTrue(solverGameBoard.grid[8][0].pencils[5], nil);
+	STAssertTrue(solverGameBoard.grid[8][0].pencils[8], nil);
+	
+	STAssertFalse(solverGameBoard.grid[8][7].pencils[0], nil);
+	STAssertTrue(solverGameBoard.grid[8][7].pencils[5], nil);
+}
+
+- (void)testEliminatingPencilsViaNakedTriplets {
+	ZSFastGameBoard *gameBoard = [[ZSFastGameBoard alloc] initWithSize:9];
+	[gameBoard copyGroupMapFromString:@"000111222 000111222 000111222 333444555 333444555 333444555 666777888 666777888 666777888"];
+	[gameBoard copyGuessesFromString:@"6..8.2735 7.235694. 3..4.7.62 1..975.24 2..183.79 .79624..3 4..56.2.7 .6724.3.. 92.7384.6"];
+	
+	ZSFastGameSolver *solver = [[ZSFastGameSolver alloc] initWithSize:gameBoard.size];
+	[solver copyGroupMapFromFastGameBoard:gameBoard];
+	[solver copyGuessesFromFastGameBoard:gameBoard];
+	
+	ZSFastGameBoard *solverGameBoard = [solver getGameBoard];
+	
+	STAssertTrue(solverGameBoard.grid[0][1].pencils[0], nil);
+	STAssertTrue(solverGameBoard.grid[0][1].pencils[3], nil);
+	STAssertTrue(solverGameBoard.grid[0][1].pencils[8], nil);
+	
+	STAssertTrue(solverGameBoard.grid[2][1].pencils[0], nil);
+	STAssertTrue(solverGameBoard.grid[2][1].pencils[4], nil);
+	STAssertTrue(solverGameBoard.grid[2][1].pencils[7], nil);
+	STAssertTrue(solverGameBoard.grid[2][1].pencils[8], nil);
+	
+	NSInteger totalEliminatedPencils = [solver eliminatePencilsNakedSubgroupForSize:3];
+	
+	STAssertEquals(totalEliminatedPencils, 3, nil);
+	
+	STAssertFalse(solverGameBoard.grid[0][1].pencils[0], nil);
+	STAssertTrue(solverGameBoard.grid[0][1].pencils[3], nil);
+	STAssertTrue(solverGameBoard.grid[0][1].pencils[8], nil);
+	
+	STAssertFalse(solverGameBoard.grid[2][1].pencils[0], nil);
+	STAssertTrue(solverGameBoard.grid[2][1].pencils[4], nil);
+	STAssertFalse(solverGameBoard.grid[2][1].pencils[7], nil);
+	STAssertTrue(solverGameBoard.grid[2][1].pencils[8], nil);
+}
+
 - (void)testCombinationIterator {
 	ZSFastGameSolver *solver = [[ZSFastGameSolver alloc] initWithSize:9];
 	

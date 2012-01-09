@@ -41,6 +41,7 @@ typedef enum {
 - (NSInteger)solveOnlyChoice;
 - (NSInteger)solveSinglePossibility;
 - (NSInteger)eliminatePencilsHiddenSubgroupForSize:(NSInteger)size;
+- (NSInteger)eliminatePencilsNakedSubgroupForSize:(NSInteger)size;
 
 // Logic Technique Helpers
 - (NSInteger)initPencilMap:(NSInteger *)pencilMap forTileSet:(ZSGameTileStub **)set;

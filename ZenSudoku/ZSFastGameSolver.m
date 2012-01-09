@@ -99,6 +99,14 @@ typedef struct {
 			continue;
 		}
 		
+		// Naked Pairs
+		pencilsEliminated = [self eliminatePencilsNakedSubgroupForSize:2];
+		
+		if (pencilsEliminated) {
+			// NSLog(@"eliminatePencilsNakedSubgroupForSize:2 pencils eliminated: %i", pencilsEliminated);
+			continue;
+		}
+		
 		// Hidden Pairs
 		pencilsEliminated = [self eliminatePencilsHiddenSubgroupForSize:2];
 		
@@ -107,11 +115,27 @@ typedef struct {
 			continue;
 		}
 		
+		// Naked Triplets
+		pencilsEliminated = [self eliminatePencilsNakedSubgroupForSize:3];
+		
+		if (pencilsEliminated) {
+			// NSLog(@"eliminatePencilsNakedSubgroupForSize:3 pencils eliminated: %i", pencilsEliminated);
+			continue;
+		}
+		
 		// Hidden Triplets
 		pencilsEliminated = [self eliminatePencilsHiddenSubgroupForSize:3];
 		
 		if (pencilsEliminated) {
 			// NSLog(@"eliminatePencilsHiddenSubgroupForSize:3 pencils eliminated: %i", pencilsEliminated);
+			continue;
+		}
+		
+		// Naked Quads
+		pencilsEliminated = [self eliminatePencilsNakedSubgroupForSize:4];
+		
+		if (pencilsEliminated) {
+			// NSLog(@"eliminatePencilsNakedSubgroupForSize:4 pencils eliminated: %i", pencilsEliminated);
 			continue;
 		}
 		
@@ -279,6 +303,113 @@ typedef struct {
 						
 						if (subgroupMatches[subgroupMatchIndex]->pencils[pencilToEliminate]) {
 							[_gameBoard setPencil:NO forPencilNumber:(pencilToEliminate + 1) forTileAtRow:subgroupMatches[subgroupMatchIndex]->row col:subgroupMatches[subgroupMatchIndex]->col];
+							++totalPencilsEliminated;
+						}
+					}
+				}
+			}
+		} while ([self setNextCombinationInArray:combinationMap ofLength:subgroupSize totalPencils:totalPencilsInSet]);
+	}
+	
+	free(subgroupMatches);
+	free(combinationMap);
+	free(pencilMap);
+	
+	return totalPencilsEliminated;
+}
+
+- (NSInteger)eliminatePencilsNakedSubgroupForSize:(NSInteger)subgroupSize {
+	NSInteger totalPencilsEliminated = 0;
+	
+	// Allocate memory used in searching for hidden subgroups. We allocate out of the main loop because
+	// allocation is expensive and all iterations of the loop need roughly the same size arrays.
+	NSInteger *pencilMap = malloc(_gameBoard.size * sizeof(NSInteger));
+	NSInteger *combinationMap = malloc(subgroupSize * sizeof(NSInteger));
+	ZSGameTileStub **subgroupMatches = malloc(_gameBoard.size * sizeof(ZSGameTileStub *));
+	
+	// Iterate over each tile set.
+	for (NSInteger setIndex = 0, totalSets = 3 * _gameBoard.size; setIndex < totalSets; ++setIndex) {
+		// Cache the current set.
+		ZSGameTileStub **currentSet = _gameBoard.allSets[setIndex];
+		
+		// Initialize the pencil map. The compinations generated later will be indexes on this array.
+		NSInteger totalPencilsInSet = [self initPencilMap:pencilMap forTileSet:currentSet];
+		
+		// If there are fewer (or equal) pencil marks than the subgroup size, we can quit here.
+		if (totalPencilsInSet <= subgroupSize) {
+			continue;
+		}
+		
+		// Initialize the combination list.
+		[self setFirstCombinationInArray:combinationMap ofLength:subgroupSize totalPencils:totalPencilsInSet];
+		
+		// Iterate over each combination of pencils.
+		do {
+			// Keep track of how many tiles match all pencils in the current combination.
+			NSInteger totalTilesWithMatchingPencilsInCombination = 0;
+			
+			// Iterate over each tile in the group.
+			for (NSInteger tileIndex = 0; tileIndex < _gameBoard.size; ++tileIndex) {
+				// Skip solved tiles.
+				if (currentSet[tileIndex]->guess) {
+					continue;
+				}
+				
+				// Make sure the tile has all of the pencils.
+				BOOL tileHasOnlyMatchingPencils = YES;
+				
+				// Check all pencils on the current tile.
+				for (NSInteger pencilToTest = 0; pencilToTest < _gameBoard.size; ++pencilToTest) {
+					// If the tile has the current pencil, make sure it's not one of the possible naked subgroup pencils.
+					if (currentSet[tileIndex]->pencils[pencilToTest]) {
+						BOOL pencilToTestMatchesSubgroupTarget = NO;
+						
+						for (NSInteger currentCombinationIndex = 0; currentCombinationIndex < subgroupSize; ++currentCombinationIndex) {
+							if (pencilToTest == pencilMap[combinationMap[currentCombinationIndex]]) {
+								pencilToTestMatchesSubgroupTarget = YES;
+								break;
+							}
+						}
+						
+						// If the pencil is one of the naked subgroup pencils, it's okay to continue. Else, this tile cannot be part of a naked subgroup.
+						if (pencilToTestMatchesSubgroupTarget) {
+							continue;
+						} else {
+							tileHasOnlyMatchingPencils = NO;
+							break;
+						}
+					}
+				}
+				
+				// If this tile only has pencils that match the possible naked subgroup, save a pointer to it for later.
+				if (tileHasOnlyMatchingPencils) {
+					subgroupMatches[totalTilesWithMatchingPencilsInCombination] = currentSet[tileIndex];
+					++totalTilesWithMatchingPencilsInCombination;
+				}
+			}
+			
+			// If the possible subgroup match count is less than or equal to the subgroup size, we've found a valid subgroup.
+			if (totalTilesWithMatchingPencilsInCombination && totalTilesWithMatchingPencilsInCombination == subgroupSize) {
+				// Iterate over all the tiles in the set (except for those in the subgroup) and eliminate all pencil marks that aren't in the pencil map.
+				for (NSInteger setIndex = 0; setIndex < _gameBoard.size; ++setIndex) {
+					BOOL tileIsInNakedSubgroup = NO;
+					
+					for (NSInteger subgroupMatchIndex = 0; subgroupMatchIndex < totalTilesWithMatchingPencilsInCombination; ++subgroupMatchIndex) {
+						if (subgroupMatches[subgroupMatchIndex] == currentSet[setIndex]) {
+							tileIsInNakedSubgroup = YES;
+							break;
+						}
+					}
+					
+					if (tileIsInNakedSubgroup) {
+						continue;
+					}
+					
+					for (NSInteger currentCombinationIndex = 0; currentCombinationIndex < subgroupSize; ++currentCombinationIndex) {
+						NSInteger pencilToEliminate = pencilMap[combinationMap[currentCombinationIndex]];
+						
+						if (currentSet[setIndex]->pencils[pencilToEliminate]) {
+							[_gameBoard setPencil:NO forPencilNumber:(pencilToEliminate + 1) forTileAtRow:currentSet[setIndex]->row col:currentSet[setIndex]->col];
 							++totalPencilsEliminated;
 						}
 					}
