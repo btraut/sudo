@@ -12,6 +12,11 @@
 NSString * const kExceptionPuzzleHasNoSolution = @"kExceptionPuzzleHasNoSolution";
 NSString * const kExceptionPuzzleHasMultipleSolutions = @"kExceptionPuzzleHasMultipleSolutions";
 
+typedef struct {
+	NSInteger size;
+	NSInteger *entries;
+} ZSNumberSet;
+
 @implementation ZSFastGameSolver
 
 #pragma mark - Object Lifecycle
@@ -49,6 +54,14 @@ NSString * const kExceptionPuzzleHasMultipleSolutions = @"kExceptionPuzzleHasMul
 	[gameBoard copyGuessesFromFastGameBoard:_solvedGameBoard];
 }
 
+- (ZSFastGameBoard *)getGameBoard {
+	return _gameBoard;
+}
+
+- (ZSFastGameBoard *)getSolvedGameBoard {
+	return _solvedGameBoard;
+}
+
 #pragma mark - Solving
 
 - (ZSGameSolveResult)solve {
@@ -63,32 +76,44 @@ NSString * const kExceptionPuzzleHasMultipleSolutions = @"kExceptionPuzzleHasMul
 		}
 	}
 	
+	NSInteger solved;
+	NSInteger pencilsEliminated;
+	
 	// Start the solve loop.
 	while (totalUnsolved) {
 		// Only Choice
-		NSInteger solvedOnlyChoice = [self solveOnlyChoice];
+		solved = [self solveOnlyChoice];
 		
-		if (solvedOnlyChoice) {
-			totalUnsolved -= solvedOnlyChoice;
-//			NSLog(@"solveOnlyChoice solved: %i", solvedOnlyChoice);
+		if (solved) {
+			totalUnsolved -= solved;
+			// NSLog(@"solveOnlyChoice solved: %i", solved);
 			continue;
 		}
 		
 		// Single Possibility
-		NSInteger solvedSinglePossibility = [self solveSinglePossibility];
+		solved = [self solveSinglePossibility];
 		
-		if (solvedSinglePossibility) {
-			totalUnsolved -= solvedSinglePossibility;
-//			NSLog(@"solveSinglePossibility solved: %i", solvedSinglePossibility);
+		if (solved) {
+			totalUnsolved -= solved;
+			// NSLog(@"solveSinglePossibility solved: %i", solved);
 			continue;
 		}
 		
-//		// Hidden Sub-Groups
-//		NSInteger eliminatedPencilsHiddenSubGroup = [self eliminatePencilsHiddenSubGroup];
-//		
-//		if (eliminatedPencilsHiddenSubGroup) {
-//			continue;
-//		}
+		// Hidden Pairs
+		pencilsEliminated = [self eliminatePencilsHiddenSubgroupForSize:2];
+		
+		if (pencilsEliminated) {
+			// NSLog(@"eliminatePencilsHiddenSubgroupForSize:2 pencils eliminated: %i", pencilsEliminated);
+			continue;
+		}
+		
+		// Hidden Triplets
+		pencilsEliminated = [self eliminatePencilsHiddenSubgroupForSize:2];
+		
+		if (pencilsEliminated) {
+			// NSLog(@"eliminatePencilsHiddenSubgroupForSize:3 pencils eliminated: %i", pencilsEliminated);
+			continue;
+		}
 		
 		// We couldn't use logic to solve the puzzle. Guess we'll have to break and brute force.
 		break;
@@ -98,7 +123,7 @@ NSString * const kExceptionPuzzleHasMultipleSolutions = @"kExceptionPuzzleHasMul
 	if (totalUnsolved) {
 		// Brute Force: Last change to solve the puzzle!
 		ZSGameSolveResult bruteForceResult = [self solveBruteForce];
-//		NSLog(@"solveBruteForce solved: %i", totalUnsolved);
+		// NSLog(@"solveBruteForce solved: %i", totalUnsolved);
 		totalUnsolved = 0;
 		
 		// If the brute force failed, return the failure.
@@ -112,7 +137,9 @@ NSString * const kExceptionPuzzleHasMultipleSolutions = @"kExceptionPuzzleHasMul
 	
 	// All looks good at this point.
 	return ZSGameSolveResultSucceeded;
-}
+;}
+
+#pragma mark - Logic Techniques
 
 - (NSInteger)solveOnlyChoice {
 	NSInteger totalSolved = 0;
@@ -146,18 +173,10 @@ NSString * const kExceptionPuzzleHasMultipleSolutions = @"kExceptionPuzzleHasMul
 - (NSInteger)solveSinglePossibility {
 	NSInteger totalSolved = 0;
 	
-	// Make a list of all tile sets in the game.
-	ZSGameTileStub ***sets = malloc(3 * _gameBoard.size * sizeof(ZSGameTileStub **));
-	
-	for (NSInteger i = 0; i < _gameBoard.size; ++i) {
-		sets[3 * i + 0] = _gameBoard.rows[i];
-		sets[3 * i + 1] = _gameBoard.cols[i];
-		sets[3 * i + 2] = _gameBoard.groups[i];
-	}
-	
 	// Iterate over each tile set.
 	for (NSInteger setIndex = 0, totalSets = 3 * _gameBoard.size; setIndex < totalSets; ++setIndex) {
-		ZSGameTileStub **set = sets[setIndex];
+		// Cache the current set.
+		ZSGameTileStub **set = _gameBoard.allSets[setIndex];
 		
 		// Iterate over each guess.
 		for (NSInteger guess = 1; guess <= _gameBoard.size; ++guess) {
@@ -182,31 +201,172 @@ NSString * const kExceptionPuzzleHasMultipleSolutions = @"kExceptionPuzzleHasMul
 		}
 	}
 	
-	free(sets);
-	
 	return totalSolved;
 }
 
-- (NSInteger)eliminatePencilsHiddenSubGroup {
-	// Start by searching for a tile with no answer.
-	for (NSInteger row = 0; row < _gameBoard.size; ++row) {
-		for (NSInteger col = 0; col < _gameBoard.size; ++col) {
-			if (!_gameBoard.grid[row][col].guess) {
+- (NSInteger)eliminatePencilsHiddenSubgroupForSize:(NSInteger)subgroupSize {
+	NSInteger totalPencilsEliminated = 0;
+	
+	// Allocate memory used in searching for hidden subgroups. We allocate out of the main loop because
+	// allocation is expensive and all iterations of the loop need roughly the same size arrays.
+	NSInteger *pencilMap = malloc(_gameBoard.size * sizeof(NSInteger));
+	NSInteger *combinationMap = malloc(subgroupSize * sizeof(NSInteger));
+	ZSGameTileStub **subgroupMatches = malloc(_gameBoard.size * sizeof(ZSGameTileStub *));
+	
+	// Iterate over each tile set.
+	for (NSInteger setIndex = 0, totalSets = 3 * _gameBoard.size; setIndex < totalSets; ++setIndex) {
+		// Cache the current set.
+		ZSGameTileStub **currentSet = _gameBoard.allSets[setIndex];
+		
+		// Initialize the pencil map. The compinations generated later will be indexes on this array.
+		NSInteger totalPencilsInSet = [self initPencilMap:pencilMap forTileSet:currentSet];
+		
+		// If there are fewer (or equal) pencil marks than the subgroup size, we can quit here.
+		if (totalPencilsInSet <= subgroupSize) {
+			continue;
+		}
+		
+		// Initialize the combination list.
+		[self setFirstCombinationInArray:combinationMap ofLength:subgroupSize totalPencils:totalPencilsInSet];
+		
+		// Iterate over each combination of pencils.
+		do {
+			// Keep track of how many tiles match all pencils in the current combination.
+			NSInteger totalTilesWithAnyPencilsInCombination = 0;
+			
+			// Iterate over each tile in the group.
+			for (NSInteger tileIndex = 0; tileIndex < _gameBoard.size; ++tileIndex) {
+				// Skip solved tiles.
+				if (currentSet[tileIndex]->guess) {
+					continue;
+				}
 				
-				// Okay, we've found an empty tile.
-				
-				// Create a list of combinations for the tile. Iterate over the list of combinations.
-				
-				// Loop over the row, col, and group separately looking for n (the size of the combinations) cells that contain the same numbers as the combincation.
-				
-				// If n (or fewer) matches are found, eliminate all other pencils from those matches.
-				
+				// If the current tile contains any of the pencil marks in the subgroup, increment the possible subgroup match count and save a reference to the tile.
+				for (NSInteger currentCombinationIndex = 0; currentCombinationIndex < subgroupSize; ++currentCombinationIndex) {
+					if (currentSet[tileIndex]->pencils[pencilMap[combinationMap[currentCombinationIndex]]]) {
+						subgroupMatches[totalTilesWithAnyPencilsInCombination] = currentSet[tileIndex];
+						++totalTilesWithAnyPencilsInCombination;
+						break;
+					}
+				}
+			}
+			
+			// If the possible subgroup match count is less than or equal to the subgroup size, we've found a valid subgroup.
+			if (totalTilesWithAnyPencilsInCombination && totalTilesWithAnyPencilsInCombination <= subgroupSize) {
+				// Iterate over all the tiles in the subgroup and eliminate all pencil marks that aren't in the pencil map.
+				for (NSInteger subgroupMatchIndex = 0; subgroupMatchIndex < totalTilesWithAnyPencilsInCombination; ++subgroupMatchIndex) {
+					for (NSInteger pencilToEliminate = 0; pencilToEliminate < _gameBoard.size; ++pencilToEliminate) {
+						BOOL matchesHiddenPencil = NO;
+						
+						for (NSInteger currentCombinationIndex = 0; currentCombinationIndex < subgroupSize; ++currentCombinationIndex) {
+							if (pencilToEliminate == pencilMap[combinationMap[currentCombinationIndex]]) {
+								matchesHiddenPencil = YES;
+								break;
+							}
+						}
+						
+						if (matchesHiddenPencil) {
+							continue;
+						}
+						
+						if (subgroupMatches[subgroupMatchIndex]->pencils[pencilToEliminate]) {
+							[_gameBoard setPencil:NO forPencilNumber:(pencilToEliminate + 1) forTileAtRow:subgroupMatches[subgroupMatchIndex]->row col:subgroupMatches[subgroupMatchIndex]->col];
+							++totalPencilsEliminated;
+						}
+					}
+				}
+			}
+		} while ([self setNextCombinationInArray:combinationMap ofLength:subgroupSize totalPencils:totalPencilsInSet]);
+	}
+	
+	free(subgroupMatches);
+	free(combinationMap);
+	free(pencilMap);
+	
+	return totalPencilsEliminated;
+}
+
+#pragma mark - Logic Technique Helpers
+
+// Populate the pencilMap array with a list of pencils that exist in the given tile set. Return the total number of pencils found.
+- (NSInteger)initPencilMap:(NSInteger *)pencilMap forTileSet:(ZSGameTileStub **)set {
+	NSInteger totalPencils = 0;
+	
+	for (NSInteger guess = 0; guess < _gameBoard.size; ++guess) {
+		for (NSInteger tileIndex = 0; tileIndex < _gameBoard.size; ++tileIndex) {
+			// If we find this pencil mark in the set, add it to the list of all pencil marks and increment the total.
+			// We can also break out of the loop over the tiles and move to the next guess.
+			if (!set[tileIndex]->guess && set[tileIndex]->pencils[guess]) {
+				pencilMap[totalPencils] = guess;
+				++totalPencils;
+				break;
 			}
 		}
 	}
 	
-	return 0;
+	return totalPencils;
 }
+
+// Returns the the first combination.
+- (void)setFirstCombinationInArray:(NSInteger *)comboArray ofLength:(NSInteger)arrayLength totalPencils:(NSInteger)itemCount {
+	// Make sure we have enough unique items to fill the array.
+	assert(arrayLength <= itemCount);
+	
+	for (NSInteger i = 0; i < arrayLength; i++) {
+		comboArray[i] = i;
+	}
+}
+
+// Provides the next the next combination in the sequence. Returns false if there are no more combinations.
+- (BOOL)setNextCombinationInArray:(NSInteger *)comboArray ofLength:(NSInteger)arrayLength totalPencils:(NSInteger)itemCount {
+	// Increment the last array element. If it overflows, then increment the next-to-last element, etc.
+	for (NSInteger index = arrayLength - 1; index >= 0; index--) {
+		NSInteger maxValueForIndex = itemCount - (arrayLength - index);
+		
+		// Make sure we're not about to exceed the max value for the current index.
+		if (comboArray[index] < maxValueForIndex) {
+			comboArray[index] += 1;
+			
+			// Initialize the rest of the array.
+			for (NSInteger initIndex = index + 1; initIndex < arrayLength; initIndex++) {
+				comboArray[initIndex] = comboArray[initIndex - 1] + 1;
+			}
+			
+			return YES;
+		}
+	}
+	
+	return NO;
+}
+
+- (NSInteger)getNumberOfTilesInSet:(ZSGameTileStub **)set withTotalPencilsEqualToOrGreaterThan:(NSInteger)totalPencilLimit {
+	// Create a bit map of all pencils in the group.
+	NSInteger totalTiles = 0;
+	
+	// Iterate over all tiles in the set.
+	for (NSInteger i = 0; i < _gameBoard.size; ++i) {
+		// Count the number of pencils in the current tile.
+		NSInteger totalPencils = 0;
+		
+		// Iterate over each guess.
+		for (NSInteger guess = 1; guess <= _gameBoard.size; ++guess) {
+			NSInteger totalPencils = 0;
+
+			if (!set[i]->guess && set[i]->pencils[guess - 1]) {
+				++totalPencils;
+			}
+		}
+		
+		// Keep count of the number of tiles that equal or exceed the limit.
+		if (totalPencils >= totalPencilLimit) {
+			++totalTiles;
+		}
+	}
+	
+	return totalTiles;
+}
+
+#pragma mark - Brute Force Solving
 
 - (ZSGameSolveResult)solveBruteForce {
 	// Begin the recursive brute force algorithm.

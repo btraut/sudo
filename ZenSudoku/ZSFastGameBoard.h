@@ -29,6 +29,7 @@ typedef struct {
 	ZSGameTileStub ***rows;
 	ZSGameTileStub ***cols;
 	ZSGameTileStub ***groups;
+	ZSGameTileStub ***allSets;
 	
 	BOOL **rowContainsAnswer;
 	BOOL **colContainsAnswer;
@@ -42,6 +43,7 @@ typedef struct {
 @property (nonatomic, assign) ZSGameTileStub ***rows;
 @property (nonatomic, assign) ZSGameTileStub ***cols;
 @property (nonatomic, assign) ZSGameTileStub ***groups;
+@property (nonatomic, assign) ZSGameTileStub ***allSets;
 
 @property (nonatomic, assign) BOOL **rowContainsAnswer;
 @property (nonatomic, assign) BOOL **colContainsAnswer;
@@ -58,8 +60,9 @@ typedef struct {
 - (void)allocSetCaches;
 - (void)freeSetCaches;
 
-- (void)rebuildRowAndSetCaches;
+- (void)rebuildRowAndColCaches;
 - (void)rebuildGroupCache;
+- (void)rebuildAllSetsCache;
 
 // Data Migration
 

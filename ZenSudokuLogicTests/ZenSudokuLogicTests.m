@@ -28,12 +28,12 @@
 	[gameBoard copyGroupMapFromString:@"000111222 000111222 000111222 333444555 333444555 333444555 666777888 666777888 666777888"];
 	[gameBoard copyGuessesFromString:@"....8..1. ..81..2.3 ...359... ..5.7.... 4...1.... .....253. ......4.. .9...6.28 ..6...9.5"];
 	
-	STAssertTrue(gameBoard.grid[0][4].guess == 8, nil);
-	STAssertTrue(gameBoard.grid[0][7].guess == 1, nil);
-	STAssertTrue(gameBoard.grid[3][4].guess == 7, nil);
-	STAssertTrue(gameBoard.grid[6][6].guess == 4, nil);
-	STAssertTrue(gameBoard.grid[0][0].guess == 0, nil);
-	STAssertTrue(gameBoard.grid[8][7].guess == 0, nil);
+	STAssertEquals(gameBoard.grid[0][4].guess, 8, nil);
+	STAssertEquals(gameBoard.grid[0][7].guess, 1, nil);
+	STAssertEquals(gameBoard.grid[3][4].guess, 7, nil);
+	STAssertEquals(gameBoard.grid[6][6].guess, 4, nil);
+	STAssertEquals(gameBoard.grid[0][0].guess, 0, nil);
+	STAssertEquals(gameBoard.grid[8][7].guess, 0, nil);
 }
 
 - (void)testAutoPencil {
@@ -44,9 +44,9 @@
 	[gameBoard addAutoPencils];
 	
 	// Check tile 8-7.
-	STAssertTrue(gameBoard.grid[8][7].guess == 0, nil);
+	STAssertEquals(gameBoard.grid[8][7].guess, 0, nil);
 	
-	STAssertTrue(gameBoard.grid[8][7].totalPencils == 1, nil);
+	STAssertEquals(gameBoard.grid[8][7].totalPencils, 1, nil);
 	
 	STAssertFalse(gameBoard.grid[8][7].pencils[0], nil);
 	STAssertFalse(gameBoard.grid[8][7].pencils[5], nil);
@@ -54,9 +54,9 @@
 	STAssertFalse(gameBoard.grid[8][7].pencils[7], nil);
 	
 	// Check tile 8-5.
-	STAssertTrue(gameBoard.grid[8][5].guess == 0, nil);
+	STAssertEquals(gameBoard.grid[8][5].guess, 0, nil);
 	
-	STAssertTrue(gameBoard.grid[8][5].totalPencils == 5, nil);
+	STAssertEquals(gameBoard.grid[8][5].totalPencils, 5, nil);
 	
 	STAssertTrue(gameBoard.grid[8][5].pencils[0], nil);
 	STAssertTrue(gameBoard.grid[8][5].pencils[2], nil);
@@ -101,20 +101,20 @@
 	ZSGameSolveResult result = [solver solve];
 	
 	// Make sure the solver worked properly.
-	STAssertTrue(result == ZSGameSolveResultSucceeded, nil);
+	STAssertEquals(result, ZSGameSolveResultSucceeded, nil);
 	
 	[solver copySolutionToFastGameBoard:gameBoard];
 	
 	// Make sure the full top row is correct.
-	STAssertTrue(gameBoard.grid[0][0].guess == 2, nil);
-	STAssertTrue(gameBoard.grid[0][1].guess == 5, nil);
-	STAssertTrue(gameBoard.grid[0][2].guess == 8, nil);
-	STAssertTrue(gameBoard.grid[0][3].guess == 7, nil);
-	STAssertTrue(gameBoard.grid[0][4].guess == 3, nil);
-	STAssertTrue(gameBoard.grid[0][5].guess == 9, nil);
-	STAssertTrue(gameBoard.grid[0][6].guess == 4, nil);
-	STAssertTrue(gameBoard.grid[0][7].guess == 6, nil);
-	STAssertTrue(gameBoard.grid[0][8].guess == 1, nil);
+	STAssertEquals(gameBoard.grid[0][0].guess, 2, nil);
+	STAssertEquals(gameBoard.grid[0][1].guess, 5, nil);
+	STAssertEquals(gameBoard.grid[0][2].guess, 8, nil);
+	STAssertEquals(gameBoard.grid[0][3].guess, 7, nil);
+	STAssertEquals(gameBoard.grid[0][4].guess, 3, nil);
+	STAssertEquals(gameBoard.grid[0][5].guess, 9, nil);
+	STAssertEquals(gameBoard.grid[0][6].guess, 4, nil);
+	STAssertEquals(gameBoard.grid[0][7].guess, 6, nil);
+	STAssertEquals(gameBoard.grid[0][8].guess, 1, nil);
 	
 	/*
 	 258739461
@@ -140,7 +140,7 @@
 	
 	ZSGameSolveResult result = [solver solve];
 	
-	STAssertTrue(result == ZSGameSolveResultFailedNoSolution, nil);
+	STAssertEquals(result, ZSGameSolveResultFailedNoSolution, nil);
 }
 
 - (void)testMultipleSolutions {
@@ -154,7 +154,7 @@
 	
 	ZSGameSolveResult result = [solver solve];
 	
-	STAssertTrue(result == ZSGameSolveResultFailedMultipleSolutions, nil);
+	STAssertEquals(result, ZSGameSolveResultFailedMultipleSolutions, nil);
 }
 
 - (void)testMultipleSolutions2 {
@@ -168,7 +168,7 @@
 	
 	ZSGameSolveResult result = [solver solve];
 	
-	STAssertTrue(result == ZSGameSolveResultFailedMultipleSolutions, nil);
+	STAssertEquals(result, ZSGameSolveResultFailedMultipleSolutions, nil);
 }
 
 - (void)testEasySolutionOrder {
@@ -184,26 +184,26 @@
 	
 	// Solve 7 in 8-7.
 	solved = [solver solveOnlyChoice];
-	STAssertTrue(solved == 1, nil);
+	STAssertEquals(solved, 1, nil);
 	
 	// Solve 6 in 6-7.
 	// Solve 1 in 6-8.
 	// Solve 3 in 7-6.
 	solved = [solver solveOnlyChoice];
-	STAssertTrue(solved == 3, nil);
+	STAssertEquals(solved, 3, nil);
 	
 	// Solve 4 in 7-4.
 	solved = [solver solveOnlyChoice];
-	STAssertTrue(solved == 1, nil);
+	STAssertEquals(solved, 1, nil);
 	
 	// Solve 6 in 1-4.
 	// Solve 9 in 5-4.
 	solved = [solver solveOnlyChoice];
-	STAssertTrue(solved == 2, nil);
+	STAssertEquals(solved, 2, nil);
 	
 	// Nothing left to solve.
 	solved = [solver solveOnlyChoice];
-	STAssertTrue(solved == 0, nil);
+	STAssertEquals(solved, 0, nil);
 }
 
 - (void)testSinglePossibility {
@@ -219,7 +219,7 @@
 	
 	// Solve 7 in 8-7.
 	solved = [solver solveSinglePossibility];
-	STAssertTrue(solved == 6, nil);
+	STAssertEquals(solved, 6, nil);
 }
 
 - (void)testBruteForce {
@@ -237,16 +237,126 @@
 	
 	[solver copySolutionToFastGameBoard:gameBoard];
 	
-	STAssertTrue(gameBoard.grid[8][5].guess == 1, nil);
-	STAssertTrue(gameBoard.grid[8][6].guess == 9, nil);
-	STAssertTrue(gameBoard.grid[8][7].guess == 7, nil);
-	STAssertTrue(gameBoard.grid[8][8].guess == 5, nil);
+	STAssertEquals(gameBoard.grid[8][5].guess, 1, nil);
+	STAssertEquals(gameBoard.grid[8][6].guess, 9, nil);
+	STAssertEquals(gameBoard.grid[8][7].guess, 7, nil);
+	STAssertEquals(gameBoard.grid[8][8].guess, 5, nil);
 	
 	for (NSInteger row = 0; row < gameBoard.size; ++row) {
 		for (NSInteger col = 0; col < gameBoard.size; ++col) {
 			STAssertTrue(gameBoard.grid[row][col].guess, nil);
 		}
 	}
+}
+
+- (void)testEliminatingPencilsViaHiddenPairs {
+	ZSFastGameBoard *gameBoard = [[ZSFastGameBoard alloc] initWithSize:9];
+	[gameBoard copyGroupMapFromString:@"000111222 000111222 000111222 333444555 333444555 333444555 666777888 666777888 666777888"];
+	[gameBoard copyGuessesFromString:@"8.1..6.94 3....9.8. 97..8.5.. 547.62.3. 632....5. 198375246 .8362.915 .65198... 2195....8"];
+	
+	ZSFastGameSolver *solver = [[ZSFastGameSolver alloc] initWithSize:gameBoard.size];
+	[solver copyGroupMapFromFastGameBoard:gameBoard];
+	[solver copyGuessesFromFastGameBoard:gameBoard];
+	
+	ZSFastGameBoard *solverGameBoard = [solver getGameBoard];
+	
+	STAssertTrue(solverGameBoard.grid[2][5].pencils[0], nil);
+	STAssertTrue(solverGameBoard.grid[2][5].pencils[2], nil);
+	STAssertTrue(solverGameBoard.grid[2][5].pencils[3], nil);
+	
+	STAssertTrue(solverGameBoard.grid[2][8].pencils[0], nil);
+	STAssertTrue(solverGameBoard.grid[2][8].pencils[1], nil);
+	STAssertTrue(solverGameBoard.grid[2][8].pencils[2], nil);
+	
+	STAssertTrue(solverGameBoard.grid[4][3].pencils[3], nil);
+	STAssertTrue(solverGameBoard.grid[4][3].pencils[7], nil);
+	STAssertTrue(solverGameBoard.grid[4][3].pencils[8], nil);
+	
+	NSInteger totalEliminatedPencils = [solver eliminatePencilsHiddenSubgroupForSize:2];
+	
+	STAssertEquals(totalEliminatedPencils, 3, nil);
+	
+	STAssertTrue(solverGameBoard.grid[2][5].pencils[0], nil);
+	STAssertTrue(solverGameBoard.grid[2][5].pencils[2], nil);
+	STAssertFalse(solverGameBoard.grid[2][5].pencils[3], nil);
+	
+	STAssertTrue(solverGameBoard.grid[2][8].pencils[0], nil);
+	STAssertFalse(solverGameBoard.grid[2][8].pencils[1], nil);
+	STAssertTrue(solverGameBoard.grid[2][8].pencils[2], nil);
+	
+	STAssertFalse(solverGameBoard.grid[4][3].pencils[3], nil);
+	STAssertTrue(solverGameBoard.grid[4][3].pencils[7], nil);
+	STAssertTrue(solverGameBoard.grid[4][3].pencils[8], nil);
+}
+
+- (void)testEliminatingPencilsViaHiddenTriplets {
+	ZSFastGameBoard *gameBoard = [[ZSFastGameBoard alloc] initWithSize:9];
+	[gameBoard copyGroupMapFromString:@"000111222 000111222 000111222 333444555 333444555 333444555 666777888 666777888 666777888"];
+	[gameBoard copyGuessesFromString:@"5286...49 13649..25 7942.563. ...1..2.. ..78263.. ..25.9.6. 24.3..976 8.97.2413 .7.9.4582"];
+	
+	ZSFastGameSolver *solver = [[ZSFastGameSolver alloc] initWithSize:gameBoard.size];
+	[solver copyGroupMapFromFastGameBoard:gameBoard];
+	[solver copyGuessesFromFastGameBoard:gameBoard];
+	
+	ZSFastGameBoard *solverGameBoard = [solver getGameBoard];
+	
+	STAssertTrue(solverGameBoard.grid[0][4].pencils[0], nil);
+	STAssertTrue(solverGameBoard.grid[0][4].pencils[2], nil);
+	STAssertTrue(solverGameBoard.grid[0][4].pencils[6], nil);
+	
+	NSInteger totalEliminatedPencils = [solver eliminatePencilsHiddenSubgroupForSize:3];
+	
+	STAssertEquals(totalEliminatedPencils, 1, nil);
+	
+	STAssertFalse(solverGameBoard.grid[0][4].pencils[0], nil);
+	STAssertTrue(solverGameBoard.grid[0][4].pencils[2], nil);
+	STAssertTrue(solverGameBoard.grid[0][4].pencils[6], nil);
+}
+
+- (void)testCombinationIterator {
+	ZSFastGameSolver *solver = [[ZSFastGameSolver alloc] initWithSize:9];
+	
+	NSInteger *combinationArray = malloc(2 * sizeof(NSInteger));
+	BOOL combinationResults = NO;
+	
+	[solver setFirstCombinationInArray:combinationArray ofLength:2 totalPencils:4];
+	
+	STAssertEquals(combinationArray[0], 0, nil);
+	STAssertEquals(combinationArray[1], 1, nil);
+	
+	combinationResults = [solver setNextCombinationInArray:combinationArray ofLength:2 totalPencils:4];
+	
+	STAssertTrue(combinationResults, nil);
+	STAssertEquals(combinationArray[0], 0, nil);
+	STAssertEquals(combinationArray[1], 2, nil);
+	
+	combinationResults = [solver setNextCombinationInArray:combinationArray ofLength:2 totalPencils:4];
+	
+	STAssertTrue(combinationResults, nil);
+	STAssertEquals(combinationArray[0], 0, nil);
+	STAssertEquals(combinationArray[1], 3, nil);
+	
+	combinationResults = [solver setNextCombinationInArray:combinationArray ofLength:2 totalPencils:4];
+	
+	STAssertTrue(combinationResults, nil);
+	STAssertEquals(combinationArray[0], 1, nil);
+	STAssertEquals(combinationArray[1], 2, nil);
+	
+	combinationResults = [solver setNextCombinationInArray:combinationArray ofLength:2 totalPencils:4];
+	
+	STAssertTrue(combinationResults, nil);
+	STAssertEquals(combinationArray[0], 1, nil);
+	STAssertEquals(combinationArray[1], 3, nil);
+	
+	combinationResults = [solver setNextCombinationInArray:combinationArray ofLength:2 totalPencils:4];
+	
+	STAssertTrue(combinationResults, nil);
+	STAssertEquals(combinationArray[0], 2, nil);
+	STAssertEquals(combinationArray[1], 3, nil);
+
+	combinationResults = [solver setNextCombinationInArray:combinationArray ofLength:2 totalPencils:4];
+	
+	STAssertFalse(combinationResults, nil);
 }
 
 @end

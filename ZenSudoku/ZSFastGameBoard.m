@@ -14,7 +14,7 @@
 
 @synthesize size;
 @synthesize grid;
-@synthesize rows, cols, groups;
+@synthesize rows, cols, groups, allSets;
 @synthesize rowContainsAnswer, colContainsAnswer, groupContainsAnswer;
 
 #pragma mark - Initialization and Memory Management
@@ -32,13 +32,13 @@
 		[self allocGrid];
 		[self allocSetCaches];
 		
-		[self rebuildRowAndSetCaches];
+		[self rebuildRowAndColCaches];
 	}
 	
 	return self;
 }
 
-- (void)rebuildRowAndSetCaches {
+- (void)rebuildRowAndColCaches {
 	for (NSInteger row = 0; row < size; ++row) {
 		for (NSInteger col = 0; col < size; ++col) {
 			// Add the tile to row and col caches.
@@ -67,6 +67,22 @@
 	}
 	
 	free(totalTilesInEachGroup);
+	
+	[self rebuildAllSetsCache];
+}
+
+- (void)rebuildAllSetsCache {
+	for (NSInteger i = 0; i < size; ++i) {
+		allSets[i] = rows[i];
+	}
+	
+	for (NSInteger i = 0; i < size; ++i) {
+		allSets[size + i] = cols[i];
+	}
+	
+	for (NSInteger i = 0; i < size; ++i) {
+		allSets[(2 * size) + i] = groups[i];
+	}
 }
 
 - (void)dealloc {
@@ -113,6 +129,7 @@
 	rows = malloc(size * sizeof(ZSGameTileStub **));
 	cols = malloc(size * sizeof(ZSGameTileStub **));
 	groups = malloc(size * sizeof(ZSGameTileStub **));
+	allSets = malloc(3 * size * sizeof(ZSGameTileStub **));
 	
 	rowContainsAnswer = malloc(size * sizeof(BOOL *));
 	colContainsAnswer = malloc(size * sizeof(BOOL *));
@@ -153,6 +170,7 @@
 	free(rows);
 	free(cols);
 	free(groups);
+	free(allSets);
 }
 
 #pragma mark - Data Migration

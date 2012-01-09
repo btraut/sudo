@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ZSFastGameBoard.h"
 
 typedef enum {
 	ZSGameSolveResultSucceeded,
@@ -33,11 +34,22 @@ typedef enum {
 
 - (ZSGameSolveResult)solve;
 
+- (ZSFastGameBoard *)getGameBoard;
+- (ZSFastGameBoard *)getSolvedGameBoard;
+
+// Logic Techniques
 - (NSInteger)solveOnlyChoice;
 - (NSInteger)solveSinglePossibility;
-- (NSInteger)eliminatePencilsHiddenSubGroup;
-- (ZSGameSolveResult)solveBruteForce;
+- (NSInteger)eliminatePencilsHiddenSubgroupForSize:(NSInteger)size;
 
+// Logic Technique Helpers
+- (NSInteger)initPencilMap:(NSInteger *)pencilMap forTileSet:(ZSGameTileStub **)set;
+- (void)setFirstCombinationInArray:(NSInteger *)comboArray ofLength:(NSInteger)arrayLength totalPencils:(NSInteger)itemCount;
+- (BOOL)setNextCombinationInArray:(NSInteger *)comboArray ofLength:(NSInteger)arrayLength totalPencils:(NSInteger)itemCount;
+- (NSInteger)getNumberOfTilesInSet:(ZSGameTileStub **)set withTotalPencilsEqualToOrGreaterThan:(NSInteger)totalPencilLimit;
+
+// Brute Force Solving
+- (ZSGameSolveResult)solveBruteForce;
 - (ZSGameSolveResult)solveBruteForceForRow:(NSInteger)row col:(NSInteger)col;
 
 @end
