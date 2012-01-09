@@ -108,10 +108,18 @@ typedef struct {
 		}
 		
 		// Hidden Triplets
-		pencilsEliminated = [self eliminatePencilsHiddenSubgroupForSize:2];
+		pencilsEliminated = [self eliminatePencilsHiddenSubgroupForSize:3];
 		
 		if (pencilsEliminated) {
 			// NSLog(@"eliminatePencilsHiddenSubgroupForSize:3 pencils eliminated: %i", pencilsEliminated);
+			continue;
+		}
+		
+		// Hidden Quads
+		pencilsEliminated = [self eliminatePencilsHiddenSubgroupForSize:4];
+		
+		if (pencilsEliminated) {
+			// NSLog(@"eliminatePencilsHiddenSubgroupForSize:4 pencils eliminated: %i", pencilsEliminated);
 			continue;
 		}
 		
