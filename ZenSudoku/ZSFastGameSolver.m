@@ -145,7 +145,7 @@ typedef struct {
 	
 	// All looks good at this point.
 	return ZSGameSolveResultSucceeded;
-;}
+}
 
 #pragma mark - Logic Techniques
 

@@ -316,45 +316,60 @@
 - (void)testCombinationIterator {
 	ZSFastGameSolver *solver = [[ZSFastGameSolver alloc] initWithSize:9];
 	
-	NSInteger *combinationArray = malloc(2 * sizeof(NSInteger));
+	NSInteger *combinationArray = malloc(3 * sizeof(NSInteger));
 	BOOL combinationResults = NO;
 	
-	[solver setFirstCombinationInArray:combinationArray ofLength:2 totalPencils:4];
+	// Start with combination size 2.
+	[solver setFirstCombinationInArray:combinationArray ofLength:2 totalPencils:3];
 	
 	STAssertEquals(combinationArray[0], 0, nil);
 	STAssertEquals(combinationArray[1], 1, nil);
 	
-	combinationResults = [solver setNextCombinationInArray:combinationArray ofLength:2 totalPencils:4];
+	combinationResults = [solver setNextCombinationInArray:combinationArray ofLength:2 totalPencils:3];
 	
 	STAssertTrue(combinationResults, nil);
 	STAssertEquals(combinationArray[0], 0, nil);
 	STAssertEquals(combinationArray[1], 2, nil);
 	
-	combinationResults = [solver setNextCombinationInArray:combinationArray ofLength:2 totalPencils:4];
-	
-	STAssertTrue(combinationResults, nil);
-	STAssertEquals(combinationArray[0], 0, nil);
-	STAssertEquals(combinationArray[1], 3, nil);
-	
-	combinationResults = [solver setNextCombinationInArray:combinationArray ofLength:2 totalPencils:4];
+	combinationResults = [solver setNextCombinationInArray:combinationArray ofLength:2 totalPencils:3];
 	
 	STAssertTrue(combinationResults, nil);
 	STAssertEquals(combinationArray[0], 1, nil);
 	STAssertEquals(combinationArray[1], 2, nil);
 	
-	combinationResults = [solver setNextCombinationInArray:combinationArray ofLength:2 totalPencils:4];
+	combinationResults = [solver setNextCombinationInArray:combinationArray ofLength:2 totalPencils:3];
+	
+	STAssertFalse(combinationResults, nil);
+	
+	// Now lets try combination size 3.
+	[solver setFirstCombinationInArray:combinationArray ofLength:3 totalPencils:4];
+	
+	STAssertEquals(combinationArray[0], 0, nil);
+	STAssertEquals(combinationArray[1], 1, nil);
+	STAssertEquals(combinationArray[2], 2, nil);
+	
+	combinationResults = [solver setNextCombinationInArray:combinationArray ofLength:3 totalPencils:4];
+	
+	STAssertTrue(combinationResults, nil);
+	STAssertEquals(combinationArray[0], 0, nil);
+	STAssertEquals(combinationArray[1], 1, nil);
+	STAssertEquals(combinationArray[2], 3, nil);
+	
+	combinationResults = [solver setNextCombinationInArray:combinationArray ofLength:3 totalPencils:4];
+	
+	STAssertTrue(combinationResults, nil);
+	STAssertEquals(combinationArray[0], 0, nil);
+	STAssertEquals(combinationArray[1], 2, nil);
+	STAssertEquals(combinationArray[2], 3, nil);
+	
+	combinationResults = [solver setNextCombinationInArray:combinationArray ofLength:3 totalPencils:4];
 	
 	STAssertTrue(combinationResults, nil);
 	STAssertEquals(combinationArray[0], 1, nil);
-	STAssertEquals(combinationArray[1], 3, nil);
+	STAssertEquals(combinationArray[1], 2, nil);
+	STAssertEquals(combinationArray[2], 3, nil);
 	
-	combinationResults = [solver setNextCombinationInArray:combinationArray ofLength:2 totalPencils:4];
-	
-	STAssertTrue(combinationResults, nil);
-	STAssertEquals(combinationArray[0], 2, nil);
-	STAssertEquals(combinationArray[1], 3, nil);
-
-	combinationResults = [solver setNextCombinationInArray:combinationArray ofLength:2 totalPencils:4];
+	combinationResults = [solver setNextCombinationInArray:combinationArray ofLength:3 totalPencils:4];
 	
 	STAssertFalse(combinationResults, nil);
 }
