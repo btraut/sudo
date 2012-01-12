@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		841F849A14BE8ECA00DFFABC /* ZSFastGameUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 841F849914BE8ECA00DFFABC /* ZSFastGameUtility.m */; };
 		843BEDEF149DC4E800D1D19B /* ZSIconNew57.png in Resources */ = {isa = PBXBuildFile; fileRef = 843BEDEE149DC4E800D1D19B /* ZSIconNew57.png */; };
 		843BEDF1149DC4F100D1D19B /* ZSIconNew114.png in Resources */ = {isa = PBXBuildFile; fileRef = 843BEDF0149DC4F100D1D19B /* ZSIconNew114.png */; };
 		843BEDF3149DC90E00D1D19B /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 843BEDF2149DC90E00D1D19B /* Default.png */; };
@@ -28,7 +29,6 @@
 		84D55020147F1C4A00A7934E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D5501F147F1C4A00A7934E /* main.m */; };
 		84D55024147F1C4A00A7934E /* ZSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D55023147F1C4A00A7934E /* ZSAppDelegate.m */; };
 		84D5505C147F227C00A7934E /* ZSMainMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D5505A147F227C00A7934E /* ZSMainMenuViewController.m */; };
-		84D5505D147F227C00A7934E /* ZSMainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84D5505B147F227C00A7934E /* ZSMainMenu.xib */; };
 		84D55065147F2EFA00A7934E /* ZSNewGameOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D55064147F2EFA00A7934E /* ZSNewGameOptionsViewController.m */; };
 		84D55069147F3D7500A7934E /* ZSGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D55068147F3D7400A7934E /* ZSGameViewController.m */; };
 		84E18C961498B0F6009717D4 /* ZSFastGameGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E18C931498B0F6009717D4 /* ZSFastGameGenerator.m */; };
@@ -43,6 +43,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		841F849814BE8ECA00DFFABC /* ZSFastGameUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSFastGameUtility.h; sourceTree = "<group>"; };
+		841F849914BE8ECA00DFFABC /* ZSFastGameUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSFastGameUtility.m; sourceTree = "<group>"; };
 		843BEDEE149DC4E800D1D19B /* ZSIconNew57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ZSIconNew57.png; path = Resources/Images/ZSIconNew57.png; sourceTree = "<group>"; };
 		843BEDF0149DC4F100D1D19B /* ZSIconNew114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ZSIconNew114.png; path = Resources/Images/ZSIconNew114.png; sourceTree = "<group>"; };
 		843BEDF2149DC90E00D1D19B /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../Default.png; sourceTree = "<group>"; };
@@ -78,7 +80,6 @@
 		84D5503A147F1C4B00A7934E /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		84D55059147F227C00A7934E /* ZSMainMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSMainMenuViewController.h; sourceTree = "<group>"; };
 		84D5505A147F227C00A7934E /* ZSMainMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSMainMenuViewController.m; sourceTree = "<group>"; };
-		84D5505B147F227C00A7934E /* ZSMainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZSMainMenu.xib; sourceTree = "<group>"; };
 		84D55063147F2EFA00A7934E /* ZSNewGameOptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSNewGameOptionsViewController.h; sourceTree = "<group>"; };
 		84D55064147F2EFA00A7934E /* ZSNewGameOptionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSNewGameOptionsViewController.m; sourceTree = "<group>"; };
 		84D55067147F3D7400A7934E /* ZSGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSGameViewController.h; sourceTree = "<group>"; };
@@ -162,6 +163,8 @@
 				84AC26DF1480DDBA00E966A5 /* ZSGameTile.m */,
 				84B300F2148AF6FD00E568CE /* ZSGameHistoryEntry.h */,
 				84B300F3148AF6FD00E568CE /* ZSGameHistoryEntry.m */,
+				841F849814BE8ECA00DFFABC /* ZSFastGameUtility.h */,
+				841F849914BE8ECA00DFFABC /* ZSFastGameUtility.m */,
 				84E18C9C1498B57F009717D4 /* ZSFastGameBoard.h */,
 				84E18C9D1498B57F009717D4 /* ZSFastGameBoard.m */,
 				84E18C921498B0F6009717D4 /* ZSFastGameGenerator.h */,
@@ -222,7 +225,6 @@
 				8449D95B14833649003F6FB3 /* External */,
 				84D55022147F1C4A00A7934E /* ZSAppDelegate.h */,
 				84D55023147F1C4A00A7934E /* ZSAppDelegate.m */,
-				84D5505B147F227C00A7934E /* ZSMainMenu.xib */,
 			);
 			path = ZenSudoku;
 			sourceTree = "<group>";
@@ -349,7 +351,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				84D5501E147F1C4A00A7934E /* InfoPlist.strings in Resources */,
-				84D5505D147F227C00A7934E /* ZSMainMenu.xib in Resources */,
 				843BEDEF149DC4E800D1D19B /* ZSIconNew57.png in Resources */,
 				843BEDF1149DC4F100D1D19B /* ZSIconNew114.png in Resources */,
 				843BEDF3149DC90E00D1D19B /* Default.png in Resources */,
@@ -407,6 +408,7 @@
 				84E18C961498B0F6009717D4 /* ZSFastGameGenerator.m in Sources */,
 				84E18C971498B0F6009717D4 /* ZSFastGameSolver.m in Sources */,
 				84E18C9E1498B57F009717D4 /* ZSFastGameBoard.m in Sources */,
+				841F849A14BE8ECA00DFFABC /* ZSFastGameUtility.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

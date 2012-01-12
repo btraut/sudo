@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+#import "ZSFastGameUtility.h"
 #import "ZSGame.h"
 
 @class ZSFastGameBoard;
 
-@interface ZSFastGameGenerator : NSObject {
+@interface ZSFastGameGenerator : ZSFastGameUtility {
 	@private
 	
 	ZSFastGameBoard *_reductionGameBoard;

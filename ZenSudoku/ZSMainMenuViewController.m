@@ -38,6 +38,8 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+	[self.tableView reloadData];
+	
 	[super viewWillAppear:animated];
 }
 
@@ -66,7 +68,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	switch (section) {
 		case 0:
-			return 2;
+			return [ZSGameController sharedInstance].currentGame ? 2 : 1;
 		case 1:
 			return 4;
 	}

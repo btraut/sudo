@@ -47,26 +47,20 @@ NSString * const kDictionaryRepresentationGameTilePencilsKey = @"kDictionaryRepr
 	return self;
 }
 
-- (id)initWithBoard:(ZSGameBoard *)newGameBoard dictionaryRepresentation:(NSDictionary *)dict {
-	self = [self initWithBoard:newGameBoard];
-	
-	if (self) {
-		guess = [[dict objectForKey:kDictionaryRepresentationGameTileGuessKey] intValue];
-		answer = [[dict objectForKey:kDictionaryRepresentationGameTileAnswerKey] intValue];
-		locked = [[dict objectForKey:kDictionaryRepresentationGameTileLockedKey] boolValue];
-		
-		groupId = [[dict objectForKey:kDictionaryRepresentationGameTileGroupIdKey] boolValue];
-		
-		for (NSInteger i = 0; i < gameBoard.size; ++i) {
-			NSNumber *pencilNumber = [[dict objectForKey:kDictionaryRepresentationGameTilePencilsKey] objectAtIndex:i];
-			[self setPencil:[pencilNumber boolValue] forGuess:(i + 1)];
-		}
-	}
-	
-	return self;
-}
+#pragma mark - Dictionary Representations
 
-#pragma mark - Setters / Getters
+- (void)setValuesForDictionaryRepresentation:(NSDictionary *)dict {
+	guess = [[dict objectForKey:kDictionaryRepresentationGameTileGuessKey] intValue];
+	answer = [[dict objectForKey:kDictionaryRepresentationGameTileAnswerKey] intValue];
+	locked = [[dict objectForKey:kDictionaryRepresentationGameTileLockedKey] boolValue];
+	
+	groupId = [[dict objectForKey:kDictionaryRepresentationGameTileGroupIdKey] boolValue];
+	
+	for (NSInteger i = 0; i < gameBoard.size; ++i) {
+		NSNumber *pencilNumber = [[dict objectForKey:kDictionaryRepresentationGameTilePencilsKey] objectAtIndex:i];
+		[self setPencil:[pencilNumber boolValue] forGuess:(i + 1)];
+	}
+}
 
 - (NSDictionary *)getDictionaryRepresentation {
 	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
@@ -87,6 +81,8 @@ NSString * const kDictionaryRepresentationGameTilePencilsKey = @"kDictionaryRepr
 	
 	return dict;
 }
+
+#pragma mark - Setters / Getters
 
 - (BOOL)getPencilForGuess:(NSInteger)newGuess {
 	return [[_pencils objectAtIndex:(newGuess - 1)] boolValue];

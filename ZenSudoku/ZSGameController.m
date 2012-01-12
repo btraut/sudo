@@ -11,6 +11,8 @@
 #import "ZSGame.h"
 #import "ZSFastGameGenerator.h"
 
+NSString * const kSavedGameFileName = @"SavedGame.plist";
+
 @implementation ZSGameController
 
 @synthesize currentGame;
@@ -19,7 +21,7 @@
 	self = [super init];
 	
 	if (self) {
-		currentGame = nil;
+		// currentGame = nil;
 	}
 	
 	return self;
@@ -30,6 +32,43 @@
 - (void)generateGameWithDifficulty:(ZSGameDifficulty)difficulty {
 	ZSFastGameGenerator *gameGenerator = [[ZSFastGameGenerator alloc] init];
 	currentGame = [gameGenerator generateGameWithDifficulty:difficulty];
+}
+
+#pragma mark Saved Game
+
+- (NSString *)getPathForFileName:(NSString *)filename {
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString *documentsDirectory = [paths objectAtIndex:0];
+	return [documentsDirectory stringByAppendingPathComponent:filename];
+}
+
+- (BOOL)savedGameInProgress {
+	NSString *savedGameFilePath = [self getPathForFileName:kSavedGameFileName];
+	return [[NSFileManager defaultManager] fileExistsAtPath:savedGameFilePath];
+}
+
+- (void)loadSavedGame {
+	NSString *savedGameFilePath = [self getPathForFileName:kSavedGameFileName];
+	NSDictionary *dictionaryRepresentation = [[NSDictionary alloc] initWithContentsOfFile:savedGameFilePath];
+	currentGame = [[ZSGame alloc] initWithDictionaryRepresentation:dictionaryRepresentation];
+}
+
+- (void)saveGame {
+	[self clearSavedGame];
+	
+	if (currentGame) {
+		NSString *savedGameFilePath = [self getPathForFileName:kSavedGameFileName];
+		NSDictionary *dictionaryRepresentation = [currentGame getDictionaryRepresentation];
+		
+		[dictionaryRepresentation writeToFile:savedGameFilePath atomically:YES];
+	}
+}
+
+- (void)clearSavedGame {
+	NSString *savedGameFilePath = [self getPathForFileName:kSavedGameFileName];
+	
+	NSFileManager *fileManager = [NSFileManager defaultManager];
+	[fileManager removeItemAtPath:savedGameFilePath error:NULL];
 }
 
 #pragma mark Utilities
@@ -78,33 +117,6 @@
 	}
 	
 	free(grid);
-}
-
-#pragma mark Saved Game
-
-- (BOOL)savedGameInProgress {
-	return [[NSUserDefaults standardUserDefaults] boolForKey:kSavedGameInProgressKey];
-}
-
-- (void)loadSavedGame {
-	NSDictionary *dictionaryRepresentation = [[NSUserDefaults standardUserDefaults] dictionaryForKey:kSavedGameKey];
-	currentGame = [[ZSGame alloc] initWithDictionaryRepresentation:dictionaryRepresentation];
-}
-
-- (void)saveGame {
-	[self clearSavedGame];
-	
-	if (currentGame) {
-		NSDictionary *dictionaryRepresentation = [currentGame getDictionaryRepresentation];
-		
-		[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:kSavedGameInProgressKey];
-		[[NSUserDefaults standardUserDefaults] setObject:dictionaryRepresentation forKey:kSavedGameKey];
-	}
-}
-
-- (void)clearSavedGame {
-	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:kSavedGameInProgressKey];
-	[[NSUserDefaults standardUserDefaults] setObject:[NSDictionary dictionary] forKey:kSavedGameKey];
 }
 
 #pragma mark Singleton Methods

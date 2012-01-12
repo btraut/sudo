@@ -40,18 +40,21 @@ typedef struct {
 - (void)copyGroupMapFromFastGameBoard:(ZSFastGameBoard *)gameBoard {
 	// Set all the group ids from the game board.
 	[_gameBoard copyGroupMapFromFastGameBoard:gameBoard];
-	// [_solvedGameBoard copyGroupMapFromFastGameBoard:gameBoard];
+	[_solvedGameBoard copyGroupMapFromFastGameBoard:gameBoard];
 }
 
 - (void)copyGuessesFromFastGameBoard:(ZSFastGameBoard *)gameBoard {
 	// Copy the game board's answers into our guesses.
 	[_gameBoard copyGuessesFromFastGameBoard:gameBoard];
+	
+	// Reset pencils.
+	[_gameBoard setAllPencils:NO];
 	[_gameBoard addAutoPencils];
 }
 
 - (void)copySolutionToFastGameBoard:(ZSFastGameBoard *)gameBoard {
 	// Save the solution back into the game board's answers.
-	[gameBoard copyGuessesFromFastGameBoard:_solvedGameBoard];
+	[gameBoard copyGuessesFromFastGameBoard:_gameBoard];
 }
 
 - (ZSFastGameBoard *)getGameBoard {
@@ -162,9 +165,6 @@ typedef struct {
 		if (bruteForceResult != ZSGameSolveResultSucceeded) {
 			return bruteForceResult;
 		}
-	} else {
-		// We managed to solve the puzzle without the need to brute force. Copy the solution into the solution array.
-		[_solvedGameBoard copyGuessesFromFastGameBoard:_gameBoard];
 	}
 	
 	// All looks good at this point.
@@ -509,7 +509,15 @@ typedef struct {
 
 - (ZSGameSolveResult)solveBruteForce {
 	// Begin the recursive brute force algorithm.
-	return [self solveBruteForceForRow:0 col:0];
+	ZSGameSolveResult result = [self solveBruteForceForRow:0 col:0];
+	
+	// If a unique solution was found, copy the solution to the main game board.
+	if (result == ZSGameSolveResultSucceeded) {
+		[_gameBoard copyGuessesFromFastGameBoard:_solvedGameBoard];
+	}
+	
+	// Return the result.
+	return result;
 }
 
 - (ZSGameSolveResult)solveBruteForceForRow:(NSInteger)row col:(NSInteger)col {

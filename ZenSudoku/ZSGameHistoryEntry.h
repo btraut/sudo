@@ -30,4 +30,7 @@ typedef enum {
 + (id)undoDescriptionWithType:(ZSGameHistoryEntryType)newType tile:(ZSGameTile *)newTile previousValue:(NSInteger)newPreviousValue;
 - (id)initWithType:(ZSGameHistoryEntryType)newType tile:(ZSGameTile *)newTile previousValue:(NSInteger)newPreviousValue;
 
+- (id)initWithDictionaryRepresentation:(NSDictionary *)dict;
+- (NSDictionary *)getDictionaryRepresentation;
+
 @end

@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "ZSFastGameUtility.h"
+
 typedef struct {
 	NSInteger row;
 	NSInteger col;
@@ -21,7 +23,7 @@ typedef struct {
 
 @class ZSGameBoard;
 
-@interface ZSFastGameBoard : NSObject {
+@interface ZSFastGameBoard : ZSFastGameUtility {
 	NSInteger size;
 	
 	ZSGameTileStub **grid;
@@ -31,9 +33,9 @@ typedef struct {
 	ZSGameTileStub ***groups;
 	ZSGameTileStub ***allSets;
 	
-	BOOL **rowContainsAnswer;
-	BOOL **colContainsAnswer;
-	BOOL **groupContainsAnswer;
+	NSInteger **rowContainsAnswer;
+	NSInteger **colContainsAnswer;
+	NSInteger **groupContainsAnswer;
 }
 
 @property (nonatomic, assign) NSInteger size;
@@ -45,9 +47,9 @@ typedef struct {
 @property (nonatomic, assign) ZSGameTileStub ***groups;
 @property (nonatomic, assign) ZSGameTileStub ***allSets;
 
-@property (nonatomic, assign) BOOL **rowContainsAnswer;
-@property (nonatomic, assign) BOOL **colContainsAnswer;
-@property (nonatomic, assign) BOOL **groupContainsAnswer;
+@property (nonatomic, assign) NSInteger **rowContainsAnswer;
+@property (nonatomic, assign) NSInteger **colContainsAnswer;
+@property (nonatomic, assign) NSInteger **groupContainsAnswer;
 
 // Initialization and Memory Management
 
@@ -98,5 +100,6 @@ typedef struct {
 // Debug
 
 - (void)print9x9Grid;
+- (void)print9x9PencilGrid;
 
 @end

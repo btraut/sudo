@@ -131,23 +131,23 @@
 	groups = malloc(size * sizeof(ZSGameTileStub **));
 	allSets = malloc(3 * size * sizeof(ZSGameTileStub **));
 	
-	rowContainsAnswer = malloc(size * sizeof(BOOL *));
-	colContainsAnswer = malloc(size * sizeof(BOOL *));
-	groupContainsAnswer = malloc(size * sizeof(BOOL *));
+	rowContainsAnswer = malloc(size * sizeof(NSInteger *));
+	colContainsAnswer = malloc(size * sizeof(NSInteger *));
+	groupContainsAnswer = malloc(size * sizeof(NSInteger *));
 	
 	for (NSInteger i = 0; i < size; ++i) {
 		rows[i] = malloc(size * sizeof(ZSGameTileStub *));
 		cols[i] = malloc(size * sizeof(ZSGameTileStub *));
 		groups[i] = malloc(size * sizeof(ZSGameTileStub *));
 		
-		rowContainsAnswer[i] = malloc(size * sizeof(BOOL));
-		colContainsAnswer[i] = malloc(size * sizeof(BOOL));
-		groupContainsAnswer[i] = malloc(size * sizeof(BOOL));
+		rowContainsAnswer[i] = malloc(size * sizeof(NSInteger));
+		colContainsAnswer[i] = malloc(size * sizeof(NSInteger));
+		groupContainsAnswer[i] = malloc(size * sizeof(NSInteger));
 		
 		for (NSInteger j = 0; j < size; ++j) {
-			rowContainsAnswer[i][j] = NO;
-			colContainsAnswer[i][j] = NO;
-			groupContainsAnswer[i][j] = NO;
+			rowContainsAnswer[i][j] = 0;
+			colContainsAnswer[i][j] = 0;
+			groupContainsAnswer[i][j] = 0;
 		}
 	}
 }
@@ -312,15 +312,15 @@
 	[self setAllPencils:NO forTileAtRow:row col:col];
 	
 	if (formerGuess) {
-		rowContainsAnswer[row][formerGuess - 1] = NO;
-		colContainsAnswer[col][formerGuess - 1] = NO;
-		groupContainsAnswer[grid[row][col].groupId][formerGuess - 1] = NO;
+		--rowContainsAnswer[row][formerGuess - 1];
+		--colContainsAnswer[col][formerGuess - 1];
+		--groupContainsAnswer[grid[row][col].groupId][formerGuess - 1];
 	}
 	
 	if (guess) {
-		rowContainsAnswer[row][guess - 1] = YES;
-		colContainsAnswer[col][guess - 1] = YES;
-		groupContainsAnswer[grid[row][col].groupId][guess - 1] = YES;
+		++rowContainsAnswer[row][guess - 1];
+		++colContainsAnswer[col][guess - 1];
+		++groupContainsAnswer[grid[row][col].groupId][guess - 1];
 	}
 }
 
@@ -372,8 +372,6 @@
 	for (NSInteger i = 0; i < size; ++i) {
 		[self setPencil:NO forPencilNumber:guess forTileAtRow:i col:tile->col];
 	}
-	
-	
 	
 	for (NSInteger i = 0; i < size; ++i) {
 		[self setPencil:NO forPencilNumber:guess forTileAtRow:groups[tile->groupId][i]->row col:groups[tile->groupId][i]->col];
@@ -432,6 +430,36 @@
 		
 		if (row == 2 || row == 5) {
 			NSLog(@"-------+-------+-------");
+		}
+	}
+	NSLog(@" ");
+}
+
+- (void)print9x9PencilGrid {
+	NSLog(@" ");
+	for (NSInteger row = 0; row < 9; ++row) {
+		NSMutableString *rowString = [NSMutableString string];
+		
+		for (NSInteger col = 0; col < 9; ++col) {
+			for (NSInteger pencil = 0; pencil < 9; ++pencil) {
+				if (grid[row][col].pencils[pencil]) {
+					[rowString appendString:[NSString stringWithFormat:@"%i", (pencil + 1)]];
+				} else {
+					[rowString appendString:@"."];
+				}
+			}
+			
+			[rowString appendString:@" "];
+			
+			if (col == 2 || col == 5) {
+				[rowString appendString:@"| "];
+			}
+		}
+		
+		NSLog(@"%@", rowString);
+		
+		if (row == 2 || row == 5) {
+			NSLog(@"------------------------------+-------------------------------+------------------------------");
 		}
 	}
 	NSLog(@" ");

@@ -126,7 +126,7 @@
 	 316572984
 	 824913756
 	 597648123
-	*/
+	 */
 }
 
 - (void)testNoSolutions {
@@ -169,6 +169,41 @@
 	ZSGameSolveResult result = [solver solve];
 	
 	STAssertEquals(result, ZSGameSolveResultFailedMultipleSolutions, nil);
+}
+
+- (void)testReusingSolution {
+	ZSFastGameBoard *gameBoard = [[ZSFastGameBoard alloc] initWithSize:9];
+	[gameBoard copyGroupMapFromString:@"000111222 000111222 000111222 333444555 333444555 333444555 666777888 666777888 666777888"];
+	[gameBoard copyGuessesFromString:@"...7..4.1 9.1..5.3. ....8.... .......7. .3....2.8 7...54... .16.7.... .24.1..5. ...6...2."];
+	
+	ZSFastGameBoard *invalidGameBoard = [[ZSFastGameBoard alloc] initWithSize:9];
+	[invalidGameBoard copyGroupMapFromString:@"000111222 000111222 000111222 333444555 333444555 333444555 666777888 666777888 666777888"];
+	[invalidGameBoard copyGuessesFromString:@"......... 9.1..5.3. ....8.... .......7. .3....2.8 7...54... .16.7.... .24.1..5. ...6...2."];
+	
+	ZSFastGameSolver *solver = [[ZSFastGameSolver alloc] initWithSize:gameBoard.size];
+	[solver copyGroupMapFromFastGameBoard:gameBoard];
+	
+	ZSGameSolveResult result;
+	
+	[solver copyGuessesFromFastGameBoard:gameBoard];
+	result = [solver solve];
+	STAssertEquals(result, ZSGameSolveResultSucceeded, nil);
+	
+	[solver copyGuessesFromFastGameBoard:gameBoard];
+	result = [solver solve];
+	STAssertEquals(result, ZSGameSolveResultSucceeded, nil);
+	
+	[solver copyGuessesFromFastGameBoard:gameBoard];
+	result = [solver solve];
+	STAssertEquals(result, ZSGameSolveResultSucceeded, nil);
+	
+	[solver copyGuessesFromFastGameBoard:invalidGameBoard];
+	result = [solver solve];
+	STAssertEquals(result, ZSGameSolveResultFailedMultipleSolutions, nil);
+	
+	[solver copyGuessesFromFastGameBoard:gameBoard];
+	result = [solver solve];
+	STAssertEquals(result, ZSGameSolveResultSucceeded, nil);
 }
 
 - (void)testEasySolutionOrder {

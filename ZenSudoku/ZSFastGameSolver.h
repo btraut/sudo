@@ -7,7 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+
 #import "ZSFastGameBoard.h"
+#import "ZSFastGameUtility.h"
 
 typedef enum {
 	ZSGameSolveResultSucceeded,
@@ -17,7 +19,7 @@ typedef enum {
 
 @class ZSFastGameBoard;
 
-@interface ZSFastGameSolver : NSObject {
+@interface ZSFastGameSolver : ZSFastGameUtility {
 	@private
 	
 	ZSFastGameBoard *_gameBoard;

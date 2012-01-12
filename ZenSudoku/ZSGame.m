@@ -13,12 +13,23 @@
 #import "ZSGameHistoryEntry.h"
 #import "ZSGameBoard.h"
 
+NSString * const kDictionaryRepresentationGameSizeKey = @"kDictionaryRepresentationGameSizeKey";
 NSString * const kDictionaryRepresentationGameDifficultyKey = @"kDictionaryRepresentationGameDifficultyKey";
+NSString * const kDictionaryRepresentationGameTypeKey = @"kDictionaryRepresentationGameTypeKey";
+
 NSString * const kDictionaryRepresentationGameTilesKey = @"kDictionaryRepresentationGameTilesKey";
+
+NSString * const kDictionaryRepresentationGameTimerCountKey = @"kDictionaryRepresentationGameTimerCountKey";
+NSString * const kDictionaryRepresentationGameTotalStrikesKey = @"kDictionaryRepresentationGameTotalStrikesKey";
+
+NSString * const kDictionaryRepresentationGameUndoStackKey = @"kDictionaryRepresentationGameUndoStackKey";
+NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepresentationGameRedoStackKey";
+
 
 @implementation ZSGame
 
-@synthesize difficulty, gameBoard;
+@synthesize difficulty, type;
+@synthesize gameBoard;
 @synthesize recordingHistory;
 @synthesize delegate;
 @synthesize timerCount;
@@ -89,44 +100,63 @@ NSString * const kDictionaryRepresentationGameTilesKey = @"kDictionaryRepresenta
 #pragma mark - Persistant Storage Methods
 
 - (id)initWithDictionaryRepresentation:(NSDictionary *)dict {
-/*
-	self = [self init];
+	// Init the game with the proper size.
+	self = [self initWithSize:[[dict objectForKey:kDictionaryRepresentationGameSizeKey] intValue]];
 	
 	if (self) {
-		NSMutableArray *tileRows = [NSMutableArray array];
+		// Set the game properties.
+		difficulty = [[dict objectForKey:kDictionaryRepresentationGameDifficultyKey] intValue];
+		type = [[dict objectForKey:kDictionaryRepresentationGameTypeKey] intValue];
 		
+		// Unpack the tiles.
 		for (NSInteger row = 0; row < gameBoard.size; row++) {
-			NSMutableArray *tileCols = [NSMutableArray array];
-			
 			for (NSInteger col = 0; col < gameBoard.size; col++) {
-				NSDictionary *gameTileDictionaryRepresentation = [[[dict objectForKey:kDictionaryRepresentationGameTilesKey] objectAtIndex:row] objectAtIndex:col];
-				
-				ZSGameTile *gameTile = [[ZSGameTile alloc] initWithGame:(ZSGame *)self dictionaryRepresentation:gameTileDictionaryRepresentation];
-				
-				gameTile.row = row;
-				gameTile.col = col;
-				
-				[tileCols addObject:gameTile];
+				ZSGameTile *tile = [gameBoard getTileAtRow:row col:col];
+				[tile setValuesForDictionaryRepresentation:[[[dict objectForKey:kDictionaryRepresentationGameTilesKey] objectAtIndex:row] objectAtIndex:col]];
 			}
-			
-			[tileRows addObject:[NSArray arrayWithArray:tileCols]];
 		}
 		
-		_tiles = [NSArray arrayWithArray:tileRows];
+		// Set the game status data.
+		timerCount = [[dict objectForKey:kDictionaryRepresentationGameTimerCountKey] intValue];
+		totalStrikes = [[dict objectForKey:kDictionaryRepresentationGameTotalStrikesKey] intValue];
+		
+		// Unpack history.
+		NSMutableArray *undoStackDictionaries = [dict objectForKey:kDictionaryRepresentationGameUndoStackKey];
+		NSMutableArray *redoStackDictionaries = [dict objectForKey:kDictionaryRepresentationGameRedoStackKey];
+		
+		for (NSArray *stackEntries in undoStackDictionaries) {
+			NSMutableArray *stackEntry = [NSMutableArray array];
+			
+			for (NSDictionary *historyEntry in stackEntries) {
+				[stackEntry addObject:[[ZSGameHistoryEntry alloc] initWithDictionaryRepresentation:historyEntry]];
+			}
+			
+			[_undoStack addObject:stackEntry];
+		}
+		
+		for (NSArray *stackEntries in redoStackDictionaries) {
+			NSMutableArray *stackEntry = [NSMutableArray array];
+			
+			for (NSDictionary *historyEntry in stackEntries) {
+				[stackEntry addObject:[[ZSGameHistoryEntry alloc] initWithDictionaryRepresentation:historyEntry]];
+			}
+			
+			[_redoStack addObject:stackEntry];
+		}
 	}
 	
 	return self;
-*/
-	
-	return nil;
 }
 
 - (NSDictionary *)getDictionaryRepresentation {
-/*
 	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 	
+	// Set the game properties.
+	[dict setValue:[NSNumber numberWithInt:gameBoard.size] forKey:kDictionaryRepresentationGameSizeKey];
 	[dict setValue:[NSNumber numberWithInt:difficulty] forKey:kDictionaryRepresentationGameDifficultyKey];
+	[dict setValue:[NSNumber numberWithInt:type] forKey:kDictionaryRepresentationGameTypeKey];
 	
+	// Build dictionary representations of the tiles and pack them up.
 	NSMutableArray *tileRowArray = [NSMutableArray array];
 	
 	for (NSInteger row = 0; row < gameBoard.size; row++) {
@@ -141,10 +171,39 @@ NSString * const kDictionaryRepresentationGameTilesKey = @"kDictionaryRepresenta
 	
 	[dict setValue:tileRowArray forKey:kDictionaryRepresentationGameTilesKey];
 	
-	return dict;
-*/
+	// Set the game status data.
+	[dict setValue:[NSNumber numberWithInt:timerCount] forKey:kDictionaryRepresentationGameTimerCountKey];
+	[dict setValue:[NSNumber numberWithInt:totalStrikes] forKey:kDictionaryRepresentationGameTotalStrikesKey];
 	
-	return nil;
+	// Build game history dictionaries.
+	NSMutableArray *undoStackDictionaries = [NSMutableArray array];
+	NSMutableArray *redoStackDictionaries = [NSMutableArray array];
+	
+	for (NSArray *stackEntries in _undoStack) {
+		NSMutableArray *stackEntry = [NSMutableArray array];
+		
+		for (ZSGameHistoryEntry *historyEntry in stackEntries) {
+			[stackEntry addObject:[historyEntry getDictionaryRepresentation]];
+		}
+		
+		[undoStackDictionaries addObject:stackEntry];
+	}
+	
+	for (NSArray *stackEntries in _redoStack) {
+		NSMutableArray *stackEntry = [NSMutableArray array];
+		
+		for (ZSGameHistoryEntry *historyEntry in stackEntries) {
+			[stackEntry addObject:[historyEntry getDictionaryRepresentation]];
+		}
+		
+		[redoStackDictionaries addObject:stackEntry];
+	}
+	
+	[dict setValue:undoStackDictionaries forKey:kDictionaryRepresentationGameUndoStackKey];
+	[dict setValue:redoStackDictionaries forKey:kDictionaryRepresentationGameRedoStackKey];
+	
+	// Done.
+	return dict;
 }
 
 #pragma mark - Tile Methods

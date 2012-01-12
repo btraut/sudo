@@ -9,9 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "ZSMainMenuViewController.h"
 
-@interface ZSAppDelegate : UIResponder <UIApplicationDelegate>
+@interface ZSAppDelegate : UIResponder <UIApplicationDelegate, UINavigationControllerDelegate>
 
-@property (strong, nonatomic) IBOutlet UIWindow *window;
+@property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) UINavigationController *navigationController;
 
 - (void)setUserDefaults;
 
@@ -30,6 +31,3 @@ extern NSString * const kClearPencilsAfterGuessingKey;
 
 extern NSString * const kShowErrorsOptionKey;
 extern NSString * const kRemoveTileAfterErrorKey;
-
-extern NSString * const kSavedGameInProgressKey;
-extern NSString * const kSavedGameKey;

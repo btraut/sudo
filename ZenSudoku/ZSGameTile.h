@@ -37,8 +37,8 @@
 @property (nonatomic, assign) BOOL locked;
 
 - (id)initWithBoard:(ZSGameBoard *)gameBoard;
-- (id)initWithBoard:(ZSGameBoard *)gameBoard dictionaryRepresentation:(NSDictionary *)dict;
 
+- (void)setValuesForDictionaryRepresentation:(NSDictionary *)dict;
 - (NSDictionary *)getDictionaryRepresentation;
 
 - (BOOL)getPencilForGuess:(NSInteger)newGuess;

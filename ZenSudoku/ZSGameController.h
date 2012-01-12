@@ -17,16 +17,22 @@
 
 + (ZSGameController *)sharedInstance;
 
+// Game Management
 - (void)generateGameWithDifficulty:(ZSGameDifficulty)difficulty;
 
-+ (NSInteger **)alloc2DIntGridWithSize:(NSInteger)size;
-+ (void)free2DIntGrid:(NSInteger **)grid withSize:(NSInteger)size;
-+ (BOOL ***)alloc3DBoolGridWithSize:(NSInteger)size;
-+ (void)free3DBoolGrid:(BOOL ***)grid withSize:(NSInteger)size;	
-
+// Saved Games
+- (NSString *)getPathForFileName:(NSString *)filename;
 - (BOOL)savedGameInProgress;
 - (void)loadSavedGame;
 - (void)saveGame;
 - (void)clearSavedGame;
 
+// Utilities
++ (NSInteger **)alloc2DIntGridWithSize:(NSInteger)size;
++ (void)free2DIntGrid:(NSInteger **)grid withSize:(NSInteger)size;
++ (BOOL ***)alloc3DBoolGridWithSize:(NSInteger)size;
++ (void)free3DBoolGrid:(BOOL ***)grid withSize:(NSInteger)size;	
+
 @end
+
+extern NSString * const kSavedGameFileName;

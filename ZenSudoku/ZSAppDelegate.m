@@ -23,16 +23,12 @@ NSString * const kClearPencilsAfterGuessingKey = @"kClearPencilsAfterGuessingKey
 NSString * const kShowErrorsOptionKey = @"kShowErrorsOptionKey";
 NSString * const kRemoveTileAfterErrorKey = @"kRemoveTileAfterErrorKey";
 
-NSString * const kSavedGameInProgressKey = @"kSavedGameInProgressKey";
-NSString * const kSavedGameKey = @"kSavedGameKey";
-
 @implementation ZSAppDelegate
 
 @synthesize window = _window;
+@synthesize navigationController = _navigationController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-	[self.window makeKeyAndVisible];
-	
 	// Set user defaults.
 	[self setUserDefaults];
 	
@@ -40,6 +36,15 @@ NSString * const kSavedGameKey = @"kSavedGameKey";
 	if ([[ZSGameController sharedInstance] savedGameInProgress]) {
 		[[ZSGameController sharedInstance] loadSavedGame];
 	}
+	
+	// Set up the window.
+	ZSMainMenuViewController *mainMenuController = [[ZSMainMenuViewController alloc] initWithStyle:UITableViewStyleGrouped];
+	
+    _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	_navigationController = [[UINavigationController alloc] initWithRootViewController:mainMenuController];
+	
+	_window.rootViewController = _navigationController;
+	[_window makeKeyAndVisible];
 	
 	return YES;
 }
@@ -61,7 +66,7 @@ NSString * const kSavedGameKey = @"kSavedGameKey";
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
-	[[ZSGameController sharedInstance] saveGame];
+	// [[ZSGameController sharedInstance] saveGame];
 }
 
 - (void)setUserDefaults {
@@ -78,9 +83,6 @@ NSString * const kSavedGameKey = @"kSavedGameKey";
 								 
 								 [NSNumber numberWithInt:ZSShowErrorsOptionAlways], kShowErrorsOptionKey,
 								 [NSNumber numberWithBool:NO], kRemoveTileAfterErrorKey,
-								 
-								 [NSNumber numberWithBool:NO], kSavedGameInProgressKey,
-								 [NSDictionary dictionary], kSavedGameKey,
 								 
 								 nil];
 	

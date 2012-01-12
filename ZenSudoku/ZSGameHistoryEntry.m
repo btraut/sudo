@@ -37,4 +37,13 @@
 	return self;
 }
 
+- (id)initWithDictionaryRepresentation:(NSDictionary *)dict {
+	return nil;
+}
+
+- (NSDictionary *)getDictionaryRepresentation {
+	// Not done yet!
+	return [NSDictionary dictionary];
+}
+
 @end

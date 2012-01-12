@@ -9,12 +9,19 @@
 #import <Foundation/Foundation.h>
 #import "ZSGameBoard.h"
 
+
 typedef enum {
 	ZSGameDifficultyEasy,
 	ZSGameDifficultyMedium,
 	ZSGameDifficultyHard,
 	ZSGameDifficultyExpert
 } ZSGameDifficulty;
+
+typedef enum {
+	ZSGameTypeTraditional,
+	ZSGameTypeWordoku,
+	ZSGameTypeJigsaw
+} ZSGameType;
 
 typedef enum {
 	ZSGameAnswerOption1,
@@ -58,6 +65,8 @@ typedef enum {
 
 @interface ZSGame : NSObject <ZSGameBoardDelegate> {
 	ZSGameDifficulty difficulty;
+	ZSGameType type;
+	
 	ZSGameBoard *gameBoard;
 	
 	BOOL recordingHistory;
@@ -77,6 +86,8 @@ typedef enum {
 }
 
 @property (nonatomic, assign) ZSGameDifficulty difficulty;
+@property (nonatomic, assign) ZSGameType type;
+
 @property (nonatomic, strong) ZSGameBoard *gameBoard;
 
 @property (nonatomic, assign) BOOL recordingHistory;
@@ -149,5 +160,16 @@ typedef enum {
 @end
 
 // Dictionary Keys for Game Preservation / Restoration
+extern NSString * const kDictionaryRepresentationGameSizeKey;
 extern NSString * const kDictionaryRepresentationGameDifficultyKey;
+extern NSString * const kDictionaryRepresentationGameTypeKey;
+
 extern NSString * const kDictionaryRepresentationGameTilesKey;
+
+extern NSString * const kDictionaryRepresentationGameTimerCountKey;
+extern NSString * const kDictionaryRepresentationGameTotalStrikesKey;
+
+extern NSString * const kDictionaryRepresentationGameUndoStackKey;
+extern NSString * const kDictionaryRepresentationGameRedoStackKey;
+
+

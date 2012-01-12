@@ -15,7 +15,9 @@
 
 - (ZSGame *)generateGameWithDifficulty:(ZSGameDifficulty)difficulty {
 	ZSGame *game = [self generateStandard9x9Game];
+	
 	game.difficulty = difficulty;
+	game.type = ZSGameTypeTraditional;
 	
 	return game;
 }
@@ -33,8 +35,6 @@
 	
 	// Build a whole puzzle.
 	[self buildPuzzleForX:0 y:0];
-	
-	[_reductionGameBoard print9x9Grid];
 	
 	// Generate a random string of rows and columns to act as our reduction guide.
 	NSInteger *reductionCoords = malloc(_reductionGameBoard.size * _reductionGameBoard.size * sizeof(NSInteger));
