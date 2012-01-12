@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		841F849A14BE8ECA00DFFABC /* ZSFastGameUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 841F849914BE8ECA00DFFABC /* ZSFastGameUtility.m */; };
 		843BEDEF149DC4E800D1D19B /* ZSIconNew57.png in Resources */ = {isa = PBXBuildFile; fileRef = 843BEDEE149DC4E800D1D19B /* ZSIconNew57.png */; };
 		843BEDF1149DC4F100D1D19B /* ZSIconNew114.png in Resources */ = {isa = PBXBuildFile; fileRef = 843BEDF0149DC4F100D1D19B /* ZSIconNew114.png */; };
 		843BEDF3149DC90E00D1D19B /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 843BEDF2149DC90E00D1D19B /* Default.png */; };
@@ -43,8 +42,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		841F849814BE8ECA00DFFABC /* ZSFastGameUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSFastGameUtility.h; sourceTree = "<group>"; };
-		841F849914BE8ECA00DFFABC /* ZSFastGameUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSFastGameUtility.m; sourceTree = "<group>"; };
 		843BEDEE149DC4E800D1D19B /* ZSIconNew57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ZSIconNew57.png; path = Resources/Images/ZSIconNew57.png; sourceTree = "<group>"; };
 		843BEDF0149DC4F100D1D19B /* ZSIconNew114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ZSIconNew114.png; path = Resources/Images/ZSIconNew114.png; sourceTree = "<group>"; };
 		843BEDF2149DC90E00D1D19B /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../Default.png; sourceTree = "<group>"; };
@@ -163,8 +160,6 @@
 				84AC26DF1480DDBA00E966A5 /* ZSGameTile.m */,
 				84B300F2148AF6FD00E568CE /* ZSGameHistoryEntry.h */,
 				84B300F3148AF6FD00E568CE /* ZSGameHistoryEntry.m */,
-				841F849814BE8ECA00DFFABC /* ZSFastGameUtility.h */,
-				841F849914BE8ECA00DFFABC /* ZSFastGameUtility.m */,
 				84E18C9C1498B57F009717D4 /* ZSFastGameBoard.h */,
 				84E18C9D1498B57F009717D4 /* ZSFastGameBoard.m */,
 				84E18C921498B0F6009717D4 /* ZSFastGameGenerator.h */,
@@ -408,7 +403,6 @@
 				84E18C961498B0F6009717D4 /* ZSFastGameGenerator.m in Sources */,
 				84E18C971498B0F6009717D4 /* ZSFastGameSolver.m in Sources */,
 				84E18C9E1498B57F009717D4 /* ZSFastGameBoard.m in Sources */,
-				841F849A14BE8ECA00DFFABC /* ZSFastGameUtility.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

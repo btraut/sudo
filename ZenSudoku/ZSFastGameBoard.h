@@ -8,8 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-#import "ZSFastGameUtility.h"
-
 typedef struct {
 	NSInteger row;
 	NSInteger col;
@@ -23,7 +21,7 @@ typedef struct {
 
 @class ZSGameBoard;
 
-@interface ZSFastGameBoard : ZSFastGameUtility {
+@interface ZSFastGameBoard : NSObject {
 	NSInteger size;
 	
 	ZSGameTileStub **grid;
