@@ -12,6 +12,8 @@
 #import "ZSGameController.h"
 #import "ZSGame.h"
 
+#import "TestFlight.h"
+
 @implementation ZSMainMenuViewController
 
 - (id)initWithStyle:(UITableViewStyle)style {
@@ -62,7 +64,7 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-	return 2;
+	return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -71,6 +73,8 @@
 			return [ZSGameController sharedInstance].currentGame ? 2 : 1;
 		case 1:
 			return 4;
+		case 2:
+			return 1;
 	}
 	
 	return 0;
@@ -97,7 +101,7 @@
 				cell.textLabel.text = @"Resume Game";
 				break;
 		}
-	} else {
+	} else if (indexPath.section == 1) {
 		switch (indexPath.row) {
 			case 0:
 				cell.textLabel.text = @"Statistics";
@@ -115,6 +119,8 @@
 				cell.textLabel.text = @"Settings";
 				break;
 		}
+	} else {
+		cell.textLabel.text = @"Feedback";
 	}
 	
 	return cell;
@@ -145,7 +151,7 @@
 				
 				break;
 		}
-	} else {
+	} else if (indexPath.row == 1) {
 		switch (indexPath.row) {
 			case 0:
 				break;
@@ -159,6 +165,8 @@
 			case 3:
 				break;
 		}
+	} else {
+		[TestFlight openFeedbackView];
 	}
 	
 	if (detailViewController) {

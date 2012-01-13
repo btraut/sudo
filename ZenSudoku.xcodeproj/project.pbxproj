@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		841F84FA14C0381C00DFFABC /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 841F84F614C0381C00DFFABC /* libTestFlight.a */; };
 		843BEDEF149DC4E800D1D19B /* ZSIconNew57.png in Resources */ = {isa = PBXBuildFile; fileRef = 843BEDEE149DC4E800D1D19B /* ZSIconNew57.png */; };
 		843BEDF1149DC4F100D1D19B /* ZSIconNew114.png in Resources */ = {isa = PBXBuildFile; fileRef = 843BEDF0149DC4F100D1D19B /* ZSIconNew114.png */; };
 		843BEDF3149DC90E00D1D19B /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 843BEDF2149DC90E00D1D19B /* Default.png */; };
@@ -42,6 +43,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		841F84F614C0381C00DFFABC /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
+		841F84F914C0381C00DFFABC /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		843BEDEE149DC4E800D1D19B /* ZSIconNew57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ZSIconNew57.png; path = Resources/Images/ZSIconNew57.png; sourceTree = "<group>"; };
 		843BEDF0149DC4F100D1D19B /* ZSIconNew114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ZSIconNew114.png; path = Resources/Images/ZSIconNew114.png; sourceTree = "<group>"; };
 		843BEDF2149DC90E00D1D19B /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../Default.png; sourceTree = "<group>"; };
@@ -105,6 +108,7 @@
 				84D55014147F1C4A00A7934E /* UIKit.framework in Frameworks */,
 				84D55016147F1C4A00A7934E /* Foundation.framework in Frameworks */,
 				84D55018147F1C4A00A7934E /* CoreGraphics.framework in Frameworks */,
+				841F84FA14C0381C00DFFABC /* libTestFlight.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,9 +125,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		841F84F514C0381C00DFFABC /* TestFlightSDK0.8.2 */ = {
+			isa = PBXGroup;
+			children = (
+				841F84F914C0381C00DFFABC /* TestFlight.h */,
+				841F84F614C0381C00DFFABC /* libTestFlight.a */,
+			);
+			path = TestFlightSDK0.8.2;
+			sourceTree = "<group>";
+		};
 		8449D95B14833649003F6FB3 /* External */ = {
 			isa = PBXGroup;
 			children = (
+				841F84F514C0381C00DFFABC /* TestFlightSDK0.8.2 */,
 			);
 			name = External;
 			sourceTree = "<group>";
@@ -452,7 +466,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "E061C60A-E852-4BE3-A3BC-27645E2E9CBC";
+				PROVISIONING_PROFILE = "B62E574E-0DDA-4A03-84C5-35E1BBCBB1B1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -462,10 +476,15 @@
 		843BEDCE149C8FE200D1D19B /* Ad Hoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COPY_PHASE_STRIP = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ZenSudoku/ZenSudoku-Prefix.pch";
 				INFOPLIST_FILE = "ZenSudoku/ZenSudoku-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/ZenSudoku/TestFlightSDK0.8.2\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -511,7 +530,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				PROVISIONING_PROFILE = "E061C60A-E852-4BE3-A3BC-27645E2E9CBC";
+				PROVISIONING_PROFILE = "B62E574E-0DDA-4A03-84C5-35E1BBCBB1B1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -533,7 +552,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "E061C60A-E852-4BE3-A3BC-27645E2E9CBC";
+				PROVISIONING_PROFILE = "B62E574E-0DDA-4A03-84C5-35E1BBCBB1B1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -547,6 +566,10 @@
 				GCC_PREFIX_HEADER = "ZenSudoku/ZenSudoku-Prefix.pch";
 				INFOPLIST_FILE = "ZenSudoku/ZenSudoku-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/ZenSudoku/TestFlightSDK0.8.2\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -564,6 +587,10 @@
 				GCC_PREFIX_HEADER = "ZenSudoku/ZenSudoku-Prefix.pch";
 				INFOPLIST_FILE = "ZenSudoku/ZenSudoku-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/ZenSudoku/TestFlightSDK0.8.2\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;

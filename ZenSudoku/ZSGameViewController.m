@@ -15,6 +15,8 @@
 #import "ZSGameHistoryEntry.h"
 #import "ZSGameController.h"
 
+#import "TestFlight.h"
+
 @implementation ZSGameViewController
 
 @synthesize game;
@@ -46,6 +48,9 @@
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
+	
+	// TestFlight Checkpoint
+	[TestFlight passCheckpoint:kTestFlightCheckPointStartedNewPuzzle];
 	
 	// Build the menu button.
 	UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithTitle:@"Menu" style:UIBarButtonItemStyleBordered target:self action:@selector(closeButtonWasTouched)];
@@ -434,6 +439,9 @@
 }
 
 - (void)gameWasSolved {
+	// TestFlight Checkpoint
+	[TestFlight passCheckpoint:kTestFlightCheckPointSolvedPuzzle];
+	
 	// Stop the game timer.
 	[game stopGameTimer];
 	

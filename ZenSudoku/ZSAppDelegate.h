@@ -20,6 +20,10 @@
 
 // === Define Preference Keys === //
 
+extern NSString * const kTestFlightTeamToken;
+extern NSString * const kTestFlightCheckPointStartedNewPuzzle;
+extern NSString * const kTestFlightCheckPointSolvedPuzzle;
+
 extern NSString * const kTileAnswerOrderKey;
 
 extern NSString * const kClearAnswerOptionSelectionAfterPickingTileForAnswerKey;

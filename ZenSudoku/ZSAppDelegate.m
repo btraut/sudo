@@ -11,6 +11,12 @@
 #import "ZSGameController.h"
 #import "ZSGame.h"
 
+#import "TestFlight.h"
+
+NSString * const kTestFlightTeamToken = @"b838f7b1003025e596ee5b134d349769_NDgyOTkyMDEyLTAxLTEzIDA1OjAyOjMzLjM4ODA4NA";
+NSString * const kTestFlightCheckPointStartedNewPuzzle = @"kTestFlightCheckPointStartedNewPuzzle";
+NSString * const kTestFlightCheckPointSolvedPuzzle = @"kTestFlightCheckPointSolvedPuzzle";
+
 NSString * const kTileAnswerOrderKey = @"kTileAnswerOrderKey";
 
 NSString * const kClearAnswerOptionSelectionAfterPickingTileForAnswerKey = @"kClearAnswerOptionSelectionAfterPickingTileForAnswerKey";
@@ -29,6 +35,9 @@ NSString * const kRemoveTileAfterErrorKey = @"kRemoveTileAfterErrorKey";
 @synthesize navigationController = _navigationController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+	// Tell TestFlight that we used the app.
+	[TestFlight takeOff:kTestFlightTeamToken];
+	
 	// Set user defaults.
 	[self setUserDefaults];
 	
