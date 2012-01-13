@@ -19,6 +19,7 @@
 
 // Game Management
 - (void)generateGameWithDifficulty:(ZSGameDifficulty)difficulty;
+- (void)clearCurrentGame;
 
 // Saved Games
 - (NSString *)getPathForFileName:(NSString *)filename;

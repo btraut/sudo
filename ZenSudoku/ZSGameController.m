@@ -34,6 +34,10 @@ NSString * const kSavedGameFileName = @"SavedGame.plist";
 	currentGame = [gameGenerator generateGameWithDifficulty:difficulty];
 }
 
+- (void)clearCurrentGame {
+	currentGame = nil;
+}
+
 #pragma mark Saved Game
 
 - (NSString *)getPathForFileName:(NSString *)filename {

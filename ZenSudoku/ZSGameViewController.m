@@ -13,6 +13,7 @@
 #import "ZSGameBoard.h"
 #import "ZSAppDelegate.h"
 #import "ZSGameHistoryEntry.h"
+#import "ZSGameController.h"
 
 @implementation ZSGameViewController
 
@@ -338,6 +339,12 @@
 #pragma mark - Button Handler Methods
 
 - (void)closeButtonWasTouched {
+	// If the game was finished, delete it.
+	if ([game isSolved]) {
+		[[ZSGameController sharedInstance] clearCurrentGame];
+	}
+	
+	// Navigate back to the main menu.
 	UINavigationController *gameNavController = self.navigationController;
 	UINavigationController *mainNavController;
 	
