@@ -54,7 +54,7 @@ NSString * const kDictionaryRepresentationGameTilePencilsKey = @"kDictionaryRepr
 	answer = [[dict objectForKey:kDictionaryRepresentationGameTileAnswerKey] intValue];
 	locked = [[dict objectForKey:kDictionaryRepresentationGameTileLockedKey] boolValue];
 	
-	groupId = [[dict objectForKey:kDictionaryRepresentationGameTileGroupIdKey] boolValue];
+	groupId = [[dict objectForKey:kDictionaryRepresentationGameTileGroupIdKey] intValue];
 	
 	for (NSInteger i = 0; i < gameBoard.size; ++i) {
 		NSNumber *pencilNumber = [[dict objectForKey:kDictionaryRepresentationGameTilePencilsKey] objectAtIndex:i];

@@ -50,7 +50,7 @@ NSString * const kRemoveTileAfterErrorKey = @"kRemoveTileAfterErrorKey";
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
-	
+	[[ZSGameController sharedInstance] saveGame];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {

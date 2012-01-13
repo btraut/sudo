@@ -160,6 +160,10 @@
 #pragma mark - Touch Events
 
 - (void)handleTap {
+	NSLog(@"Row: %i", tile.row);
+	NSLog(@"Col: %i", tile.col);
+	NSLog(@"Group: %i", tile.groupId);
+	
 	[(id<ZSGameBoardTileTouchDelegate>)delegate gameBoardTileWasTouched:self];
 }
 

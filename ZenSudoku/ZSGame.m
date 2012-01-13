@@ -450,17 +450,20 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 		ZSGameHistoryEntry *undoDescription = [historyState objectAtIndex:(i - 1)];
 		
 		NSInteger tempPreviousValue;
+		ZSGameTile *undoTile;
 		
 		switch (undoDescription.type) {
 			case ZSGameHistoryEntryTypeGuess:
-				tempPreviousValue = undoDescription.tile.guess;
-				[gameBoard setGuess:undoDescription.previousValue forTileAtRow:undoDescription.tile.row col:undoDescription.tile.col];
+				undoTile = [gameBoard getTileAtRow:undoDescription.row col:undoDescription.col];
+				tempPreviousValue = undoTile.guess;
+				[gameBoard setGuess:undoDescription.previousValue forTileAtRow:undoDescription.row col:undoDescription.col];
 				undoDescription.previousValue = tempPreviousValue;
 				break;
 				
 			case ZSGameHistoryEntryTypePencil:
-				tempPreviousValue = [undoDescription.tile getPencilForGuess:undoDescription.pencilNumber];
-				[gameBoard setPencil:undoDescription.previousValue forPencilNumber:undoDescription.pencilNumber forTileAtRow:undoDescription.tile.row col:undoDescription.tile.col];
+				undoTile = [gameBoard getTileAtRow:undoDescription.row col:undoDescription.col];
+				tempPreviousValue = [undoTile getPencilForGuess:undoDescription.pencilNumber];
+				[gameBoard setPencil:undoDescription.previousValue forPencilNumber:undoDescription.pencilNumber forTileAtRow:undoDescription.row col:undoDescription.col];
 				undoDescription.previousValue = tempPreviousValue;
 				break;
 		}
@@ -498,17 +501,20 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 	// Walk the history state backwards and restore each action.
 	for (ZSGameHistoryEntry *undoDescription in historyState) {
 		NSInteger tempPreviousValue;
+		ZSGameTile *redoTile;
 		
 		switch (undoDescription.type) {
 			case ZSGameHistoryEntryTypeGuess:
-				tempPreviousValue = undoDescription.tile.guess;
-				[gameBoard setGuess:undoDescription.previousValue forTileAtRow:undoDescription.tile.row col:undoDescription.tile.col];
+				redoTile = [gameBoard getTileAtRow:undoDescription.row col:undoDescription.col];
+				tempPreviousValue = redoTile.guess;
+				[gameBoard setGuess:undoDescription.previousValue forTileAtRow:undoDescription.row col:undoDescription.col];
 				undoDescription.previousValue = tempPreviousValue;
 				break;
 				
 			case ZSGameHistoryEntryTypePencil:
-				tempPreviousValue = [undoDescription.tile getPencilForGuess:undoDescription.pencilNumber];
-				[gameBoard setPencil:undoDescription.previousValue forPencilNumber:undoDescription.pencilNumber forTileAtRow:undoDescription.tile.row col:undoDescription.tile.col];
+				redoTile = [gameBoard getTileAtRow:undoDescription.row col:undoDescription.col];
+				tempPreviousValue = [redoTile getPencilForGuess:undoDescription.pencilNumber];
+				[gameBoard setPencil:undoDescription.previousValue forPencilNumber:undoDescription.pencilNumber forTileAtRow:undoDescription.row col:undoDescription.col];
 				undoDescription.previousValue = tempPreviousValue;
 				break;
 		}
