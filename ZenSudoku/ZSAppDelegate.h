@@ -18,11 +18,13 @@
 
 @end
 
-// === Define Preference Keys === //
+// Test Flight Params
 
 extern NSString * const kTestFlightTeamToken;
 extern NSString * const kTestFlightCheckPointStartedNewPuzzle;
 extern NSString * const kTestFlightCheckPointSolvedPuzzle;
+
+// Preference Keys
 
 extern NSString * const kTileAnswerOrderKey;
 

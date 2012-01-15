@@ -13,6 +13,7 @@
 #import "ZSGame.h"
 
 #import "TestFlight.h"
+#import "IASKAppSettingsViewController.h"
 
 @implementation ZSMainMenuViewController
 
@@ -131,6 +132,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	UIViewController *detailViewController = nil;
 	
+	IASKAppSettingsViewController *appSettingsViewController;
+	
 	if (indexPath.section == 0) {
 		ZSGame *game;
 		
@@ -151,7 +154,7 @@
 				
 				break;
 		}
-	} else if (indexPath.row == 1) {
+	} else if (indexPath.section == 1) {
 		switch (indexPath.row) {
 			case 0:
 				break;
@@ -163,6 +166,11 @@
 				break;
 				
 			case 3:
+				appSettingsViewController = [[IASKAppSettingsViewController alloc] initWithNibName:@"IASKAppSettingsView" bundle:nil];
+				appSettingsViewController.delegate = self;
+				appSettingsViewController.showDoneButton = NO;
+				[self.navigationController pushViewController:appSettingsViewController animated:YES];
+
 				break;
 		}
 	} else {

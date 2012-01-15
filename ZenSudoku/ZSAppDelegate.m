@@ -81,17 +81,17 @@ NSString * const kRemoveTileAfterErrorKey = @"kRemoveTileAfterErrorKey";
 - (void)setUserDefaults {
     NSDictionary *appDefaults = [NSDictionary dictionaryWithObjectsAndKeys:
 								 
-								 [NSNumber numberWithInt:ZSGameTileAnswerOrderTileFirst], kTileAnswerOrderKey,
-								 
 								 [NSNumber numberWithBool:NO], kClearAnswerOptionSelectionAfterPickingTileForAnswerKey,
 								 [NSNumber numberWithBool:NO], kClearTileSelectionAfterPickingAnswerOptionForAnswerKey,
 								 [NSNumber numberWithBool:NO], kClearAnswerOptionSelectionAfterPickingTileForPencilKey,
 								 [NSNumber numberWithBool:NO], kClearTileSelectionAfterPickingAnswerOptionForPencilKey,
 								 
-								 [NSNumber numberWithBool:YES], kClearPencilsAfterGuessingKey,
+								 // [NSNumber numberWithInt:ZSGameTileAnswerOrderTileFirst], kTileAnswerOrderKey,
 								 
-								 [NSNumber numberWithInt:ZSShowErrorsOptionAlways], kShowErrorsOptionKey,
-								 [NSNumber numberWithBool:NO], kRemoveTileAfterErrorKey,
+								 // [NSNumber numberWithBool:YES], kClearPencilsAfterGuessingKey,
+								 
+								 // [NSNumber numberWithInt:ZSShowErrorsOptionAlways], kShowErrorsOptionKey,
+								 // [NSNumber numberWithBool:NO], kRemoveTileAfterErrorKey,
 								 
 								 nil];
 	
