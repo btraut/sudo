@@ -31,6 +31,8 @@
 		841F854014C2601500DFFABC /* IASKPSToggleSwitchSpecifierViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 841F852B14C2601500DFFABC /* IASKPSToggleSwitchSpecifierViewCell.xib */; };
 		841F854114C2601500DFFABC /* IASKSpecifierValuesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 841F852C14C2601500DFFABC /* IASKSpecifierValuesView.xib */; };
 		841F854714C2651700DFFABC /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 841F854614C2651600DFFABC /* MessageUI.framework */; };
+		841F854A14C40F5600DFFABC /* ZSStatisticsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841F854914C40F5500DFFABC /* ZSStatisticsController.m */; };
+		841F854E14C4287700DFFABC /* ZSStatisticsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841F854C14C4287600DFFABC /* ZSStatisticsViewController.m */; };
 		843BEDEF149DC4E800D1D19B /* ZSIconNew57.png in Resources */ = {isa = PBXBuildFile; fileRef = 843BEDEE149DC4E800D1D19B /* ZSIconNew57.png */; };
 		843BEDF1149DC4F100D1D19B /* ZSIconNew114.png in Resources */ = {isa = PBXBuildFile; fileRef = 843BEDF0149DC4F100D1D19B /* ZSIconNew114.png */; };
 		843BEDF3149DC90E00D1D19B /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 843BEDF2149DC90E00D1D19B /* Default.png */; };
@@ -106,6 +108,10 @@
 		841F852B14C2601500DFFABC /* IASKPSToggleSwitchSpecifierViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IASKPSToggleSwitchSpecifierViewCell.xib; sourceTree = "<group>"; };
 		841F852C14C2601500DFFABC /* IASKSpecifierValuesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IASKSpecifierValuesView.xib; sourceTree = "<group>"; };
 		841F854614C2651600DFFABC /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		841F854814C40F5500DFFABC /* ZSStatisticsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSStatisticsController.h; sourceTree = "<group>"; };
+		841F854914C40F5500DFFABC /* ZSStatisticsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSStatisticsController.m; sourceTree = "<group>"; };
+		841F854B14C4287600DFFABC /* ZSStatisticsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSStatisticsViewController.h; sourceTree = "<group>"; };
+		841F854C14C4287600DFFABC /* ZSStatisticsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSStatisticsViewController.m; sourceTree = "<group>"; };
 		843BEDEE149DC4E800D1D19B /* ZSIconNew57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ZSIconNew57.png; path = Resources/Images/ZSIconNew57.png; sourceTree = "<group>"; };
 		843BEDF0149DC4F100D1D19B /* ZSIconNew114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ZSIconNew114.png; path = Resources/Images/ZSIconNew114.png; sourceTree = "<group>"; };
 		843BEDF2149DC90E00D1D19B /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../Default.png; sourceTree = "<group>"; };
@@ -336,6 +342,8 @@
 			children = (
 				84AC26E21480EB7D00E966A5 /* ZSGameController.h */,
 				84AC26E31480EB7D00E966A5 /* ZSGameController.m */,
+				841F854814C40F5500DFFABC /* ZSStatisticsController.h */,
+				841F854914C40F5500DFFABC /* ZSStatisticsController.m */,
 			);
 			name = "Model Controllers";
 			sourceTree = "<group>";
@@ -414,6 +422,8 @@
 				8449D9561481D77D003F6FB3 /* ZSGameAnswerOptionsViewController.m */,
 				8449D9581481E518003F6FB3 /* ZSGameAnswerOptionViewController.h */,
 				8449D9591481E518003F6FB3 /* ZSGameAnswerOptionViewController.m */,
+				841F854B14C4287600DFFABC /* ZSStatisticsViewController.h */,
+				841F854C14C4287600DFFABC /* ZSStatisticsViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -587,6 +597,8 @@
 				841F853914C2601500DFFABC /* IASKSlider.m in Sources */,
 				841F853A14C2601500DFFABC /* IASKSwitch.m in Sources */,
 				841F853B14C2601500DFFABC /* IASKTextField.m in Sources */,
+				841F854A14C40F5600DFFABC /* ZSStatisticsController.m in Sources */,
+				841F854E14C4287700DFFABC /* ZSStatisticsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

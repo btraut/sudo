@@ -80,21 +80,10 @@
 	
 	switch (indexPath.row) {
 		default:
-		case 0:
-			cell.textLabel.text = @"Easy";
-			break;
-			
-		case 1:
-			cell.textLabel.text = @"Medium";
-			break;
-			
-		case 2:
-			cell.textLabel.text = @"Hard";
-			break;
-			
-		case 3:
-			cell.textLabel.text = @"Expert";
-			break;
+		case 0: cell.textLabel.text = @"Easy"; break;
+		case 1: cell.textLabel.text = @"Medium"; break;
+		case 2: cell.textLabel.text = @"Hard"; break;
+		case 3: cell.textLabel.text = @"Expert"; break;
 	}
 	
 	return cell;
@@ -103,25 +92,24 @@
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	// Set the difficulty based on the user's choice.
+	ZSGameDifficulty newDifficulty;
+	
 	switch (indexPath.row) {
 		default:
-		case 0:
-			[[ZSGameController sharedInstance] generateGameWithDifficulty:ZSGameDifficultyEasy];
-			break;
-			
-		case 1:
-			[[ZSGameController sharedInstance] generateGameWithDifficulty:ZSGameDifficultyMedium];
-			break;
-			
-		case 2:
-			[[ZSGameController sharedInstance] generateGameWithDifficulty:ZSGameDifficultyHard];
-			break;
-			
-		case 3:
-			[[ZSGameController sharedInstance] generateGameWithDifficulty:ZSGameDifficultyExpert];
-			break;
+		case 0: newDifficulty = ZSGameDifficultyEasy; break;
+		case 1: newDifficulty = ZSGameDifficultyMedium; break;
+		case 2: newDifficulty = ZSGameDifficultyHard; break;
+		case 3: newDifficulty = ZSGameDifficultyExpert; break;
 	}
 	
+	// Create a new game.
+	[[ZSGameController sharedInstance] generateGameWithDifficulty:newDifficulty];
+	
+	// Tell the statistics controller that we've started a new game.
+	[[ZSGameController sharedInstance].currentGame notifyStatisticsOfNewGame];
+	
+	// Push the game view controller on the stack.
 	ZSGameViewController *gameViewController = [[ZSGameViewController alloc] initWithGame:[ZSGameController sharedInstance].currentGame];
 	UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:gameViewController];
 	

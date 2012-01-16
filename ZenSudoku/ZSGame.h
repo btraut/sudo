@@ -53,6 +53,7 @@ typedef enum {
 
 - (void)tileGuessDidChange:(NSInteger)guess forTileAtRow:(NSInteger)row col:(NSInteger)col;
 - (void)tilePencilDidChange:(BOOL)isSet forPencilNumber:(NSInteger)pencilNumber forTileAtRow:(NSInteger)row col:(NSInteger)col;
+- (void)guess:(NSInteger)guess isErrorForTileAtRow:(NSInteger)row col:(NSInteger)col;
 - (void)gameWasSolved;
 - (void)timerDidAdvance;
 
@@ -104,6 +105,8 @@ typedef enum {
 
 - (id)initWithSize:(NSInteger)size;
 - (id)initWithSize:(NSInteger)size answers:(NSInteger **)answers groupMap:(NSInteger **)groupMap;
+
+- (void)notifyStatisticsOfNewGame;
 
 // Persistant Storage Methods
 
@@ -158,6 +161,17 @@ typedef enum {
 - (void)addUndoStop;
 
 @end
+
+// Game Difficulty Names
+extern NSString * const kGameDifficultyNameEasy;
+extern NSString * const kGameDifficultyNameMedium;
+extern NSString * const kGameDifficultyNameHard;
+extern NSString * const kGameDifficultyNameExpert;
+
+// Game Type Names
+extern NSString * const kGameTypeNameTraditional;
+extern NSString * const kGameTypeNameWordoku;
+extern NSString * const kGameTypeNameJigsaw;
 
 // Dictionary Keys for Game Preservation / Restoration
 extern NSString * const kDictionaryRepresentationGameSizeKey;

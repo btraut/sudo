@@ -9,6 +9,7 @@
 #import "ZSAppDelegate.h"
 #import "ZSMainMenuViewController.h"
 #import "ZSGameController.h"
+#import "ZSStatisticsController.h"
 #import "ZSGame.h"
 
 #import "TestFlight.h"
@@ -60,6 +61,7 @@ NSString * const kRemoveTileAfterErrorKey = @"kRemoveTileAfterErrorKey";
 
 - (void)applicationWillResignActive:(UIApplication *)application {
 	[[ZSGameController sharedInstance] saveGame];
+	[[ZSStatisticsController sharedInstance] saveStats];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
@@ -96,6 +98,12 @@ NSString * const kRemoveTileAfterErrorKey = @"kRemoveTileAfterErrorKey";
 								 nil];
 	
 	[[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];	
+}
+
+- (NSString *)getPathForFileName:(NSString *)filename {
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString *documentsDirectory = [paths objectAtIndex:0];
+	return [documentsDirectory stringByAppendingPathComponent:filename];
 }
 
 @end

@@ -40,19 +40,15 @@ NSString * const kSavedGameFileName = @"SavedGame.plist";
 
 #pragma mark Saved Game
 
-- (NSString *)getPathForFileName:(NSString *)filename {
-	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-	NSString *documentsDirectory = [paths objectAtIndex:0];
-	return [documentsDirectory stringByAppendingPathComponent:filename];
-}
-
 - (BOOL)savedGameInProgress {
-	NSString *savedGameFilePath = [self getPathForFileName:kSavedGameFileName];
+	ZSAppDelegate *appDelegate = (ZSAppDelegate *)[[UIApplication sharedApplication] delegate];
+	NSString *savedGameFilePath = [appDelegate getPathForFileName:kSavedGameFileName];
 	return [[NSFileManager defaultManager] fileExistsAtPath:savedGameFilePath];
 }
 
 - (void)loadSavedGame {
-	NSString *savedGameFilePath = [self getPathForFileName:kSavedGameFileName];
+	ZSAppDelegate *appDelegate = (ZSAppDelegate *)[[UIApplication sharedApplication] delegate];
+	NSString *savedGameFilePath = [appDelegate getPathForFileName:kSavedGameFileName];
 	NSDictionary *dictionaryRepresentation = [[NSDictionary alloc] initWithContentsOfFile:savedGameFilePath];
 	currentGame = [[ZSGame alloc] initWithDictionaryRepresentation:dictionaryRepresentation];
 }
@@ -61,7 +57,8 @@ NSString * const kSavedGameFileName = @"SavedGame.plist";
 	[self clearSavedGame];
 	
 	if (currentGame) {
-		NSString *savedGameFilePath = [self getPathForFileName:kSavedGameFileName];
+		ZSAppDelegate *appDelegate = (ZSAppDelegate *)[[UIApplication sharedApplication] delegate];
+		NSString *savedGameFilePath = [appDelegate getPathForFileName:kSavedGameFileName];
 		NSDictionary *dictionaryRepresentation = [currentGame getDictionaryRepresentation];
 		
 		[dictionaryRepresentation writeToFile:savedGameFilePath atomically:YES];
@@ -69,7 +66,8 @@ NSString * const kSavedGameFileName = @"SavedGame.plist";
 }
 
 - (void)clearSavedGame {
-	NSString *savedGameFilePath = [self getPathForFileName:kSavedGameFileName];
+	ZSAppDelegate *appDelegate = (ZSAppDelegate *)[[UIApplication sharedApplication] delegate];
+	NSString *savedGameFilePath = [appDelegate getPathForFileName:kSavedGameFileName];
 	
 	NSFileManager *fileManager = [NSFileManager defaultManager];
 	[fileManager removeItemAtPath:savedGameFilePath error:NULL];

@@ -10,6 +10,7 @@
 #import "ZSNewGameOptionsViewController.h"
 #import "ZSGameViewController.h"
 #import "ZSGameController.h"
+#import "ZSStatisticsViewController.h"
 #import "ZSGame.h"
 
 #import "TestFlight.h"
@@ -20,9 +21,7 @@
 - (id)initWithStyle:(UITableViewStyle)style {
 	self = [super initWithStyle:style];
 	
-	if (self) {
-		// Custom initialization
-	}
+	if (self) { }
 	
 	return self;
 }
@@ -94,31 +93,15 @@
 	
 	if (indexPath.section == 0) {
 		switch (indexPath.row) {
-			case 0:
-				cell.textLabel.text = @"New Game";
-				break;
-				
-			case 1:
-				cell.textLabel.text = @"Resume Game";
-				break;
+			case 0: cell.textLabel.text = @"New Game"; break;
+			case 1: cell.textLabel.text = @"Resume Game"; break;
 		}
 	} else if (indexPath.section == 1) {
 		switch (indexPath.row) {
-			case 0:
-				cell.textLabel.text = @"Statistics";
-				break;
-				
-			case 1:
-				cell.textLabel.text = @"Instructions";
-				break;
-				
-			case 2:
-				cell.textLabel.text = @"Game Center";
-				break;
-				
-			case 3:
-				cell.textLabel.text = @"Settings";
-				break;
+			case 0: cell.textLabel.text = @"Statistics"; break;
+			case 1: cell.textLabel.text = @"Instructions"; break;
+			case 2: cell.textLabel.text = @"Game Center"; break;
+			case 3: cell.textLabel.text = @"Settings"; break;
 		}
 	} else {
 		cell.textLabel.text = @"Feedback";
@@ -157,6 +140,7 @@
 	} else if (indexPath.section == 1) {
 		switch (indexPath.row) {
 			case 0:
+				detailViewController = [[ZSStatisticsViewController alloc] initWithStyle:UITableViewStyleGrouped];
 				break;
 				
 			case 1:
@@ -169,12 +153,15 @@
 				appSettingsViewController = [[IASKAppSettingsViewController alloc] initWithNibName:@"IASKAppSettingsView" bundle:nil];
 				appSettingsViewController.delegate = self;
 				appSettingsViewController.showDoneButton = NO;
+				
 				[self.navigationController pushViewController:appSettingsViewController animated:YES];
-
+				[tableView deselectRowAtIndexPath:indexPath animated:NO];
+				
 				break;
 		}
 	} else {
 		[TestFlight openFeedbackView];
+		[tableView deselectRowAtIndexPath:indexPath animated:NO];
 	}
 	
 	if (detailViewController) {

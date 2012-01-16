@@ -22,7 +22,6 @@
 - (void)clearCurrentGame;
 
 // Saved Games
-- (NSString *)getPathForFileName:(NSString *)filename;
 - (BOOL)savedGameInProgress;
 - (void)loadSavedGame;
 - (void)saveGame;

@@ -125,7 +125,13 @@
 }
 
 - (void)viewDidUnload {
+	// Call parent.
 	[super viewDidUnload];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+	// Start the game timer.
+	[game stopGameTimer];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -428,6 +434,10 @@
 - (void)tilePencilDidChange:(BOOL)isSet forPencilNumber:(NSInteger)pencilNumber forTileAtRow:(NSInteger)row col:(NSInteger)col {
 	// Reload the tile.
 	[[gameBoardViewController getGameBoardTileViewControllerAtRow:row col:col] reloadView];
+}
+
+- (void)guess:(NSInteger)guess isErrorForTileAtRow:(NSInteger)row col:(NSInteger)col {
+	
 }
 
 - (void)timerDidAdvance {

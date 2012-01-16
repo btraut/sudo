@@ -12,7 +12,20 @@
 #import "ZSGameController.h"
 #import "ZSGameHistoryEntry.h"
 #import "ZSGameBoard.h"
+#import "ZSStatisticsController.h"
 
+// Game Difficulty Names
+NSString * const kGameDifficultyNameEasy = @"kGameDifficultyNameEasy";
+NSString * const kGameDifficultyNameMedium = @"kGameDifficultyNameMedium";
+NSString * const kGameDifficultyNameHard = @"kGameDifficultyNameHard";
+NSString * const kGameDifficultyNameExpert = @"kGameDifficultyNameExpert";
+
+// Game Type Names
+NSString * const kGameTypeNameTraditional = @"kGameTypeNameTraditional";
+NSString * const kGameTypeNameWordoku = @"kGameTypeNameWordoku";
+NSString * const kGameTypeNameJigsaw = @"kGameTypeNameJigsaw";
+
+// Dictionary Keys for Game Preservation / Restoration
 NSString * const kDictionaryRepresentationGameSizeKey = @"kDictionaryRepresentationGameSizeKey";
 NSString * const kDictionaryRepresentationGameDifficultyKey = @"kDictionaryRepresentationGameDifficultyKey";
 NSString * const kDictionaryRepresentationGameTypeKey = @"kDictionaryRepresentationGameTypeKey";
@@ -82,6 +95,10 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 	return self;
 }
 
+- (void)notifyStatisticsOfNewGame {
+	[[ZSStatisticsController sharedInstance] gameStartedWithDifficulty:difficulty];
+}
+
 #pragma mark - Timer Methods
 
 - (void)startGameTimer {
@@ -94,7 +111,11 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 
 - (void)advanceGameTimer:(NSTimer *)timer {
 	++timerCount;
+	
 	[delegate timerDidAdvance];
+	
+	// Notify statistics. We could mod the time and only call this function every so often, but there's little gain in doing so.
+	[[ZSStatisticsController sharedInstance] timeElapsed:1 inGameWithDifficulty:difficulty];
 }
 
 #pragma mark - Persistant Storage Methods
@@ -216,16 +237,41 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 	ZSGameTile *tile = [self getTileAtRow:row col:col];
 	
 	if (tile.guess != guess) {
-		// Create a new history stop.
-		[self addUndoStop];
+		BOOL enterGuess = NO;
 		
-		// Call the internal setter.
-		[gameBoard setGuess:guess forTileAtRow:row col:col];
-		
-		// If settings permit, clear all the pencil marks for influenced tiles.
-		if ([[NSUserDefaults standardUserDefaults] boolForKey:kClearPencilsAfterGuessingKey]) {
-			[gameBoard clearInfluencedPencilsForTileAtRow:row col:col];
+		if (guess == tile.answer) {
+			enterGuess = YES;
+		} else {
+			// Give the user a strike.
+			++totalStrikes;
+			
+			// If we're supposed to remove the tile on error, disallow the entry.
+			if (![[NSUserDefaults standardUserDefaults] integerForKey:kRemoveTileAfterErrorKey]) {
+				enterGuess = YES;
+			}
+			
+			// Create a notification.
+			[delegate guess:guess isErrorForTileAtRow:row col:col];
+			
+			// Notify statistics.
+			[[ZSStatisticsController sharedInstance] strikeEntered];
 		}
+
+		if (enterGuess) {
+			// Create a new history stop.
+			[self addUndoStop];
+			
+			// Call the internal setter.
+			[gameBoard setGuess:guess forTileAtRow:row col:col];
+			
+			// If settings permit, clear all the pencil marks for influenced tiles.
+			if ([[NSUserDefaults standardUserDefaults] boolForKey:kClearPencilsAfterGuessingKey]) {
+				[gameBoard clearInfluencedPencilsForTileAtRow:row col:col];
+			}
+		}
+		
+		// Notify statistics.
+		[[ZSStatisticsController sharedInstance] answerEntered];
 	}
 }
 
@@ -238,7 +284,11 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 	
 	// If the game is over, notify the delegate of that as well.
 	if ([self isSolved]) {
+		// Notify the delegate.
 		[delegate gameWasSolved];
+		
+		// Notify statistics.
+		[[ZSStatisticsController sharedInstance] gameSolvedWithDifficulty:difficulty totalTime:timerCount];
 	}
 }
 
@@ -474,6 +524,9 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 	
 	// Turn recording back on.
 	recordingHistory = YES;
+	
+	// Notify statistics.
+	[[ZSStatisticsController sharedInstance] userUsedUndo];
 }
 
 - (void)redo {
@@ -525,6 +578,9 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 	
 	// Turn recording back on.
 	recordingHistory = YES;
+	
+	// Notify statistics.
+	[[ZSStatisticsController sharedInstance] userUsedRedo];
 }
 
 - (void)addHistoryDescription:(ZSGameHistoryEntry *)undoDescription {

@@ -16,6 +16,8 @@
 
 - (void)setUserDefaults;
 
+- (NSString *)getPathForFileName:(NSString *)filename;
+
 @end
 
 // Test Flight Params
