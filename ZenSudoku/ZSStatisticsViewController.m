@@ -96,22 +96,22 @@
 		switch (indexPath.row) {
 			case 0:
 				cell.textLabel.text = @"Easy";
-				cell.detailTextLabel.text = [NSString stringWithFormat:@"%i", [[[[ZSStatisticsController sharedInstance] gamesSolvedPerDifficulty] objectForKey:kGameDifficultyNameEasy] intValue]];
+				cell.detailTextLabel.text = [NSString stringWithFormat:@"%i", [[ZSStatisticsController sharedInstance] gamesSolvedPerEasy]];
 				break;
 				
 			case 1:
 				cell.textLabel.text = @"Medium";
-				cell.detailTextLabel.text = [NSString stringWithFormat:@"%i", [[[[ZSStatisticsController sharedInstance] gamesSolvedPerDifficulty] objectForKey:kGameDifficultyNameMedium] intValue]];
+				cell.detailTextLabel.text = [NSString stringWithFormat:@"%i", [[ZSStatisticsController sharedInstance] gamesSolvedPerMedium]];
 				break;
 				
 			case 2:
 				cell.textLabel.text = @"Hard";
-				cell.detailTextLabel.text = [NSString stringWithFormat:@"%i", [[[[ZSStatisticsController sharedInstance] gamesSolvedPerDifficulty] objectForKey:kGameDifficultyNameHard] intValue]];
+				cell.detailTextLabel.text = [NSString stringWithFormat:@"%i", [[ZSStatisticsController sharedInstance] gamesSolvedPerHard]];
 				break;
 				
 			case 3:
 				cell.textLabel.text = @"Expert";
-				cell.detailTextLabel.text = [NSString stringWithFormat:@"%i", [[[[ZSStatisticsController sharedInstance] gamesSolvedPerDifficulty] objectForKey:kGameDifficultyNameExpert] intValue]];
+				cell.detailTextLabel.text = [NSString stringWithFormat:@"%i", [[ZSStatisticsController sharedInstance] gamesSolvedPerExpert]];
 				break;
 				
 			case 4:

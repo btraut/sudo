@@ -15,7 +15,11 @@
 	// Games
 	NSInteger totalStartedGames;
 	NSInteger totalSolvedGames;
-	NSMutableDictionary *gamesSolvedPerDifficulty;
+	
+	NSInteger gamesSolvedPerEasy;
+	NSInteger gamesSolvedPerMedium;
+	NSInteger gamesSolvedPerHard;
+	NSInteger gamesSolvedPerExpert;
 	
 	// Answers
 	NSInteger totalEnteredAnswers;
@@ -25,22 +29,45 @@
 	
 	// Time
 	NSInteger totalTimePlayed;
-	NSMutableDictionary *totalTimePlayedPerDifficulty;
-	NSMutableDictionary *fastestGamePerDifficulty;
+	
+	NSInteger totalTimePlayedPerEasy;
+	NSInteger totalTimePlayedPerMedium;
+	NSInteger totalTimePlayedPerHard;
+	NSInteger totalTimePlayedPerExpert;
+	
+	NSInteger fastestGamePerEasy;
+	NSInteger fastestGamePerMedium;
+	NSInteger fastestGamePerHard;
+	NSInteger fastestGamePerExpert;
 }
 
+// Games
 @property (nonatomic, readonly) NSInteger totalStartedGames;
 @property (nonatomic, readonly) NSInteger totalSolvedGames;
-@property (nonatomic, strong) NSMutableDictionary *gamesSolvedPerDifficulty;
 
+@property (nonatomic, readonly) NSInteger gamesSolvedPerEasy;
+@property (nonatomic, readonly) NSInteger gamesSolvedPerMedium;
+@property (nonatomic, readonly) NSInteger gamesSolvedPerHard;
+@property (nonatomic, readonly) NSInteger gamesSolvedPerExpert;
+
+// Answers
 @property (nonatomic, readonly) NSInteger totalEnteredAnswers;
 @property (nonatomic, readonly) NSInteger totalStrikes;
 @property (nonatomic, readonly) NSInteger totalUndos;
 @property (nonatomic, readonly) NSInteger totalRedos;
 
+// Time
 @property (nonatomic, readonly) NSInteger totalTimePlayed;
-@property (nonatomic, strong) NSMutableDictionary *totalTimePlayedPerDifficulty;
-@property (nonatomic, strong) NSMutableDictionary *fastestGamePerDifficulty;
+
+@property (nonatomic, readonly) NSInteger totalTimePlayedPerEasy;
+@property (nonatomic, readonly) NSInteger totalTimePlayedPerMedium;
+@property (nonatomic, readonly) NSInteger totalTimePlayedPerHard;
+@property (nonatomic, readonly) NSInteger totalTimePlayedPerExpert;
+
+@property (nonatomic, readonly) NSInteger fastestGamePerEasy;
+@property (nonatomic, readonly) NSInteger fastestGamePerMedium;
+@property (nonatomic, readonly) NSInteger fastestGamePerHard;
+@property (nonatomic, readonly) NSInteger fastestGamePerExpert;
 
 + (id)sharedInstance;
 
@@ -67,16 +94,31 @@
 
 extern NSString * const kStatsFileName;
 
-// Dictionary Representation Keys
+// Dictionary Representation Keys:
+// Games
 extern NSString * const kTotalStartedGamesKey;
 extern NSString * const kTotalSolvedGamesKey;
-extern NSString * const kGamesSolvedPerDifficultyKey;
 
+extern NSString * const kGamesSolvedPerEasyKey;
+extern NSString * const kGamesSolvedPerMediumKey;
+extern NSString * const kGamesSolvedPerHardKey;
+extern NSString * const kGamesSolvedPerExpertKey;
+
+// Answers
 extern NSString * const kTotalEnteredAnswersKey;
 extern NSString * const kTotalStrikesKey;
 extern NSString * const kTotalUndosKey;
 extern NSString * const kTotalRedosKey;
 
+// Time
 extern NSString * const kTotalTimePlayedKey;
-extern NSString * const kTotalTimePlayedPerDifficultyKey;
-extern NSString * const kFastedGamePerDifficultyKey;
+
+extern NSString * const kTotalTimePlayedPerEasyKey;
+extern NSString * const kTotalTimePlayedPerMediumKey;
+extern NSString * const kTotalTimePlayedPerHardKey;
+extern NSString * const kTotalTimePlayedPerExpertKey;
+
+extern NSString * const kFastestGamePerEasyKey;
+extern NSString * const kFastestGamePerMediumKey;
+extern NSString * const kFastestGamePerHardKey;
+extern NSString * const kFastestGamePerExpertKey;
