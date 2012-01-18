@@ -12,6 +12,7 @@
 #import "ZSGameController.h"
 #import "ZSStatisticsViewController.h"
 #import "ZSGame.h"
+#import "ZSAppDelegate.h"
 
 #import "TestFlight.h"
 #import "IASKAppSettingsViewController.h"
@@ -150,6 +151,9 @@
 				break;
 				
 			case 3:
+				// TestFlight Checkpoint
+				[TestFlight passCheckpoint:kTestFlightCheckPointOpenedSettings];
+				
 				appSettingsViewController = [[IASKAppSettingsViewController alloc] initWithNibName:@"IASKAppSettingsView" bundle:nil];
 				appSettingsViewController.delegate = self;
 				appSettingsViewController.showDoneButton = NO;

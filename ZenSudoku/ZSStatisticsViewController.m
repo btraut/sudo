@@ -8,6 +8,9 @@
 
 #import "ZSStatisticsViewController.h"
 #import "ZSStatisticsController.h"
+#import "ZSAppDelegate.h"
+
+#import "TestFlight.h"
 
 @implementation ZSStatisticsViewController
 
@@ -24,6 +27,9 @@
 #pragma mark - View Lifecycle
 
 - (void)viewDidLoad {
+	// TestFlight Checkpoint
+	[TestFlight passCheckpoint:kTestFlightCheckPointOpenedStatistics];
+	
 	[super viewDidLoad];
 	
 	self.title = @"Statistics";

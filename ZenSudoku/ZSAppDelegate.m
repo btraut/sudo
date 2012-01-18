@@ -17,6 +17,8 @@
 NSString * const kTestFlightTeamToken = @"b838f7b1003025e596ee5b134d349769_NDgyOTkyMDEyLTAxLTEzIDA1OjAyOjMzLjM4ODA4NA";
 NSString * const kTestFlightCheckPointStartedNewPuzzle = @"kTestFlightCheckPointStartedNewPuzzle";
 NSString * const kTestFlightCheckPointSolvedPuzzle = @"kTestFlightCheckPointSolvedPuzzle";
+NSString * const kTestFlightCheckPointOpenedStatistics = @"kTestFlightCheckPointOpenedStatistics";
+NSString * const kTestFlightCheckPointOpenedSettings = @"kTestFlightCheckPointOpenedSettings";
 
 NSString * const kTileAnswerOrderKey = @"kTileAnswerOrderKey";
 
