@@ -50,6 +50,10 @@ NSString * const kSQLiteDBFileName = @"Sudoku.db3";
 	return [self createGameWithDifficulty:difficulty puzzleString:puzzleString];
 }
 
+- (void)markPuzzleUsed:(NSInteger)puzzleId {
+	[db executeUpdate:@"UPDATE `puzzles` SET `puzzle_used` = 1 WHERE `puzzle_id` = ?", [NSNumber numberWithInt:puzzleId]];
+}
+
 - (NSInteger)getTotalPuzzlesForDifficulty:(ZSGameDifficulty)difficulty {
 	NSInteger total = 0;
 	
@@ -97,23 +101,28 @@ NSString * const kSQLiteDBFileName = @"Sudoku.db3";
 	NSString *puzzleQuery;
 	
 	if (requireFresh) {
-		puzzleQuery = @"SELECT `puzzle_string` FROM `puzzles` WHERE `puzzle_used` = 0 AND `puzzle_difficulty` = ? LIMIT ?, 1";
+		puzzleQuery = @"SELECT `puzzle_id`, `puzzle_string` FROM `puzzles` WHERE `puzzle_used` = 0 AND `puzzle_difficulty` = ? LIMIT ?, 1";
 	} else {
-		puzzleQuery = @"SELECT `puzzle_string` FROM `puzzles` WHERE `puzzle_difficulty` = ? LIMIT ?, 1";
+		puzzleQuery = @"SELECT `puzzle_id`, `puzzle_string` FROM `puzzles` WHERE `puzzle_difficulty` = ? LIMIT ?, 1";
 	}
 	
 	// Fetch the puzzle result.
 	FMResultSet *result = [db executeQuery:puzzleQuery, [NSNumber numberWithInt:difficulty], [NSNumber numberWithInt:puzzleNumber]];
 	
 	NSString *puzzleString;
+	NSInteger puzzleId;
 
 	if ([result next]) {
 		puzzleString = [result stringForColumn:@"puzzle_string"];
+		puzzleId = [result intForColumn:@"puzzle_id"];
 	}
 	
 	[result close];
 	
 	assert([puzzleString length]);
+	
+	// Mark the selected puzzle as used.
+	[self markPuzzleUsed:puzzleId];
 	
 	// Return the puzzle string.
 	return puzzleString;

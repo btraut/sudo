@@ -16,7 +16,9 @@
 }
 
 + (ZSGame *)fetchGameWithDifficulty:(ZSGameDifficulty)difficulty;
+
 - (ZSGame *)_fetchGameWithDifficulty:(ZSGameDifficulty)difficulty;
+- (void)markPuzzleUsed:(NSInteger)puzzleId;
 
 - (NSInteger)getTotalPuzzlesForDifficulty:(ZSGameDifficulty)difficulty;
 - (NSInteger)getTotalFreshPuzzlesForDifficulty:(ZSGameDifficulty)difficulty;
