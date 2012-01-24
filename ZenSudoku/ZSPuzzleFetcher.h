@@ -17,6 +17,8 @@
 
 + (ZSGame *)fetchGameWithDifficulty:(ZSGameDifficulty)difficulty;
 
+- (FMDatabase *)locateOrCreateDatabase;
+
 - (ZSGame *)_fetchGameWithDifficulty:(ZSGameDifficulty)difficulty;
 - (void)markPuzzleUsed:(NSInteger)puzzleId;
 
@@ -29,4 +31,5 @@
 @end
 
 extern NSString * const kSQLiteDBFileName;
-
+extern NSString * const kSQLiteDBFileNameResource;
+extern NSString * const kSQLiteDBFileNameType;

@@ -13,6 +13,8 @@
 #import "FMDatabase.h"
 
 NSString * const kSQLiteDBFileName = @"Sudoku.db3";
+NSString * const kSQLiteDBFileNameResource = @"Sudoku";
+NSString * const kSQLiteDBFileNameType = @"db3";
 
 @implementation ZSPuzzleFetcher
 
@@ -25,12 +27,8 @@ NSString * const kSQLiteDBFileName = @"Sudoku.db3";
 	self = [super init];
 	
 	if (self) {
-		// Fetch the path to the DB.
-		ZSAppDelegate *appDelegate = (ZSAppDelegate *)[[UIApplication sharedApplication] delegate];
-		NSString *sqliteDBPath = [appDelegate getPathForFileName:kSQLiteDBFileName];
-		
 		// Create the DB.
-		db = [FMDatabase databaseWithPath:sqliteDBPath];
+		db = [self locateOrCreateDatabase];
 		
 		// Attempt to open the DB. If we can't, we're done here.
 		if (![db open]) {
@@ -39,6 +37,20 @@ NSString * const kSQLiteDBFileName = @"Sudoku.db3";
 	}
 	
 	return self;
+}
+
+- (FMDatabase *)locateOrCreateDatabase {
+	ZSAppDelegate *appDelegate = (ZSAppDelegate *)[[UIApplication sharedApplication] delegate];
+	NSString *sqliteDBPath = [appDelegate getPathForFileName:kSQLiteDBFileName];
+	
+	NSFileManager *fileManager = [NSFileManager defaultManager];
+	
+	if (![fileManager fileExistsAtPath:sqliteDBPath]) {
+		NSString *resourcePath = [[NSBundle mainBundle] pathForResource:kSQLiteDBFileNameResource ofType:kSQLiteDBFileNameType];
+		[fileManager copyItemAtPath:resourcePath toPath:sqliteDBPath error:nil];
+	}
+	
+	return [FMDatabase databaseWithPath:sqliteDBPath];
 }
 
 - (void)dealloc {
