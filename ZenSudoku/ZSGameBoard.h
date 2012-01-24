@@ -49,6 +49,9 @@
 - (void)copyGroupMapFromGameBoard:(ZSGameBoard *)gameBoard;
 - (void)copyAnswersFromGameBoard:(ZSGameBoard *)gameBoard;
 - (void)copyGuessesFromGameBoard:(ZSGameBoard *)gameBoard;
+
+- (void)copyGroupMapFromString:(NSString *)guessesString;
+- (void)copyAnswersFromString:(NSString *)guessesString;
 - (void)copyGuessesFromString:(NSString *)guessesString;
 
 // Getters

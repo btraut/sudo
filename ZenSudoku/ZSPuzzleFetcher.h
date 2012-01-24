@@ -15,21 +15,22 @@
 	FMDatabase *db;
 }
 
-+ (ZSGame *)fetchGameWithDifficulty:(ZSGameDifficulty)difficulty;
+- (ZSGame *)fetchGameWithType:(ZSGameType)type size:(NSInteger)size difficulty:(ZSGameDifficulty)difficulty;
 
-- (FMDatabase *)locateOrCreateDatabase;
+- (NSDictionary *)getRandomPuzzleWithType:(ZSGameType)type size:(NSInteger)size difficulty:(ZSGameDifficulty)difficulty;
 
-- (ZSGame *)_fetchGameWithDifficulty:(ZSGameDifficulty)difficulty;
-- (void)markPuzzleUsed:(NSInteger)puzzleId;
-
-- (NSInteger)getTotalPuzzlesForDifficulty:(ZSGameDifficulty)difficulty;
-- (NSInteger)getTotalFreshPuzzlesForDifficulty:(ZSGameDifficulty)difficulty;
-- (NSString *)getRandomPuzzleStringForDifficulty:(ZSGameDifficulty)difficulty;
-
-- (ZSGame *)createGameWithDifficulty:(ZSGameDifficulty)difficulty puzzleString:(NSString *)puzzleString;
+- (ZSGame *)createGameWithDictionary:dict;
 
 @end
 
 extern NSString * const kSQLiteDBFileName;
 extern NSString * const kSQLiteDBFileNameResource;
 extern NSString * const kSQLiteDBFileNameType;
+
+extern NSString * const kDBPuzzleDefinitionIdKey;
+extern NSString * const kDBPuzzleDefinitionTypeKey;
+extern NSString * const kDBPuzzleDefinitionSizeKey;
+extern NSString * const kDBPuzzleDefinitionDifficultyKey;
+extern NSString * const kDBPuzzleDefinitionGuessesKey;
+extern NSString * const kDBPuzzleDefinitionAnswersKey;
+extern NSString * const kDBPuzzleDefinitionGroupMapKey;

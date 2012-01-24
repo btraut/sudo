@@ -190,14 +190,14 @@ NSInteger standard9x9GroupMap[9][9] = {
 	}
 }
 
-- (void)copyGuessesFromString:(NSString *)guessesString {
+- (void)copyGuessesFromString:(NSString *)string {
 	NSInteger currentRow = 0;
 	NSInteger currentCol = 0;
 	
 	NSInteger intEquivalent;
 	
-	for (NSInteger i = 0, l = guessesString.length; i < l; ++i) {
-		unichar currentChar = [guessesString characterAtIndex:i];
+	for (NSInteger i = 0, l = string.length; i < l; ++i) {
+		unichar currentChar = [string characterAtIndex:i];
 		
 		switch (currentChar) {
 			case '.':
@@ -216,6 +216,92 @@ NSInteger standard9x9GroupMap[9][9] = {
 			case '9':
 				intEquivalent = (NSInteger)currentChar - 48;
 				[self getTileAtRow:currentRow col:currentCol].guess = intEquivalent;
+				break;
+				
+			default:
+				continue;
+		}
+		
+		if (++currentCol >= size) {
+			currentCol -= size;
+			++currentRow;
+		}
+		
+		if (currentRow == size) {
+			break;
+		}
+	}
+}
+
+- (void)copyGroupMapFromString:(NSString *)string {
+	NSInteger currentRow = 0;
+	NSInteger currentCol = 0;
+	
+	NSInteger intEquivalent;
+	
+	for (NSInteger i = 0, l = string.length; i < l; ++i) {
+		unichar currentChar = [string characterAtIndex:i];
+		
+		switch (currentChar) {
+			case '.':
+			case '0':
+				[self clearGuessForTileAtRow:currentRow col:currentCol];
+				break;
+				
+			case '1':
+			case '2':
+			case '3':
+			case '4':
+			case '5':
+			case '6':
+			case '7':
+			case '8':
+			case '9':
+				intEquivalent = (NSInteger)currentChar - 48;
+				[self getTileAtRow:currentRow col:currentCol].groupId = intEquivalent;
+				break;
+				
+			default:
+				continue;
+		}
+		
+		if (++currentCol >= size) {
+			currentCol -= size;
+			++currentRow;
+		}
+		
+		if (currentRow == size) {
+			break;
+		}
+	}
+}
+
+- (void)copyAnswersFromString:(NSString *)string {
+	NSInteger currentRow = 0;
+	NSInteger currentCol = 0;
+	
+	NSInteger intEquivalent;
+	
+	for (NSInteger i = 0, l = string.length; i < l; ++i) {
+		unichar currentChar = [string characterAtIndex:i];
+		
+		switch (currentChar) {
+			case '.':
+			case '0':
+				[self clearGuessForTileAtRow:currentRow col:currentCol];
+				break;
+				
+			case '1':
+			case '2':
+			case '3':
+			case '4':
+			case '5':
+			case '6':
+			case '7':
+			case '8':
+			case '9':
+				intEquivalent = (NSInteger)currentChar - 48;
+				[self getTileAtRow:currentRow col:currentCol].answer = intEquivalent;
 				break;
 				
 			default:

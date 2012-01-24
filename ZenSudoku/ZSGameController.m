@@ -31,7 +31,8 @@ NSString * const kSavedGameFileName = @"SavedGame.plist";
 #pragma mark Game Creation
 
 - (void)fetchGameWithDifficulty:(ZSGameDifficulty)difficulty {
-	currentGame = [ZSPuzzleFetcher fetchGameWithDifficulty:difficulty];
+	ZSPuzzleFetcher *fetcher = [[ZSPuzzleFetcher alloc] init];
+	currentGame = [fetcher fetchGameWithType:ZSGameTypeTraditional size:9 difficulty:difficulty];
 }
 
 - (void)generateGameWithDifficulty:(ZSGameDifficulty)difficulty {

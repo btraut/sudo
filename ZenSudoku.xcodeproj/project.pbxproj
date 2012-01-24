@@ -46,7 +46,7 @@
 		8492B76F14C917290093B7AC /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8492B76A14C917290093B7AC /* FMDatabaseAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8492B77114C917290093B7AC /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 8492B76D14C917290093B7AC /* FMResultSet.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8492B77414CD69B10093B7AC /* ZSPuzzleFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 8492B77314CD69B10093B7AC /* ZSPuzzleFetcher.m */; };
-		8492B78314CEAE740093B7AC /* Sudoku.db3 in Resources */ = {isa = PBXBuildFile; fileRef = 8492B78214CEAE730093B7AC /* Sudoku.db3 */; };
+		8492B78814CEBDC80093B7AC /* Sudoku.db3 in Resources */ = {isa = PBXBuildFile; fileRef = 8492B78714CEBDC80093B7AC /* Sudoku.db3 */; };
 		84AC26C91480950F00E966A5 /* ZSGameBoardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC26C71480950F00E966A5 /* ZSGameBoardViewController.m */; };
 		84AC26CE1480986900E966A5 /* ZSGameBoardTileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC26CC1480986900E966A5 /* ZSGameBoardTileViewController.m */; };
 		84AC26DD1480D9C700E966A5 /* ZSGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC26DC1480D9C700E966A5 /* ZSGame.m */; };
@@ -137,7 +137,7 @@
 		8492B76D14C917290093B7AC /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
 		8492B77214CD69B10093B7AC /* ZSPuzzleFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSPuzzleFetcher.h; sourceTree = "<group>"; };
 		8492B77314CD69B10093B7AC /* ZSPuzzleFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSPuzzleFetcher.m; sourceTree = "<group>"; };
-		8492B78214CEAE730093B7AC /* Sudoku.db3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Sudoku.db3; sourceTree = "<group>"; };
+		8492B78714CEBDC80093B7AC /* Sudoku.db3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Sudoku.db3; sourceTree = "<group>"; };
 		84AC26C61480950F00E966A5 /* ZSGameBoardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSGameBoardViewController.h; sourceTree = "<group>"; };
 		84AC26C71480950F00E966A5 /* ZSGameBoardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSGameBoardViewController.m; sourceTree = "<group>"; };
 		84AC26CB1480986900E966A5 /* ZSGameBoardTileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSGameBoardTileViewController.h; sourceTree = "<group>"; };
@@ -328,7 +328,7 @@
 		8492B78414CEAE7A0093B7AC /* Databases */ = {
 			isa = PBXGroup;
 			children = (
-				8492B78214CEAE730093B7AC /* Sudoku.db3 */,
+				8492B78714CEBDC80093B7AC /* Sudoku.db3 */,
 			);
 			name = Databases;
 			sourceTree = "<group>";
@@ -574,7 +574,7 @@
 				841F853F14C2601500DFFABC /* IASKPSTextFieldSpecifierViewCell.xib in Resources */,
 				841F854014C2601500DFFABC /* IASKPSToggleSwitchSpecifierViewCell.xib in Resources */,
 				841F854114C2601500DFFABC /* IASKSpecifierValuesView.xib in Resources */,
-				8492B78314CEAE740093B7AC /* Sudoku.db3 in Resources */,
+				8492B78814CEBDC80093B7AC /* Sudoku.db3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

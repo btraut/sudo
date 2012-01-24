@@ -16,19 +16,23 @@ NSString * const kSQLiteDBFileName = @"Sudoku.db3";
 NSString * const kSQLiteDBFileNameResource = @"Sudoku";
 NSString * const kSQLiteDBFileNameType = @"db3";
 
-@implementation ZSPuzzleFetcher
+NSString * const kDBPuzzleDefinitionIdKey = @"kDBPuzzleDefinitionIdKey";
+NSString * const kDBPuzzleDefinitionTypeKey = @"kDBPuzzleDefinitionTypeKey";
+NSString * const kDBPuzzleDefinitionSizeKey = @"kDBPuzzleDefinitionSizeKey";
+NSString * const kDBPuzzleDefinitionDifficultyKey = @"kDBPuzzleDefinitionDifficultyKey";
+NSString * const kDBPuzzleDefinitionGuessesKey = @"kDBPuzzleDefinitionGuessesKey";
+NSString * const kDBPuzzleDefinitionAnswersKey = @"kDBPuzzleDefinitionAnswersKey";
+NSString * const kDBPuzzleDefinitionGroupMapKey = @"kDBPuzzleDefinitionGroupMapKey";
 
-+ (ZSGame *)fetchGameWithDifficulty:(ZSGameDifficulty)difficulty {
-	ZSPuzzleFetcher *fetcher = [[self alloc] init];
-	return [fetcher _fetchGameWithDifficulty:difficulty];
-}
+@implementation ZSPuzzleFetcher
 
 - (id)init {
 	self = [super init];
 	
 	if (self) {
-		// Create the DB.
-		db = [self locateOrCreateDatabase];
+		// Locate the DB.
+		NSString *sqliteDBPath = [[NSBundle mainBundle] pathForResource:kSQLiteDBFileNameResource ofType:kSQLiteDBFileNameType];
+		db = [FMDatabase databaseWithPath:sqliteDBPath];
 		
 		// Attempt to open the DB. If we can't, we're done here.
 		if (![db open]) {
@@ -39,119 +43,69 @@ NSString * const kSQLiteDBFileNameType = @"db3";
 	return self;
 }
 
-- (FMDatabase *)locateOrCreateDatabase {
-	ZSAppDelegate *appDelegate = (ZSAppDelegate *)[[UIApplication sharedApplication] delegate];
-	NSString *sqliteDBPath = [appDelegate getPathForFileName:kSQLiteDBFileName];
-	
-	NSFileManager *fileManager = [NSFileManager defaultManager];
-	
-	if (![fileManager fileExistsAtPath:sqliteDBPath]) {
-		NSString *resourcePath = [[NSBundle mainBundle] pathForResource:kSQLiteDBFileNameResource ofType:kSQLiteDBFileNameType];
-		[fileManager copyItemAtPath:resourcePath toPath:sqliteDBPath error:nil];
-	}
-	
-	return [FMDatabase databaseWithPath:sqliteDBPath];
-}
-
 - (void)dealloc {
 	[db close];
 }
 
-- (ZSGame *)_fetchGameWithDifficulty:(ZSGameDifficulty)difficulty {
-	NSString *puzzleString = [self getRandomPuzzleStringForDifficulty:difficulty];
-	return [self createGameWithDifficulty:difficulty puzzleString:puzzleString];
+- (ZSGame *)fetchGameWithType:(ZSGameType)type size:(NSInteger)size difficulty:(ZSGameDifficulty)difficulty {
+	NSDictionary *dict = [self getRandomPuzzleWithType:type size:size difficulty:difficulty];
+	return [self createGameWithDictionary:dict];
 }
 
-- (void)markPuzzleUsed:(NSInteger)puzzleId {
-	[db executeUpdate:@"UPDATE `puzzles` SET `puzzle_used` = 1 WHERE `puzzle_id` = ?", [NSNumber numberWithInt:puzzleId]];
-}
-
-- (NSInteger)getTotalPuzzlesForDifficulty:(ZSGameDifficulty)difficulty {
-	NSInteger total = 0;
+- (NSDictionary *)getRandomPuzzleWithType:(ZSGameType)type size:(NSInteger)size difficulty:(ZSGameDifficulty)difficulty {
+	// Get total puzzle count.
+	NSInteger totalPuzzles = 0;
 	
-	FMResultSet *result = [db executeQuery:@"SELECT count(1) AS `count` FROM `puzzles` WHERE `puzzle_difficulty` = ?", [NSNumber numberWithInt:difficulty]];
+	NSString *totalPuzzleQuery = @"SELECT count(1) AS `count` FROM `puzzles` WHERE `puzzle_type` = ? AND `puzzle_size` = ? AND `puzzle_difficulty` = ?";
+	FMResultSet *totalPuzzlesResult = [db executeQuery:totalPuzzleQuery, [NSNumber numberWithInt:type], [NSNumber numberWithInt:size], [NSNumber numberWithInt:difficulty]];
 	
-	if ([result next]) {
-		total = [result intForColumn:@"count"];
+	if ([totalPuzzlesResult next]) {
+		totalPuzzles = [totalPuzzlesResult intForColumn:@"count"];
 	}
 	
-	[result close];
-	
-	return total;
-}
-
-- (NSInteger)getTotalFreshPuzzlesForDifficulty:(ZSGameDifficulty)difficulty {
-	NSInteger totalFresh = 0;
-	
-	FMResultSet *result = [db executeQuery:@"SELECT count(1) AS `count` FROM `puzzles` WHERE `puzzle_difficulty` = ? AND `puzzle_used` = 0", [NSNumber numberWithInt:difficulty]];
-	
-	if ([result next]) {
-		totalFresh = [result intForColumn:@"count"];
-	}
-	
-	[result close];  
-	
-	return totalFresh;
-}
-
-- (NSString *)getRandomPuzzleStringForDifficulty:(ZSGameDifficulty)difficulty {
-	// Get some totals.
-	NSInteger totalPuzzles = [self getTotalFreshPuzzlesForDifficulty:difficulty];
-	BOOL requireFresh = YES;
-	
-	if (!totalPuzzles) {
-		totalPuzzles = [self getTotalPuzzlesForDifficulty:difficulty];
-		requireFresh = NO;
-	}
+	[totalPuzzlesResult close];
 	
 	assert(totalPuzzles);
 	
 	// Pick a random puzzle from the remaining total.
 	NSInteger puzzleNumber = arc4random() % totalPuzzles;
 	
-	// Build the query.
-	NSString *puzzleQuery;
+	// Fetch a puzzle.
+	NSString *puzzleQuery = @"SELECT `puzzle_id`, `puzzle_guesses`, `puzzle_answers`, `puzzle_group_map` FROM `puzzles` WHERE `puzzle_type` = ? AND `puzzle_size` = ? AND `puzzle_difficulty` = ? LIMIT ?, 1";
+	FMResultSet *result = [db executeQuery:puzzleQuery, [NSNumber numberWithInt:type], [NSNumber numberWithInt:size], [NSNumber numberWithInt:difficulty], [NSNumber numberWithInt:puzzleNumber]];
 	
-	if (requireFresh) {
-		puzzleQuery = @"SELECT `puzzle_id`, `puzzle_string` FROM `puzzles` WHERE `puzzle_used` = 0 AND `puzzle_difficulty` = ? LIMIT ?, 1";
-	} else {
-		puzzleQuery = @"SELECT `puzzle_id`, `puzzle_string` FROM `puzzles` WHERE `puzzle_difficulty` = ? LIMIT ?, 1";
-	}
+	NSMutableDictionary *puzzleDefinition = [NSMutableDictionary dictionary];
 	
-	// Fetch the puzzle result.
-	FMResultSet *result = [db executeQuery:puzzleQuery, [NSNumber numberWithInt:difficulty], [NSNumber numberWithInt:puzzleNumber]];
-	
-	NSString *puzzleString;
-	NSInteger puzzleId;
-
 	if ([result next]) {
-		puzzleString = [result stringForColumn:@"puzzle_string"];
-		puzzleId = [result intForColumn:@"puzzle_id"];
+		[puzzleDefinition setObject:[NSNumber numberWithInt:[result intForColumn:@"puzzle_id"]] forKey:kDBPuzzleDefinitionIdKey];
+		[puzzleDefinition setObject:[result stringForColumn:@"puzzle_guesses"] forKey:kDBPuzzleDefinitionGuessesKey];
+		[puzzleDefinition setObject:[result stringForColumn:@"puzzle_answers"] forKey:kDBPuzzleDefinitionAnswersKey];
+		[puzzleDefinition setObject:[result stringForColumn:@"puzzle_group_map"] forKey:kDBPuzzleDefinitionGroupMapKey];
+		
+		[puzzleDefinition setObject:[NSNumber numberWithInt:type] forKey:kDBPuzzleDefinitionTypeKey];
+		[puzzleDefinition setObject:[NSNumber numberWithInt:size] forKey:kDBPuzzleDefinitionSizeKey];
+		[puzzleDefinition setObject:[NSNumber numberWithInt:difficulty] forKey:kDBPuzzleDefinitionDifficultyKey];
 	}
 	
 	[result close];
 	
-	assert([puzzleString length]);
-	
-	// Mark the selected puzzle as used.
-	[self markPuzzleUsed:puzzleId];
+	assert([puzzleDefinition count]);
 	
 	// Return the puzzle string.
-	return puzzleString;
+	return puzzleDefinition;
 }
 
-- (ZSGame *)createGameWithDifficulty:(ZSGameDifficulty)difficulty puzzleString:(NSString *)puzzleString {
+- (ZSGame *)createGameWithDictionary:dict {
 	// Create a new game.
 	ZSGame *game = [ZSGame emptyStandard9x9Game];
 	
-	game.difficulty = difficulty;
-	game.type = ZSGameTypeTraditional;
+	game.difficulty = [[dict objectForKey:kDBPuzzleDefinitionDifficultyKey] intValue];
+	game.type = [[dict objectForKey:kDBPuzzleDefinitionTypeKey] intValue];
 	
 	// Prepare the game board.
-	[game.gameBoard copyGuessesFromString:puzzleString];
-	ZSGameSolveResult result = [game solve];
-	
-	assert(result == ZSGameSolveResultSucceeded);
+	[game.gameBoard copyGuessesFromString:[dict objectForKey:kDBPuzzleDefinitionGuessesKey]];
+	[game.gameBoard copyAnswersFromString:[dict objectForKey:kDBPuzzleDefinitionAnswersKey]];
+	[game.gameBoard copyGroupMapFromString:[dict objectForKey:kDBPuzzleDefinitionGroupMapKey]];
 	
 	[game.gameBoard lockGuesses];
 	
