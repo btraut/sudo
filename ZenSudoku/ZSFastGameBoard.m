@@ -176,8 +176,8 @@
 #pragma mark - Data Migration
 
 - (void)copyGroupMapFromFastGameBoard:(ZSFastGameBoard *)gameBoard {
-	for (NSInteger row = 0; row < 9; ++row) {
-		for (NSInteger col = 0; col < 9; ++col) {
+	for (NSInteger row = 0; row < size; ++row) {
+		for (NSInteger col = 0; col < size; ++col) {
 			grid[row][col].groupId = gameBoard.grid[row][col].groupId;
 		}
 	}
@@ -186,8 +186,8 @@
 }
 
 - (void)copyGuessesFromFastGameBoard:(ZSFastGameBoard *)gameBoard {
-	for (NSInteger row = 0; row < 9; ++row) {
-		for (NSInteger col = 0; col < 9; ++col) {
+	for (NSInteger row = 0; row < size; ++row) {
+		for (NSInteger col = 0; col < size; ++col) {
 			[self setGuess:gameBoard.grid[row][col].guess forTileAtRow:row col:col];
 		}
 	}
@@ -201,6 +201,14 @@
 	}
 	
 	[self rebuildGroupCache];
+}
+
+- (void)copyGuessesFromGameBoard:(ZSGameBoard *)gameBoard {
+	for (NSInteger row = 0; row < size; ++row) {
+		for (NSInteger col = 0; col < size; ++col) {
+			[self setGuess:[gameBoard getTileAtRow:row col:col].guess forTileAtRow:row col:col];
+		}
+	}
 }
 
 - (void)copyGuessesFromString:(NSString *)guessesString {

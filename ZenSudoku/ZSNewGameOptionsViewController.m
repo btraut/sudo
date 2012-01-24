@@ -104,7 +104,7 @@
 	}
 	
 	// Create a new game.
-	[[ZSGameController sharedInstance] generateGameWithDifficulty:newDifficulty];
+	[[ZSGameController sharedInstance] fetchGameWithDifficulty:newDifficulty];
 	
 	// Tell the statistics controller that we've started a new game.
 	[[ZSGameController sharedInstance].currentGame notifyStatisticsOfNewGame];

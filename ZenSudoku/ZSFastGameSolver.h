@@ -31,7 +31,11 @@ typedef enum {
 - (void)copyGroupMapFromFastGameBoard:(ZSFastGameBoard *)gameBoard;
 - (void)copyGuessesFromFastGameBoard:(ZSFastGameBoard *)gameBoard;
 
+- (void)copyGroupMapFromGameBoard:(ZSGameBoard *)gameBoard;
+- (void)copyGuessesFromGameBoard:(ZSGameBoard *)gameBoard;
+
 - (void)copySolutionToFastGameBoard:(ZSFastGameBoard *)gameBoard;
+- (void)copySolutionToGameBoard:(ZSGameBoard *)gameBoard;
 
 - (ZSGameSolveResult)solve;
 

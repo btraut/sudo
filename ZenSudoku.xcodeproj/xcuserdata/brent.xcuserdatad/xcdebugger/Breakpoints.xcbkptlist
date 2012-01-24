@@ -158,30 +158,16 @@
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "ZenSudoku/ZSGameBoard.m"
-         timestampString = "345708386.133191"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "449"
-         endingLineNumber = "449"
-         landmarkName = "-solve"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "ZenSudoku/ZSFastGameGenerator.m"
-         timestampString = "348047472.221042"
+         timestampString = "349087398.978051"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "115"
-         endingLineNumber = "115"
+         startingLineNumber = "108"
+         endingLineNumber = "108"
          landmarkName = "-buildPuzzleForX:y:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -191,11 +177,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "ZenSudoku/ZSFastGameGenerator.m"
-         timestampString = "348047472.221042"
+         timestampString = "349087398.978051"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "131"
-         endingLineNumber = "131"
+         startingLineNumber = "124"
+         endingLineNumber = "124"
          landmarkName = "-buildPuzzleForX:y:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -205,11 +191,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "ZenSudoku/ZSFastGameGenerator.m"
-         timestampString = "348047472.221042"
+         timestampString = "349087398.978051"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "127"
-         endingLineNumber = "127"
+         startingLineNumber = "120"
+         endingLineNumber = "120"
          landmarkName = "-buildPuzzleForX:y:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -219,11 +205,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "ZenSudoku/ZSFastGameBoard.m"
-         timestampString = "348046594.482887"
+         timestampString = "349086781.534265"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "346"
-         endingLineNumber = "346"
+         startingLineNumber = "354"
+         endingLineNumber = "354"
          landmarkName = "-setPencil:forPencilNumber:forTileAtRow:col:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -233,11 +219,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "ZenSudoku/ZSGameController.m"
-         timestampString = "348400490.702221"
+         timestampString = "349085727.996234"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "45"
-         endingLineNumber = "45"
+         startingLineNumber = "50"
+         endingLineNumber = "50"
          landmarkName = "-savedGameInProgress"
          landmarkType = "5">
       </FileBreakpoint>
@@ -247,11 +233,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "ZenSudoku/ZSGameBoard.m"
-         timestampString = "348136615.837601"
+         timestampString = "349009973.265882"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "409"
-         endingLineNumber = "409"
+         startingLineNumber = "452"
+         endingLineNumber = "452"
          landmarkName = "-clearInfluencedPencilsForTileAtRow:col:"
          landmarkType = "5">
       </FileBreakpoint>

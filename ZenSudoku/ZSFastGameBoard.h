@@ -67,6 +67,7 @@ typedef struct {
 // Data Migration
 
 - (void)copyGroupMapFromGameBoard:(ZSGameBoard *)gameBoard;
+- (void)copyGuessesFromGameBoard:(ZSGameBoard *)gameBoard;
 
 - (void)copyGroupMapFromFastGameBoard:(ZSFastGameBoard *)gameBoard;
 - (void)copyGuessesFromFastGameBoard:(ZSFastGameBoard *)gameBoard;

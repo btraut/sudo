@@ -10,6 +10,7 @@
 #import "ZSAppDelegate.h"
 #import "ZSGame.h"
 #import "ZSFastGameGenerator.h"
+#import "ZSPuzzleFetcher.h"
 
 NSString * const kSavedGameFileName = @"SavedGame.plist";
 
@@ -28,6 +29,10 @@ NSString * const kSavedGameFileName = @"SavedGame.plist";
 }
 
 #pragma mark Game Creation
+
+- (void)fetchGameWithDifficulty:(ZSGameDifficulty)difficulty {
+	currentGame = [ZSPuzzleFetcher fetchGameWithDifficulty:difficulty];
+}
 
 - (void)generateGameWithDifficulty:(ZSGameDifficulty)difficulty {
 	ZSFastGameGenerator *gameGenerator = [[ZSFastGameGenerator alloc] init];

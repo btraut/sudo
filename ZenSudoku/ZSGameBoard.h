@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "ZSFastGameSolver.h"
+
 @class ZSGameTile;
 @class ZSGame;
 
@@ -47,6 +49,7 @@
 - (void)copyGroupMapFromGameBoard:(ZSGameBoard *)gameBoard;
 - (void)copyAnswersFromGameBoard:(ZSGameBoard *)gameBoard;
 - (void)copyGuessesFromGameBoard:(ZSGameBoard *)gameBoard;
+- (void)copyGuessesFromString:(NSString *)guessesString;
 
 // Getters
 
@@ -77,9 +80,10 @@
 - (void)clearInfluencedPencilsForTileAtRow:(NSInteger)row col:(NSInteger)col;
 - (void)addAutoPencils;
 
+- (void)lockGuesses;
 - (void)lockTileAtRow:(NSInteger)row col:(NSInteger)col;
 
-- (void)solve;
+- (ZSGameSolveResult)solve;
 
 // Validitiy Checks
 

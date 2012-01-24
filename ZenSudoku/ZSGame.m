@@ -451,8 +451,8 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 
 #pragma mark - Game Actions
 
-- (void)solve {
-	[gameBoard solve];
+- (ZSGameSolveResult)solve {
+	return [gameBoard solve];
 }
 
 - (void)addAutoPencils {

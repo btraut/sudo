@@ -79,14 +79,7 @@
 	
 	// Save the puzzle data into the new game.
 	[_scratchGameBoard copyGuessesToGameBoardAnswers:newGame.gameBoard];
-	
-	for (NSInteger row = 0; row < newGame.gameBoard.size; ++row) {
-		for (NSInteger col = 0; col < newGame.gameBoard.size; ++col) {
-			if (_reductionGameBoard.grid[row][col].guess) {
-				[newGame.gameBoard lockTileAtRow:row col:col];
-			}
-		}
-	}
+	[newGame.gameBoard lockGuesses];
 	
 	[newGame.gameBoard print9x9PuzzleAnswers];
 	[newGame.gameBoard print9x9PuzzleGuesses];

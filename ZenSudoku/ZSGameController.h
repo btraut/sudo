@@ -18,6 +18,7 @@
 + (ZSGameController *)sharedInstance;
 
 // Game Management
+- (void)fetchGameWithDifficulty:(ZSGameDifficulty)difficulty;
 - (void)generateGameWithDifficulty:(ZSGameDifficulty)difficulty;
 - (void)clearCurrentGame;
 

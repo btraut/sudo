@@ -8,6 +8,7 @@
 
 #import "ZSFastGameSolver.h"
 #import "ZSFastGameBoard.h"
+#import "ZSGameBoard.h"
 
 NSString * const kExceptionPuzzleHasNoSolution = @"kExceptionPuzzleHasNoSolution";
 NSString * const kExceptionPuzzleHasMultipleSolutions = @"kExceptionPuzzleHasMultipleSolutions";
@@ -52,9 +53,28 @@ typedef struct {
 	[_gameBoard addAutoPencils];
 }
 
+- (void)copyGroupMapFromGameBoard:(ZSGameBoard *)gameBoard {
+	// Set all the group ids from the game board.
+	[_gameBoard copyGroupMapFromGameBoard:gameBoard];
+	[_solvedGameBoard copyGroupMapFromGameBoard:gameBoard];
+}
+
+- (void)copyGuessesFromGameBoard:(ZSGameBoard *)gameBoard {
+	// Copy the game board's answers into our guesses.
+	[_gameBoard copyGuessesFromGameBoard:gameBoard];
+	
+	// Reset pencils.
+	[_gameBoard setAllPencils:NO];
+	[_gameBoard addAutoPencils];
+}
+
 - (void)copySolutionToFastGameBoard:(ZSFastGameBoard *)gameBoard {
 	// Save the solution back into the game board's answers.
 	[gameBoard copyGuessesFromFastGameBoard:_gameBoard];
+}
+
+- (void)copySolutionToGameBoard:(ZSGameBoard *)gameBoard {
+	[_gameBoard copyGuessesToGameBoardAnswers:gameBoard];
 }
 
 - (ZSFastGameBoard *)getGameBoard {

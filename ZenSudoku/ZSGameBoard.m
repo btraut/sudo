@@ -190,6 +190,49 @@ NSInteger standard9x9GroupMap[9][9] = {
 	}
 }
 
+- (void)copyGuessesFromString:(NSString *)guessesString {
+	NSInteger currentRow = 0;
+	NSInteger currentCol = 0;
+	
+	NSInteger intEquivalent;
+	
+	for (NSInteger i = 0, l = guessesString.length; i < l; ++i) {
+		unichar currentChar = [guessesString characterAtIndex:i];
+		
+		switch (currentChar) {
+			case '.':
+			case '0':
+				[self clearGuessForTileAtRow:currentRow col:currentCol];
+				break;
+				
+			case '1':
+			case '2':
+			case '3':
+			case '4':
+			case '5':
+			case '6':
+			case '7':
+			case '8':
+			case '9':
+				intEquivalent = (NSInteger)currentChar - 48;
+				[self getTileAtRow:currentRow col:currentCol].guess = intEquivalent;
+				break;
+				
+			default:
+				continue;
+		}
+		
+		if (++currentCol >= size) {
+			currentCol -= size;
+			++currentRow;
+		}
+		
+		if (currentRow == size) {
+			break;
+		}
+	}
+}
+
 - (void)lockAnswers {
 	for (NSInteger row = 0; row < size; ++row) {
 		for (NSInteger col = 0; col < size; ++col) {
@@ -438,6 +481,16 @@ NSInteger standard9x9GroupMap[9][9] = {
 	}
 }
 
+- (void)lockGuesses {
+	for (NSInteger row = 0; row < size; ++row) {
+		for (NSInteger col = 0; col < size; ++col) {
+			if ([self getTileAtRow:row col:col].guess) {
+				[self lockTileAtRow:row col:col];
+			}
+		}
+	}
+}
+
 - (void)lockTileAtRow:(NSInteger)row col:(NSInteger)col {
 	ZSGameTile *tile = [self getTileAtRow:row col:col];
 	
@@ -445,8 +498,19 @@ NSInteger standard9x9GroupMap[9][9] = {
 	tile.locked = YES;
 }
 
-- (void)solve {
-//	[[ZSFastGameSolver alloc] solveGameBoard:self];
+- (ZSGameSolveResult)solve {
+	// Initialize a solver.
+	ZSFastGameSolver *solver = [[ZSFastGameSolver alloc] initWithSize:size];
+	[solver copyGroupMapFromGameBoard:self];
+	[solver copyGuessesFromGameBoard:self];
+	
+	// Solve the puzzle.
+	ZSGameSolveResult result = [solver solve];
+	
+	// Copy the solution into the answer grid.
+	[solver copySolutionToGameBoard:self];
+	
+	return result;
 }
 
 #pragma mark - Validitiy Checks

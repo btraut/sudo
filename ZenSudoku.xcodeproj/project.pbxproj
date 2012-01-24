@@ -41,6 +41,11 @@
 		843BEDFA14A6E0F900D1D19B /* board@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 843BEDF914A6E0F900D1D19B /* board@2x.png */; };
 		8449D9571481D77D003F6FB3 /* ZSGameAnswerOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8449D9561481D77D003F6FB3 /* ZSGameAnswerOptionsViewController.m */; };
 		8449D95A1481E518003F6FB3 /* ZSGameAnswerOptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8449D9591481E518003F6FB3 /* ZSGameAnswerOptionViewController.m */; };
+		8492B76114C911FF0093B7AC /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8492B76014C911FF0093B7AC /* libsqlite3.0.dylib */; };
+		8492B76E14C917290093B7AC /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 8492B76814C917290093B7AC /* FMDatabase.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8492B76F14C917290093B7AC /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8492B76A14C917290093B7AC /* FMDatabaseAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8492B77114C917290093B7AC /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 8492B76D14C917290093B7AC /* FMResultSet.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8492B77414CD69B10093B7AC /* ZSPuzzleFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 8492B77314CD69B10093B7AC /* ZSPuzzleFetcher.m */; };
 		84AC26C91480950F00E966A5 /* ZSGameBoardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC26C71480950F00E966A5 /* ZSGameBoardViewController.m */; };
 		84AC26CE1480986900E966A5 /* ZSGameBoardTileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC26CC1480986900E966A5 /* ZSGameBoardTileViewController.m */; };
 		84AC26DD1480D9C700E966A5 /* ZSGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC26DC1480D9C700E966A5 /* ZSGame.m */; };
@@ -122,6 +127,15 @@
 		8449D9561481D77D003F6FB3 /* ZSGameAnswerOptionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSGameAnswerOptionsViewController.m; sourceTree = "<group>"; };
 		8449D9581481E518003F6FB3 /* ZSGameAnswerOptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSGameAnswerOptionViewController.h; sourceTree = "<group>"; };
 		8449D9591481E518003F6FB3 /* ZSGameAnswerOptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSGameAnswerOptionViewController.m; sourceTree = "<group>"; };
+		8492B76014C911FF0093B7AC /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
+		8492B76714C917290093B7AC /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
+		8492B76814C917290093B7AC /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
+		8492B76914C917290093B7AC /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
+		8492B76A14C917290093B7AC /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
+		8492B76C14C917290093B7AC /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
+		8492B76D14C917290093B7AC /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
+		8492B77214CD69B10093B7AC /* ZSPuzzleFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSPuzzleFetcher.h; sourceTree = "<group>"; };
+		8492B77314CD69B10093B7AC /* ZSPuzzleFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSPuzzleFetcher.m; sourceTree = "<group>"; };
 		84AC26C61480950F00E966A5 /* ZSGameBoardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSGameBoardViewController.h; sourceTree = "<group>"; };
 		84AC26C71480950F00E966A5 /* ZSGameBoardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSGameBoardViewController.m; sourceTree = "<group>"; };
 		84AC26CB1480986900E966A5 /* ZSGameBoardTileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSGameBoardTileViewController.h; sourceTree = "<group>"; };
@@ -172,6 +186,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8492B76114C911FF0093B7AC /* libsqlite3.0.dylib in Frameworks */,
 				841F854714C2651700DFFABC /* MessageUI.framework in Frameworks */,
 				84D55014147F1C4A00A7934E /* UIKit.framework in Frameworks */,
 				84D55016147F1C4A00A7934E /* Foundation.framework in Frameworks */,
@@ -288,10 +303,24 @@
 		8449D95B14833649003F6FB3 /* External */ = {
 			isa = PBXGroup;
 			children = (
+				8492B76614C917290093B7AC /* FMDB */,
 				841F850414C2601500DFFABC /* InAppSettingsKit */,
 				841F84F514C0381C00DFFABC /* TestFlightSDK0.8.2 */,
 			);
 			name = External;
+			sourceTree = "<group>";
+		};
+		8492B76614C917290093B7AC /* FMDB */ = {
+			isa = PBXGroup;
+			children = (
+				8492B76714C917290093B7AC /* FMDatabase.h */,
+				8492B76814C917290093B7AC /* FMDatabase.m */,
+				8492B76914C917290093B7AC /* FMDatabaseAdditions.h */,
+				8492B76A14C917290093B7AC /* FMDatabaseAdditions.m */,
+				8492B76C14C917290093B7AC /* FMResultSet.h */,
+				8492B76D14C917290093B7AC /* FMResultSet.m */,
+			);
+			path = FMDB;
 			sourceTree = "<group>";
 		};
 		84AC26C21480834B00E966A5 /* Resources */ = {
@@ -333,6 +362,8 @@
 				84E18C931498B0F6009717D4 /* ZSFastGameGenerator.m */,
 				84E18C941498B0F6009717D4 /* ZSFastGameSolver.h */,
 				84E18C951498B0F6009717D4 /* ZSFastGameSolver.m */,
+				8492B77214CD69B10093B7AC /* ZSPuzzleFetcher.h */,
+				8492B77314CD69B10093B7AC /* ZSPuzzleFetcher.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -351,7 +382,6 @@
 		84D55004147F1C4A00A7934E = {
 			isa = PBXGroup;
 			children = (
-				841F854614C2651600DFFABC /* MessageUI.framework */,
 				84D55019147F1C4A00A7934E /* ZenSudoku */,
 				84EE862A1494ADEA004C0A16 /* ZenSudokuLogicTests */,
 				84D55012147F1C4A00A7934E /* Frameworks */,
@@ -371,6 +401,8 @@
 		84D55012147F1C4A00A7934E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8492B76014C911FF0093B7AC /* libsqlite3.0.dylib */,
+				841F854614C2651600DFFABC /* MessageUI.framework */,
 				84D55013147F1C4A00A7934E /* UIKit.framework */,
 				84D55015147F1C4A00A7934E /* Foundation.framework */,
 				84D55017147F1C4A00A7934E /* CoreGraphics.framework */,
@@ -599,6 +631,10 @@
 				841F853B14C2601500DFFABC /* IASKTextField.m in Sources */,
 				841F854A14C40F5600DFFABC /* ZSStatisticsController.m in Sources */,
 				841F854E14C4287700DFFABC /* ZSStatisticsViewController.m in Sources */,
+				8492B76E14C917290093B7AC /* FMDatabase.m in Sources */,
+				8492B76F14C917290093B7AC /* FMDatabaseAdditions.m in Sources */,
+				8492B77114C917290093B7AC /* FMResultSet.m in Sources */,
+				8492B77414CD69B10093B7AC /* ZSPuzzleFetcher.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

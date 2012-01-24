@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "ZSGameBoard.h"
-
+#import "ZSFastGameSolver.h"
 
 typedef enum {
 	ZSGameDifficultyEasy,
@@ -141,7 +141,7 @@ typedef enum {
 
 - (BOOL)allowsGuess:(NSInteger)guess;
 
-- (void)solve;
+- (ZSGameSolveResult)solve;
 - (BOOL)isSolved;
 
 - (void)addAutoPencils;
