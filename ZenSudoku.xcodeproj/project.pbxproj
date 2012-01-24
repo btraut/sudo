@@ -694,6 +694,7 @@
 		843BEDCE149C8FE200D1D19B /* Ad Hoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Brent Traut (3J5X57PB42)";
 				COPY_PHASE_STRIP = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ZenSudoku/ZenSudoku-Prefix.pch";
@@ -704,6 +705,7 @@
 					"\"$(SRCROOT)/ZenSudoku/TestFlightSDK0.8.2\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "0D97E7BA-D276-4159-8DB7-D9051F8CE43B";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -780,6 +782,7 @@
 		84D5504C147F1C4B00A7934E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Brent Traut (3J5X57PB42)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ZenSudoku/ZenSudoku-Prefix.pch";
 				INFOPLIST_FILE = "ZenSudoku/ZenSudoku-Info.plist";
@@ -789,6 +792,7 @@
 					"\"$(SRCROOT)/ZenSudoku/TestFlightSDK0.8.2\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "0D97E7BA-D276-4159-8DB7-D9051F8CE43B";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -801,6 +805,7 @@
 					armv6,
 					armv7,
 				);
+				CODE_SIGN_IDENTITY = "iPhone Developer: Brent Traut (3J5X57PB42)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ZenSudoku/ZenSudoku-Prefix.pch";
 				INFOPLIST_FILE = "ZenSudoku/ZenSudoku-Info.plist";
@@ -810,6 +815,7 @@
 					"\"$(SRCROOT)/ZenSudoku/TestFlightSDK0.8.2\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "0D97E7BA-D276-4159-8DB7-D9051F8CE43B";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
