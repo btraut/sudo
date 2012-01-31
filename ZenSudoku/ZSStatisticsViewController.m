@@ -128,7 +128,7 @@
 	} else if (indexPath.section == 1) {
 		NSInteger answers = [[ZSStatisticsController sharedInstance] totalEnteredAnswers];
 		NSInteger strikes = [[ZSStatisticsController sharedInstance] totalStrikes];
-		float accuracy = answers ? ((float)(answers - strikes) / (float)answers) * 100 : 0;
+		float accuracy = answers ? ((float)((answers - strikes) * 100) / (float)answers) : 0;
 		
 		switch (indexPath.row) {
 			case 0:
@@ -143,7 +143,7 @@
 				
 			case 2:
 				cell.textLabel.text = @"Accuracy";
-				cell.detailTextLabel.text = [NSString stringWithFormat:@"%1.0f%%", accuracy];
+				cell.detailTextLabel.text = [NSString stringWithFormat:@"%1.1f%%", accuracy];
 				break;
 		}
 	} else if (indexPath.section == 2) {

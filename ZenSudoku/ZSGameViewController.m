@@ -79,8 +79,7 @@
 	[self.view addSubview:gameAnswerOptionsViewController.view];
 	
 	// Debug
-	/*
-	if (game.difficulty == ZSGameDifficultyEasy) {
+	if (game.difficulty == ZSGameDifficultyExpert) {
 		NSInteger totalUnsolved = game.gameBoard.size * game.gameBoard.size;
 		
 		for (NSInteger row = 0; row < game.gameBoard.size; ++row) {
@@ -104,7 +103,6 @@
 			}
 		}
 	}
-	*/
 	
 	// Disable any answer option buttons that are at quota.
 //	for (NSInteger i = 0; i < game.gameBoard.size; ++i) {

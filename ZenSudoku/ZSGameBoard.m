@@ -243,11 +243,7 @@ NSInteger standard9x9GroupMap[9][9] = {
 		unichar currentChar = [string characterAtIndex:i];
 		
 		switch (currentChar) {
-			case '.':
 			case '0':
-				[self clearGuessForTileAtRow:currentRow col:currentCol];
-				break;
-				
 			case '1':
 			case '2':
 			case '3':
