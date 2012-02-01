@@ -22,7 +22,7 @@ NSString * const kDictionaryRepresentationGameHistoryEntryPencilNumberKey = @"kD
 	return [[self alloc] initWithType:ZSGameHistoryEntryTypeGuess tile:nil previousValue:0];
 }
 
-+ (id)undoDescriptionWithType:(ZSGameHistoryEntryType)newType tile:(ZSGameTile *)newTile previousValue:(int)newPreviousValue {
++ (id)undoDescriptionWithType:(ZSGameHistoryEntryType)newType tile:(ZSGameTile *)newTile previousValue:(NSInteger)newPreviousValue {
 	return [[self alloc] initWithType:newType tile:newTile previousValue:newPreviousValue];
 }
 
@@ -30,11 +30,11 @@ NSString * const kDictionaryRepresentationGameHistoryEntryPencilNumberKey = @"kD
 	return [self initWithType:ZSGameHistoryEntryTypeGuess tile:nil previousValue:0];
 }
 
-- (id)initWithType:(ZSGameHistoryEntryType)newType tile:(ZSGameTile *)newTile previousValue:(int)newPreviousValue {
+- (id)initWithType:(ZSGameHistoryEntryType)newType tile:(ZSGameTile *)newTile previousValue:(NSInteger)newPreviousValue {
 	return [self initWithType:newType row:newTile.row col:newTile.col previousValue:newPreviousValue];
 }
 
-- (id)initWithType:(ZSGameHistoryEntryType)newType row:(int)newRow col:(int)newCol previousValue:(int)newPreviousValue {
+- (id)initWithType:(ZSGameHistoryEntryType)newType row:(NSInteger)newRow col:(NSInteger)newCol previousValue:(NSInteger)newPreviousValue {
 	self = [super init];
 	
 	if (self) {

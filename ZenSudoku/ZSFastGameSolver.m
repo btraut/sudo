@@ -14,8 +14,8 @@ NSString * const kExceptionPuzzleHasNoSolution = @"kExceptionPuzzleHasNoSolution
 NSString * const kExceptionPuzzleHasMultipleSolutions = @"kExceptionPuzzleHasMultipleSolutions";
 
 typedef struct {
-	int size;
-	int *entries;
+	NSInteger size;
+	NSInteger *entries;
 } ZSNumberSet;
 
 @implementation ZSFastGameSolver
@@ -26,7 +26,7 @@ typedef struct {
 	return [self initWithSize:9];
 }
 
-- (id)initWithSize:(int)size {
+- (id)initWithSize:(NSInteger)size {
 	self = [super init];
 	
 	if (self) {
@@ -89,18 +89,18 @@ typedef struct {
 
 - (ZSGameSolveResult)solve {
 	// Set up the solve loop.
-	int totalUnsolved = _gameBoard.size * _gameBoard.size;
+	NSInteger totalUnsolved = _gameBoard.size * _gameBoard.size;
 	
-	for (int row = 0; row < _gameBoard.size; ++row) {
-		for (int col = 0; col < _gameBoard.size; ++col) {
+	for (NSInteger row = 0; row < _gameBoard.size; ++row) {
+		for (NSInteger col = 0; col < _gameBoard.size; ++col) {
 			if (_gameBoard.grid[row][col].guess) {
 				--totalUnsolved;
 			}
 		}
 	}
 	
-	int solved;
-	int pencilsEliminated;
+	NSInteger solved;
+	NSInteger pencilsEliminated;
 	
 	// Start the solve loop.
 	while (totalUnsolved) {
@@ -193,12 +193,12 @@ typedef struct {
 
 #pragma mark - Logic Techniques
 
-- (int)solveOnlyChoice {
-	int totalSolved = 0;
+- (NSInteger)solveOnlyChoice {
+	NSInteger totalSolved = 0;
 	
 	// Iterate over all the tiles on the board.
-	for (int row = 0; row < _gameBoard.size; ++row) {
-		for (int col = 0; col < _gameBoard.size; ++col) {
+	for (NSInteger row = 0; row < _gameBoard.size; ++row) {
+		for (NSInteger col = 0; col < _gameBoard.size; ++col) {
 			// Skip the solved tiles.
 			if (_gameBoard.grid[row][col].guess) {
 				continue;
@@ -207,7 +207,7 @@ typedef struct {
 			// If the tile only has one pencil mark, it has to be that answer.
 			if (_gameBoard.grid[row][col].totalPencils == 1) {
 				// Search through the pencils and find the lone YES.
-				for (int guess = 1; guess <= _gameBoard.size; ++guess) {
+				for (NSInteger guess = 1; guess <= _gameBoard.size; ++guess) {
 					if (_gameBoard.grid[row][col].pencils[guess - 1]) {
 						[_gameBoard setGuess:guess forTileAtRow:row col:col];
 						[_gameBoard clearInfluencedPencilsForTileAtRow:row col:col];
@@ -222,22 +222,22 @@ typedef struct {
 	return totalSolved;
 }
 
-- (int)solveSinglePossibility {
-	int totalSolved = 0;
+- (NSInteger)solveSinglePossibility {
+	NSInteger totalSolved = 0;
 	
 	// Iterate over each tile set.
-	for (int setIndex = 0, totalSets = 3 * _gameBoard.size; setIndex < totalSets; ++setIndex) {
+	for (NSInteger setIndex = 0, totalSets = 3 * _gameBoard.size; setIndex < totalSets; ++setIndex) {
 		// Cache the current set.
 		ZSGameTileStub **set = _gameBoard.allSets[setIndex];
 		
 		// Iterate over each guess.
-		for (int guess = 1; guess <= _gameBoard.size; ++guess) {
+		for (NSInteger guess = 1; guess <= _gameBoard.size; ++guess) {
 			// Keep track of how many instances of the target pencil are found in the set.
-			int totalPencilsFound = 0;
+			NSInteger totalPencilsFound = 0;
 			ZSGameTileStub *lastTileFound = NULL;
 			
 			// Iterate over the tiles in the set making note of the occurrances of the target pencil.
-			for (int i = 0; i < _gameBoard.size; ++i) {
+			for (NSInteger i = 0; i < _gameBoard.size; ++i) {
 				if (!set[i]->guess && set[i]->pencils[guess - 1]) {
 					++totalPencilsFound;
 					lastTileFound = set[i];
@@ -256,22 +256,22 @@ typedef struct {
 	return totalSolved;
 }
 
-- (int)eliminatePencilsHiddenSubgroupForSize:(int)subgroupSize {
-	int totalPencilsEliminated = 0;
+- (NSInteger)eliminatePencilsHiddenSubgroupForSize:(NSInteger)subgroupSize {
+	NSInteger totalPencilsEliminated = 0;
 	
 	// Allocate memory used in searching for hidden subgroups. We allocate out of the main loop because
 	// allocation is expensive and all iterations of the loop need roughly the same size arrays.
-	int *pencilMap = malloc(_gameBoard.size * sizeof(int));
-	int *combinationMap = malloc(subgroupSize * sizeof(int));
+	NSInteger *pencilMap = malloc(_gameBoard.size * sizeof(NSInteger));
+	NSInteger *combinationMap = malloc(subgroupSize * sizeof(NSInteger));
 	ZSGameTileStub **subgroupMatches = malloc(_gameBoard.size * sizeof(ZSGameTileStub *));
 	
 	// Iterate over each tile set.
-	for (int setIndex = 0, totalSets = 3 * _gameBoard.size; setIndex < totalSets; ++setIndex) {
+	for (NSInteger setIndex = 0, totalSets = 3 * _gameBoard.size; setIndex < totalSets; ++setIndex) {
 		// Cache the current set.
 		ZSGameTileStub **currentSet = _gameBoard.allSets[setIndex];
 		
 		// Initialize the pencil map. The compinations generated later will be indexes on this array.
-		int totalPencilsInSet = [self initPencilMap:pencilMap forTileSet:currentSet];
+		NSInteger totalPencilsInSet = [self initPencilMap:pencilMap forTileSet:currentSet];
 		
 		// If there are fewer (or equal) pencil marks than the subgroup size, we can quit here.
 		if (totalPencilsInSet <= subgroupSize) {
@@ -284,17 +284,17 @@ typedef struct {
 		// Iterate over each combination of pencils.
 		do {
 			// Keep track of how many tiles match all pencils in the current combination.
-			int totalTilesWithAnyPencilsInCombination = 0;
+			NSInteger totalTilesWithAnyPencilsInCombination = 0;
 			
 			// Iterate over each tile in the group.
-			for (int tileIndex = 0; tileIndex < _gameBoard.size; ++tileIndex) {
+			for (NSInteger tileIndex = 0; tileIndex < _gameBoard.size; ++tileIndex) {
 				// Skip solved tiles.
 				if (currentSet[tileIndex]->guess) {
 					continue;
 				}
 				
 				// If the current tile contains any of the pencil marks in the subgroup, increment the possible subgroup match count and save a reference to the tile.
-				for (int currentCombinationIndex = 0; currentCombinationIndex < subgroupSize; ++currentCombinationIndex) {
+				for (NSInteger currentCombinationIndex = 0; currentCombinationIndex < subgroupSize; ++currentCombinationIndex) {
 					if (currentSet[tileIndex]->pencils[pencilMap[combinationMap[currentCombinationIndex]]]) {
 						subgroupMatches[totalTilesWithAnyPencilsInCombination] = currentSet[tileIndex];
 						++totalTilesWithAnyPencilsInCombination;
@@ -306,11 +306,11 @@ typedef struct {
 			// If the possible subgroup match count is less than or equal to the subgroup size, we've found a valid subgroup.
 			if (totalTilesWithAnyPencilsInCombination && totalTilesWithAnyPencilsInCombination <= subgroupSize) {
 				// Iterate over all the tiles in the subgroup and eliminate all pencil marks that aren't in the pencil map.
-				for (int subgroupMatchIndex = 0; subgroupMatchIndex < totalTilesWithAnyPencilsInCombination; ++subgroupMatchIndex) {
-					for (int pencilToEliminate = 0; pencilToEliminate < _gameBoard.size; ++pencilToEliminate) {
+				for (NSInteger subgroupMatchIndex = 0; subgroupMatchIndex < totalTilesWithAnyPencilsInCombination; ++subgroupMatchIndex) {
+					for (NSInteger pencilToEliminate = 0; pencilToEliminate < _gameBoard.size; ++pencilToEliminate) {
 						BOOL matchesHiddenPencil = NO;
 						
-						for (int currentCombinationIndex = 0; currentCombinationIndex < subgroupSize; ++currentCombinationIndex) {
+						for (NSInteger currentCombinationIndex = 0; currentCombinationIndex < subgroupSize; ++currentCombinationIndex) {
 							if (pencilToEliminate == pencilMap[combinationMap[currentCombinationIndex]]) {
 								matchesHiddenPencil = YES;
 								break;
@@ -338,22 +338,22 @@ typedef struct {
 	return totalPencilsEliminated;
 }
 
-- (int)eliminatePencilsNakedSubgroupForSize:(int)subgroupSize {
-	int totalPencilsEliminated = 0;
+- (NSInteger)eliminatePencilsNakedSubgroupForSize:(NSInteger)subgroupSize {
+	NSInteger totalPencilsEliminated = 0;
 	
 	// Allocate memory used in searching for hidden subgroups. We allocate out of the main loop because
 	// allocation is expensive and all iterations of the loop need roughly the same size arrays.
-	int *pencilMap = malloc(_gameBoard.size * sizeof(int));
-	int *combinationMap = malloc(subgroupSize * sizeof(int));
+	NSInteger *pencilMap = malloc(_gameBoard.size * sizeof(NSInteger));
+	NSInteger *combinationMap = malloc(subgroupSize * sizeof(NSInteger));
 	ZSGameTileStub **subgroupMatches = malloc(_gameBoard.size * sizeof(ZSGameTileStub *));
 	
 	// Iterate over each tile set.
-	for (int setIndex = 0, totalSets = 3 * _gameBoard.size; setIndex < totalSets; ++setIndex) {
+	for (NSInteger setIndex = 0, totalSets = 3 * _gameBoard.size; setIndex < totalSets; ++setIndex) {
 		// Cache the current set.
 		ZSGameTileStub **currentSet = _gameBoard.allSets[setIndex];
 		
 		// Initialize the pencil map. The compinations generated later will be indexes on this array.
-		int totalPencilsInSet = [self initPencilMap:pencilMap forTileSet:currentSet];
+		NSInteger totalPencilsInSet = [self initPencilMap:pencilMap forTileSet:currentSet];
 		
 		// If there are fewer (or equal) pencil marks than the subgroup size, we can quit here.
 		if (totalPencilsInSet <= subgroupSize) {
@@ -366,10 +366,10 @@ typedef struct {
 		// Iterate over each combination of pencils.
 		do {
 			// Keep track of how many tiles match all pencils in the current combination.
-			int totalTilesWithMatchingPencilsInCombination = 0;
+			NSInteger totalTilesWithMatchingPencilsInCombination = 0;
 			
 			// Iterate over each tile in the group.
-			for (int tileIndex = 0; tileIndex < _gameBoard.size; ++tileIndex) {
+			for (NSInteger tileIndex = 0; tileIndex < _gameBoard.size; ++tileIndex) {
 				// Skip solved tiles.
 				if (currentSet[tileIndex]->guess) {
 					continue;
@@ -379,12 +379,12 @@ typedef struct {
 				BOOL tileHasOnlyMatchingPencils = YES;
 				
 				// Check all pencils on the current tile.
-				for (int pencilToTest = 0; pencilToTest < _gameBoard.size; ++pencilToTest) {
+				for (NSInteger pencilToTest = 0; pencilToTest < _gameBoard.size; ++pencilToTest) {
 					// If the tile has the current pencil, make sure it's not one of the possible naked subgroup pencils.
 					if (currentSet[tileIndex]->pencils[pencilToTest]) {
 						BOOL pencilToTestMatchesSubgroupTarget = NO;
 						
-						for (int currentCombinationIndex = 0; currentCombinationIndex < subgroupSize; ++currentCombinationIndex) {
+						for (NSInteger currentCombinationIndex = 0; currentCombinationIndex < subgroupSize; ++currentCombinationIndex) {
 							if (pencilToTest == pencilMap[combinationMap[currentCombinationIndex]]) {
 								pencilToTestMatchesSubgroupTarget = YES;
 								break;
@@ -411,10 +411,10 @@ typedef struct {
 			// If the possible subgroup match count is less than or equal to the subgroup size, we've found a valid subgroup.
 			if (totalTilesWithMatchingPencilsInCombination && totalTilesWithMatchingPencilsInCombination == subgroupSize) {
 				// Iterate over all the tiles in the set (except for those in the subgroup) and eliminate all pencil marks that aren't in the pencil map.
-				for (int setIndex = 0; setIndex < _gameBoard.size; ++setIndex) {
+				for (NSInteger setIndex = 0; setIndex < _gameBoard.size; ++setIndex) {
 					BOOL tileIsInNakedSubgroup = NO;
 					
-					for (int subgroupMatchIndex = 0; subgroupMatchIndex < totalTilesWithMatchingPencilsInCombination; ++subgroupMatchIndex) {
+					for (NSInteger subgroupMatchIndex = 0; subgroupMatchIndex < totalTilesWithMatchingPencilsInCombination; ++subgroupMatchIndex) {
 						if (subgroupMatches[subgroupMatchIndex] == currentSet[setIndex]) {
 							tileIsInNakedSubgroup = YES;
 							break;
@@ -425,8 +425,8 @@ typedef struct {
 						continue;
 					}
 					
-					for (int currentCombinationIndex = 0; currentCombinationIndex < subgroupSize; ++currentCombinationIndex) {
-						int pencilToEliminate = pencilMap[combinationMap[currentCombinationIndex]];
+					for (NSInteger currentCombinationIndex = 0; currentCombinationIndex < subgroupSize; ++currentCombinationIndex) {
+						NSInteger pencilToEliminate = pencilMap[combinationMap[currentCombinationIndex]];
 						
 						if (currentSet[setIndex]->pencils[pencilToEliminate]) {
 							[_gameBoard setPencil:NO forPencilNumber:(pencilToEliminate + 1) forTileAtRow:currentSet[setIndex]->row col:currentSet[setIndex]->col];
@@ -448,11 +448,11 @@ typedef struct {
 #pragma mark - Logic Technique Helpers
 
 // Populate the pencilMap array with a list of pencils that exist in the given tile set. Return the total number of pencils found.
-- (int)initPencilMap:(int *)pencilMap forTileSet:(ZSGameTileStub **)set {
-	int totalPencils = 0;
+- (NSInteger)initPencilMap:(NSInteger *)pencilMap forTileSet:(ZSGameTileStub **)set {
+	NSInteger totalPencils = 0;
 	
-	for (int guess = 0; guess < _gameBoard.size; ++guess) {
-		for (int tileIndex = 0; tileIndex < _gameBoard.size; ++tileIndex) {
+	for (NSInteger guess = 0; guess < _gameBoard.size; ++guess) {
+		for (NSInteger tileIndex = 0; tileIndex < _gameBoard.size; ++tileIndex) {
 			// If we find this pencil mark in the set, add it to the list of all pencil marks and increment the total.
 			// We can also break out of the loop over the tiles and move to the next guess.
 			if (!set[tileIndex]->guess && set[tileIndex]->pencils[guess]) {
@@ -467,27 +467,27 @@ typedef struct {
 }
 
 // Returns the the first combination.
-- (void)setFirstCombinationInArray:(int *)comboArray ofLength:(int)arrayLength totalPencils:(int)itemCount {
+- (void)setFirstCombinationInArray:(NSInteger *)comboArray ofLength:(NSInteger)arrayLength totalPencils:(NSInteger)itemCount {
 	// Make sure we have enough unique items to fill the array.
 	assert(arrayLength <= itemCount);
 	
-	for (int i = 0; i < arrayLength; i++) {
+	for (NSInteger i = 0; i < arrayLength; i++) {
 		comboArray[i] = i;
 	}
 }
 
 // Provides the next the next combination in the sequence. Returns false if there are no more combinations.
-- (BOOL)setNextCombinationInArray:(int *)comboArray ofLength:(int)arrayLength totalPencils:(int)itemCount {
+- (BOOL)setNextCombinationInArray:(NSInteger *)comboArray ofLength:(NSInteger)arrayLength totalPencils:(NSInteger)itemCount {
 	// Increment the last array element. If it overflows, then increment the next-to-last element, etc.
-	for (int index = arrayLength - 1; index >= 0; index--) {
-		int maxValueForIndex = itemCount - (arrayLength - index);
+	for (NSInteger index = arrayLength - 1; index >= 0; index--) {
+		NSInteger maxValueForIndex = itemCount - (arrayLength - index);
 		
 		// Make sure we're not about to exceed the max value for the current index.
 		if (comboArray[index] < maxValueForIndex) {
 			comboArray[index] += 1;
 			
 			// Initialize the rest of the array.
-			for (int initIndex = index + 1; initIndex < arrayLength; initIndex++) {
+			for (NSInteger initIndex = index + 1; initIndex < arrayLength; initIndex++) {
 				comboArray[initIndex] = comboArray[initIndex - 1] + 1;
 			}
 			
@@ -498,18 +498,18 @@ typedef struct {
 	return NO;
 }
 
-- (int)getNumberOfTilesInSet:(ZSGameTileStub **)set withTotalPencilsEqualToOrGreaterThan:(int)totalPencilLimit {
+- (NSInteger)getNumberOfTilesInSet:(ZSGameTileStub **)set withTotalPencilsEqualToOrGreaterThan:(NSInteger)totalPencilLimit {
 	// Create a bit map of all pencils in the group.
-	int totalTiles = 0;
+	NSInteger totalTiles = 0;
 	
 	// Iterate over all tiles in the set.
-	for (int i = 0; i < _gameBoard.size; ++i) {
+	for (NSInteger i = 0; i < _gameBoard.size; ++i) {
 		// Count the number of pencils in the current tile.
-		int totalPencils = 0;
+		NSInteger totalPencils = 0;
 		
 		// Iterate over each guess.
-		for (int guess = 1; guess <= _gameBoard.size; ++guess) {
-			int totalPencils = 0;
+		for (NSInteger guess = 1; guess <= _gameBoard.size; ++guess) {
+			NSInteger totalPencils = 0;
 
 			if (!set[i]->guess && set[i]->pencils[guess - 1]) {
 				++totalPencils;
@@ -540,7 +540,7 @@ typedef struct {
 	return result;
 }
 
-- (ZSGameSolveResult)solveBruteForceForRow:(int)row col:(int)col {
+- (ZSGameSolveResult)solveBruteForceForRow:(NSInteger)row col:(NSInteger)col {
 	// If we've already iterated off the end, the puzzle is complete.
 	if (col >= _gameBoard.size) {
 		// Copy the solution.
@@ -562,7 +562,7 @@ typedef struct {
 	// Now that we've found an empty spot, loop over all the possible guesses.
 	ZSGameSolveResult localSolutions = ZSGameSolveResultFailedNoSolution;
 	
-	for (int guess = 1; guess <= _gameBoard.size; ++guess) {
+	for (NSInteger guess = 1; guess <= _gameBoard.size; ++guess) {
 		if ([_gameBoard isGuess:guess validInRow:row col:col]) {
 			[_gameBoard setGuess:guess forTileAtRow:row col:col];
 			

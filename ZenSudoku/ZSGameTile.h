@@ -13,12 +13,12 @@
 @interface ZSGameTile : NSObject {
 	ZSGameBoard *gameBoard;
 	
-	int row;
-	int col;
-	int groupId;
+	NSInteger row;
+	NSInteger col;
+	NSInteger groupId;
 	
-	int guess;
-	int answer;
+	NSInteger guess;
+	NSInteger answer;
 	BOOL locked;
 	
 	@private
@@ -28,12 +28,12 @@
 
 @property (strong) ZSGameBoard *gameBoard;
 
-@property (nonatomic, assign) int row;
-@property (nonatomic, assign) int col;
-@property (nonatomic, assign) int groupId;
+@property (nonatomic, assign) NSInteger row;
+@property (nonatomic, assign) NSInteger col;
+@property (nonatomic, assign) NSInteger groupId;
 
-@property (nonatomic, assign) int guess;
-@property (nonatomic, assign) int answer;
+@property (nonatomic, assign) NSInteger guess;
+@property (nonatomic, assign) NSInteger answer;
 @property (nonatomic, assign) BOOL locked;
 
 - (id)initWithBoard:(ZSGameBoard *)gameBoard;
@@ -41,10 +41,10 @@
 - (void)setValuesForDictionaryRepresentation:(NSDictionary *)dict;
 - (NSDictionary *)getDictionaryRepresentation;
 
-- (BOOL)getPencilForGuess:(int)newGuess;
-- (void)setPencil:(BOOL)isset forGuess:(int)guess;
+- (BOOL)getPencilForGuess:(NSInteger)newGuess;
+- (void)setPencil:(BOOL)isset forGuess:(NSInteger)guess;
 - (void)setAllPencils:(BOOL)isset;
-- (void)togglePencilForGuess:(int)guess;
+- (void)togglePencilForGuess:(NSInteger)guess;
 
 @end
 

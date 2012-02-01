@@ -59,11 +59,11 @@
 
 #pragma mark - Table view data source
 
-- (int)numberOfSectionsInTableView:(UITableView *)tableView {
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 	return 1;
 }
 
-- (int)tableView:(UITableView *)tableView numberOfRowsInSection:(int)section {
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	return 4;
 }
 

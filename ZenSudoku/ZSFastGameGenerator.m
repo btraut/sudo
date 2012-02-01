@@ -37,7 +37,7 @@
 	[self buildPuzzleForX:0 y:0];
 	
 	// Generate a random string of rows and columns to act as our reduction guide.
-	int *reductionCoords = malloc(_reductionGameBoard.size * _reductionGameBoard.size * sizeof(int));
+	NSInteger *reductionCoords = malloc(_reductionGameBoard.size * _reductionGameBoard.size * sizeof(NSInteger));
 	[self populateRandomNumberArray:reductionCoords withSize:(_reductionGameBoard.size * _reductionGameBoard.size)];
 	
 	// Create a solver to use in the loop.
@@ -46,9 +46,9 @@
 	[gameSolver copyGroupMapFromFastGameBoard:_reductionGameBoard];
 	
 	// As long as it doesn't make the solution ambiguous, keep removing tiles.
-	for (int i = 0, iMax = _reductionGameBoard.size * _reductionGameBoard.size; i < iMax; ++i) {
-		int reductionRow = reductionCoords[i] / _reductionGameBoard.size;
-		int reductionCol = reductionCoords[i] % _reductionGameBoard.size;
+	for (NSInteger i = 0, iMax = _reductionGameBoard.size * _reductionGameBoard.size; i < iMax; ++i) {
+		NSInteger reductionRow = reductionCoords[i] / _reductionGameBoard.size;
+		NSInteger reductionCol = reductionCoords[i] % _reductionGameBoard.size;
 		
 		// Copy the puzzle to the scratch board. We have to keep doing this because the solver keeps solving it.
 		[_scratchGameBoard copyGuessesFromFastGameBoard:_reductionGameBoard];
@@ -87,7 +87,7 @@
 	return newGame;
 }
 
-- (BOOL)buildPuzzleForX:(int)row y:(int)col {
+- (BOOL)buildPuzzleForX:(NSInteger)row y:(NSInteger)col {
 	// If we've already iterated off the end, the puzzle is complete.
 	if (col >= _reductionGameBoard.size) {
 		return YES;
@@ -104,11 +104,11 @@
 	}
 	
 	// Now that we've found an empty spot, loop over all the possible guesses.
-	int *randomGuesses = malloc(_reductionGameBoard.size * sizeof(int));
+	NSInteger *randomGuesses = malloc(_reductionGameBoard.size * sizeof(NSInteger));
 	[self populateRandomNumberArray:randomGuesses withSize:_reductionGameBoard.size];
 	
-	for (int i = 0; i < _reductionGameBoard.size; ++i) {
-		int guess = randomGuesses[i] + 1;
+	for (NSInteger i = 0; i < _reductionGameBoard.size; ++i) {
+		NSInteger guess = randomGuesses[i] + 1;
 		
 		if ([_reductionGameBoard isGuess:guess validInRow:row col:col]) {
 			[_reductionGameBoard setGuess:guess forTileAtRow:row col:col];
@@ -127,16 +127,16 @@
 	return NO;
 }
 
-- (void)populateRandomNumberArray:(int *)array withSize:(int)arraySize {
+- (void)populateRandomNumberArray:(NSInteger *)array withSize:(NSInteger)arraySize {
 	// Populate the array.
-	for (int i = 0; i < arraySize; ++i) {
+	for (NSInteger i = 0; i < arraySize; ++i) {
 		array[i] = i;
 	}
 	
 	// Shuffle the array.
-	int temp, target1, target2;
+	NSInteger temp, target1, target2;
 	
-	for (int i = 0, timesToShuffle = arraySize * arraySize; i < timesToShuffle; ++i) {
+	for (NSInteger i = 0, timesToShuffle = arraySize * arraySize; i < timesToShuffle; ++i) {
 		target1 = arc4random() % arraySize;
 		target2 = arc4random() % arraySize;
 		

@@ -39,7 +39,7 @@ NSString * const kDictionaryRepresentationGameTilePencilsKey = @"kDictionaryRepr
 		
 		_pencils = [NSMutableArray array];
 		
-		for (int i = 0; i < gameBoard.size; ++i) {
+		for (NSInteger i = 0; i < gameBoard.size; ++i) {
 			[_pencils addObject:[NSNumber numberWithBool:NO]];
 		}
 	}
@@ -56,7 +56,7 @@ NSString * const kDictionaryRepresentationGameTilePencilsKey = @"kDictionaryRepr
 	
 	groupId = [[dict objectForKey:kDictionaryRepresentationGameTileGroupIdKey] intValue];
 	
-	for (int i = 0; i < gameBoard.size; ++i) {
+	for (NSInteger i = 0; i < gameBoard.size; ++i) {
 		NSNumber *pencilNumber = [[dict objectForKey:kDictionaryRepresentationGameTilePencilsKey] objectAtIndex:i];
 		[self setPencil:[pencilNumber boolValue] forGuess:(i + 1)];
 	}
@@ -84,21 +84,21 @@ NSString * const kDictionaryRepresentationGameTilePencilsKey = @"kDictionaryRepr
 
 #pragma mark - Setters / Getters
 
-- (BOOL)getPencilForGuess:(int)newGuess {
+- (BOOL)getPencilForGuess:(NSInteger)newGuess {
 	return [[_pencils objectAtIndex:(newGuess - 1)] boolValue];
 }
 
-- (void)setPencil:(BOOL)isset forGuess:(int)newGuess {
+- (void)setPencil:(BOOL)isset forGuess:(NSInteger)newGuess {
 	[_pencils replaceObjectAtIndex:(newGuess - 1) withObject:[NSNumber numberWithBool:isset]];
 }
 
 - (void)setAllPencils:(BOOL)isset {
-	for (int i = 1; i <= gameBoard.size; ++i) {
+	for (NSInteger i = 1; i <= gameBoard.size; ++i) {
 		[self setPencil:isset forGuess:i];
 	}
 }
 
-- (void)togglePencilForGuess:(int)newGuess {
+- (void)togglePencilForGuess:(NSInteger)newGuess {
 	[self setPencil:(![self getPencilForGuess:newGuess]) forGuess:newGuess];
 }
 

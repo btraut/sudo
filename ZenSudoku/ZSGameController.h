@@ -29,10 +29,10 @@
 - (void)clearSavedGame;
 
 // Utilities
-+ (int **)alloc2DIntGridWithSize:(int)size;
-+ (void)free2DIntGrid:(int **)grid withSize:(int)size;
-+ (BOOL ***)alloc3DBoolGridWithSize:(int)size;
-+ (void)free3DBoolGrid:(BOOL ***)grid withSize:(int)size;	
++ (NSInteger **)alloc2DIntGridWithSize:(NSInteger)size;
++ (void)free2DIntGrid:(NSInteger **)grid withSize:(NSInteger)size;
++ (BOOL ***)alloc3DBoolGridWithSize:(NSInteger)size;
++ (void)free3DBoolGrid:(BOOL ***)grid withSize:(NSInteger)size;	
 
 @end
 
