@@ -9,7 +9,6 @@
 #import "ZSGameController.h"
 #import "ZSAppDelegate.h"
 #import "ZSGame.h"
-#import "ZSFastGameGenerator.h"
 #import "ZSPuzzleFetcher.h"
 
 NSString * const kSavedGameFileName = @"SavedGame.plist";
@@ -33,11 +32,6 @@ NSString * const kSavedGameFileName = @"SavedGame.plist";
 - (void)fetchGameWithDifficulty:(ZSGameDifficulty)difficulty {
 	ZSPuzzleFetcher *fetcher = [[ZSPuzzleFetcher alloc] init];
 	currentGame = [fetcher fetchGameWithType:ZSGameTypeTraditional size:9 difficulty:difficulty];
-}
-
-- (void)generateGameWithDifficulty:(ZSGameDifficulty)difficulty {
-	ZSFastGameGenerator *gameGenerator = [[ZSFastGameGenerator alloc] init];
-	currentGame = [gameGenerator generateGameWithDifficulty:difficulty];
 }
 
 - (void)clearCurrentGame {

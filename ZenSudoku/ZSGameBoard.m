@@ -10,7 +10,6 @@
 #import "ZSGame.h"
 #import "ZSGameTile.h"
 #import "ZSGameController.h"
-#import "ZSFastGameSolver.h"
 
 NSInteger standard9x9GroupMap[9][9] = {
 	{0, 0, 0, 1, 1, 1, 2, 2, 2},
@@ -578,21 +577,6 @@ NSInteger standard9x9GroupMap[9][9] = {
 	
 	tile.guess = tile.answer;
 	tile.locked = YES;
-}
-
-- (ZSGameSolveResult)solve {
-	// Initialize a solver.
-	ZSFastGameSolver *solver = [[ZSFastGameSolver alloc] initWithSize:size];
-	[solver copyGroupMapFromGameBoard:self];
-	[solver copyGuessesFromGameBoard:self];
-	
-	// Solve the puzzle.
-	ZSGameSolveResult result = [solver solve];
-	
-	// Copy the solution into the answer grid.
-	[solver copySolutionToGameBoard:self];
-	
-	return result;
 }
 
 #pragma mark - Validitiy Checks

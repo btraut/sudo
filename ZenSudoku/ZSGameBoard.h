@@ -8,8 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-#import "ZSFastGameSolver.h"
-
 @class ZSGameTile;
 @class ZSGame;
 
@@ -85,8 +83,6 @@
 
 - (void)lockGuesses;
 - (void)lockTileAtRow:(NSInteger)row col:(NSInteger)col;
-
-- (ZSGameSolveResult)solve;
 
 // Validitiy Checks
 

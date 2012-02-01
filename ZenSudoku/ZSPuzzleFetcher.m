@@ -8,7 +8,6 @@
 
 #import "ZSPuzzleFetcher.h"
 #import "ZSAppDelegate.h"
-#import "ZSFastGameSolver.h"
 
 #import "FMDatabase.h"
 

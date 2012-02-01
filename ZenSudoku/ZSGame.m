@@ -8,7 +8,6 @@
 
 #import "ZSGame.h"
 #import "ZSAppDelegate.h"
-#import "ZSFastGameSolver.h"
 #import "ZSGameController.h"
 #import "ZSGameHistoryEntry.h"
 #import "ZSGameBoard.h"
@@ -450,10 +449,6 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 }
 
 #pragma mark - Game Actions
-
-- (ZSGameSolveResult)solve {
-	return [gameBoard solve];
-}
 
 - (void)addAutoPencils {
 	// Create a new history stop.
