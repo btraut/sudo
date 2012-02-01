@@ -53,6 +53,8 @@
 		84AC26E01480DDBA00E966A5 /* ZSGameTile.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC26DF1480DDBA00E966A5 /* ZSGameTile.m */; };
 		84AC26E41480EB7E00E966A5 /* ZSGameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC26E31480EB7D00E966A5 /* ZSGameController.m */; };
 		84B300F4148AF6FF00E568CE /* ZSGameHistoryEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B300F3148AF6FD00E568CE /* ZSGameHistoryEntry.m */; };
+		84C6110A14D94414003358FE /* ZSInstructionsRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C6110814D94414003358FE /* ZSInstructionsRootViewController.m */; };
+		84C6110B14D94414003358FE /* ZSInstructionsRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C6110914D94414003358FE /* ZSInstructionsRootViewController.xib */; };
 		84D55014147F1C4A00A7934E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D55013147F1C4A00A7934E /* UIKit.framework */; };
 		84D55016147F1C4A00A7934E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D55015147F1C4A00A7934E /* Foundation.framework */; };
 		84D55018147F1C4A00A7934E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D55017147F1C4A00A7934E /* CoreGraphics.framework */; };
@@ -146,6 +148,9 @@
 		84AC26E31480EB7D00E966A5 /* ZSGameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSGameController.m; sourceTree = "<group>"; };
 		84B300F2148AF6FD00E568CE /* ZSGameHistoryEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSGameHistoryEntry.h; sourceTree = "<group>"; };
 		84B300F3148AF6FD00E568CE /* ZSGameHistoryEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSGameHistoryEntry.m; sourceTree = "<group>"; };
+		84C6110714D94414003358FE /* ZSInstructionsRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSInstructionsRootViewController.h; sourceTree = "<group>"; };
+		84C6110814D94414003358FE /* ZSInstructionsRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSInstructionsRootViewController.m; sourceTree = "<group>"; };
+		84C6110914D94414003358FE /* ZSInstructionsRootViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZSInstructionsRootViewController.xib; sourceTree = "<group>"; };
 		84D5500F147F1C4A00A7934E /* ZenSudoku.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZenSudoku.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84D55013147F1C4A00A7934E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		84D55015147F1C4A00A7934E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -449,6 +454,9 @@
 				8449D9591481E518003F6FB3 /* ZSGameAnswerOptionViewController.m */,
 				841F854B14C4287600DFFABC /* ZSStatisticsViewController.h */,
 				841F854C14C4287600DFFABC /* ZSStatisticsViewController.m */,
+				84C6110714D94414003358FE /* ZSInstructionsRootViewController.h */,
+				84C6110814D94414003358FE /* ZSInstructionsRootViewController.m */,
+				84C6110914D94414003358FE /* ZSInstructionsRootViewController.xib */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -555,6 +563,7 @@
 				8492B78814CEBDC80093B7AC /* Sudoku.db3 in Resources */,
 				8492B78E14CEC07D0093B7AC /* Default.png in Resources */,
 				8492B78F14CEC07D0093B7AC /* Default@2x.png in Resources */,
+				84C6110B14D94414003358FE /* ZSInstructionsRootViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -624,6 +633,7 @@
 				8492B76F14C917290093B7AC /* FMDatabaseAdditions.m in Sources */,
 				8492B77114C917290093B7AC /* FMResultSet.m in Sources */,
 				8492B77414CD69B10093B7AC /* ZSPuzzleFetcher.m in Sources */,
+				84C6110A14D94414003358FE /* ZSInstructionsRootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

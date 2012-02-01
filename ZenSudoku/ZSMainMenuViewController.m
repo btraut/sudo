@@ -7,12 +7,14 @@
 //
 
 #import "ZSMainMenuViewController.h"
+
 #import "ZSNewGameOptionsViewController.h"
 #import "ZSGameViewController.h"
 #import "ZSGameController.h"
 #import "ZSStatisticsViewController.h"
 #import "ZSGame.h"
 #import "ZSAppDelegate.h"
+#import "ZSInstructionsRootViewController.h"
 
 #import "TestFlight.h"
 #import "IASKAppSettingsViewController.h"
@@ -145,6 +147,7 @@
 				break;
 				
 			case 1:
+				detailViewController = [[ZSInstructionsRootViewController alloc] initWithNibName:@"ZSInstructionsRootViewController" bundle:[NSBundle mainBundle]];
 				break;
 				
 			case 2:
