@@ -61,14 +61,14 @@
 	
 	// Build the tiles.
 	NSMutableArray *rows = [NSMutableArray array];
-	NSInteger yOffset = 2;
+	int yOffset = 2;
 	
-	for (NSInteger row = 0; row < game.gameBoard.size; row++) {
-		NSInteger xOffset = 2;
+	for (int row = 0; row < game.gameBoard.size; row++) {
+		int xOffset = 2;
 		
 		NSMutableArray *rowTiles = [NSMutableArray array];
 		
-		for (NSInteger col = 0; col < game.gameBoard.size; col++) {
+		for (int col = 0; col < game.gameBoard.size; col++) {
 			ZSGameBoardTileViewController *tileViewController = [[ZSGameBoardTileViewController alloc] initWithTile:[game getTileAtRow:row col:col]];
 			tileViewController.view.frame = CGRectMake(xOffset, yOffset, tileViewController.view.frame.size.width, tileViewController.view.frame.size.height);
 			tileViewController.delegate = self;
@@ -96,8 +96,8 @@
 #pragma mark - Board Changes
 
 - (void)reloadView {
-	for (NSInteger row = 0; row < game.gameBoard.size; row++) {
-		for (NSInteger col = 0; col < game.gameBoard.size; col++) {
+	for (int row = 0; row < game.gameBoard.size; row++) {
+		for (int col = 0; col < game.gameBoard.size; col++) {
 			[[self getGameBoardTileViewControllerAtRow:row col:col] reloadView];
 		}
 	}
@@ -143,8 +143,8 @@
 
 - (void)addHighlightsForTilesInfluencedByTileView:(ZSGameBoardTileViewController *)tileView {
 	if (tileView.tile.guess) {
-		for (NSInteger row = 0; row < game.gameBoard.size; row++) {
-			for (NSInteger col = 0; col < game.gameBoard.size; col++) {
+		for (int row = 0; row < game.gameBoard.size; row++) {
+			for (int col = 0; col < game.gameBoard.size; col++) {
 				ZSGameBoardTileViewController *iteratedTileView = [self getGameBoardTileViewControllerAtRow:row col:col];
 				
 				if (iteratedTileView.tile.guess == selectedTileView.tile.guess || [iteratedTileView.tile getPencilForGuess:tileView.tile.guess]) {
@@ -167,7 +167,7 @@
 
 #pragma mark - Tile Accessors
 
-- (ZSGameBoardTileViewController *)getGameBoardTileViewControllerAtRow:(NSInteger)row col:(NSInteger)col {
+- (ZSGameBoardTileViewController *)getGameBoardTileViewControllerAtRow:(int)row col:(int)col {
 	return [[tileViews objectAtIndex:row] objectAtIndex:col];
 }
 

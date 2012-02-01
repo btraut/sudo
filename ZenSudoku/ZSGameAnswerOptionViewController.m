@@ -73,7 +73,7 @@
 		case ZSGameAnswerOption7:
 		case ZSGameAnswerOption8:
 		case ZSGameAnswerOption9:
-			theView.text = [NSString stringWithFormat:@"%i", ((NSInteger)gameAnswerOption + 1)];
+			theView.text = [NSString stringWithFormat:@"%i", ((int)gameAnswerOption + 1)];
 			break;
 		
 		default:

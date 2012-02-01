@@ -16,22 +16,22 @@ typedef enum {
 
 @interface ZSGameHistoryEntry : NSObject {
 	ZSGameHistoryEntryType type;
-	NSInteger row;
-	NSInteger col;
-	NSInteger previousValue;
-	NSInteger pencilNumber;
+	int row;
+	int col;
+	int previousValue;
+	int pencilNumber;
 }
 
 @property (assign) ZSGameHistoryEntryType type;
-@property (assign) NSInteger row;
-@property (assign) NSInteger col;
-@property (assign) NSInteger previousValue;
-@property (assign) NSInteger pencilNumber;
+@property (assign) int row;
+@property (assign) int col;
+@property (assign) int previousValue;
+@property (assign) int pencilNumber;
 
 + (id)undoStop;
-+ (id)undoDescriptionWithType:(ZSGameHistoryEntryType)newType tile:(ZSGameTile *)newTile previousValue:(NSInteger)newPreviousValue;
-- (id)initWithType:(ZSGameHistoryEntryType)newType tile:(ZSGameTile *)newTile previousValue:(NSInteger)newPreviousValue;
-- (id)initWithType:(ZSGameHistoryEntryType)newType row:(NSInteger)row col:(NSInteger)col previousValue:(NSInteger)newPreviousValue;
++ (id)undoDescriptionWithType:(ZSGameHistoryEntryType)newType tile:(ZSGameTile *)newTile previousValue:(int)newPreviousValue;
+- (id)initWithType:(ZSGameHistoryEntryType)newType tile:(ZSGameTile *)newTile previousValue:(int)newPreviousValue;
+- (id)initWithType:(ZSGameHistoryEntryType)newType row:(int)row col:(int)col previousValue:(int)newPreviousValue;
 
 - (id)initWithDictionaryRepresentation:(NSDictionary *)dict;
 - (NSDictionary *)getDictionaryRepresentation;

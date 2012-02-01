@@ -81,33 +81,33 @@ NSString * const kSavedGameFileName = @"SavedGame.plist";
 
 #pragma mark Utilities
 
-+ (NSInteger **)alloc2DIntGridWithSize:(NSInteger)size {
++ (int **)alloc2DIntGridWithSize:(int)size {
 	// Allocate.
-	NSInteger **grid = malloc(size * sizeof(NSInteger *));
+	int **grid = malloc(size * sizeof(int *));
 	
-	for (NSInteger i = 0; i < size; ++i) {
-		grid[i] = malloc(size * sizeof(NSInteger));
+	for (int i = 0; i < size; ++i) {
+		grid[i] = malloc(size * sizeof(int));
 	}
 	
 	return grid;
 }
 
-+ (void)free2DIntGrid:(NSInteger **)grid withSize:(NSInteger)size {
-	for (NSInteger i = 0; i < size; ++i) {
++ (void)free2DIntGrid:(int **)grid withSize:(int)size {
+	for (int i = 0; i < size; ++i) {
 		free(grid[i]);
 	}
 	
 	free(grid);
 }
 
-+ (BOOL ***)alloc3DBoolGridWithSize:(NSInteger)size {
++ (BOOL ***)alloc3DBoolGridWithSize:(int)size {
 	// Allocate.
 	BOOL ***grid = malloc(size * sizeof(BOOL **));
 	
-	for (NSInteger i = 0; i < size; ++i) {
+	for (int i = 0; i < size; ++i) {
 		grid[i] = malloc(size * sizeof(BOOL *));
 		
-		for (NSInteger j = 0; j < size; ++j) {
+		for (int j = 0; j < size; ++j) {
 			grid[i][j] = malloc(size * sizeof(BOOL));
 		}
 	}
@@ -115,9 +115,9 @@ NSString * const kSavedGameFileName = @"SavedGame.plist";
 	return grid;
 }
 
-+ (void)free3DBoolGrid:(BOOL ***)grid withSize:(NSInteger)size {
-	for (NSInteger i = 0; i < size; ++i) {
-		for (NSInteger j = 0; j < size; ++j) {
++ (void)free3DBoolGrid:(BOOL ***)grid withSize:(int)size {
+	for (int i = 0; i < size; ++i) {
+		for (int j = 0; j < size; ++j) {
 			free(grid[i][j]);
 		}
 		

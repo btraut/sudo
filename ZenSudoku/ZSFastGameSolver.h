@@ -26,7 +26,7 @@ typedef enum {
 }
 
 - (id)init;
-- (id)initWithSize:(NSInteger)size;
+- (id)initWithSize:(int)size;
 
 - (void)copyGroupMapFromFastGameBoard:(ZSFastGameBoard *)gameBoard;
 - (void)copyGuessesFromFastGameBoard:(ZSFastGameBoard *)gameBoard;
@@ -43,20 +43,20 @@ typedef enum {
 - (ZSFastGameBoard *)getSolvedGameBoard;
 
 // Logic Techniques
-- (NSInteger)solveOnlyChoice;
-- (NSInteger)solveSinglePossibility;
-- (NSInteger)eliminatePencilsHiddenSubgroupForSize:(NSInteger)size;
-- (NSInteger)eliminatePencilsNakedSubgroupForSize:(NSInteger)size;
+- (int)solveOnlyChoice;
+- (int)solveSinglePossibility;
+- (int)eliminatePencilsHiddenSubgroupForSize:(int)size;
+- (int)eliminatePencilsNakedSubgroupForSize:(int)size;
 
 // Logic Technique Helpers
-- (NSInteger)initPencilMap:(NSInteger *)pencilMap forTileSet:(ZSGameTileStub **)set;
-- (void)setFirstCombinationInArray:(NSInteger *)comboArray ofLength:(NSInteger)arrayLength totalPencils:(NSInteger)itemCount;
-- (BOOL)setNextCombinationInArray:(NSInteger *)comboArray ofLength:(NSInteger)arrayLength totalPencils:(NSInteger)itemCount;
-- (NSInteger)getNumberOfTilesInSet:(ZSGameTileStub **)set withTotalPencilsEqualToOrGreaterThan:(NSInteger)totalPencilLimit;
+- (int)initPencilMap:(int *)pencilMap forTileSet:(ZSGameTileStub **)set;
+- (void)setFirstCombinationInArray:(int *)comboArray ofLength:(int)arrayLength totalPencils:(int)itemCount;
+- (BOOL)setNextCombinationInArray:(int *)comboArray ofLength:(int)arrayLength totalPencils:(int)itemCount;
+- (int)getNumberOfTilesInSet:(ZSGameTileStub **)set withTotalPencilsEqualToOrGreaterThan:(int)totalPencilLimit;
 
 // Brute Force Solving
 - (ZSGameSolveResult)solveBruteForce;
-- (ZSGameSolveResult)solveBruteForceForRow:(NSInteger)row col:(NSInteger)col;
+- (ZSGameSolveResult)solveBruteForceForRow:(int)row col:(int)col;
 
 @end
 

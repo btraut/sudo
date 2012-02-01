@@ -167,7 +167,7 @@ NSString * const kFastestGamePerExpertKey = @"kFastestGamePerExpertKey";
 	++totalStartedGames;
 }
 
-- (void)gameSolvedWithDifficulty:(ZSGameDifficulty)difficulty totalTime:(NSInteger)seconds {
+- (void)gameSolvedWithDifficulty:(ZSGameDifficulty)difficulty totalTime:(int)seconds {
 	// Total Solved Games
 	++totalSolvedGames;
 	
@@ -180,7 +180,7 @@ NSString * const kFastestGamePerExpertKey = @"kFastestGamePerExpertKey";
 	}
 	
 	// Fastest Solved Per Difficulty
-	NSInteger *fastestGameTimePtr = nil;
+	int *fastestGameTimePtr = nil;
 	
 	switch (difficulty) {
 		case ZSGameDifficultyEasy: fastestGameTimePtr = &fastestGamePerEasy; break;
@@ -210,7 +210,7 @@ NSString * const kFastestGamePerExpertKey = @"kFastestGamePerExpertKey";
 	++totalRedos;
 }
 
-- (void)timeElapsed:(NSInteger)seconds inGameWithDifficulty:(ZSGameDifficulty)difficulty {
+- (void)timeElapsed:(int)seconds inGameWithDifficulty:(ZSGameDifficulty)difficulty {
 	totalTimePlayed += seconds;
 	
 	switch (difficulty) {

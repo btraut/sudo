@@ -34,7 +34,7 @@
 - (id)initWithGame:(ZSGame *)game;
 
 - (void)reloadView;
-- (ZSGameBoardTileViewController *)getGameBoardTileViewControllerAtRow:(NSInteger)row col:(NSInteger)col;
+- (ZSGameBoardTileViewController *)getGameBoardTileViewControllerAtRow:(int)row col:(int)col;
 
 - (void)gameBoardTileWasTouched:(ZSGameBoardTileViewController *)tileView;
 

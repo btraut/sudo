@@ -63,11 +63,11 @@
 
 #pragma mark - Table View Data Source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+- (int)numberOfSectionsInTableView:(UITableView *)tableView {
 	return 3;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (int)tableView:(UITableView *)tableView numberOfRowsInSection:(int)section {
 	switch (section) {
 		case 0: return 5;
 		case 1: return 3;
@@ -78,7 +78,7 @@
 	return 0;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(int)section {
 	switch (section) {
 		case 0: return @"Puzzles Solved";
 		case 1: return @"Answers Entered";
@@ -126,8 +126,8 @@
 				break;
 		}
 	} else if (indexPath.section == 1) {
-		NSInteger answers = [[ZSStatisticsController sharedInstance] totalEnteredAnswers];
-		NSInteger strikes = [[ZSStatisticsController sharedInstance] totalStrikes];
+		int answers = [[ZSStatisticsController sharedInstance] totalEnteredAnswers];
+		int strikes = [[ZSStatisticsController sharedInstance] totalStrikes];
 		float accuracy = answers ? ((float)((answers - strikes) * 100) / (float)answers) : 0;
 		
 		switch (indexPath.row) {
@@ -147,12 +147,12 @@
 				break;
 		}
 	} else if (indexPath.section == 2) {
-		NSInteger remainingSeconds = [[ZSStatisticsController sharedInstance] totalTimePlayed];
+		int remainingSeconds = [[ZSStatisticsController sharedInstance] totalTimePlayed];
 		
-		NSInteger daysPlayed = 0;
-		NSInteger hoursPlayed = 0;
-		NSInteger minutesPlayed = 0;
-		NSInteger secondsPlayed = 0;
+		int daysPlayed = 0;
+		int hoursPlayed = 0;
+		int minutesPlayed = 0;
+		int secondsPlayed = 0;
 		
 		NSMutableString *timePlayedString = [NSMutableString string];
 		

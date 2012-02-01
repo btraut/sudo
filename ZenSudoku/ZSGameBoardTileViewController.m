@@ -56,8 +56,8 @@
 	// Create the pencil labels.
 	NSMutableArray *newPencils = [NSMutableArray array];
 	
-	for (NSInteger row = 0; row < 3; row++) {
-		for (NSInteger col = 0; col < 3; col++) {
+	for (int row = 0; row < 3; row++) {
+		for (int col = 0; col < 3; col++) {
 			UILabel *pencil = [[UILabel alloc] init];
 			
 			pencil.text = [NSString stringWithFormat:@"%i", (row * 3) + col + 1];
@@ -107,7 +107,7 @@
 		guessView.hidden = NO;
 		
 		// Set visibility on all the pencil views.
-		for (NSInteger i = 0; i < tile.gameBoard.size; ++i) {
+		for (int i = 0; i < tile.gameBoard.size; ++i) {
 			UILabel *pencilLabel = [pencilViews objectAtIndex:i];
 			pencilLabel.hidden = YES;
 		}		
@@ -127,7 +127,7 @@
 		guessView.hidden = YES;
 		
 		// Set visibility on all the pencil views.
-		for (NSInteger i = 0; i < tile.gameBoard.size; ++i) {
+		for (int i = 0; i < tile.gameBoard.size; ++i) {
 			UILabel *pencilLabel = [pencilViews objectAtIndex:i];
 			pencilLabel.hidden = ![tile getPencilForGuess:(i + 1)];
 		}

@@ -34,7 +34,7 @@
 }
 
 - (ZSGameAnswerOptionViewController *)getGameAnswerOptionViewControllerForGameAnswerOption:(ZSGameAnswerOption)gameAnswerOption {
-	return [gameAnswerOptionViewControllers objectAtIndex:(NSInteger)gameAnswerOption];
+	return [gameAnswerOptionViewControllers objectAtIndex:(int)gameAnswerOption];
 }
 
 #pragma mark - View Lifecycle
@@ -49,9 +49,9 @@
 	NSMutableArray *buttons = [NSMutableArray array];
 	ZSGameAnswerOptionViewController *gameAnswerOptionViewController;
 	
-	NSInteger xOffset = 1;
+	int xOffset = 1;
 	
-	for (NSInteger i = 0; i <= game.gameBoard.size; i++) {
+	for (int i = 0; i <= game.gameBoard.size; i++) {
 		gameAnswerOptionViewController = [[ZSGameAnswerOptionViewController alloc] initWithGameAnswerOption:(ZSGameAnswerOption)i];
 		gameAnswerOptionViewController.view.frame = CGRectMake(xOffset, 0, gameAnswerOptionViewController.view.frame.size.width, gameAnswerOptionViewController.view.frame.size.height);
 		gameAnswerOptionViewController.delegate = self;

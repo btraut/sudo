@@ -22,8 +22,8 @@
 - (ZSGame *)generateGameWithDifficulty:(ZSGameDifficulty)difficulty;
 - (ZSGame *)generateStandard9x9Game;
 
-- (BOOL)buildPuzzleForX:(NSInteger)x y:(NSInteger)y;
+- (BOOL)buildPuzzleForX:(int)x y:(int)y;
 
-- (void)populateRandomNumberArray:(NSInteger *)array withSize:(NSInteger)arraySize;
+- (void)populateRandomNumberArray:(int *)array withSize:(int)arraySize;
 
 @end

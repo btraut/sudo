@@ -51,9 +51,9 @@ typedef enum {
 
 @protocol ZSGameDelegate <NSObject>
 
-- (void)tileGuessDidChange:(NSInteger)guess forTileAtRow:(NSInteger)row col:(NSInteger)col;
-- (void)tilePencilDidChange:(BOOL)isSet forPencilNumber:(NSInteger)pencilNumber forTileAtRow:(NSInteger)row col:(NSInteger)col;
-- (void)guess:(NSInteger)guess isErrorForTileAtRow:(NSInteger)row col:(NSInteger)col;
+- (void)tileGuessDidChange:(int)guess forTileAtRow:(int)row col:(int)col;
+- (void)tilePencilDidChange:(BOOL)isSet forPencilNumber:(int)pencilNumber forTileAtRow:(int)row col:(int)col;
+- (void)guess:(int)guess isErrorForTileAtRow:(int)row col:(int)col;
 - (void)gameWasSolved;
 - (void)timerDidAdvance;
 
@@ -74,9 +74,9 @@ typedef enum {
 	
 	NSObject<ZSGameDelegate> *delegate;
 	
-	NSInteger timerCount;
+	int timerCount;
 	
-	NSInteger totalStrikes;
+	int totalStrikes;
 	
 	@private
 	
@@ -95,16 +95,16 @@ typedef enum {
 
 @property (nonatomic, strong) NSObject<ZSGameDelegate> *delegate;
 
-@property (nonatomic, readonly) NSInteger timerCount;
+@property (nonatomic, readonly) int timerCount;
 
-@property (nonatomic, readonly) NSInteger totalStrikes;
+@property (nonatomic, readonly) int totalStrikes;
 
 // Creation / Initialization
 
 + (id)emptyStandard9x9Game;
 
-- (id)initWithSize:(NSInteger)size;
-- (id)initWithSize:(NSInteger)size answers:(NSInteger **)answers groupMap:(NSInteger **)groupMap;
+- (id)initWithSize:(int)size;
+- (id)initWithSize:(int)size answers:(int **)answers groupMap:(int **)groupMap;
 
 - (void)notifyStatisticsOfNewGame;
 
@@ -115,37 +115,37 @@ typedef enum {
 
 // Tile Methods
 
-- (NSInteger)getGuessForTileAtRow:(NSInteger)row col:(NSInteger)col;
-- (void)setGuess:(NSInteger)guess forTileAtRow:(NSInteger)row col:(NSInteger)col;
-- (void)clearGuessForTileAtRow:(NSInteger)row col:(NSInteger)col;
+- (int)getGuessForTileAtRow:(int)row col:(int)col;
+- (void)setGuess:(int)guess forTileAtRow:(int)row col:(int)col;
+- (void)clearGuessForTileAtRow:(int)row col:(int)col;
 
-- (BOOL)getLockedForTileAtRow:(NSInteger)row col:(NSInteger)col;
-- (void)setLocked:(BOOL)locked forTileAtRow:(NSInteger)row col:(NSInteger)col;
+- (BOOL)getLockedForTileAtRow:(int)row col:(int)col;
+- (void)setLocked:(BOOL)locked forTileAtRow:(int)row col:(int)col;
 
-- (BOOL)getPencilForPencilNumber:(NSInteger)pencilNumber forTileAtRow:(NSInteger)row col:(NSInteger)col;
-- (void)setPencil:(BOOL)isSet forPencilNumber:(NSInteger)pencilNumber forTileAtRow:(NSInteger)row col:(NSInteger)col;
-- (void)togglePencilForPencilNumber:(NSInteger)pencilNumber forTileAtRow:(NSInteger)row col:(NSInteger)col;
+- (BOOL)getPencilForPencilNumber:(int)pencilNumber forTileAtRow:(int)row col:(int)col;
+- (void)setPencil:(BOOL)isSet forPencilNumber:(int)pencilNumber forTileAtRow:(int)row col:(int)col;
+- (void)togglePencilForPencilNumber:(int)pencilNumber forTileAtRow:(int)row col:(int)col;
 
-- (void)guessDidChangeForTile:(ZSGameTile *)tile previousGuess:(NSInteger)previousGuess;
-- (void)pencilDidChangeForTile:(ZSGameTile *)tile pencilNumber:(NSInteger)pencilNumber previousSet:(NSInteger)previousSet;
+- (void)guessDidChangeForTile:(ZSGameTile *)tile previousGuess:(int)previousGuess;
+- (void)pencilDidChangeForTile:(ZSGameTile *)tile pencilNumber:(int)pencilNumber previousSet:(int)previousSet;
 
-- (NSInteger)getGroupIdForTileAtRow:(NSInteger)row col:(NSInteger)col;
+- (int)getGroupIdForTileAtRow:(int)row col:(int)col;
 
-- (ZSGameTile *)getTileAtRow:(NSInteger)row col:(NSInteger)col;
-- (NSArray *)getAllInfluencedTilesForTileAtRow:(NSInteger)row col:(NSInteger)col includeSelf:(BOOL)includeSelf;
-- (NSArray *)getRowSetForTileAtRow:(NSInteger)row col:(NSInteger)col includeSelf:(BOOL)includeSelf;
-- (NSArray *)getColSetForTileAtRow:(NSInteger)row col:(NSInteger)col includeSelf:(BOOL)includeSelf;
-- (NSArray *)getFamilySetForTileAtRow:(NSInteger)row col:(NSInteger)col includeSelf:(BOOL)includeSelf;
+- (ZSGameTile *)getTileAtRow:(int)row col:(int)col;
+- (NSArray *)getAllInfluencedTilesForTileAtRow:(int)row col:(int)col includeSelf:(BOOL)includeSelf;
+- (NSArray *)getRowSetForTileAtRow:(int)row col:(int)col includeSelf:(BOOL)includeSelf;
+- (NSArray *)getColSetForTileAtRow:(int)row col:(int)col includeSelf:(BOOL)includeSelf;
+- (NSArray *)getFamilySetForTileAtRow:(int)row col:(int)col includeSelf:(BOOL)includeSelf;
 
 // Misc Methods
 
-- (BOOL)allowsGuess:(NSInteger)guess;
+- (BOOL)allowsGuess:(int)guess;
 
 - (ZSGameSolveResult)solve;
 - (BOOL)isSolved;
 
 - (void)addAutoPencils;
-- (void)clearInfluencedPencilsForTileAtRow:(NSInteger)row col:(NSInteger)col;
+- (void)clearInfluencedPencilsForTileAtRow:(int)row col:(int)col;
 
 // Timer Methods
 

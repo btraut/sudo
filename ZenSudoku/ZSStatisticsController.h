@@ -13,61 +13,61 @@
 
 @interface ZSStatisticsController : NSObject {
 	// Games
-	NSInteger totalStartedGames;
-	NSInteger totalSolvedGames;
+	int totalStartedGames;
+	int totalSolvedGames;
 	
-	NSInteger gamesSolvedPerEasy;
-	NSInteger gamesSolvedPerMedium;
-	NSInteger gamesSolvedPerHard;
-	NSInteger gamesSolvedPerExpert;
+	int gamesSolvedPerEasy;
+	int gamesSolvedPerMedium;
+	int gamesSolvedPerHard;
+	int gamesSolvedPerExpert;
 	
 	// Answers
-	NSInteger totalEnteredAnswers;
-	NSInteger totalStrikes;
-	NSInteger totalUndos;
-	NSInteger totalRedos;
+	int totalEnteredAnswers;
+	int totalStrikes;
+	int totalUndos;
+	int totalRedos;
 	
 	// Time
-	NSInteger totalTimePlayed;
+	int totalTimePlayed;
 	
-	NSInteger totalTimePlayedPerEasy;
-	NSInteger totalTimePlayedPerMedium;
-	NSInteger totalTimePlayedPerHard;
-	NSInteger totalTimePlayedPerExpert;
+	int totalTimePlayedPerEasy;
+	int totalTimePlayedPerMedium;
+	int totalTimePlayedPerHard;
+	int totalTimePlayedPerExpert;
 	
-	NSInteger fastestGamePerEasy;
-	NSInteger fastestGamePerMedium;
-	NSInteger fastestGamePerHard;
-	NSInteger fastestGamePerExpert;
+	int fastestGamePerEasy;
+	int fastestGamePerMedium;
+	int fastestGamePerHard;
+	int fastestGamePerExpert;
 }
 
 // Games
-@property (nonatomic, readonly) NSInteger totalStartedGames;
-@property (nonatomic, readonly) NSInteger totalSolvedGames;
+@property (nonatomic, readonly) int totalStartedGames;
+@property (nonatomic, readonly) int totalSolvedGames;
 
-@property (nonatomic, readonly) NSInteger gamesSolvedPerEasy;
-@property (nonatomic, readonly) NSInteger gamesSolvedPerMedium;
-@property (nonatomic, readonly) NSInteger gamesSolvedPerHard;
-@property (nonatomic, readonly) NSInteger gamesSolvedPerExpert;
+@property (nonatomic, readonly) int gamesSolvedPerEasy;
+@property (nonatomic, readonly) int gamesSolvedPerMedium;
+@property (nonatomic, readonly) int gamesSolvedPerHard;
+@property (nonatomic, readonly) int gamesSolvedPerExpert;
 
 // Answers
-@property (nonatomic, readonly) NSInteger totalEnteredAnswers;
-@property (nonatomic, readonly) NSInteger totalStrikes;
-@property (nonatomic, readonly) NSInteger totalUndos;
-@property (nonatomic, readonly) NSInteger totalRedos;
+@property (nonatomic, readonly) int totalEnteredAnswers;
+@property (nonatomic, readonly) int totalStrikes;
+@property (nonatomic, readonly) int totalUndos;
+@property (nonatomic, readonly) int totalRedos;
 
 // Time
-@property (nonatomic, readonly) NSInteger totalTimePlayed;
+@property (nonatomic, readonly) int totalTimePlayed;
 
-@property (nonatomic, readonly) NSInteger totalTimePlayedPerEasy;
-@property (nonatomic, readonly) NSInteger totalTimePlayedPerMedium;
-@property (nonatomic, readonly) NSInteger totalTimePlayedPerHard;
-@property (nonatomic, readonly) NSInteger totalTimePlayedPerExpert;
+@property (nonatomic, readonly) int totalTimePlayedPerEasy;
+@property (nonatomic, readonly) int totalTimePlayedPerMedium;
+@property (nonatomic, readonly) int totalTimePlayedPerHard;
+@property (nonatomic, readonly) int totalTimePlayedPerExpert;
 
-@property (nonatomic, readonly) NSInteger fastestGamePerEasy;
-@property (nonatomic, readonly) NSInteger fastestGamePerMedium;
-@property (nonatomic, readonly) NSInteger fastestGamePerHard;
-@property (nonatomic, readonly) NSInteger fastestGamePerExpert;
+@property (nonatomic, readonly) int fastestGamePerEasy;
+@property (nonatomic, readonly) int fastestGamePerMedium;
+@property (nonatomic, readonly) int fastestGamePerHard;
+@property (nonatomic, readonly) int fastestGamePerExpert;
 
 + (id)sharedInstance;
 
@@ -75,12 +75,12 @@
 - (void)resetStats;
 
 - (void)gameStartedWithDifficulty:(ZSGameDifficulty)difficulty;
-- (void)gameSolvedWithDifficulty:(ZSGameDifficulty)difficulty totalTime:(NSInteger)seconds;
+- (void)gameSolvedWithDifficulty:(ZSGameDifficulty)difficulty totalTime:(int)seconds;
 - (void)answerEntered;
 - (void)strikeEntered;
 - (void)userUsedUndo;
 - (void)userUsedRedo;
-- (void)timeElapsed:(NSInteger)seconds inGameWithDifficulty:(ZSGameDifficulty)difficulty;
+- (void)timeElapsed:(int)seconds inGameWithDifficulty:(ZSGameDifficulty)difficulty;
 
 - (void)initWithDictionaryRepresentation:(NSDictionary *)dict;
 - (NSDictionary *)getDictionaryRepresentation;

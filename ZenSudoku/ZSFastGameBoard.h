@@ -9,20 +9,20 @@
 #import <Foundation/Foundation.h>
 
 typedef struct {
-	NSInteger row;
-	NSInteger col;
-	NSInteger groupId;
+	int row;
+	int col;
+	int groupId;
 	
-    NSInteger guess;
+    int guess;
 	
-	NSInteger totalPencils;
+	int totalPencils;
     BOOL *pencils;
 } ZSGameTileStub;
 
 @class ZSGameBoard;
 
 @interface ZSFastGameBoard : NSObject {
-	NSInteger size;
+	int size;
 	
 	ZSGameTileStub **grid;
 	
@@ -31,12 +31,12 @@ typedef struct {
 	ZSGameTileStub ***groups;
 	ZSGameTileStub ***allSets;
 	
-	NSInteger **rowContainsAnswer;
-	NSInteger **colContainsAnswer;
-	NSInteger **groupContainsAnswer;
+	int **rowContainsAnswer;
+	int **colContainsAnswer;
+	int **groupContainsAnswer;
 }
 
-@property (nonatomic, assign) NSInteger size;
+@property (nonatomic, assign) int size;
 
 @property (nonatomic, assign) ZSGameTileStub **grid;
 
@@ -45,14 +45,14 @@ typedef struct {
 @property (nonatomic, assign) ZSGameTileStub ***groups;
 @property (nonatomic, assign) ZSGameTileStub ***allSets;
 
-@property (nonatomic, assign) NSInteger **rowContainsAnswer;
-@property (nonatomic, assign) NSInteger **colContainsAnswer;
-@property (nonatomic, assign) NSInteger **groupContainsAnswer;
+@property (nonatomic, assign) int **rowContainsAnswer;
+@property (nonatomic, assign) int **colContainsAnswer;
+@property (nonatomic, assign) int **groupContainsAnswer;
 
 // Initialization and Memory Management
 
 - (id)init;
-- (id)initWithSize:(NSInteger)size;
+- (id)initWithSize:(int)size;
 - (void)dealloc;
 
 - (void)allocGrid;
@@ -79,22 +79,22 @@ typedef struct {
 
 // Setters
 
-- (void)setGuess:(NSInteger)guess forTileAtRow:(NSInteger)row col:(NSInteger)col;
-- (void)clearGuessForTileAtRow:(NSInteger)row col:(NSInteger)col;
+- (void)setGuess:(int)guess forTileAtRow:(int)row col:(int)col;
+- (void)clearGuessForTileAtRow:(int)row col:(int)col;
 - (void)clearAllGuesses;
 
-- (void)setPencil:(BOOL)isSet forPencilNumber:(NSInteger)pencilNumber forTileAtRow:(NSInteger)row col:(NSInteger)col;
+- (void)setPencil:(BOOL)isSet forPencilNumber:(int)pencilNumber forTileAtRow:(int)row col:(int)col;
 - (void)setAllPencils:(BOOL)isSet;
-- (void)setAllPencils:(BOOL)isSet forTileAtRow:(NSInteger)row col:(NSInteger)col;
-- (void)clearInfluencedPencilsForTileAtRow:(NSInteger)row col:(NSInteger)col;
+- (void)setAllPencils:(BOOL)isSet forTileAtRow:(int)row col:(int)col;
+- (void)clearInfluencedPencilsForTileAtRow:(int)row col:(int)col;
 - (void)addAutoPencils;
 
 // Validitiy Checks
 
-- (BOOL)isGuess:(NSInteger)guess validInRow:(NSInteger)row col:(NSInteger)col;
-- (BOOL)isGuess:(NSInteger)guess validInRow:(NSInteger)row;
-- (BOOL)isGuess:(NSInteger)guess validInCol:(NSInteger)col;
-- (BOOL)isGuess:(NSInteger)guess validInGroup:(NSInteger)groupId;
+- (BOOL)isGuess:(int)guess validInRow:(int)row col:(int)col;
+- (BOOL)isGuess:(int)guess validInRow:(int)row;
+- (BOOL)isGuess:(int)guess validInCol:(int)col;
+- (BOOL)isGuess:(int)guess validInGroup:(int)groupId;
 
 // Debug
 

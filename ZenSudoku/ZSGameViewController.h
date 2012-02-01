@@ -45,7 +45,7 @@
 
 - (void)setTitle;
 
-- (void)gameBoardTileWasTouchedInRow:(NSInteger)row col:(NSInteger)col;
+- (void)gameBoardTileWasTouchedInRow:(int)row col:(int)col;
 - (void)gameAnswerOptionWasTouchedWithGameAnswerOption:(ZSGameAnswerOption)gameAnswerOption;
 
 - (void)setPencilForGameBoardTile:(ZSGameBoardTileViewController *)tileView withAnswerOption:(ZSGameAnswerOptionViewController *)answerOptionView;
@@ -59,8 +59,8 @@
 - (void)undoButtonWasTouched;
 - (void)redoButtonWasTouched;
 
-- (void)tileGuessDidChange:(NSInteger)guess forTileAtRow:(NSInteger)row col:(NSInteger)col;
-- (void)tilePencilDidChange:(BOOL)isSet forPencilNumber:(NSInteger)pencilNumber forTileAtRow:(NSInteger)row col:(NSInteger)col;
+- (void)tileGuessDidChange:(int)guess forTileAtRow:(int)row col:(int)col;
+- (void)tilePencilDidChange:(BOOL)isSet forPencilNumber:(int)pencilNumber forTileAtRow:(int)row col:(int)col;
 - (void)timerDidAdvance;
 - (void)gameWasSolved;
 

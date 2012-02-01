@@ -80,10 +80,10 @@
 	
 	// Debug
 	if (game.difficulty == ZSGameDifficultyExpert) {
-		NSInteger totalUnsolved = game.gameBoard.size * game.gameBoard.size;
+		int totalUnsolved = game.gameBoard.size * game.gameBoard.size;
 		
-		for (NSInteger row = 0; row < game.gameBoard.size; ++row) {
-			for (NSInteger col = 0; col < game.gameBoard.size; ++col) {
+		for (int row = 0; row < game.gameBoard.size; ++row) {
+			for (int col = 0; col < game.gameBoard.size; ++col) {
 				ZSGameTile *tile = [game getTileAtRow:row col:col];
 				
 				if (tile.guess) {
@@ -92,8 +92,8 @@
 			}
 		}
 		
-		for (NSInteger row = 0; row < game.gameBoard.size && totalUnsolved > 2; ++row) {
-			for (NSInteger col = 0; col < game.gameBoard.size && totalUnsolved > 2; ++col) {
+		for (int row = 0; row < game.gameBoard.size && totalUnsolved > 2; ++row) {
+			for (int col = 0; col < game.gameBoard.size && totalUnsolved > 2; ++col) {
 				ZSGameTile *tile = [game getTileAtRow:row col:col];
 				
 				if (!tile.guess) {
@@ -105,7 +105,7 @@
 	}
 	
 	// Disable any answer option buttons that are at quota.
-//	for (NSInteger i = 0; i < game.gameBoard.size; ++i) {
+//	for (int i = 0; i < game.gameBoard.size; ++i) {
 //		if (![game allowsGuess:(i + 1)]) {
 //			ZSGameAnswerOptionViewController *gameAnswerOptionViewController = [gameAnswerOptionsViewController.gameAnswerOptionViewControllers objectAtIndex:i];
 //			gameAnswerOptionViewController.enabled = NO;
@@ -161,7 +161,7 @@
 
 #pragma mark - User Interaction
 
-- (void)gameBoardTileWasTouchedInRow:(NSInteger)row col:(NSInteger)col {
+- (void)gameBoardTileWasTouchedInRow:(int)row col:(int)col {
 	// Fetch the touched game tile view controller.
 	ZSGameBoardTileViewController *tileView = [[gameBoardViewController.tileViews objectAtIndex:row] objectAtIndex:col];
 	
@@ -287,7 +287,7 @@
 	}
 	
 	// Set the new pencil to the selected answer option value.
-	[game togglePencilForPencilNumber:((NSInteger)answerOptionView.gameAnswerOption + 1) forTileAtRow:tileView.tile.row col:tileView.tile.col];
+	[game togglePencilForPencilNumber:((int)answerOptionView.gameAnswerOption + 1) forTileAtRow:tileView.tile.row col:tileView.tile.col];
 }
 
 - (void)setAnswerForGameBoardTile:(ZSGameBoardTileViewController *)tileView withAnswerOption:(ZSGameAnswerOptionViewController *)answerOptionView {
@@ -297,7 +297,7 @@
 		[game clearGuessForTileAtRow:tileView.tile.row col:tileView.tile.col];
 	} else {
 		// Set the new guess to the selected guess option value.
-		[game setGuess:((NSInteger)answerOptionView.gameAnswerOption + 1) forTileAtRow:tileView.tile.row col:tileView.tile.col];
+		[game setGuess:((int)answerOptionView.gameAnswerOption + 1) forTileAtRow:tileView.tile.row col:tileView.tile.col];
 	}
 }
 
@@ -306,8 +306,8 @@
 	ZSShowErrorsOption showErrorsOption = [[NSUserDefaults standardUserDefaults] integerForKey:kShowErrorsOptionKey];
 	
 	// Loop over all tiles and check errors on the users' guesses.
-	for (NSInteger row = 0; row < game.gameBoard.size; row++) {
-		for (NSInteger col = 0; col < game.gameBoard.size; col++) {
+	for (int row = 0; row < game.gameBoard.size; row++) {
+		for (int col = 0; col < game.gameBoard.size; col++) {
 			ZSGameBoardTileViewController *tileView = [gameBoardViewController getGameBoardTileViewControllerAtRow:row col:col];
 			
 			// Start by assuming no error.
@@ -406,7 +406,7 @@
 
 #pragma mark - ZSGameDelegate Methods
 
-- (void)tileGuessDidChange:(NSInteger)guess forTileAtRow:(NSInteger)row col:(NSInteger)col {
+- (void)tileGuessDidChange:(int)guess forTileAtRow:(int)row col:(int)col {
 	// Check for errors.
 	[self setErrors];
 	
@@ -431,12 +431,12 @@
 //	}
 }
 
-- (void)tilePencilDidChange:(BOOL)isSet forPencilNumber:(NSInteger)pencilNumber forTileAtRow:(NSInteger)row col:(NSInteger)col {
+- (void)tilePencilDidChange:(BOOL)isSet forPencilNumber:(int)pencilNumber forTileAtRow:(int)row col:(int)col {
 	// Reload the tile.
 	[[gameBoardViewController getGameBoardTileViewControllerAtRow:row col:col] reloadView];
 }
 
-- (void)guess:(NSInteger)guess isErrorForTileAtRow:(NSInteger)row col:(NSInteger)col {
+- (void)guess:(int)guess isErrorForTileAtRow:(int)row col:(int)col {
 	
 }
 

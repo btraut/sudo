@@ -64,11 +64,11 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+- (int)numberOfSectionsInTableView:(UITableView *)tableView {
 	return 3;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (int)tableView:(UITableView *)tableView numberOfRowsInSection:(int)section {
 	switch (section) {
 		case 0:
 			return [ZSGameController sharedInstance].currentGame ? 2 : 1;
