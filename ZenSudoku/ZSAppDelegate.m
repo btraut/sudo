@@ -20,6 +20,8 @@ NSString * const kTestFlightCheckPointSolvedPuzzle = @"kTestFlightCheckPointSolv
 NSString * const kTestFlightCheckPointOpenedStatistics = @"kTestFlightCheckPointOpenedStatistics";
 NSString * const kTestFlightCheckPointOpenedSettings = @"kTestFlightCheckPointOpenedSettings";
 
+NSString * const kLastUsedVersionKey = @"kLastUsedVersionKey";
+
 NSString * const kTileAnswerOrderKey = @"kTileAnswerOrderKey";
 
 NSString * const kClearAnswerOptionSelectionAfterPickingTileForAnswerKey = @"kClearAnswerOptionSelectionAfterPickingTileForAnswerKey";
@@ -58,6 +60,12 @@ NSString * const kRemoveTileAfterErrorKey = @"kRemoveTileAfterErrorKey";
 	_window.rootViewController = _navigationController;
 	[_window makeKeyAndVisible];
 	
+	// If the user has upgraded the game since last launch, the game may need to do stuff.
+	NSString *currentVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+	if (![[[NSUserDefaults standardUserDefaults] stringForKey:kLastUsedVersionKey] isEqualToString:currentVersion]) {
+		[self userDidUpgradeVersion];
+	}
+	
 	return YES;
 }
 
@@ -80,6 +88,16 @@ NSString * const kRemoveTileAfterErrorKey = @"kRemoveTileAfterErrorKey";
 
 - (void)applicationWillTerminate:(UIApplication *)application {
 	// [[ZSGameController sharedInstance] saveGame];
+}
+
+- (void)userDidUpgradeVersion {
+	// Get the new version and save it back into the user defaults.
+	NSString *currentVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+	[[NSUserDefaults standardUserDefaults] setObject:currentVersion forKey:kLastUsedVersionKey];
+	
+	// Debug - clear stats and re-save.
+	[[ZSStatisticsController sharedInstance] resetStats];
+	[[ZSStatisticsController sharedInstance] saveStats];
 }
 
 - (void)setUserDefaults {

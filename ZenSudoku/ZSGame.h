@@ -11,9 +11,10 @@
 
 typedef enum {
 	ZSGameDifficultyEasy,
-	ZSGameDifficultyMedium,
-	ZSGameDifficultyHard,
-	ZSGameDifficultyExpert
+	ZSGameDifficultyModerate,
+	ZSGameDifficultyChallenging,
+	ZSGameDifficultyDiabolical,
+	ZSGameDifficultyInsane
 } ZSGameDifficulty;
 
 typedef enum {
@@ -162,9 +163,10 @@ typedef enum {
 
 // Game Difficulty Names
 extern NSString * const kGameDifficultyNameEasy;
-extern NSString * const kGameDifficultyNameMedium;
-extern NSString * const kGameDifficultyNameHard;
-extern NSString * const kGameDifficultyNameExpert;
+extern NSString * const kGameDifficultyNameModerate;
+extern NSString * const kGameDifficultyNameChallenging;
+extern NSString * const kGameDifficultyNameDiabolical;
+extern NSString * const kGameDifficultyNameInsane;
 
 // Game Type Names
 extern NSString * const kGameTypeNameTraditional;

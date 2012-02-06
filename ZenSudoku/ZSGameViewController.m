@@ -79,7 +79,7 @@
 	[self.view addSubview:gameAnswerOptionsViewController.view];
 	
 	// Debug
-	if (game.difficulty == ZSGameDifficultyExpert) {
+	if (game.difficulty == ZSGameDifficultyInsane) {
 		NSInteger totalUnsolved = game.gameBoard.size * game.gameBoard.size;
 		
 		for (NSInteger row = 0; row < game.gameBoard.size; ++row) {
@@ -145,16 +145,20 @@
 			self.title = @"Easy";
 			break;
 			
-		case ZSGameDifficultyMedium:
-			self.title = @"Medium";
+		case ZSGameDifficultyModerate:
+			self.title = @"Moderate";
 			break;
 			
-		case ZSGameDifficultyHard:
-			self.title = @"Hard";
+		case ZSGameDifficultyChallenging:
+			self.title = @"Challenging";
 			break;
 			
-		case ZSGameDifficultyExpert:
-			self.title = @"Expert";
+		case ZSGameDifficultyDiabolical:
+			self.title = @"Diabolical";
+			break;
+		
+		case ZSGameDifficultyInsane:
+			self.title = @"Insane";
 			break;
 	}
 }

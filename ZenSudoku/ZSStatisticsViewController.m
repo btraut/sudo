@@ -69,10 +69,9 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	switch (section) {
-		case 0: return 5;
+		case 0: return 6;
 		case 1: return 3;
 		case 2: return 1;
-		case 3: return 5;
 	}
 	
 	return 0;
@@ -107,21 +106,26 @@
 				break;
 				
 			case 1:
-				cell.textLabel.text = @"Medium";
-				cell.detailTextLabel.text = [NSString stringWithFormat:@"%i", [[ZSStatisticsController sharedInstance] gamesSolvedPerMedium]];
+				cell.textLabel.text = @"Moderate";
+				cell.detailTextLabel.text = [NSString stringWithFormat:@"%i", [[ZSStatisticsController sharedInstance] gamesSolvedPerModerate]];
 				break;
 				
 			case 2:
-				cell.textLabel.text = @"Hard";
-				cell.detailTextLabel.text = [NSString stringWithFormat:@"%i", [[ZSStatisticsController sharedInstance] gamesSolvedPerHard]];
+				cell.textLabel.text = @"Challenging";
+				cell.detailTextLabel.text = [NSString stringWithFormat:@"%i", [[ZSStatisticsController sharedInstance] gamesSolvedPerChallenging]];
 				break;
 				
 			case 3:
-				cell.textLabel.text = @"Expert";
-				cell.detailTextLabel.text = [NSString stringWithFormat:@"%i", [[ZSStatisticsController sharedInstance] gamesSolvedPerExpert]];
+				cell.textLabel.text = @"Diabolical";
+				cell.detailTextLabel.text = [NSString stringWithFormat:@"%i", [[ZSStatisticsController sharedInstance] gamesSolvedPerDiabolical]];
 				break;
 				
 			case 4:
+				cell.textLabel.text = @"Insane";
+				cell.detailTextLabel.text = [NSString stringWithFormat:@"%i", [[ZSStatisticsController sharedInstance] gamesSolvedPerInsane]];
+				break;
+				
+			case 5:
 				cell.textLabel.text = @"Total";
 				cell.detailTextLabel.text = [NSString stringWithFormat:@"%i", [[ZSStatisticsController sharedInstance] totalSolvedGames]];
 				break;

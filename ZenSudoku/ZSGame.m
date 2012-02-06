@@ -15,9 +15,10 @@
 
 // Game Difficulty Names
 NSString * const kGameDifficultyNameEasy = @"kGameDifficultyNameEasy";
-NSString * const kGameDifficultyNameMedium = @"kGameDifficultyNameMedium";
-NSString * const kGameDifficultyNameHard = @"kGameDifficultyNameHard";
-NSString * const kGameDifficultyNameExpert = @"kGameDifficultyNameExpert";
+NSString * const kGameDifficultyNameModerate = @"kGameDifficultyNameModerate";
+NSString * const kGameDifficultyNameChallenging = @"kGameDifficultyNameChallenging";
+NSString * const kGameDifficultyNameDiabolical = @"kGameDifficultyNameDiabolical";
+NSString * const kGameDifficultyNameInsane = @"kGameDifficultyNameInsane";
 
 // Game Type Names
 NSString * const kGameTypeNameTraditional = @"kGameTypeNameTraditional";

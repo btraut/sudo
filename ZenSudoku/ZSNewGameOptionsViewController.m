@@ -64,7 +64,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	return 4;
+	return 5;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -81,9 +81,10 @@
 	switch (indexPath.row) {
 		default:
 		case 0: cell.textLabel.text = @"Easy"; break;
-		case 1: cell.textLabel.text = @"Medium"; break;
-		case 2: cell.textLabel.text = @"Hard"; break;
-		case 3: cell.textLabel.text = @"Expert"; break;
+		case 1: cell.textLabel.text = @"Moderate"; break;
+		case 2: cell.textLabel.text = @"Challenging"; break;
+		case 3: cell.textLabel.text = @"Diabolical"; break;
+		case 4: cell.textLabel.text = @"Insane"; break;
 	}
 	
 	return cell;
@@ -98,9 +99,10 @@
 	switch (indexPath.row) {
 		default:
 		case 0: newDifficulty = ZSGameDifficultyEasy; break;
-		case 1: newDifficulty = ZSGameDifficultyMedium; break;
-		case 2: newDifficulty = ZSGameDifficultyHard; break;
-		case 3: newDifficulty = ZSGameDifficultyExpert; break;
+		case 1: newDifficulty = ZSGameDifficultyModerate; break;
+		case 2: newDifficulty = ZSGameDifficultyChallenging; break;
+		case 3: newDifficulty = ZSGameDifficultyDiabolical; break;
+		case 4: newDifficulty = ZSGameDifficultyInsane; break;
 	}
 	
 	// Create a new game.

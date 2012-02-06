@@ -14,6 +14,8 @@
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) UINavigationController *navigationController;
 
+- (void)userDidUpgradeVersion;
+
 - (void)setUserDefaults;
 
 - (NSString *)getPathForFileName:(NSString *)filename;
@@ -29,6 +31,8 @@ extern NSString * const kTestFlightCheckPointOpenedStatistics;
 extern NSString * const kTestFlightCheckPointOpenedSettings;
 
 // Preference Keys
+
+extern NSString * const kLastUsedVersionKey;
 
 extern NSString * const kTileAnswerOrderKey;
 
