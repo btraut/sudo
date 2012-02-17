@@ -10,4 +10,7 @@
 
 @interface ZSStatisticsViewController : UITableViewController
 
+- (void)initResetButton;
+- (void)userDidTouchResetStatisticsButton:(id)sender;
+
 @end

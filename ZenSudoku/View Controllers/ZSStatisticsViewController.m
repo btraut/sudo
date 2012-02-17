@@ -34,6 +34,8 @@
 	
 	self.title = @"Statistics";
     [self.navigationController setNavigationBarHidden:NO animated:YES];
+	
+	[self initResetButton];
 }
 
 - (void)viewDidUnload {
@@ -61,6 +63,27 @@
 	return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+#pragma mark - Reset Button Handlers
+
+- (void)initResetButton {
+	// Create the button.
+	UIButton *resetStatisticsButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+	resetStatisticsButton.frame = CGRectMake(0, 30, 280, 40);
+	[resetStatisticsButton setTitle:@"Reset Statistics" forState:UIControlStateNormal];
+	resetStatisticsButton.backgroundColor = [UIColor clearColor];
+	[resetStatisticsButton addTarget:self action:@selector(userDidTouchResetStatisticsButton:) forControlEvents:UIControlEventTouchUpInside];
+	
+	// Create a footer view on the bottom of the table view.
+	UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(20, 0, 280, 90)];
+	[footerView addSubview:resetStatisticsButton];
+	self.tableView.tableFooterView = footerView;
+}
+
+- (void)userDidTouchResetStatisticsButton:(id)sender {
+	[[ZSStatisticsController sharedInstance] resetStats];
+	[self.tableView reloadData];
+}
+
 #pragma mark - Table View Data Source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -82,7 +105,6 @@
 		case 0: return @"Puzzles Solved";
 		case 1: return @"Answers Entered";
 		case 2: return @"Time Played";
-		case 3: return @"";
 	}
 	
 	return @"";
@@ -184,7 +206,6 @@
 		
 		cell.textLabel.text = @"Total";
 		cell.detailTextLabel.text = timePlayedString;
-	} else {
 	}
 	
 	return cell;
