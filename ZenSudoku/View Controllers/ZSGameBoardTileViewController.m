@@ -10,6 +10,7 @@
 #import "ZSGameTile.h"
 #import "ZSGame.h"
 #import "ZSGameBoard.h"
+#import "FontLabel.h"
 
 @implementation ZSGameBoardTileViewController
 
@@ -58,14 +59,13 @@
 	
 	for (NSInteger row = 0; row < 3; row++) {
 		for (NSInteger col = 0; col < 3; col++) {
-			UILabel *pencil = [[UILabel alloc] init];
+			FontLabel *pencil = [[FontLabel alloc] initWithFrame:CGRectMake(col * 11, row * 11, 10, 10) fontName:@"ReklameScript-Regular" pointSize:10.0f];
 			
 			pencil.text = [NSString stringWithFormat:@"%i", (row * 3) + col + 1];
-			pencil.frame = CGRectMake(col * 11, row * 11, 10, 10);
 			pencil.textAlignment = UITextAlignmentCenter;
-			pencil.lineBreakMode = UILineBreakModeClip;
 			pencil.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
-			pencil.font = [UIFont systemFontOfSize:10];
+			pencil.lineBreakMode = UILineBreakModeClip;
+			pencil.textColor = [UIColor colorWithRed:0.15f green:0.15f blue:0.15f alpha:1.0f];
 			pencil.backgroundColor = [UIColor clearColor];
 			pencil.hidden = YES;
 			
@@ -77,14 +77,13 @@
 	pencilViews = [NSArray arrayWithArray:newPencils];
 	
 	// Create the guess label.
-	guessView = [[UILabel alloc] init];
+	guessView = [[FontLabel alloc] initWithFrame:CGRectMake(0, 0, 32, 32) fontName:@"ReklameScript-Regular" pointSize:24.0f];
 	
 	guessView.text = @"0";
-	guessView.frame = CGRectMake(0, 0, 32, 32);
 	guessView.textAlignment = UITextAlignmentCenter;
-	guessView.lineBreakMode = UILineBreakModeClip;
 	guessView.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
-	guessView.font = [UIFont systemFontOfSize:20];
+	guessView.lineBreakMode = UILineBreakModeClip;
+	guessView.textColor = [UIColor colorWithWhite:0.07f alpha:1.0f];
 	guessView.backgroundColor = [UIColor clearColor];
 	guessView.hidden = YES;
 	
@@ -114,7 +113,7 @@
 		
 		// Choose the guess text color.
 		if (tile.locked) {
-			guessView.textColor = [UIColor blackColor];
+			guessView.textColor = [UIColor colorWithWhite:0.07f alpha:1.0f];
 		} else {
 			if (incorrect) {
 				guessView.textColor = [UIColor colorWithRed:0.5 green:0.1 blue:0.1 alpha:1.0];

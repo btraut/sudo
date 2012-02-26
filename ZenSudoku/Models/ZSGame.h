@@ -32,8 +32,7 @@ typedef enum {
 	ZSGameAnswerOption6,
 	ZSGameAnswerOption7,
 	ZSGameAnswerOption8,
-	ZSGameAnswerOption9,
-	ZSGameAnswerOptionErase
+	ZSGameAnswerOption9
 } ZSGameAnswerOption;
 
 typedef enum {

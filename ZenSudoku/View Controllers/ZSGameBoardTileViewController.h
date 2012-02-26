@@ -10,6 +10,7 @@
 
 @class ZSGameTile;
 @class ZSGameBoardTileViewController;
+@class FontLabel;
 
 @protocol ZSGameBoardTileTouchDelegate <NSObject>
 
@@ -26,7 +27,7 @@
 	BOOL incorrect;
 	
 	NSArray *pencilViews;
-	UILabel *guessView;
+	FontLabel *guessView;
 }
 
 @property (strong) ZSGameTile *tile;

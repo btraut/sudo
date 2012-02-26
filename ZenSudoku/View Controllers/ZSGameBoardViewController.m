@@ -51,8 +51,8 @@
 #pragma mark - View Lifecycle
 
 - (void)loadView {
-	self.view = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"board.png"]];
-	self.view.frame = CGRectMake(0, 0, 302, 302);
+	self.view = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Board.png"]];
+	self.view.frame = CGRectMake(0, 0, 304, 304);
 	self.view.userInteractionEnabled = YES;
 }
 
@@ -61,10 +61,10 @@
 	
 	// Build the tiles.
 	NSMutableArray *rows = [NSMutableArray array];
-	NSInteger yOffset = 2;
+	NSInteger yOffset = 3;
 	
 	for (NSInteger row = 0; row < game.gameBoard.size; row++) {
-		NSInteger xOffset = 2;
+		NSInteger xOffset = 3;
 		
 		NSMutableArray *rowTiles = [NSMutableArray array];
 		

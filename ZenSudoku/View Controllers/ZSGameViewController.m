@@ -16,6 +16,7 @@
 #import "ZSGameController.h"
 
 #import "TestFlight.h"
+#import "FontLabel.h"
 
 @implementation ZSGameViewController
 
@@ -42,8 +43,9 @@
 #pragma mark - View Lifecycle
 
 - (void)loadView {
-	self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)];
-	self.view.backgroundColor = [UIColor whiteColor];
+	self.view = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"PaperBackground.png"]];
+	self.view.frame = CGRectMake(0, 0, 320, 460);
+	self.view.userInteractionEnabled = YES;
 }
 
 - (void)viewDidLoad {
@@ -52,9 +54,31 @@
 	// TestFlight Checkpoint
 	[TestFlight passCheckpoint:kTestFlightCheckPointStartedNewPuzzle];
 	
+	// Hide the menu bar.
+	[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackOpaque animated:YES];
+	self.navigationController.navigationBarHidden = YES;
+	
+	// Build the title.
+	title = [[FontLabel alloc] initWithFrame:CGRectMake(70, 12, 180, 32) fontName:@"ReklameScript-Medium" pointSize:30.0f];
+	title.textAlignment = UITextAlignmentCenter;
+	title.backgroundColor = [UIColor clearColor];
+	[self.view addSubview:title];
+	[self setTitle];
+	
 	// Build the menu button.
-	UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithTitle:@"Menu" style:UIBarButtonItemStyleBordered target:self action:@selector(closeButtonWasTouched)];
-	self.navigationItem.leftBarButtonItem = menuButton;
+	//	UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithTitle:@"Menu" style:UIBarButtonItemStyleBordered target:self action:@selector(closeButtonWasTouched)];
+	//	self.navigationItem.leftBarButtonItem = menuButton;
+	
+	// Build the menu button.
+	FontLabel *menuButton = [[FontLabel alloc] initWithFrame:CGRectMake(12, 22, 60, 20) fontName:@"ReklameScript-Regular" pointSize:18.0f];
+	menuButton.text = @"Main Menu";
+	menuButton.backgroundColor = [UIColor clearColor];
+	menuButton.userInteractionEnabled = YES;
+	
+	UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeButtonWasTouched)];
+	[menuButton addGestureRecognizer:gestureRecognizer];
+	
+	[self.view addSubview:menuButton];
 	
 	// Build the toolbar buttons.
 	pencilButton = [[UIBarButtonItem alloc] initWithTitle:@"Pencil" style:UIBarButtonItemStyleBordered target:self action:@selector(pencilButtonWasTouched)];
@@ -68,13 +92,13 @@
 	
 	// Build the game board.
 	gameBoardViewController = [ZSGameBoardViewController gameBoardViewControllerForGame:game];
-	gameBoardViewController.view.frame = CGRectMake(9, 9, gameBoardViewController.view.frame.size.width, gameBoardViewController.view.frame.size.height);
+	gameBoardViewController.view.frame = CGRectMake(8, 54, gameBoardViewController.view.frame.size.width, gameBoardViewController.view.frame.size.height);
 	gameBoardViewController.delegate = self;
 	[self.view addSubview:gameBoardViewController.view];
 	
 	// Build the answer options.
 	gameAnswerOptionsViewController = [ZSGameAnswerOptionsViewController gameAnswerOptionsViewControllerForGame:game];
-	gameAnswerOptionsViewController.view.frame = CGRectMake(10, 320, gameAnswerOptionsViewController.view.frame.size.width, gameAnswerOptionsViewController.view.frame.size.height);
+	gameAnswerOptionsViewController.view.frame = CGRectMake(6, 371, gameAnswerOptionsViewController.view.frame.size.width, gameAnswerOptionsViewController.view.frame.size.height);
 	gameAnswerOptionsViewController.delegate = self;
 	[self.view addSubview:gameAnswerOptionsViewController.view];
 	
@@ -120,8 +144,6 @@
 	
 	// Start the game timer.
 	[game startGameTimer];
-	
-	[self setTitle];
 }
 
 - (void)viewDidUnload {
@@ -142,23 +164,23 @@
 	switch (game.difficulty) {
 		default:
 		case ZSGameDifficultyEasy:
-			self.title = @"Easy";
+			title.text = @"Easy";
 			break;
 			
 		case ZSGameDifficultyModerate:
-			self.title = @"Moderate";
+			title.text = @"Moderate";
 			break;
 			
 		case ZSGameDifficultyChallenging:
-			self.title = @"Challenging";
+			title.text = @"Challenging";
 			break;
 			
 		case ZSGameDifficultyDiabolical:
-			self.title = @"Diabolical";
+			title.text = @"Diabolical";
 			break;
 		
 		case ZSGameDifficultyInsane:
-			self.title = @"Insane";
+			title.text = @"Insane";
 			break;
 	}
 }
@@ -280,11 +302,6 @@
 }
 
 - (void)setPencilForGameBoardTile:(ZSGameBoardTileViewController *)tileView withAnswerOption:(ZSGameAnswerOptionViewController *)answerOptionView {
-	// If the answer option is the erase option, ignore it.
-	if (answerOptionView.gameAnswerOption == ZSGameAnswerOptionErase) {
-		return;
-	}
-	
 	// Only honor the pencil mark if there is no guess in the tile.
 	if (tileView.tile.guess) {
 		return;
@@ -295,14 +312,8 @@
 }
 
 - (void)setAnswerForGameBoardTile:(ZSGameBoardTileViewController *)tileView withAnswerOption:(ZSGameAnswerOptionViewController *)answerOptionView {
-	// Is the selected option the erase option, or did the user select the same guess as what already exists in the tile?
-	if (answerOptionView.gameAnswerOption == ZSGameAnswerOptionErase) {
-		// Erase the guess.
-		[game clearGuessForTileAtRow:tileView.tile.row col:tileView.tile.col];
-	} else {
-		// Set the new guess to the selected guess option value.
-		[game setGuess:((NSInteger)answerOptionView.gameAnswerOption + 1) forTileAtRow:tileView.tile.row col:tileView.tile.col];
-	}
+	// Set the new guess to the selected guess option value.
+	[game setGuess:((NSInteger)answerOptionView.gameAnswerOption + 1) forTileAtRow:tileView.tile.row col:tileView.tile.col];
 }
 
 - (void)setErrors {
@@ -382,10 +393,6 @@
 	} else {
 		pencilButton.style = UIBarButtonItemStyleBordered;
 	}
-	
-	ZSGameAnswerOptionViewController *eraseGameAnswerOptionViewController = [[gameAnswerOptionsViewController gameAnswerOptionViewControllers] objectAtIndex:ZSGameAnswerOptionErase];
-	eraseGameAnswerOptionViewController.enabled = !penciling;
-	[eraseGameAnswerOptionViewController reloadView];
 }
 
 - (void)autoPencilButtonWasTouched {

@@ -7,6 +7,7 @@
 //
 
 #import "ZSGameAnswerOptionViewController.h"
+#import "FontLabel.h"
 
 @implementation ZSGameAnswerOptionViewController
 
@@ -38,9 +39,9 @@
 #pragma mark - View Lifecycle
 
 - (void)loadView {
-	UILabel *theView = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 28, 30)];
+	FontLabel *theView = [[FontLabel alloc] initWithFrame:CGRectMake(0, 0, 31, 31) fontName:@"ReklameScript-Regular" pointSize:34.0f];
 	theView.textAlignment = UITextAlignmentCenter;
-	theView.font = [UIFont systemFontOfSize:22];
+	theView.backgroundColor = [UIColor clearColor];
 	theView.userInteractionEnabled = YES;
 	
 	self.view = theView;
@@ -77,8 +78,6 @@
 			break;
 		
 		default:
-		case ZSGameAnswerOptionErase:
-			theView.text = @"E";
 			break;
 	}
 }

@@ -49,7 +49,7 @@
 	NSMutableArray *buttons = [NSMutableArray array];
 	ZSGameAnswerOptionViewController *gameAnswerOptionViewController;
 	
-	NSInteger xOffset = 1;
+	NSInteger xOffset = 0;
 	
 	for (NSInteger i = 0; i <= game.gameBoard.size; i++) {
 		gameAnswerOptionViewController = [[ZSGameAnswerOptionViewController alloc] initWithGameAnswerOption:(ZSGameAnswerOption)i];
@@ -59,7 +59,7 @@
 		[self.view addSubview:gameAnswerOptionViewController.view];
 		[buttons addObject:gameAnswerOptionViewController];
 		
-		xOffset += 30;
+		xOffset += 31;
 	}
 	
 	gameAnswerOptionViewControllers = [NSArray arrayWithArray:buttons];
