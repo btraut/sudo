@@ -81,13 +81,11 @@
 	[self.view addSubview:menuButton];
 	
 	// Build the toolbar buttons.
-	pencilButton = [[UIBarButtonItem alloc] initWithTitle:@"Pencil" style:UIBarButtonItemStyleBordered target:self action:@selector(pencilButtonWasTouched)];
 	autoPencilButton = [[UIBarButtonItem alloc] initWithTitle:@"Auto-Pencil" style:UIBarButtonItemStyleBordered target:self action:@selector(autoPencilButtonWasTouched)];
-	
 	undoButton = [[UIBarButtonItem alloc] initWithTitle:@"Undo" style:UIBarButtonItemStyleBordered target:self action:@selector(undoButtonWasTouched)];
 	redoButton = [[UIBarButtonItem alloc] initWithTitle:@"Redo" style:UIBarButtonItemStyleBordered target:self action:@selector(redoButtonWasTouched)];
 	
-	self.toolbarItems = [NSArray arrayWithObjects:pencilButton, autoPencilButton, undoButton, redoButton, nil];
+	self.toolbarItems = [NSArray arrayWithObjects:autoPencilButton, undoButton, redoButton, nil];
 	[self.navigationController setToolbarHidden:NO animated:NO];
 	
 	// Build the game board.
@@ -101,6 +99,23 @@
 	gameAnswerOptionsViewController.view.frame = CGRectMake(6, 371, gameAnswerOptionsViewController.view.frame.size.width, gameAnswerOptionsViewController.view.frame.size.height);
 	gameAnswerOptionsViewController.delegate = self;
 	[self.view addSubview:gameAnswerOptionsViewController.view];
+	
+	// Build pencil button.
+	pencilButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	
+	[pencilButton addTarget:self action:@selector(pencilButtonWasTouched) forControlEvents:UIControlEventTouchUpInside];
+	pencilButton.frame = CGRectMake(288, 371, 21.5f, 32.0f);
+	
+	UIImage *pencilImage = [UIImage imageNamed:@"Pencil"];
+	UIImage *pencilSelectedImage = [UIImage imageNamed:@"PencilSelected"];
+	[pencilButton setBackgroundImage:pencilImage forState:UIControlStateNormal];
+	[pencilButton setBackgroundImage:pencilSelectedImage forState:UIControlStateSelected];
+	
+	[self.view addSubview:pencilButton];
+	
+	// Reload errors.
+	[self setErrors];
+	[gameBoardViewController reloadView];
 	
 	// Debug
 	if (game.difficulty == ZSGameDifficultyInsane) {
@@ -387,12 +402,7 @@
 
 - (void)pencilButtonWasTouched {
 	penciling = !penciling;
-	
-	if (penciling) {
-		pencilButton.style = UIBarButtonItemStyleDone;
-	} else {
-		pencilButton.style = UIBarButtonItemStyleBordered;
-	}
+	pencilButton.selected = penciling;
 }
 
 - (void)autoPencilButtonWasTouched {

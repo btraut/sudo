@@ -18,7 +18,7 @@
 	NSObject *delegate;
 	
 	NSArray *gameAnswerOptionViewControllers;
-	UIView *pencilToggleButton;
+	UIButton *pencilToggleButton;
 	
 	ZSGameAnswerOptionViewController *selectedGameAnswerOptionView;
 }
@@ -40,7 +40,7 @@
 @property (strong) NSObject *delegate;
 
 @property (strong, readonly) NSArray *gameAnswerOptionViewControllers;
-@property (strong, readonly) UIView *pencilToggleButton;
+@property (strong, readonly) UIButton *pencilToggleButton;
 
 @property (strong, readonly) ZSGameAnswerOptionViewController *selectedGameAnswerOptionView;
 

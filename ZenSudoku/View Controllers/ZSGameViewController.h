@@ -21,7 +21,7 @@
 	ZSGameBoardViewController *gameBoardViewController;
 	ZSGameAnswerOptionsViewController *gameAnswerOptionsViewController;
 	
-	UIBarButtonItem *pencilButton;
+	UIButton *pencilButton;
 	BOOL penciling;
 	
 	UIBarButtonItem *autoPencilButton;
@@ -39,7 +39,7 @@
 @property (strong, readonly) ZSGameBoardViewController *gameBoardViewController;
 @property (strong, readonly) ZSGameAnswerOptionsViewController *gameAnswerOptionsViewController;
 
-@property (strong, readonly) UIBarButtonItem *pencilButton;
+@property (strong, readonly) UIButton *pencilButton;
 @property (assign) BOOL penciling;
 
 @property (assign) BOOL allowsInput;

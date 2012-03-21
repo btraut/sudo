@@ -11,6 +11,19 @@
 #import "ZSGame.h"
 #import "ZSGameBoard.h"
 #import "FontLabel.h"
+#import "UIColor+ColorWithHex.h"
+
+// Tile Color Constants
+NSString * const kTextColorAnswer = @"#FF111111";
+NSString * const kTextColorGuess = @"#FF4444FF";
+NSString * const kTextColorError = @"#FF882222";
+
+NSString * const kTileColorNormal = @"#00FFFFFF";
+NSString * const kTileColorSelected = @"#220000FF";
+NSString * const kTileColorHighlightAnswer = @"#99FFFF88";
+NSString * const kTileColorHighlightPencil = @"#99BBFFBB";
+NSString * const kTileColorError = @"#33FF0000";
+NSString * const kTileColorErrorSelected = @"#33D600DB";
 
 @implementation ZSGameBoardTileViewController
 
@@ -113,12 +126,12 @@
 		
 		// Choose the guess text color.
 		if (tile.locked) {
-			guessView.textColor = [UIColor colorWithWhite:0.07f alpha:1.0f];
+			guessView.textColor = [UIColor colorWithAlphaHexString:kTextColorAnswer];
 		} else {
 			if (incorrect) {
-				guessView.textColor = [UIColor colorWithRed:0.5 green:0.1 blue:0.1 alpha:1.0];
+				guessView.textColor = [UIColor colorWithAlphaHexString:kTextColorError];
 			} else {
-				guessView.textColor = [UIColor colorWithRed:0.3 green:0.3 blue:1.0 alpha:1.0];
+				guessView.textColor = [UIColor colorWithAlphaHexString:kTextColorGuess];
 			}
 		}
 	} else {
@@ -135,22 +148,22 @@
 	// Choose the background color.
 	if (selected) {
 		if (incorrect) {
-			self.view.backgroundColor = [UIColor colorWithRed:1.0 green:0.0 blue:0.5 alpha:0.2];
+			self.view.backgroundColor = [UIColor colorWithAlphaHexString:kTileColorErrorSelected];
 		} else {
-			self.view.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:1.0 alpha:0.2];
+			self.view.backgroundColor = [UIColor colorWithAlphaHexString:kTileColorSelected];
 		}
 	} else {
 		if (incorrect) {
-			self.view.backgroundColor = [UIColor colorWithRed:1.0 green:0.0 blue:0.0 alpha:0.2];
+			self.view.backgroundColor = [UIColor colorWithAlphaHexString:kTileColorError];
 		} else {
 			if (highlighted) {
 				if (tile.guess) {
-					self.view.backgroundColor = [UIColor colorWithRed:1.0 green:1.0 blue:0.5 alpha:0.6];
+					self.view.backgroundColor = [UIColor colorWithAlphaHexString:kTileColorHighlightAnswer];
 				} else {
-					self.view.backgroundColor = [UIColor colorWithRed:0.8 green:1.0 blue:0.8 alpha:0.6];
+					self.view.backgroundColor = [UIColor colorWithAlphaHexString:kTileColorHighlightPencil];
 				}
 			} else {
-				self.view.backgroundColor = [UIColor clearColor];
+				self.view.backgroundColor = [UIColor colorWithAlphaHexString:kTileColorNormal];
 			}
 		}
 	}

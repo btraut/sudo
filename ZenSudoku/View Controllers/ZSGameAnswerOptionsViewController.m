@@ -46,12 +46,13 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	
+	// Build numbers.
 	NSMutableArray *buttons = [NSMutableArray array];
 	ZSGameAnswerOptionViewController *gameAnswerOptionViewController;
 	
 	NSInteger xOffset = 0;
 	
-	for (NSInteger i = 0; i <= game.gameBoard.size; i++) {
+	for (NSInteger i = 0; i < game.gameBoard.size; i++) {
 		gameAnswerOptionViewController = [[ZSGameAnswerOptionViewController alloc] initWithGameAnswerOption:(ZSGameAnswerOption)i];
 		gameAnswerOptionViewController.view.frame = CGRectMake(xOffset, 0, gameAnswerOptionViewController.view.frame.size.width, gameAnswerOptionViewController.view.frame.size.height);
 		gameAnswerOptionViewController.delegate = self;

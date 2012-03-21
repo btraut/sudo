@@ -47,3 +47,15 @@
 - (void)reloadView;
 
 @end
+
+// Tile Color Constants
+extern NSString * const kTextColorAnswer;
+extern NSString * const kTextColorGuess;
+extern NSString * const kTextColorError;
+
+extern NSString * const kTileColorNormal;
+extern NSString * const kTileColorSelected;
+extern NSString * const kTileColorHighlightAnswer;
+extern NSString * const kTileColorHighlightPencil;
+extern NSString * const kTileColorError;
+extern NSString * const kTileColorErrorSelected;
