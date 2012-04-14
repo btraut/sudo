@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		840216EA1538EAAD00B16131 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 840216E61538EAAD00B16131 /* README.txt */; };
+		840216EB1538EAAD00B16131 /* release_notes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 840216E71538EAAD00B16131 /* release_notes.txt */; };
+		840216ED1538F11400B16131 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 840216E51538EAAD00B16131 /* libTestFlight.a */; };
+		840216EF1538F15B00B16131 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 840216EE1538F15B00B16131 /* libz.dylib */; };
 		841F850214C25F2E00DFFABC /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 841F850114C25F2D00DFFABC /* Settings.bundle */; };
 		841F854714C2651700DFFABC /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 841F854614C2651600DFFABC /* MessageUI.framework */; };
 		841F854A14C40F5600DFFABC /* ZSStatisticsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841F854914C40F5500DFFABC /* ZSStatisticsController.m */; };
@@ -35,7 +39,6 @@
 		8426A79D14ED16A3006DAD1C /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 8426A79814ED16A3006DAD1C /* FMDatabase.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8426A79E14ED16A3006DAD1C /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8426A79A14ED16A3006DAD1C /* FMDatabaseAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8426A79F14ED16A3006DAD1C /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 8426A79C14ED16A3006DAD1C /* FMResultSet.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		8426A7A014ED1748006DAD1C /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8426A79314ED1671006DAD1C /* libTestFlight.a */; };
 		843BEDEF149DC4E800D1D19B /* ZSIconNew57.png in Resources */ = {isa = PBXBuildFile; fileRef = 843BEDEE149DC4E800D1D19B /* ZSIconNew57.png */; };
 		843BEDF1149DC4F100D1D19B /* ZSIconNew114.png in Resources */ = {isa = PBXBuildFile; fileRef = 843BEDF0149DC4F100D1D19B /* ZSIconNew114.png */; };
 		8449D9571481D77D003F6FB3 /* ZSGameAnswerOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8449D9561481D77D003F6FB3 /* ZSGameAnswerOptionsViewController.m */; };
@@ -87,6 +90,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		840216E51538EAAD00B16131 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
+		840216E61538EAAD00B16131 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		840216E71538EAAD00B16131 /* release_notes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes.txt; sourceTree = "<group>"; };
+		840216E81538EAAD00B16131 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
+		840216EE1538F15B00B16131 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		841F850114C25F2D00DFFABC /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		841F854614C2651600DFFABC /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		841F854814C40F5500DFFABC /* ZSStatisticsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSStatisticsController.h; path = "Model Controllers/ZSStatisticsController.h"; sourceTree = "<group>"; };
@@ -129,8 +137,6 @@
 		8426A77A14ED1656006DAD1C /* IASKPSTextFieldSpecifierViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IASKPSTextFieldSpecifierViewCell.xib; sourceTree = "<group>"; };
 		8426A77B14ED1656006DAD1C /* IASKPSToggleSwitchSpecifierViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IASKPSToggleSwitchSpecifierViewCell.xib; sourceTree = "<group>"; };
 		8426A77C14ED1656006DAD1C /* IASKSpecifierValuesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IASKSpecifierValuesView.xib; sourceTree = "<group>"; };
-		8426A79314ED1671006DAD1C /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
-		8426A79414ED1671006DAD1C /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		8426A79714ED16A3006DAD1C /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
 		8426A79814ED16A3006DAD1C /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
 		8426A79914ED16A3006DAD1C /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
@@ -218,13 +224,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8426A7A014ED1748006DAD1C /* libTestFlight.a in Frameworks */,
 				8492B76114C911FF0093B7AC /* libsqlite3.0.dylib in Frameworks */,
 				841F854714C2651700DFFABC /* MessageUI.framework in Frameworks */,
 				84D55014147F1C4A00A7934E /* UIKit.framework in Frameworks */,
 				84D55016147F1C4A00A7934E /* Foundation.framework in Frameworks */,
 				84D55018147F1C4A00A7934E /* CoreGraphics.framework in Frameworks */,
 				849B69BE14F24D6100870F09 /* GameKit.framework in Frameworks */,
+				840216ED1538F11400B16131 /* libTestFlight.a in Frameworks */,
+				840216EF1538F15B00B16131 /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -241,6 +248,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		840216E41538EAAD00B16131 /* TestFlightSDK1.0 */ = {
+			isa = PBXGroup;
+			children = (
+				840216E51538EAAD00B16131 /* libTestFlight.a */,
+				840216E61538EAAD00B16131 /* README.txt */,
+				840216E71538EAAD00B16131 /* release_notes.txt */,
+				840216E81538EAAD00B16131 /* TestFlight.h */,
+			);
+			name = TestFlightSDK1.0;
+			path = External/TestFlightSDK1.0;
+			sourceTree = "<group>";
+		};
 		841F850314C25F4D00DFFABC /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -328,16 +347,6 @@
 			path = ZenSudoku/External/InAppSettingsKit/Xibs;
 			sourceTree = SOURCE_ROOT;
 		};
-		8426A79214ED1671006DAD1C /* TestFlightSDK0.8.2 */ = {
-			isa = PBXGroup;
-			children = (
-				8426A79314ED1671006DAD1C /* libTestFlight.a */,
-				8426A79414ED1671006DAD1C /* TestFlight.h */,
-			);
-			name = TestFlightSDK0.8.2;
-			path = External/TestFlightSDK0.8.2;
-			sourceTree = "<group>";
-		};
 		8426A79614ED16A3006DAD1C /* FMDB */ = {
 			isa = PBXGroup;
 			children = (
@@ -358,7 +367,7 @@
 				84AC6B3D1508B2D000C2F192 /* UIColor+ColorWithHex */,
 				849B69DD14F263EF00870F09 /* FontLabel */,
 				8426A79614ED16A3006DAD1C /* FMDB */,
-				8426A79214ED1671006DAD1C /* TestFlightSDK0.8.2 */,
+				840216E41538EAAD00B16131 /* TestFlightSDK1.0 */,
 				841F850414C2601500DFFABC /* InAppSettingsKit */,
 			);
 			name = External;
@@ -471,6 +480,7 @@
 		84D55004147F1C4A00A7934E = {
 			isa = PBXGroup;
 			children = (
+				840216EE1538F15B00B16131 /* libz.dylib */,
 				84D55019147F1C4A00A7934E /* ZenSudoku */,
 				84EE862A1494ADEA004C0A16 /* ZenSudokuLogicTests */,
 				84D55012147F1C4A00A7934E /* Frameworks */,
@@ -664,6 +674,8 @@
 				8494BE6C14FAACCC00010233 /* Board@2x.png in Resources */,
 				8494BE7114FB117100010233 /* Pencil@2x.png in Resources */,
 				8494BE7214FB117100010233 /* PencilSelected@2x.png in Resources */,
+				840216EA1538EAAD00B16131 /* README.txt in Resources */,
+				840216EB1538EAAD00B16131 /* release_notes.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -807,6 +819,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/ZenSudoku/External/TestFlightSDK0.8.2\"",
+					"\"$(SRCROOT)/ZenSudoku/External/TestFlightSDK1.0\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "0D97E7BA-D276-4159-8DB7-D9051F8CE43B";
@@ -894,6 +907,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/ZenSudoku/External/TestFlightSDK0.8.2\"",
+					"\"$(SRCROOT)/ZenSudoku/External/TestFlightSDK1.0\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "0D97E7BA-D276-4159-8DB7-D9051F8CE43B";
@@ -917,6 +931,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/ZenSudoku/External/TestFlightSDK0.8.2\"",
+					"\"$(SRCROOT)/ZenSudoku/External/TestFlightSDK1.0\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "0D97E7BA-D276-4159-8DB7-D9051F8CE43B";
