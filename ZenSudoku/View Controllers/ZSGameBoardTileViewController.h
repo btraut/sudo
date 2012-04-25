@@ -84,6 +84,9 @@ extern NSString * const kTextColorGuessSelected;
 extern NSString * const kTextColorError;
 extern NSString * const kTextColorErrorSelected;
 
+extern NSString * const kTextShadowColorGuess;
+extern NSString * const kTextShadowColorGuessSelected;
+
 extern NSString * const kTileColorDefault;
 extern NSString * const kTileColorSelected;
 extern NSString * const kTileColorHighlightSimilarAnswer;

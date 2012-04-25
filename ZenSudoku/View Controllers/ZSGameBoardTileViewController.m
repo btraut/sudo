@@ -19,6 +19,9 @@ NSString * const kTextColorGuessSelected = @"#FF595959";
 NSString * const kTextColorError = @"#FFA70404";
 NSString * const kTextColorErrorSelected = @"#FFA70404";
 
+NSString * const kTextShadowColorGuess = @"66FFFFFF";
+NSString * const kTextShadowColorGuessSelected = @"44FFFFFF";
+
 NSString * const kTileColorDefault = @"#00FFFFFF";
 NSString * const kTileColorSelected = @"#CC2F83D4";
 NSString * const kTileColorHighlightSimilarAnswer = @"#4C2F83D4";
@@ -137,22 +140,27 @@ NSString * const kTileColorOtherError = @"#19A70404";
 	switch (textType) {
 		case ZSGameBoardTileTextTypeAnswer:
 			guessView.textColor = [UIColor colorWithAlphaHexString:kTextColorAnswer];
+			guessView.shadowColor = [UIColor colorWithAlphaHexString:kTextShadowColorGuess];
 			break;
 		
 		case ZSGameBoardTileTextTypeGuess:
 			guessView.textColor = [UIColor colorWithAlphaHexString:kTextColorGuess];
+			guessView.shadowColor = [UIColor colorWithAlphaHexString:kTextShadowColorGuess];
 			break;
 			
 		case ZSGameBoardTileTextTypeGuessSelected:
 			guessView.textColor = [UIColor colorWithAlphaHexString:kTextColorGuessSelected];
+			guessView.shadowColor = [UIColor colorWithAlphaHexString:kTextShadowColorGuessSelected];
 			break;
 			
 		case ZSGameBoardTileTextTypeGuessError:
 			guessView.textColor = [UIColor colorWithAlphaHexString:kTextColorError];
+			guessView.shadowColor = [UIColor colorWithAlphaHexString:kTextShadowColorGuess];
 			break;
 			
 		case ZSGameBoardTileTextTypeGuessErrorSelected:
 			guessView.textColor = [UIColor colorWithAlphaHexString:kTextColorErrorSelected];
+			guessView.shadowColor = [UIColor colorWithAlphaHexString:kTextShadowColorGuess];
 			break;
 	}
 	
