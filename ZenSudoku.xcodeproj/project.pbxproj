@@ -785,7 +785,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/ZenSudoku/External/TestFlightSDK0.8.2\"",
 					"\"$(SRCROOT)/ZenSudoku/External/TestFlightSDK1.0\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -873,7 +872,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/ZenSudoku/External/TestFlightSDK0.8.2\"",
 					"\"$(SRCROOT)/ZenSudoku/External/TestFlightSDK1.0\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -897,7 +895,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/ZenSudoku/External/TestFlightSDK0.8.2\"",
 					"\"$(SRCROOT)/ZenSudoku/External/TestFlightSDK1.0\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
