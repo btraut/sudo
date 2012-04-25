@@ -10,7 +10,6 @@
 
 @class ZSGameTile;
 @class ZSGameBoardTileViewController;
-@class FontLabel;
 
 typedef enum {
 	ZSGameBoardTileTextTypeAnswer,
@@ -49,7 +48,7 @@ typedef enum {
 	BOOL highlightedError;
 	
 	NSArray *pencilViews;
-	FontLabel *guessView;
+	UILabel *guessView;
 }
 
 @property (strong) ZSGameTile *tile;

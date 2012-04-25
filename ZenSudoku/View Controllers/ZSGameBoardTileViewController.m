@@ -10,7 +10,6 @@
 #import "ZSGameTile.h"
 #import "ZSGame.h"
 #import "ZSGameBoard.h"
-#import "ShadowedFontLabel.h"
 #import "UIColor+ColorWithHex.h"
 
 // Tile Color Constants
@@ -77,8 +76,9 @@ NSString * const kTileColorOtherError = @"#19A70404";
 	
 	for (NSInteger row = 0; row < 3; row++) {
 		for (NSInteger col = 0; col < 3; col++) {
-			ShadowedFontLabel *pencil = [[ShadowedFontLabel alloc] initWithFrame:CGRectMake(col * 11, row * 11, 10, 10) fontName:@"ReklameScript-Regular" pointSize:10.0f];
+			UILabel *pencil = [[UILabel alloc] initWithFrame:CGRectMake(col * 11, row * 11, 10, 10)];
 			
+			pencil.font = [UIFont fontWithName:@"ReklameScript-Regular" size:10.0f];
 			pencil.text = [NSString stringWithFormat:@"%i", (row * 3) + col + 1];
 			pencil.textAlignment = UITextAlignmentCenter;
 			pencil.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
@@ -86,6 +86,8 @@ NSString * const kTileColorOtherError = @"#19A70404";
 			pencil.textColor = [UIColor colorWithRed:0.15f green:0.15f blue:0.15f alpha:1.0f];
 			pencil.backgroundColor = [UIColor clearColor];
 			pencil.hidden = YES;
+			pencil.shadowColor = [UIColor colorWithAlphaHexString:@"66FFFFFF"];
+			pencil.shadowOffset = CGSizeMake(0, 1);
 			
 			[newPencils addObject:pencil];
 			[self.view addSubview:pencil];
@@ -95,14 +97,17 @@ NSString * const kTileColorOtherError = @"#19A70404";
 	pencilViews = [NSArray arrayWithArray:newPencils];
 	
 	// Create the guess label.
-	guessView = [[ShadowedFontLabel alloc] initWithFrame:CGRectMake(0, 0, 32, 32) fontName:@"ReklameScript-Regular" pointSize:24.0f];
+	guessView = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 32, 32)];
 	
+	guessView.font = [UIFont fontWithName:@"ReklameScript-Regular" size:24.0f];
 	guessView.text = @"0";
 	guessView.textAlignment = UITextAlignmentCenter;
 	guessView.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
 	guessView.lineBreakMode = UILineBreakModeClip;
 	guessView.textColor = [UIColor colorWithWhite:0.07f alpha:1.0f];
 	guessView.backgroundColor = [UIColor clearColor];
+	guessView.shadowColor = [UIColor colorWithAlphaHexString:@"66FFFFFF"];
+	guessView.shadowOffset = CGSizeMake(0, 1);
 	guessView.hidden = YES;
 	
 	self.selected = NO;

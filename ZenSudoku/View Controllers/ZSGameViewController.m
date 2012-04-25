@@ -16,7 +16,6 @@
 #import "ZSGameController.h"
 
 #import "TestFlight.h"
-#import "FontLabel.h"
 
 @implementation ZSGameViewController
 
@@ -59,7 +58,8 @@
 	self.navigationController.navigationBarHidden = YES;
 	
 	// Build the title.
-	title = [[FontLabel alloc] initWithFrame:CGRectMake(70, 12, 180, 32) fontName:@"ReklameScript-Medium" pointSize:30.0f];
+	title = [[UILabel alloc] initWithFrame:CGRectMake(70, 12, 180, 32)];
+	title.font = [UIFont fontWithName:@"ReklameScript-Medium" size:30.0f];
 	title.textAlignment = UITextAlignmentCenter;
 	title.backgroundColor = [UIColor clearColor];
 	[self.view addSubview:title];
@@ -70,7 +70,8 @@
 	//	self.navigationItem.leftBarButtonItem = menuButton;
 	
 	// Build the menu button.
-	FontLabel *menuButton = [[FontLabel alloc] initWithFrame:CGRectMake(12, 22, 60, 20) fontName:@"ReklameScript-Regular" pointSize:18.0f];
+	UILabel *menuButton = [[UILabel alloc] initWithFrame:CGRectMake(12, 22, 60, 20)];
+	menuButton.font = [UIFont fontWithName:@"ReklameScript-Regular" size:18.0f];
 	menuButton.text = @"Main Menu";
 	menuButton.backgroundColor = [UIColor clearColor];
 	menuButton.userInteractionEnabled = YES;

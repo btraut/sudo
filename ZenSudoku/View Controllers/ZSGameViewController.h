@@ -13,7 +13,6 @@
 
 @class ZSGameBoardViewController;
 @class ZSGameAnswerOptionsViewController;
-@class FontLabel;
 
 @interface ZSGameViewController : UIViewController <ZSGameDelegate> {
 	ZSGame *game;
@@ -31,7 +30,7 @@
 	
 	BOOL allowsInput;
 	
-	FontLabel *title;
+	UILabel *title;
 }
 
 @property (strong) ZSGame *game;

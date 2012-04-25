@@ -42,6 +42,13 @@
 	<string>v0.5.2a</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>ReklameScript-Regular.ttf</string>
+		<string>ReklameScript-Medium.ttf</string>
+		<string>ReklameScript-Bold.ttf</string>
+		<string>ReklameScript-Black.ttf</string>
+	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
