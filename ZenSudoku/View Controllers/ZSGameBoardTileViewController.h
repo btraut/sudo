@@ -12,6 +12,24 @@
 @class ZSGameBoardTileViewController;
 @class FontLabel;
 
+typedef enum {
+	ZSGameBoardTileTextTypeAnswer,
+	ZSGameBoardTileTextTypeGuess,
+	ZSGameBoardTileTextTypeGuessSelected,
+	ZSGameBoardTileTextTypeGuessError,
+	ZSGameBoardTileTextTypeGuessErrorSelected,
+} ZSGameBoardTileTextType;
+
+typedef enum {
+	ZSGameBoardTileBackgroundTypeDefault,
+	ZSGameBoardTileBackgroundTypeSelected,
+	ZSGameBoardTileBackgroundTypeSimilarPencil,
+    ZSGameBoardTileBackgroundTypeSimilarAnswer,
+    ZSGameBoardTileBackgroundTypeSimilarError,
+    ZSGameBoardTileBackgroundTypeSimilarErrorGroup,
+    ZSGameBoardTileBackgroundTypeOtherError
+} ZSGameBoardTileBackgroundType;
+
 @protocol ZSGameBoardTileTouchDelegate <NSObject>
 
 - (void)gameBoardTileWasTouched:(ZSGameBoardTileViewController *)tileView;
@@ -22,9 +40,13 @@
 	ZSGameTile *tile;
 	NSObject *delegate;
 	
+    ZSGameBoardTileTextType textType;
+    ZSGameBoardTileBackgroundType backgroundType;
+    
 	BOOL selected;
-	BOOL highlighted;
-	BOOL incorrect;
+	BOOL error;
+	BOOL highlightedSimilar;
+	BOOL highlightedError;
 	
 	NSArray *pencilViews;
 	FontLabel *guessView;
@@ -33,9 +55,13 @@
 @property (strong) ZSGameTile *tile;
 @property (strong) NSObject *delegate;
 
+@property (assign) ZSGameBoardTileTextType textType;
+@property (assign) ZSGameBoardTileBackgroundType backgroundType;
+
 @property (nonatomic, assign) BOOL selected;
-@property (assign) BOOL highlighted;
-@property (assign) BOOL incorrect;
+@property (assign) BOOL highlightedSimilar;
+@property (assign) BOOL highlightedError;
+@property (assign) BOOL error;
 
 @property (strong) NSArray *pencilViews;
 @property (strong) UILabel *guessView;
@@ -45,17 +71,24 @@
 - (void)handleTap;
 
 - (void)reloadView;
+- (void)reloadTextAndBackgroundType;
+
+- (void)showGuess;
+- (void)hideGuess;
 
 @end
 
 // Tile Color Constants
 extern NSString * const kTextColorAnswer;
 extern NSString * const kTextColorGuess;
+extern NSString * const kTextColorGuessSelected;
 extern NSString * const kTextColorError;
+extern NSString * const kTextColorErrorSelected;
 
-extern NSString * const kTileColorNormal;
+extern NSString * const kTileColorDefault;
 extern NSString * const kTileColorSelected;
-extern NSString * const kTileColorHighlightAnswer;
-extern NSString * const kTileColorHighlightPencil;
-extern NSString * const kTileColorError;
-extern NSString * const kTileColorErrorSelected;
+extern NSString * const kTileColorHighlightSimilarAnswer;
+extern NSString * const kTileColorHighlightSimilarPencil;
+extern NSString * const kTileColorSimilarError;
+extern NSString * const kTileColorSimilarErrorGroup;
+extern NSString * const kTileColorOtherError;

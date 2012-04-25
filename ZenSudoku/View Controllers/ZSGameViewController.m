@@ -43,7 +43,7 @@
 #pragma mark - View Lifecycle
 
 - (void)loadView {
-	self.view = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"PaperBackground.png"]];
+	self.view = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"PaperBackgroundCurled.png"]];
 	self.view.frame = CGRectMake(0, 0, 320, 460);
 	self.view.userInteractionEnabled = YES;
 }
@@ -81,12 +81,12 @@
 	[self.view addSubview:menuButton];
 	
 	// Build the toolbar buttons.
-	autoPencilButton = [[UIBarButtonItem alloc] initWithTitle:@"Auto-Pencil" style:UIBarButtonItemStyleBordered target:self action:@selector(autoPencilButtonWasTouched)];
-	undoButton = [[UIBarButtonItem alloc] initWithTitle:@"Undo" style:UIBarButtonItemStyleBordered target:self action:@selector(undoButtonWasTouched)];
-	redoButton = [[UIBarButtonItem alloc] initWithTitle:@"Redo" style:UIBarButtonItemStyleBordered target:self action:@selector(redoButtonWasTouched)];
+//	autoPencilButton = [[UIBarButtonItem alloc] initWithTitle:@"Auto-Pencil" style:UIBarButtonItemStyleBordered target:self action:@selector(autoPencilButtonWasTouched)];
+//	undoButton = [[UIBarButtonItem alloc] initWithTitle:@"Undo" style:UIBarButtonItemStyleBordered target:self action:@selector(undoButtonWasTouched)];
+//	redoButton = [[UIBarButtonItem alloc] initWithTitle:@"Redo" style:UIBarButtonItemStyleBordered target:self action:@selector(redoButtonWasTouched)];
 	
-	self.toolbarItems = [NSArray arrayWithObjects:autoPencilButton, undoButton, redoButton, nil];
-	[self.navigationController setToolbarHidden:NO animated:NO];
+//	self.toolbarItems = [NSArray arrayWithObjects:autoPencilButton, undoButton, redoButton, nil];
+//	[self.navigationController setToolbarHidden:NO animated:NO];
 	
 	// Build the game board.
 	gameBoardViewController = [ZSGameBoardViewController gameBoardViewControllerForGame:game];
@@ -298,7 +298,8 @@
 			if ([[NSUserDefaults standardUserDefaults] boolForKey:kClearTileSelectionAfterPickingAnswerOptionForAnswerKey]) {
 				[gameBoardViewController deselectTileView];
 			} else {
-				[gameBoardViewController resetHighlightsForSelectedTile];
+				[gameBoardViewController resetSimilarHighlights];
+				[gameBoardViewController resetErrorHighlights];
 			}
 		}
 	} else {
@@ -341,13 +342,13 @@
 			ZSGameBoardTileViewController *tileView = [gameBoardViewController getGameBoardTileViewControllerAtRow:row col:col];
 			
 			// Start by assuming no error.
-			tileView.incorrect = NO;
+			tileView.error = NO;
 			
 			if (tileView.tile.guess && !tileView.tile.locked) {
 				// If we're showing all errors and this is an error, mark it incorrect.
 				if (showErrorsOption == ZSShowErrorsOptionAlways) {
 					if (tileView.tile.guess != tileView.tile.answer) {
-						tileView.incorrect = YES;
+						tileView.error = YES;
 					}
 				}
 				
@@ -362,14 +363,14 @@
 					// Loop over all influenced tiles and check if any others have the same guess as this one. If so, mark it as incorrect.
 					for (ZSGameTile *influencedTile in influencedTiles) {
 						if (tileView.tile.guess == influencedTile.guess) {
-							[gameBoardViewController getGameBoardTileViewControllerAtRow:row col:col].incorrect = YES;
+							[gameBoardViewController getGameBoardTileViewControllerAtRow:row col:col].error = YES;
 							foundError = YES;
 						}
 					}
 					
 					// If we found another tile that errs with this one, mark this one as an error.
 					if (foundError) {
-						tileView.incorrect = YES;
+						tileView.error = YES;
 					}
 				}
 			}
@@ -411,7 +412,7 @@
 	
 	// Update the highlights.
 	if (gameBoardViewController.selectedTileView) {
-		[gameBoardViewController resetHighlightsForSelectedTile];
+		[gameBoardViewController resetSimilarHighlights];
 	}
 }
 

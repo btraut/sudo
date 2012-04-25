@@ -10,25 +10,29 @@
 #import "ZSGameTile.h"
 #import "ZSGame.h"
 #import "ZSGameBoard.h"
-#import "FontLabel.h"
+#import "ShadowedFontLabel.h"
 #import "UIColor+ColorWithHex.h"
 
 // Tile Color Constants
-NSString * const kTextColorAnswer = @"#FF111111";
-NSString * const kTextColorGuess = @"#FF4444FF";
-NSString * const kTextColorError = @"#FF882222";
+NSString * const kTextColorAnswer = @"#FF2B2B2B";
+NSString * const kTextColorGuess = @"#FF666666";
+NSString * const kTextColorGuessSelected = @"#FF595959";
+NSString * const kTextColorError = @"#FFA70404";
+NSString * const kTextColorErrorSelected = @"#FFA70404";
 
-NSString * const kTileColorNormal = @"#00FFFFFF";
-NSString * const kTileColorSelected = @"#220000FF";
-NSString * const kTileColorHighlightAnswer = @"#99FFFF88";
-NSString * const kTileColorHighlightPencil = @"#99BBFFBB";
-NSString * const kTileColorError = @"#33FF0000";
-NSString * const kTileColorErrorSelected = @"#33D600DB";
+NSString * const kTileColorDefault = @"#00FFFFFF";
+NSString * const kTileColorSelected = @"#CC2F83D4";
+NSString * const kTileColorHighlightSimilarAnswer = @"#4C2F83D4";
+NSString * const kTileColorHighlightSimilarPencil = @"#202F83D4";
+NSString * const kTileColorSimilarError = @"#66A70404";
+NSString * const kTileColorSimilarErrorGroup = @"#19A70404";
+NSString * const kTileColorOtherError = @"#19A70404";
 
 @implementation ZSGameBoardTileViewController
 
 @synthesize tile, delegate;
-@synthesize selected, highlighted, incorrect;
+@synthesize textType, backgroundType;
+@synthesize selected, highlightedSimilar, highlightedError, error;
 @synthesize pencilViews, guessView;
 
 - (id)init {
@@ -36,8 +40,9 @@ NSString * const kTileColorErrorSelected = @"#33D600DB";
 	
 	if (self) {
 		selected = NO;
-		highlighted = NO;
-		incorrect = NO;
+		highlightedSimilar = NO;
+		highlightedError = NO;
+		error = NO;
 	}
 	
 	return self;
@@ -57,7 +62,7 @@ NSString * const kTileColorErrorSelected = @"#33D600DB";
 
 - (void)loadView {
 	self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 32, 32)];
-	self.view.backgroundColor = [UIColor colorWithRed:1.0 green:0.0 blue:1.0 alpha:0.2];
+//	self.view.backgroundColor = [UIColor colorWithRed:1.0 green:0.0 blue:1.0 alpha:0.2];
 }
 
 - (void)viewDidLoad {
@@ -72,7 +77,7 @@ NSString * const kTileColorErrorSelected = @"#33D600DB";
 	
 	for (NSInteger row = 0; row < 3; row++) {
 		for (NSInteger col = 0; col < 3; col++) {
-			FontLabel *pencil = [[FontLabel alloc] initWithFrame:CGRectMake(col * 11, row * 11, 10, 10) fontName:@"ReklameScript-Regular" pointSize:10.0f];
+			ShadowedFontLabel *pencil = [[ShadowedFontLabel alloc] initWithFrame:CGRectMake(col * 11, row * 11, 10, 10) fontName:@"ReklameScript-Regular" pointSize:10.0f];
 			
 			pencil.text = [NSString stringWithFormat:@"%i", (row * 3) + col + 1];
 			pencil.textAlignment = UITextAlignmentCenter;
@@ -90,7 +95,7 @@ NSString * const kTileColorErrorSelected = @"#33D600DB";
 	pencilViews = [NSArray arrayWithArray:newPencils];
 	
 	// Create the guess label.
-	guessView = [[FontLabel alloc] initWithFrame:CGRectMake(0, 0, 32, 32) fontName:@"ReklameScript-Regular" pointSize:24.0f];
+	guessView = [[ShadowedFontLabel alloc] initWithFrame:CGRectMake(0, 0, 32, 32) fontName:@"ReklameScript-Regular" pointSize:24.0f];
 	
 	guessView.text = @"0";
 	guessView.textAlignment = UITextAlignmentCenter;
@@ -114,58 +119,146 @@ NSString * const kTileColorErrorSelected = @"#33D600DB";
 - (void)reloadView {
 	// Choose whether to show the guess or pencil marks.
 	if (tile.guess) {
-		// Set the guess text and show it.
 		guessView.text = [NSString stringWithFormat:@"%i", tile.guess];
-		guessView.hidden = NO;
+		[self showGuess];		
+	} else {
+		[self hideGuess];
+	}
+	
+	// Set the proper text and background types.
+	[self reloadTextAndBackgroundType];
+	
+	// Set the text color based on text type.
+	switch (textType) {
+		case ZSGameBoardTileTextTypeAnswer:
+			guessView.textColor = [UIColor colorWithAlphaHexString:kTextColorAnswer];
+			break;
 		
-		// Set visibility on all the pencil views.
-		for (NSInteger i = 0; i < tile.gameBoard.size; ++i) {
-			UILabel *pencilLabel = [pencilViews objectAtIndex:i];
-			pencilLabel.hidden = YES;
-		}		
-		
+		case ZSGameBoardTileTextTypeGuess:
+			guessView.textColor = [UIColor colorWithAlphaHexString:kTextColorGuess];
+			break;
+			
+		case ZSGameBoardTileTextTypeGuessSelected:
+			guessView.textColor = [UIColor colorWithAlphaHexString:kTextColorGuessSelected];
+			break;
+			
+		case ZSGameBoardTileTextTypeGuessError:
+			guessView.textColor = [UIColor colorWithAlphaHexString:kTextColorError];
+			break;
+			
+		case ZSGameBoardTileTextTypeGuessErrorSelected:
+			guessView.textColor = [UIColor colorWithAlphaHexString:kTextColorErrorSelected];
+			break;
+	}
+	
+	// Set the background color based on text type.
+	switch (backgroundType) {
+		case ZSGameBoardTileBackgroundTypeDefault:
+			self.view.backgroundColor = [UIColor colorWithAlphaHexString:kTileColorDefault];
+			break;
+			
+		case ZSGameBoardTileBackgroundTypeSelected:
+			self.view.backgroundColor = [UIColor colorWithAlphaHexString:kTileColorSelected];
+			break;
+			
+		case ZSGameBoardTileBackgroundTypeSimilarPencil:
+			self.view.backgroundColor = [UIColor colorWithAlphaHexString:kTileColorHighlightSimilarPencil];
+			break;
+			
+		case ZSGameBoardTileBackgroundTypeSimilarAnswer:
+			self.view.backgroundColor = [UIColor colorWithAlphaHexString:kTileColorHighlightSimilarAnswer];
+			break;
+			
+		case ZSGameBoardTileBackgroundTypeSimilarError:
+			self.view.backgroundColor = [UIColor colorWithAlphaHexString:kTileColorSimilarError];
+			break;
+			
+		case ZSGameBoardTileBackgroundTypeSimilarErrorGroup:
+			self.view.backgroundColor = [UIColor colorWithAlphaHexString:kTileColorSimilarErrorGroup];
+			break;
+			
+		case ZSGameBoardTileBackgroundTypeOtherError:
+			self.view.backgroundColor = [UIColor colorWithAlphaHexString:kTileColorOtherError];
+			break;
+	}
+	
+}
+
+- (void)reloadTextAndBackgroundType {
+	// Choose whether to show the guess or pencil marks.
+	if (tile.guess) {
 		// Choose the guess text color.
 		if (tile.locked) {
-			guessView.textColor = [UIColor colorWithAlphaHexString:kTextColorAnswer];
+			textType = ZSGameBoardTileTextTypeAnswer;
 		} else {
-			if (incorrect) {
-				guessView.textColor = [UIColor colorWithAlphaHexString:kTextColorError];
+			if (selected) {
+				if (error) {
+					textType = ZSGameBoardTileTextTypeGuessErrorSelected;
+				} else {
+					textType = ZSGameBoardTileTextTypeGuessSelected;
+				}
 			} else {
-				guessView.textColor = [UIColor colorWithAlphaHexString:kTextColorGuess];
+				if (error) {
+					textType = ZSGameBoardTileTextTypeGuessError;
+				} else {
+					textType = ZSGameBoardTileTextTypeGuess;
+				}
 			}
-		}
-	} else {
-		// Hide the guess.
-		guessView.hidden = YES;
-		
-		// Set visibility on all the pencil views.
-		for (NSInteger i = 0; i < tile.gameBoard.size; ++i) {
-			UILabel *pencilLabel = [pencilViews objectAtIndex:i];
-			pencilLabel.hidden = ![tile getPencilForGuess:(i + 1)];
 		}
 	}
 	
 	// Choose the background color.
 	if (selected) {
-		if (incorrect) {
-			self.view.backgroundColor = [UIColor colorWithAlphaHexString:kTileColorErrorSelected];
-		} else {
-			self.view.backgroundColor = [UIColor colorWithAlphaHexString:kTileColorSelected];
-		}
+		backgroundType = ZSGameBoardTileBackgroundTypeSelected;
 	} else {
-		if (incorrect) {
-			self.view.backgroundColor = [UIColor colorWithAlphaHexString:kTileColorError];
-		} else {
-			if (highlighted) {
-				if (tile.guess) {
-					self.view.backgroundColor = [UIColor colorWithAlphaHexString:kTileColorHighlightAnswer];
-				} else {
-					self.view.backgroundColor = [UIColor colorWithAlphaHexString:kTileColorHighlightPencil];
-				}
+		if (highlightedError) {
+			// Todo: this should really only be set if the guess of the tile matches that of the selected tile
+			if (tile.guess && highlightedSimilar) {
+				backgroundType = ZSGameBoardTileBackgroundTypeSimilarError;
 			} else {
-				self.view.backgroundColor = [UIColor colorWithAlphaHexString:kTileColorNormal];
+				if (error) {
+					backgroundType = ZSGameBoardTileBackgroundTypeOtherError;
+				} else {
+					backgroundType = ZSGameBoardTileBackgroundTypeSimilarErrorGroup;
+				}
+			}
+		} else {
+			if (error) {
+				backgroundType = ZSGameBoardTileBackgroundTypeOtherError;
+			} else {
+				if (highlightedSimilar) {
+					if (tile.guess) {
+						backgroundType = ZSGameBoardTileBackgroundTypeSimilarAnswer;
+					} else {
+						backgroundType = ZSGameBoardTileBackgroundTypeSimilarPencil;
+					}
+				} else {
+					backgroundType = ZSGameBoardTileBackgroundTypeDefault;
+				}
 			}
 		}
+	}
+}
+
+- (void)showGuess {
+	// Show the guess.
+	guessView.hidden = NO;
+	
+	// Set visibility on all the pencil views.
+	for (NSInteger i = 0; i < tile.gameBoard.size; ++i) {
+		UILabel *pencilLabel = [pencilViews objectAtIndex:i];
+		pencilLabel.hidden = YES;
+	}		
+}
+
+- (void)hideGuess {
+	// Hide the guess.
+	guessView.hidden = YES;
+	
+	// Set visibility on all the pencil views.
+	for (NSInteger i = 0; i < tile.gameBoard.size; ++i) {
+		UILabel *pencilLabel = [pencilViews objectAtIndex:i];
+		pencilLabel.hidden = ![tile getPencilForGuess:(i + 1)];
 	}
 }
 

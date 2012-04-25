@@ -17,7 +17,8 @@
 	NSObject *delegate;
 	
 	ZSGameBoardTileViewController *selectedTileView;
-	NSMutableArray *highlightedTileViews;
+	NSMutableArray *highlightedSimilarTileViews;
+	NSMutableArray *highlightedErrorTileViews;
 }
 
 @property (strong) ZSGame *game;
@@ -26,24 +27,35 @@
 @property (strong) NSObject *delegate;
 
 @property (strong, readonly) ZSGameBoardTileViewController *selectedTileView;
-@property (strong, readonly) NSMutableArray *highlightedTileViews;
+@property (strong, readonly) NSMutableArray *highlightedSimilarTileViews;
 
 
+// View Lifecycle
 + (id)gameBoardViewControllerForGame:(ZSGame *)game;
 
 - (id)initWithGame:(ZSGame *)game;
 
+// Board Changes
 - (void)reloadView;
-- (ZSGameBoardTileViewController *)getGameBoardTileViewControllerAtRow:(NSInteger)row col:(NSInteger)col;
-
-- (void)gameBoardTileWasTouched:(ZSGameBoardTileViewController *)tileView;
 
 - (void)selectTileView:(ZSGameBoardTileViewController *)tileView;
 - (void)deselectTileView;
 
-- (void)removeAllHighlights;
-- (void)addHighlightsForTilesInfluencedByTileView:(ZSGameBoardTileViewController *)tileView;
-- (void)resetHighlightsForSelectedTile;
+// Handling Highlights
+- (void)removeAllSimilarHighlights;
+- (void)addSimilarHighlightsForTileView:(ZSGameBoardTileViewController *)tileView;
+- (void)resetSimilarHighlights;
 
+- (void)removeAllErrorHighlights;
+- (void)addErrorHighlightsForTileView:(ZSGameBoardTileViewController *)tileView;
+- (void)resetErrorHighlights;
+
+- (NSInteger)_getTotalTilesInSet:(NSArray *)set withGuess:(NSInteger)guess;
+
+// Tile Accessors
+- (ZSGameBoardTileViewController *)getGameBoardTileViewControllerAtRow:(NSInteger)row col:(NSInteger)col;
+
+// Delegate Responsibilities
+- (void)gameBoardTileWasTouched:(ZSGameBoardTileViewController *)tileView;
 
 @end

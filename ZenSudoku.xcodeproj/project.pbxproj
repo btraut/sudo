@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		840185AE15450C44000D5999 /* ShadowedFontLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 840185AD15450C44000D5999 /* ShadowedFontLabel.m */; };
 		840216EA1538EAAD00B16131 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 840216E61538EAAD00B16131 /* README.txt */; };
 		840216EB1538EAAD00B16131 /* release_notes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 840216E71538EAAD00B16131 /* release_notes.txt */; };
 		840216ED1538F11400B16131 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 840216E51538EAAD00B16131 /* libTestFlight.a */; };
@@ -39,6 +40,8 @@
 		8426A79D14ED16A3006DAD1C /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 8426A79814ED16A3006DAD1C /* FMDatabase.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8426A79E14ED16A3006DAD1C /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8426A79A14ED16A3006DAD1C /* FMDatabaseAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8426A79F14ED16A3006DAD1C /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 8426A79C14ED16A3006DAD1C /* FMResultSet.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8435B42715456C0A00C15E87 /* PaperBackgroundCurled.png in Resources */ = {isa = PBXBuildFile; fileRef = 8435B42515456C0A00C15E87 /* PaperBackgroundCurled.png */; };
+		8435B42815456C0A00C15E87 /* PaperBackgroundCurled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8435B42615456C0A00C15E87 /* PaperBackgroundCurled@2x.png */; };
 		843BEDEF149DC4E800D1D19B /* ZSIconNew57.png in Resources */ = {isa = PBXBuildFile; fileRef = 843BEDEE149DC4E800D1D19B /* ZSIconNew57.png */; };
 		843BEDF1149DC4F100D1D19B /* ZSIconNew114.png in Resources */ = {isa = PBXBuildFile; fileRef = 843BEDF0149DC4F100D1D19B /* ZSIconNew114.png */; };
 		8449D9571481D77D003F6FB3 /* ZSGameAnswerOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8449D9561481D77D003F6FB3 /* ZSGameAnswerOptionsViewController.m */; };
@@ -90,6 +93,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		840185AC15450C44000D5999 /* ShadowedFontLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShadowedFontLabel.h; sourceTree = "<group>"; };
+		840185AD15450C44000D5999 /* ShadowedFontLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShadowedFontLabel.m; sourceTree = "<group>"; };
 		840216E51538EAAD00B16131 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
 		840216E61538EAAD00B16131 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		840216E71538EAAD00B16131 /* release_notes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes.txt; sourceTree = "<group>"; };
@@ -143,6 +148,8 @@
 		8426A79A14ED16A3006DAD1C /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
 		8426A79B14ED16A3006DAD1C /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
 		8426A79C14ED16A3006DAD1C /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
+		8435B42515456C0A00C15E87 /* PaperBackgroundCurled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PaperBackgroundCurled.png; path = Resources/Images/PaperBackgroundCurled.png; sourceTree = "<group>"; };
+		8435B42615456C0A00C15E87 /* PaperBackgroundCurled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "PaperBackgroundCurled@2x.png"; path = "Resources/Images/PaperBackgroundCurled@2x.png"; sourceTree = "<group>"; };
 		843BEDEE149DC4E800D1D19B /* ZSIconNew57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ZSIconNew57.png; path = Resources/Images/ZSIconNew57.png; sourceTree = "<group>"; };
 		843BEDF0149DC4F100D1D19B /* ZSIconNew114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ZSIconNew114.png; path = Resources/Images/ZSIconNew114.png; sourceTree = "<group>"; };
 		8449D9551481D77C003F6FB3 /* ZSGameAnswerOptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSGameAnswerOptionsViewController.h; path = "View Controllers/ZSGameAnswerOptionsViewController.h"; sourceTree = "<group>"; };
@@ -407,6 +414,8 @@
 				849B69E614F263EF00870F09 /* ZAttributedStringPrivate.h */,
 				849B69E714F263EF00870F09 /* ZFont.h */,
 				849B69E814F263EF00870F09 /* ZFont.m */,
+				840185AC15450C44000D5999 /* ShadowedFontLabel.h */,
+				840185AD15450C44000D5999 /* ShadowedFontLabel.m */,
 			);
 			name = FontLabel;
 			path = External/FontLabel;
@@ -428,6 +437,8 @@
 			children = (
 				849B69EE14F2666400870F09 /* PaperBackground.png */,
 				849B69EF14F2666400870F09 /* PaperBackground@2x.png */,
+				8435B42515456C0A00C15E87 /* PaperBackgroundCurled.png */,
+				8435B42615456C0A00C15E87 /* PaperBackgroundCurled@2x.png */,
 				8494BE6914FAACCC00010233 /* Board.png */,
 				8494BE6A14FAACCC00010233 /* Board@2x.png */,
 				8494BE6F14FB117100010233 /* Pencil@2x.png */,
@@ -480,7 +491,6 @@
 		84D55004147F1C4A00A7934E = {
 			isa = PBXGroup;
 			children = (
-				840216EE1538F15B00B16131 /* libz.dylib */,
 				84D55019147F1C4A00A7934E /* ZenSudoku */,
 				84EE862A1494ADEA004C0A16 /* ZenSudokuLogicTests */,
 				84D55012147F1C4A00A7934E /* Frameworks */,
@@ -501,6 +511,7 @@
 			isa = PBXGroup;
 			children = (
 				8492B76014C911FF0093B7AC /* libsqlite3.0.dylib */,
+				840216EE1538F15B00B16131 /* libz.dylib */,
 				849B69BD14F24D6100870F09 /* GameKit.framework */,
 				841F854614C2651600DFFABC /* MessageUI.framework */,
 				84D55013147F1C4A00A7934E /* UIKit.framework */,
@@ -625,7 +636,7 @@
 		84D55006147F1C4A00A7934E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0430;
 			};
 			buildConfigurationList = 84D55009147F1C4A00A7934E /* Build configuration list for PBXProject "ZenSudoku" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -676,6 +687,8 @@
 				8494BE7214FB117100010233 /* PencilSelected@2x.png in Resources */,
 				840216EA1538EAAD00B16131 /* README.txt in Resources */,
 				840216EB1538EAAD00B16131 /* release_notes.txt in Resources */,
+				8435B42715456C0A00C15E87 /* PaperBackgroundCurled.png in Resources */,
+				8435B42815456C0A00C15E87 /* PaperBackgroundCurled@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -752,6 +765,7 @@
 				849B69EC14F263EF00870F09 /* ZAttributedString.m in Sources */,
 				849B69ED14F263EF00870F09 /* ZFont.m in Sources */,
 				84AC6B411508B35F00C2F192 /* UIColor+ColorWithHex.m in Sources */,
+				840185AE15450C44000D5999 /* ShadowedFontLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

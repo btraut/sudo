@@ -374,9 +374,9 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 - (NSArray *)getRowSetForTileAtRow:(NSInteger)targetRow col:(NSInteger)targetCol includeSelf:(BOOL)includeSelf {
 	NSMutableArray *set = [NSMutableArray array];
 	
-	for (NSInteger row = 0; row < gameBoard.size; ++row) {
-		if (includeSelf || row != targetRow) {
-			[set addObject:[self getTileAtRow:row col:targetCol]];
+	for (NSInteger col = 0; col < gameBoard.size; ++col) {
+		if (includeSelf || col != targetCol) {
+			[set addObject:[self getTileAtRow:targetRow col:col]];
 		}
 	}
 	
@@ -386,9 +386,9 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 - (NSArray *)getColSetForTileAtRow:(NSInteger)targetRow col:(NSInteger)targetCol includeSelf:(BOOL)includeSelf {
 	NSMutableArray *set = [NSMutableArray array];
 	
-	for (NSInteger col = 0; col < gameBoard.size; ++col) {
-		if (includeSelf || col != targetCol) {
-			[set addObject:[self getTileAtRow:targetRow col:col]];
+	for (NSInteger row = 0; row < gameBoard.size; ++row) {
+		if (includeSelf || row != targetRow) {
+			[set addObject:[self getTileAtRow:row col:targetCol]];
 		}
 	}
 	
