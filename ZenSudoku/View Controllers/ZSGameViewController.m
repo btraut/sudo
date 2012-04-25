@@ -82,7 +82,6 @@
 	[self.view addSubview:menuButton];
 	
 	// Build the toolbar buttons.
-//	autoPencilButton = [[UIBarButtonItem alloc] initWithTitle:@"Auto-Pencil" style:UIBarButtonItemStyleBordered target:self action:@selector(autoPencilButtonWasTouched)];
 //	undoButton = [[UIBarButtonItem alloc] initWithTitle:@"Undo" style:UIBarButtonItemStyleBordered target:self action:@selector(undoButtonWasTouched)];
 //	redoButton = [[UIBarButtonItem alloc] initWithTitle:@"Redo" style:UIBarButtonItemStyleBordered target:self action:@selector(redoButtonWasTouched)];
 	
@@ -113,6 +112,32 @@
 	[pencilButton setBackgroundImage:pencilSelectedImage forState:UIControlStateSelected];
 	
 	[self.view addSubview:pencilButton];
+	
+	// Build the autopencil button.
+	autoPencilButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	
+	[autoPencilButton addTarget:self action:@selector(autoPencilButtonWasTouched) forControlEvents:UIControlEventTouchUpInside];
+	autoPencilButton.frame = CGRectMake(115, 412, 34.5f, 34.5f);
+	
+	UIImage *autoPencilImage = [UIImage imageNamed:@"AutoPencil"];
+	UIImage *autoPencilHighlightedImage = [UIImage imageNamed:@"AutoPencilHighlighted"];
+	[autoPencilButton setBackgroundImage:autoPencilImage forState:UIControlStateNormal];
+	[autoPencilButton setBackgroundImage:autoPencilHighlightedImage forState:UIControlStateHighlighted];
+	
+	[self.view addSubview:autoPencilButton];
+	
+	// Build the hints button.
+	hintButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	
+	[hintButton addTarget:self action:@selector(autoPencilButtonWasTouched) forControlEvents:UIControlEventTouchUpInside];
+	hintButton.frame = CGRectMake(170.5f, 412, 34.5f, 34.5f);
+	
+	UIImage *hintsImage = [UIImage imageNamed:@"Hints"];
+	UIImage *hintsHighlightedImage = [UIImage imageNamed:@"HintsHighlighted"];
+	[hintButton setBackgroundImage:hintsImage forState:UIControlStateNormal];
+	[hintButton setBackgroundImage:hintsHighlightedImage forState:UIControlStateHighlighted];
+	
+	[self.view addSubview:hintButton];
 	
 	// Reload errors.
 	[self setErrors];
@@ -329,8 +354,15 @@
 }
 
 - (void)setAnswerForGameBoardTile:(ZSGameBoardTileViewController *)tileView withAnswerOption:(ZSGameAnswerOptionViewController *)answerOptionView {
-	// Set the new guess to the selected guess option value.
-	[game setGuess:((NSInteger)answerOptionView.gameAnswerOption + 1) forTileAtRow:tileView.tile.row col:tileView.tile.col];
+	NSInteger guess = ((NSInteger)answerOptionView.gameAnswerOption + 1);
+	
+	if (tileView.tile.guess == guess) {
+		// The user is picking the same guess that already exists in the tile. Clear the guess.
+		[game clearGuessForTileAtRow:tileView.tile.row col:tileView.tile.col];
+	} else {
+		// Set the new guess to the selected guess option value.
+		[game setGuess:guess forTileAtRow:tileView.tile.row col:tileView.tile.col];
+	}
 }
 
 - (void)setErrors {

@@ -23,7 +23,8 @@
 	UIButton *pencilButton;
 	BOOL penciling;
 	
-	UIBarButtonItem *autoPencilButton;
+	UIButton *autoPencilButton;
+	UIButton *hintButton;
 	
 	UIBarButtonItem *undoButton;
 	UIBarButtonItem *redoButton;
