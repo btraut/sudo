@@ -8,6 +8,7 @@
 
 #import "ZSAppDelegate.h"
 #import "ZSMainMenuViewController.h"
+#import "ZSGameBookViewController.h"
 #import "ZSGameController.h"
 #import "ZSStatisticsController.h"
 #import "ZSGame.h"
@@ -52,12 +53,14 @@ NSString * const kRemoveTileAfterErrorKey = @"kRemoveTileAfterErrorKey";
 	}
 	
 	// Set up the window.
-	ZSMainMenuViewController *mainMenuController = [[ZSMainMenuViewController alloc] initWithStyle:UITableViewStyleGrouped];
+//	ZSMainMenuViewController *mainMenuController = [[ZSMainMenuViewController alloc] initWithStyle:UITableViewStyleGrouped];
 	
     _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-	_navigationController = [[UINavigationController alloc] initWithRootViewController:mainMenuController];
+//	_navigationController = [[UINavigationController alloc] initWithRootViewController:mainMenuController];
 	
-	_window.rootViewController = _navigationController;
+	ZSGameBookViewController *gameBookViewController = [[ZSGameBookViewController alloc] init];
+	
+	_window.rootViewController = gameBookViewController;
 	[_window makeKeyAndVisible];
 	
 	// If the user has upgraded the game since last launch, the game may need to do stuff.

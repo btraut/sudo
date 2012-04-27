@@ -39,6 +39,15 @@
 		8426A79D14ED16A3006DAD1C /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 8426A79814ED16A3006DAD1C /* FMDatabase.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8426A79E14ED16A3006DAD1C /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8426A79A14ED16A3006DAD1C /* FMDatabaseAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8426A79F14ED16A3006DAD1C /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 8426A79C14ED16A3006DAD1C /* FMResultSet.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8428AD2B154A2C2D00BA8EE0 /* ZSFastGameBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 8428AD24154A2C2D00BA8EE0 /* ZSFastGameBoard.m */; };
+		8428AD2D154A2C2D00BA8EE0 /* ZSFastGameSolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 8428AD28154A2C2D00BA8EE0 /* ZSFastGameSolver.m */; };
+		8428AD36154A48F700BA8EE0 /* ZSHintViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8428AD34154A48F700BA8EE0 /* ZSHintViewController.m */; };
+		8428AD37154A48F700BA8EE0 /* ZSHintViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8428AD35154A48F700BA8EE0 /* ZSHintViewController.xib */; };
+		8428AD39154A498200BA8EE0 /* HintPaper@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8428AD38154A498200BA8EE0 /* HintPaper@2x.png */; };
+		8428AD3C154A52F700BA8EE0 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 8428AD3A154A52F700BA8EE0 /* Default.png */; };
+		8428AD3D154A52F700BA8EE0 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8428AD3B154A52F700BA8EE0 /* Default@2x.png */; };
+		8428AD3F154AA62600BA8EE0 /* HintPaper.png in Resources */ = {isa = PBXBuildFile; fileRef = 8428AD3E154AA62600BA8EE0 /* HintPaper.png */; };
+		8428AD42154AB8FE00BA8EE0 /* ZSHintCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 8428AD41154AB8FE00BA8EE0 /* ZSHintCard.m */; };
 		8435B42715456C0A00C15E87 /* PaperBackgroundCurled.png in Resources */ = {isa = PBXBuildFile; fileRef = 8435B42515456C0A00C15E87 /* PaperBackgroundCurled.png */; };
 		8435B42815456C0A00C15E87 /* PaperBackgroundCurled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8435B42615456C0A00C15E87 /* PaperBackgroundCurled@2x.png */; };
 		843BEDEF149DC4E800D1D19B /* ZSIconNew57.png in Resources */ = {isa = PBXBuildFile; fileRef = 843BEDEE149DC4E800D1D19B /* ZSIconNew57.png */; };
@@ -48,8 +57,6 @@
 		8492B76114C911FF0093B7AC /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8492B76014C911FF0093B7AC /* libsqlite3.0.dylib */; };
 		8492B77414CD69B10093B7AC /* ZSPuzzleFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 8492B77314CD69B10093B7AC /* ZSPuzzleFetcher.m */; };
 		8492B78814CEBDC80093B7AC /* Sudoku.db3 in Resources */ = {isa = PBXBuildFile; fileRef = 8492B78714CEBDC80093B7AC /* Sudoku.db3 */; };
-		8492B78E14CEC07D0093B7AC /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 8492B78C14CEC07D0093B7AC /* Default.png */; };
-		8492B78F14CEC07D0093B7AC /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8492B78D14CEC07D0093B7AC /* Default@2x.png */; };
 		8494BE6B14FAACCC00010233 /* Board.png in Resources */ = {isa = PBXBuildFile; fileRef = 8494BE6914FAACCC00010233 /* Board.png */; };
 		8494BE6C14FAACCC00010233 /* Board@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8494BE6A14FAACCC00010233 /* Board@2x.png */; };
 		8494BE7114FB117100010233 /* Pencil@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8494BE6F14FB117100010233 /* Pencil@2x.png */; };
@@ -69,6 +76,7 @@
 		84A097571548B22D0082C9D0 /* Hints@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A0974F1548B22D0082C9D0 /* Hints@2x.png */; };
 		84A097581548B22D0082C9D0 /* HintsHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A097501548B22D0082C9D0 /* HintsHighlighted.png */; };
 		84A097591548B22D0082C9D0 /* HintsHighlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A097511548B22D0082C9D0 /* HintsHighlighted@2x.png */; };
+		84A0975F1549DDE40082C9D0 /* ZSGameBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A0975E1549DDE40082C9D0 /* ZSGameBookViewController.m */; };
 		84AC26C91480950F00E966A5 /* ZSGameBoardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC26C71480950F00E966A5 /* ZSGameBoardViewController.m */; };
 		84AC26CE1480986900E966A5 /* ZSGameBoardTileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC26CC1480986900E966A5 /* ZSGameBoardTileViewController.m */; };
 		84AC26DD1480D9C700E966A5 /* ZSGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC26DC1480D9C700E966A5 /* ZSGame.m */; };
@@ -148,6 +156,19 @@
 		8426A79A14ED16A3006DAD1C /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
 		8426A79B14ED16A3006DAD1C /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
 		8426A79C14ED16A3006DAD1C /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
+		8428AD23154A2C2D00BA8EE0 /* ZSFastGameBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSFastGameBoard.h; sourceTree = "<group>"; };
+		8428AD24154A2C2D00BA8EE0 /* ZSFastGameBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSFastGameBoard.m; sourceTree = "<group>"; };
+		8428AD27154A2C2D00BA8EE0 /* ZSFastGameSolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSFastGameSolver.h; sourceTree = "<group>"; };
+		8428AD28154A2C2D00BA8EE0 /* ZSFastGameSolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSFastGameSolver.m; sourceTree = "<group>"; };
+		8428AD33154A48F700BA8EE0 /* ZSHintViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSHintViewController.h; path = "View Controllers/ZSHintViewController.h"; sourceTree = "<group>"; };
+		8428AD34154A48F700BA8EE0 /* ZSHintViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSHintViewController.m; path = "View Controllers/ZSHintViewController.m"; sourceTree = "<group>"; };
+		8428AD35154A48F700BA8EE0 /* ZSHintViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ZSHintViewController.xib; path = "View Controllers/ZSHintViewController.xib"; sourceTree = "<group>"; };
+		8428AD38154A498200BA8EE0 /* HintPaper@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "HintPaper@2x.png"; path = "Resources/Images/HintPaper@2x.png"; sourceTree = "<group>"; };
+		8428AD3A154A52F700BA8EE0 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = Resources/Images/Default.png; sourceTree = "<group>"; };
+		8428AD3B154A52F700BA8EE0 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Resources/Images/Default@2x.png"; sourceTree = "<group>"; };
+		8428AD3E154AA62600BA8EE0 /* HintPaper.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = HintPaper.png; path = Resources/Images/HintPaper.png; sourceTree = "<group>"; };
+		8428AD40154AB8FE00BA8EE0 /* ZSHintCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSHintCard.h; path = Models/ZSHintCard.h; sourceTree = "<group>"; };
+		8428AD41154AB8FE00BA8EE0 /* ZSHintCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSHintCard.m; path = Models/ZSHintCard.m; sourceTree = "<group>"; };
 		8435B42515456C0A00C15E87 /* PaperBackgroundCurled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PaperBackgroundCurled.png; path = Resources/Images/PaperBackgroundCurled.png; sourceTree = "<group>"; };
 		8435B42615456C0A00C15E87 /* PaperBackgroundCurled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "PaperBackgroundCurled@2x.png"; path = "Resources/Images/PaperBackgroundCurled@2x.png"; sourceTree = "<group>"; };
 		843BEDEE149DC4E800D1D19B /* ZSIconNew57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ZSIconNew57.png; path = Resources/Images/ZSIconNew57.png; sourceTree = "<group>"; };
@@ -160,8 +181,6 @@
 		8492B77214CD69B10093B7AC /* ZSPuzzleFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSPuzzleFetcher.h; path = "Model Controllers/ZSPuzzleFetcher.h"; sourceTree = "<group>"; };
 		8492B77314CD69B10093B7AC /* ZSPuzzleFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSPuzzleFetcher.m; path = "Model Controllers/ZSPuzzleFetcher.m"; sourceTree = "<group>"; };
 		8492B78714CEBDC80093B7AC /* Sudoku.db3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Sudoku.db3; sourceTree = "<group>"; };
-		8492B78C14CEC07D0093B7AC /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		8492B78D14CEC07D0093B7AC /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		8494BE6914FAACCC00010233 /* Board.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Board.png; path = Resources/Images/Board.png; sourceTree = "<group>"; };
 		8494BE6A14FAACCC00010233 /* Board@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Board@2x.png"; path = "Resources/Images/Board@2x.png"; sourceTree = "<group>"; };
 		8494BE6F14FB117100010233 /* Pencil@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Pencil@2x.png"; path = "Resources/Images/Pencil@2x.png"; sourceTree = "<group>"; };
@@ -181,6 +200,8 @@
 		84A0974F1548B22D0082C9D0 /* Hints@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Hints@2x.png"; path = "Resources/Images/Hints@2x.png"; sourceTree = "<group>"; };
 		84A097501548B22D0082C9D0 /* HintsHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = HintsHighlighted.png; path = Resources/Images/HintsHighlighted.png; sourceTree = "<group>"; };
 		84A097511548B22D0082C9D0 /* HintsHighlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "HintsHighlighted@2x.png"; path = "Resources/Images/HintsHighlighted@2x.png"; sourceTree = "<group>"; };
+		84A0975D1549DDE40082C9D0 /* ZSGameBookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSGameBookViewController.h; path = "View Controllers/ZSGameBookViewController.h"; sourceTree = "<group>"; };
+		84A0975E1549DDE40082C9D0 /* ZSGameBookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSGameBookViewController.m; path = "View Controllers/ZSGameBookViewController.m"; sourceTree = "<group>"; };
 		84AC26C61480950F00E966A5 /* ZSGameBoardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSGameBoardViewController.h; path = "View Controllers/ZSGameBoardViewController.h"; sourceTree = "<group>"; };
 		84AC26C71480950F00E966A5 /* ZSGameBoardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSGameBoardViewController.m; path = "View Controllers/ZSGameBoardViewController.m"; sourceTree = "<group>"; };
 		84AC26CB1480986900E966A5 /* ZSGameBoardTileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSGameBoardTileViewController.h; path = "View Controllers/ZSGameBoardTileViewController.h"; sourceTree = "<group>"; };
@@ -365,6 +386,17 @@
 			path = External/FMDB;
 			sourceTree = "<group>";
 		};
+		8428AD22154A2C2D00BA8EE0 /* Sudoku Solving Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				8428AD23154A2C2D00BA8EE0 /* ZSFastGameBoard.h */,
+				8428AD24154A2C2D00BA8EE0 /* ZSFastGameBoard.m */,
+				8428AD27154A2C2D00BA8EE0 /* ZSFastGameSolver.h */,
+				8428AD28154A2C2D00BA8EE0 /* ZSFastGameSolver.m */,
+			);
+			path = "Sudoku Solving Utilities";
+			sourceTree = "<group>";
+		};
 		8449D95B14833649003F6FB3 /* External */ = {
 			isa = PBXGroup;
 			children = (
@@ -414,12 +446,12 @@
 				849B69EF14F2666400870F09 /* PaperBackground@2x.png */,
 				8435B42515456C0A00C15E87 /* PaperBackgroundCurled.png */,
 				8435B42615456C0A00C15E87 /* PaperBackgroundCurled@2x.png */,
+				8428AD3A154A52F700BA8EE0 /* Default.png */,
+				8428AD3B154A52F700BA8EE0 /* Default@2x.png */,
 				8494BE6914FAACCC00010233 /* Board.png */,
 				8494BE6A14FAACCC00010233 /* Board@2x.png */,
 				8494BE6F14FB117100010233 /* Pencil@2x.png */,
 				8494BE7014FB117100010233 /* PencilSelected@2x.png */,
-				8492B78C14CEC07D0093B7AC /* Default.png */,
-				8492B78D14CEC07D0093B7AC /* Default@2x.png */,
 				843BEDF0149DC4F100D1D19B /* ZSIconNew114.png */,
 				843BEDEE149DC4E800D1D19B /* ZSIconNew57.png */,
 				84A0974A1548B22D0082C9D0 /* AutoPencil.png */,
@@ -430,6 +462,8 @@
 				84A0974F1548B22D0082C9D0 /* Hints@2x.png */,
 				84A097501548B22D0082C9D0 /* HintsHighlighted.png */,
 				84A097511548B22D0082C9D0 /* HintsHighlighted@2x.png */,
+				8428AD3E154AA62600BA8EE0 /* HintPaper.png */,
+				8428AD38154A498200BA8EE0 /* HintPaper@2x.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -445,6 +479,9 @@
 				84AC26DF1480DDBA00E966A5 /* ZSGameTile.m */,
 				84B300F2148AF6FD00E568CE /* ZSGameHistoryEntry.h */,
 				84B300F3148AF6FD00E568CE /* ZSGameHistoryEntry.m */,
+				8428AD40154AB8FE00BA8EE0 /* ZSHintCard.h */,
+				8428AD41154AB8FE00BA8EE0 /* ZSHintCard.m */,
+				8428AD22154A2C2D00BA8EE0 /* Sudoku Solving Utilities */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -538,6 +575,8 @@
 				84D5505A147F227C00A7934E /* ZSMainMenuViewController.m */,
 				84D55063147F2EFA00A7934E /* ZSNewGameOptionsViewController.h */,
 				84D55064147F2EFA00A7934E /* ZSNewGameOptionsViewController.m */,
+				84A0975D1549DDE40082C9D0 /* ZSGameBookViewController.h */,
+				84A0975E1549DDE40082C9D0 /* ZSGameBookViewController.m */,
 				84D55067147F3D7400A7934E /* ZSGameViewController.h */,
 				84D55068147F3D7400A7934E /* ZSGameViewController.m */,
 				84AC26C61480950F00E966A5 /* ZSGameBoardViewController.h */,
@@ -553,6 +592,9 @@
 				84C6110714D94414003358FE /* ZSInstructionsRootViewController.h */,
 				84C6110814D94414003358FE /* ZSInstructionsRootViewController.m */,
 				84C6110914D94414003358FE /* ZSInstructionsRootViewController.xib */,
+				8428AD33154A48F700BA8EE0 /* ZSHintViewController.h */,
+				8428AD34154A48F700BA8EE0 /* ZSHintViewController.m */,
+				8428AD35154A48F700BA8EE0 /* ZSHintViewController.xib */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -649,8 +691,6 @@
 				843BEDF1149DC4F100D1D19B /* ZSIconNew114.png in Resources */,
 				841F850214C25F2E00DFFABC /* Settings.bundle in Resources */,
 				8492B78814CEBDC80093B7AC /* Sudoku.db3 in Resources */,
-				8492B78E14CEC07D0093B7AC /* Default.png in Resources */,
-				8492B78F14CEC07D0093B7AC /* Default@2x.png in Resources */,
 				84C6110B14D94414003358FE /* ZSInstructionsRootViewController.xib in Resources */,
 				8426A78C14ED1657006DAD1C /* IASKAppSettingsView.xib in Resources */,
 				8426A78D14ED1657006DAD1C /* IASKAppSettingsWebView.xib in Resources */,
@@ -680,6 +720,11 @@
 				84A097571548B22D0082C9D0 /* Hints@2x.png in Resources */,
 				84A097581548B22D0082C9D0 /* HintsHighlighted.png in Resources */,
 				84A097591548B22D0082C9D0 /* HintsHighlighted@2x.png in Resources */,
+				8428AD37154A48F700BA8EE0 /* ZSHintViewController.xib in Resources */,
+				8428AD39154A498200BA8EE0 /* HintPaper@2x.png in Resources */,
+				8428AD3C154A52F700BA8EE0 /* Default.png in Resources */,
+				8428AD3D154A52F700BA8EE0 /* Default@2x.png in Resources */,
+				8428AD3F154AA62600BA8EE0 /* HintPaper.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -751,6 +796,11 @@
 				8426A79E14ED16A3006DAD1C /* FMDatabaseAdditions.m in Sources */,
 				8426A79F14ED16A3006DAD1C /* FMResultSet.m in Sources */,
 				84AC6B411508B35F00C2F192 /* UIColor+ColorWithHex.m in Sources */,
+				84A0975F1549DDE40082C9D0 /* ZSGameBookViewController.m in Sources */,
+				8428AD2B154A2C2D00BA8EE0 /* ZSFastGameBoard.m in Sources */,
+				8428AD2D154A2C2D00BA8EE0 /* ZSFastGameSolver.m in Sources */,
+				8428AD36154A48F700BA8EE0 /* ZSHintViewController.m in Sources */,
+				8428AD42154AB8FE00BA8EE0 /* ZSHintCard.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

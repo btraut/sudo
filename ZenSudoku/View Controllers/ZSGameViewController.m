@@ -14,6 +14,7 @@
 #import "ZSAppDelegate.h"
 #import "ZSGameHistoryEntry.h"
 #import "ZSGameController.h"
+#import "ZSHintCard.h"
 
 #import "TestFlight.h"
 
@@ -23,6 +24,7 @@
 @synthesize gameBoardViewController, gameAnswerOptionsViewController;
 @synthesize pencilButton, penciling;
 @synthesize allowsInput;
+@synthesize hintDelegate;
 
 - (id)initWithGame:(ZSGame *)newGame {
 	self = [self init];
@@ -64,22 +66,6 @@
 	title.backgroundColor = [UIColor clearColor];
 	[self.view addSubview:title];
 	[self setTitle];
-	
-	// Build the menu button.
-	//	UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithTitle:@"Menu" style:UIBarButtonItemStyleBordered target:self action:@selector(closeButtonWasTouched)];
-	//	self.navigationItem.leftBarButtonItem = menuButton;
-	
-	// Build the menu button.
-	UILabel *menuButton = [[UILabel alloc] initWithFrame:CGRectMake(12, 22, 60, 20)];
-	menuButton.font = [UIFont fontWithName:@"ReklameScript-Regular" size:18.0f];
-	menuButton.text = @"Main Menu";
-	menuButton.backgroundColor = [UIColor clearColor];
-	menuButton.userInteractionEnabled = YES;
-	
-	UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeButtonWasTouched)];
-	[menuButton addGestureRecognizer:gestureRecognizer];
-	
-	[self.view addSubview:menuButton];
 	
 	// Build the toolbar buttons.
 //	undoButton = [[UIBarButtonItem alloc] initWithTitle:@"Undo" style:UIBarButtonItemStyleBordered target:self action:@selector(undoButtonWasTouched)];
@@ -129,7 +115,7 @@
 	// Build the hints button.
 	hintButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	
-	[hintButton addTarget:self action:@selector(autoPencilButtonWasTouched) forControlEvents:UIControlEventTouchUpInside];
+	[hintButton addTarget:self action:@selector(hintButtonWasTouched) forControlEvents:UIControlEventTouchUpInside];
 	hintButton.frame = CGRectMake(170.5f, 412, 34.5f, 34.5f);
 	
 	UIImage *hintsImage = [UIImage imageNamed:@"Hints"];
@@ -440,6 +426,36 @@
 }
 
 - (void)autoPencilButtonWasTouched {
+	[self setAutoPencils];
+}
+
+- (void)hintButtonWasTouched {
+	NSMutableArray *hintDeck = [NSMutableArray array];
+	
+	ZSHintCard *card1 = [[ZSHintCard alloc] init];
+	card1.text = @"First card!";
+	card1.allowsPrevious = NO;
+	[hintDeck addObject:card1];
+	
+	ZSHintCard *card2 = [[ZSHintCard alloc] init];
+	card2.text = @"Second card, no going back. This card should've set auto pencils.";
+	card2.allowsPrevious = NO;
+	card2.setAutoPencil = YES;
+	[hintDeck addObject:card2];
+	
+	ZSHintCard *card3 = [[ZSHintCard alloc] init];
+	card3.text = @"Third (last) card.";
+	card3.allowsPrevious = YES;
+	[hintDeck addObject:card3];
+	
+	[hintDelegate beginHintDeck:hintDeck forGameViewController:self];
+}
+
+- (void)closeHintButtonWasTouched {
+	[hintDelegate endHintDeck];
+}
+
+- (void)setAutoPencils {
 	// Add the pencils.
 	[game addAutoPencils];
 	

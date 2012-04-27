@@ -13,6 +13,14 @@
 
 @class ZSGameBoardViewController;
 @class ZSGameAnswerOptionsViewController;
+@class ZSGameViewController;
+
+@protocol ZSHintDelegate <NSObject>
+
+- (void)beginHintDeck:(NSArray *)hintDeck forGameViewController:(ZSGameViewController *)gameViewController;
+- (void)endHintDeck;
+
+@end
 
 @interface ZSGameViewController : UIViewController <ZSGameDelegate> {
 	ZSGame *game;
@@ -32,6 +40,8 @@
 	BOOL allowsInput;
 	
 	UILabel *title;
+	
+	NSObject<ZSHintDelegate> *hintDelegate;
 }
 
 @property (strong) ZSGame *game;
@@ -43,6 +53,8 @@
 @property (assign) BOOL penciling;
 
 @property (assign) BOOL allowsInput;
+
+@property (strong) NSObject<ZSHintDelegate> *hintDelegate;
 
 - (id)initWithGame:(ZSGame *)game;
 
@@ -61,6 +73,11 @@
 - (void)autoPencilButtonWasTouched;
 - (void)undoButtonWasTouched;
 - (void)redoButtonWasTouched;
+
+- (void)hintButtonWasTouched;
+- (void)closeHintButtonWasTouched;
+
+- (void)setAutoPencils;
 
 - (void)tileGuessDidChange:(NSInteger)guess forTileAtRow:(NSInteger)row col:(NSInteger)col;
 - (void)tilePencilDidChange:(BOOL)isSet forPencilNumber:(NSInteger)pencilNumber forTileAtRow:(NSInteger)row col:(NSInteger)col;
