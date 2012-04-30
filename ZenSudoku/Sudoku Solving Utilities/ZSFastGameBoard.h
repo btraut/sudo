@@ -14,6 +14,7 @@ typedef struct {
 	NSInteger groupId;
 	
     NSInteger guess;
+	NSInteger answer;
 	
 	NSInteger totalPencils;
     BOOL *pencils;
@@ -81,6 +82,8 @@ typedef struct {
 
 - (void)copyGroupMapFromGameBoard:(ZSGameBoard *)gameBoard;
 - (void)copyGuessesFromGameBoard:(ZSGameBoard *)gameBoard;
+- (void)copyAnswersFromGameBoard:(ZSGameBoard *)gameBoard;
+- (void)copyPencilsFromGameBoard:(ZSGameBoard *)gameBoard;
 
 - (void)copyGroupMapFromFastGameBoard:(ZSFastGameBoard *)gameBoard;
 - (void)copyGuessesFromFastGameBoard:(ZSFastGameBoard *)gameBoard;

@@ -210,7 +210,36 @@
 	for (NSInteger row = 0; row < size; ++row) {
 		for (NSInteger col = 0; col < size; ++col) {
 			ZSGameTile *tile = [gameBoard getTileAtRow:row col:col];
+			grid[row][col].answer = tile.answer;
+		}
+	}
+}
+
+- (void)copyAnswersFromGameBoard:(ZSGameBoard *)gameBoard {
+	for (NSInteger row = 0; row < size; ++row) {
+		for (NSInteger col = 0; col < size; ++col) {
+			ZSGameTile *tile = [gameBoard getTileAtRow:row col:col];
 			[self setGuess:tile.guess forTileAtRow:row col:col];
+		}
+	}
+}
+
+- (void)copyPencilsFromGameBoard:(ZSGameBoard *)gameBoard {
+	[self setAllPencils:NO];
+	
+	for (NSInteger row = 0; row < size; ++row) {
+		for (NSInteger col = 0; col < size; ++col) {
+			ZSGameTile *tile = [gameBoard getTileAtRow:row col:col];
+			
+			if (tile.guess) {
+				continue;
+			}
+			
+			for (NSInteger guess = 1; guess <= size; ++guess) {
+				if ([tile getPencilForGuess:guess]) {
+					[self setPencil:YES forPencilNumber:guess forTileAtRow:row col:col];
+				}
+			}
 		}
 	}
 }

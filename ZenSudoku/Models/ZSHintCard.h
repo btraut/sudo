@@ -43,7 +43,7 @@
 - (void)addInstructionHighlightTileAtRow:(NSInteger)row col:(NSInteger)col highlightType:(ZSGameBoardTileHintHighlightType)hintHighlightType;
 - (void)addInstructionRemovePencil:(NSInteger)pencil forTileAtRow:(NSInteger)row col:(NSInteger)col;
 - (void)addInstructionAddPencil:(NSInteger)pencil forTileAtRow:(NSInteger)row col:(NSInteger)col;
-- (void)addInstructionRemoveGuess:(NSInteger)guess forTileAtRow:(NSInteger)row col:(NSInteger)col;
+- (void)addInstructionRemoveGuessForTileAtRow:(NSInteger)row col:(NSInteger)col;
 - (void)addInstructionSetGuess:(NSInteger)guess forTileAtRow:(NSInteger)row col:(NSInteger)col;
 
 @end

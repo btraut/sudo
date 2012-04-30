@@ -14,6 +14,7 @@
 #import "ZSAppDelegate.h"
 #import "ZSGameHistoryEntry.h"
 #import "ZSGameController.h"
+#import "ZSHintGenerator.h"
 #import "ZSHintCard.h"
 
 #import "TestFlight.h"
@@ -32,6 +33,8 @@
 	if (self) {
 		game = newGame;
 		game.delegate = self;
+		
+		hintGenerator = [[ZSHintGenerator alloc] initWithSize:game.gameBoard.size];
 		
 		penciling = NO;
 		
@@ -435,25 +438,8 @@
 }
 
 - (void)hintButtonWasTouched {
-	NSMutableArray *hintDeck = [NSMutableArray array];
-	
-	ZSHintCard *card1 = [[ZSHintCard alloc] init];
-	card1.text = @"First card!";
-	card1.allowsLearn = NO;
-	[hintDeck addObject:card1];
-	
-	ZSHintCard *card2 = [[ZSHintCard alloc] init];
-	card2.text = @"Second card, no going back. This card should've set auto pencils.";
-	card2.allowsLearn = NO;
-	[card2 addInstructionHighlightAnswerForTileAtRow:0 col:0 highlightType:ZSGameBoardTileTextHintHighlightTypeA];
-	[card2 addInstructionHighlightAnswerForTileAtRow:0 col:1 highlightType:ZSGameBoardTileTextHintHighlightTypeB];
-	[card2 addInstructionAddPencil:6 forTileAtRow:1 col:1];
-	[hintDeck addObject:card2];
-	
-	ZSHintCard *card3 = [[ZSHintCard alloc] init];
-	card3.text = @"Third (last) card.";
-	card3.allowsLearn = YES;
-	[hintDeck addObject:card3];
+	[hintGenerator copyGameStateFromGameBoard:game.gameBoard];
+	NSArray *hintDeck = [hintGenerator generateHint];
 	
 	[hintDelegate beginHintDeck:hintDeck forGameViewController:self];
 }

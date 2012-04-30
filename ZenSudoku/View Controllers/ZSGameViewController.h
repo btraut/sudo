@@ -14,6 +14,7 @@
 @class ZSGameBoardViewController;
 @class ZSGameAnswerOptionsViewController;
 @class ZSGameViewController;
+@class ZSHintGenerator;
 
 @protocol ZSHintDelegate <NSObject>
 
@@ -25,6 +26,7 @@
 
 @interface ZSGameViewController : UIViewController <ZSGameDelegate> {
 	ZSGame *game;
+	ZSHintGenerator *hintGenerator;
 	
 	ZSGameBoardViewController *gameBoardViewController;
 	ZSGameAnswerOptionsViewController *gameAnswerOptionsViewController;

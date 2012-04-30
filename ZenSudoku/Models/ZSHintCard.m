@@ -81,11 +81,10 @@ NSString * const kDictionaryKeyHighlightType = @"kDictionaryKeyHighlightType";
 	[addPencils addObject:dict];
 }
 
-- (void)addInstructionRemoveGuess:(NSInteger)guess forTileAtRow:(NSInteger)row col:(NSInteger)col {
+- (void)addInstructionRemoveGuessForTileAtRow:(NSInteger)row col:(NSInteger)col {
 	NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
 						  [NSNumber numberWithInt:row], kDictionaryKeyTileRow,
 						  [NSNumber numberWithInt:col], kDictionaryKeyTileCol,
-						  [NSNumber numberWithInt:guess], kDictionaryKeyTileValue,
 						  nil];
 	[removeGuess addObject:dict];
 }
