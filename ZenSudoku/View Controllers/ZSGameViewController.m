@@ -223,6 +223,11 @@
 		return;
 	}
 	
+	// Clear hints.
+	if ([hintDelegate getHintsShown]) {
+		[hintDelegate endHintDeck];
+	}
+	
 	// Save the selected tile and answer option. One or both may be nil.
 	ZSGameBoardTileViewController *selectedTileView = gameBoardViewController.selectedTileView;
 	ZSGameAnswerOptionViewController *selectedGameAnswerOptionView = gameAnswerOptionsViewController.selectedGameAnswerOptionView;
@@ -434,18 +439,20 @@
 	
 	ZSHintCard *card1 = [[ZSHintCard alloc] init];
 	card1.text = @"First card!";
-	card1.allowsPrevious = NO;
+	card1.allowsLearn = NO;
 	[hintDeck addObject:card1];
 	
 	ZSHintCard *card2 = [[ZSHintCard alloc] init];
 	card2.text = @"Second card, no going back. This card should've set auto pencils.";
-	card2.allowsPrevious = NO;
-	card2.setAutoPencil = YES;
+	card2.allowsLearn = NO;
+	[card2 addInstructionHighlightAnswerForTileAtRow:0 col:0 highlightType:ZSGameBoardTileTextHintHighlightTypeA];
+	[card2 addInstructionHighlightAnswerForTileAtRow:0 col:1 highlightType:ZSGameBoardTileTextHintHighlightTypeB];
+	[card2 addInstructionAddPencil:6 forTileAtRow:1 col:1];
 	[hintDeck addObject:card2];
 	
 	ZSHintCard *card3 = [[ZSHintCard alloc] init];
 	card3.text = @"Third (last) card.";
-	card3.allowsPrevious = YES;
+	card3.allowsLearn = YES;
 	[hintDeck addObject:card3];
 	
 	[hintDelegate beginHintDeck:hintDeck forGameViewController:self];

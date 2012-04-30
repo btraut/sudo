@@ -261,6 +261,23 @@
 	}
 }
 
+- (void)removeAllHintHighlights {
+	for (NSInteger row = 0; row < game.gameBoard.size; ++row) {
+		for (NSInteger col = 0; col < game.gameBoard.size; ++col) {
+			ZSGameBoardTileViewController *tileViewController = [self getGameBoardTileViewControllerAtRow:row col:col];
+			
+			tileViewController.highlightedHintType = ZSGameBoardTileHintHighlightTypeNone;
+			tileViewController.highlightGuessHint = NO;
+			
+			for (NSInteger i = 0; i < game.gameBoard.size; ++i) {
+				tileViewController.highlightPencilHints[i] = ZSGameBoardTilePencilTextTypeNormal;
+			}
+		}
+	}
+	
+	[self reloadView];
+}
+
 #pragma mark - Tile Accessors
 
 - (ZSGameBoardTileViewController *)getGameBoardTileViewControllerAtRow:(NSInteger)row col:(NSInteger)col {

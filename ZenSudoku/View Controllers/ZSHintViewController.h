@@ -10,8 +10,7 @@
 
 @class ZSGameViewController;
 
-@interface ZSHintViewController : UIViewController {
-}
+@interface ZSHintViewController : UIViewController
 
 - (void)beginHintDeck:(NSArray *)hintDeck forGameViewController:(ZSGameViewController *)gameViewController;
 

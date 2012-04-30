@@ -18,10 +18,11 @@
 	ZSGameViewController *previousGameViewController;
 	
 	ZSHintViewController *hintViewController;
+	
+	BOOL hintsShown;
 }
 
-- (void)startNewGame;
-
+- (BOOL)getHintsShown;
 - (void)beginHintDeck:(NSArray *)hintDeck forGameViewController:(ZSGameViewController *)gameViewController;
 - (void)endHintDeck;
 - (void)showHint;

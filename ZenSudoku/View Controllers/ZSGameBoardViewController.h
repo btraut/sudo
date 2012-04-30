@@ -50,6 +50,8 @@
 - (void)addErrorHighlightsForTileView:(ZSGameBoardTileViewController *)tileView;
 - (void)resetErrorHighlights;
 
+- (void)removeAllHintHighlights;
+
 - (NSInteger)_getTotalTilesInSet:(NSArray *)set withGuess:(NSInteger)guess;
 
 // Tile Accessors

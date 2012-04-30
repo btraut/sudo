@@ -17,7 +17,15 @@ typedef enum {
 	ZSGameBoardTileTextTypeGuessSelected,
 	ZSGameBoardTileTextTypeGuessError,
 	ZSGameBoardTileTextTypeGuessErrorSelected,
+	ZSGameBoardTileTextTypeHighlightHintA,
+	ZSGameBoardTileTextTypeHighlightHintB
 } ZSGameBoardTileTextType;
+
+typedef enum {
+	ZSGameBoardTilePencilTextTypeNormal,
+	ZSGameBoardTilePencilTextTypeHighlightHintA,
+	ZSGameBoardTilePencilTextTypeHighlightHintB
+} ZSGameBoardTilePencilTextType;
 
 typedef enum {
 	ZSGameBoardTileBackgroundTypeDefault,
@@ -26,8 +34,32 @@ typedef enum {
     ZSGameBoardTileBackgroundTypeSimilarAnswer,
     ZSGameBoardTileBackgroundTypeSimilarError,
     ZSGameBoardTileBackgroundTypeSimilarErrorGroup,
-    ZSGameBoardTileBackgroundTypeOtherError
+    ZSGameBoardTileBackgroundTypeOtherError,
+	ZSGameBoardTileBackgroundTypeHighlightHintA,
+	ZSGameBoardTileBackgroundTypeHighlightHintB,
+	ZSGameBoardTileBackgroundTypeHighlightHintC,
+	ZSGameBoardTileBackgroundTypeHighlightHintD
 } ZSGameBoardTileBackgroundType;
+
+typedef enum {
+	ZSGameBoardTileHintHighlightTypeNone,
+	ZSGameBoardTileHintHighlightTypeA,
+	ZSGameBoardTileHintHighlightTypeB,
+	ZSGameBoardTileHintHighlightTypeC,
+	ZSGameBoardTileHintHighlightTypeD
+} ZSGameBoardTileHintHighlightType;
+
+typedef enum {
+	ZSGameBoardTileTextHintHighlightTypeNone,
+	ZSGameBoardTileTextHintHighlightTypeA,
+	ZSGameBoardTileTextHintHighlightTypeB
+} ZSGameBoardTileTextHintHighlightType;
+
+typedef enum {
+	ZSGameBoardTilePencilTextHintHighlightTypeNone,
+	ZSGameBoardTilePencilTextHintHighlightTypeA,
+	ZSGameBoardTilePencilTextHintHighlightTypeB
+} ZSGameBoardTilePencilTextHintHighlightType;
 
 @protocol ZSGameBoardTileTouchDelegate <NSObject>
 
@@ -47,6 +79,10 @@ typedef enum {
 	BOOL highlightedSimilar;
 	BOOL highlightedError;
 	
+	ZSGameBoardTileHintHighlightType highlightedHintType;
+	ZSGameBoardTileTextHintHighlightType highlightGuessHint;
+	ZSGameBoardTilePencilTextType *highlightPencilHints;
+	
 	NSArray *pencilViews;
 	UILabel *guessView;
 }
@@ -57,13 +93,14 @@ typedef enum {
 @property (assign) ZSGameBoardTileTextType textType;
 @property (assign) ZSGameBoardTileBackgroundType backgroundType;
 
-@property (nonatomic, assign) BOOL selected;
+@property (assign) BOOL selected;
 @property (assign) BOOL highlightedSimilar;
 @property (assign) BOOL highlightedError;
 @property (assign) BOOL error;
 
-@property (strong) NSArray *pencilViews;
-@property (strong) UILabel *guessView;
+@property (assign) ZSGameBoardTileHintHighlightType highlightedHintType;
+@property (assign) ZSGameBoardTileTextHintHighlightType highlightGuessHint;
+@property (assign) ZSGameBoardTilePencilTextType *highlightPencilHints;
 
 - (id)initWithTile:(ZSGameTile *)newTile;
 

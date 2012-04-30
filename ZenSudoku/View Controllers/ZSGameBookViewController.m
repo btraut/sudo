@@ -11,6 +11,7 @@
 #import "ZSGameController.h"
 #import "ZSGame.h"
 #import "ZSGameViewController.h"
+#import "ZSGameBoardViewController.h"
 #import "ZSHintViewController.h"
 
 @implementation ZSGameBookViewController
@@ -49,6 +50,10 @@
 	[previousGameViewController.view removeFromSuperview];
 }
 
+- (BOOL)getHintsShown {
+	return hintsShown;
+}
+
 - (void)beginHintDeck:(NSArray *)hintDeck forGameViewController:(ZSGameViewController *)gameViewController {
 	[hintViewController beginHintDeck:hintDeck forGameViewController:gameViewController];
 	[self showHint];
@@ -59,6 +64,12 @@
 }
 
 - (void)showHint {
+	if (hintsShown) {
+		return;
+	}
+	
+	hintsShown = YES;
+	
 	[UIView beginAnimations:nil context:nil];
 	[UIView setAnimationDuration:0.3];
 	[UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
@@ -70,6 +81,14 @@
 }
 
 - (void)hideHint {
+	if (!hintsShown) {
+		return;
+	}
+	
+	hintsShown = NO;
+	
+	[currentGameViewController.gameBoardViewController removeAllHintHighlights];
+	
 	[UIView beginAnimations:nil context:nil];
 	[UIView setAnimationDuration:0.3];
 	[UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
