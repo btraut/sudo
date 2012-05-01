@@ -9,13 +9,12 @@
 #import "ZSHintGenerator.h"
 
 #import "ZSFastGameBoard.h"
+#import "ZSGame.h"
+
 #import "ZSHintGeneratorFixIncorrectGuess.h"
+#import "ZSHintGeneratorFixMissingPencil.h"
 #import "ZSHintGeneratorNoHint.h"
 
-typedef struct {
-	NSInteger size;
-	NSInteger *entries;
-} ZSNumberSet;
 
 @interface ZSHintGenerator () {
 	
@@ -31,12 +30,13 @@ typedef struct {
 
 // Logic Techniques
 - (NSArray *)fixIncorrectGuesses;
-- (NSArray *)fixMissingPencils;
 
 - (NSArray *)solveOnlyChoice;
-
-/*
 - (NSArray *)solveSinglePossibility;
+
+- (NSArray *)fixMissingPencils;
+ 
+/*
 - (NSArray *)eliminatePencilsHiddenSubgroupForSize:(NSInteger)size;
 - (NSArray *)eliminatePencilsNakedSubgroupForSize:(NSInteger)size;
 - (NSArray *)eliminatePencilsPointingPairs;
@@ -125,23 +125,23 @@ typedef struct {
 	}
 	
 	/*
-	// Fix Missing Pencils
-	if ((hintCards = [self fixMissingPencils])) {
-		return hintCards;
-	}
-	
 	// Only Choice
 	if ((hintCards = [self solveOnlyChoice])) {
 		return hintCards;
 	}
 	
 	// Single Possibility
-	hintCards = [self solveSinglePossibility];
+	if ((hintCards = [self solveSinglePossibility])) {
+		return hintCards;
+	}
+	*/
 	
-	if (hintCards) {
+	// Fix Missing Pencils
+	if ((hintCards = [self fixMissingPencils])) {
 		return hintCards;
 	}
 	
+	/*
 	// Naked Pairs
 	hintCards = [self eliminatePencilsNakedSubgroupForSize:2];
 	
@@ -259,6 +259,45 @@ typedef struct {
 }
 
 - (NSArray *)fixMissingPencils {
+	ZSHintGeneratorFixMissingPencil *generator = [[ZSHintGeneratorFixMissingPencil alloc] initWithSize:_fastGameBoard.size];
+	
+	NSInteger totalTilesWithPencils = 0;
+	NSInteger totalTilesWithNoPencils = 0;
+	NSInteger totalTilesWithMissingPencils = 0;
+	
+	// Iterate over all the tiles on the board.
+	for (NSInteger row = 0; row < _fastGameBoard.size; ++row) {
+		for (NSInteger col = 0; col < _fastGameBoard.size; ++col) {
+			if (!_fastGameBoard.grid[row][col].guess) {
+				// Keep track if there are no pencils marked.
+				if (_fastGameBoard.grid[row][col].totalPencils) {
+					++totalTilesWithPencils;
+					
+					// Keep track if a tile has pencils but is missing the correct one.
+					if (!_fastGameBoard.grid[row][col].pencils[_fastGameBoard.grid[row][col].answer - 1]) {
+						++totalTilesWithMissingPencils;
+						[generator addMissingPencil:(_fastGameBoard.grid[row][col].answer - 1) forTileAtRow:row col:col];
+					}
+				} else {
+					++totalTilesWithNoPencils;
+					
+					// Get a list of possible pencils for the tile.
+					for (NSInteger guess = 1; guess <= _fastGameBoard.size; ++guess) {
+						if ([_fastGameBoard isGuess:guess validInRow:row col:col]) {
+							[generator addPencil:guess forTileAtRow:row col:col];
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	[generator setTotalTilesWithPencils:totalTilesWithPencils];
+	
+	if (totalTilesWithNoPencils || totalTilesWithMissingPencils) {
+		return [generator generateHint];
+	}
+	
 	return nil;
 }
 
@@ -288,7 +327,6 @@ typedef struct {
 	return nil;
 }
 
-/*
 - (NSArray *)solveSinglePossibility {
 	NSInteger totalSolved = 0;
 	
@@ -340,9 +378,10 @@ typedef struct {
 		}
 	}
 	
-	return totalSolved;
+	return nil;
 }
 
+/*
 - (NSArray *)eliminatePencilsHiddenSubgroupForSize:(NSInteger)subgroupSize {
 	NSInteger totalPencilsEliminated = 0;
 	

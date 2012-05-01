@@ -50,6 +50,7 @@
 		8428AD42154AB8FE00BA8EE0 /* ZSHintCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 8428AD41154AB8FE00BA8EE0 /* ZSHintCard.m */; };
 		8428AD4B154F2D4700BA8EE0 /* ZSHintGeneratorFixIncorrectGuess.m in Sources */ = {isa = PBXBuildFile; fileRef = 8428AD4A154F2D4700BA8EE0 /* ZSHintGeneratorFixIncorrectGuess.m */; };
 		8428AD4E154F30A300BA8EE0 /* ZSHintGeneratorNoHint.m in Sources */ = {isa = PBXBuildFile; fileRef = 8428AD4D154F30A300BA8EE0 /* ZSHintGeneratorNoHint.m */; };
+		8428AD51154F36A200BA8EE0 /* ZSHintGeneratorFixMissingPencil.m in Sources */ = {isa = PBXBuildFile; fileRef = 8428AD50154F36A200BA8EE0 /* ZSHintGeneratorFixMissingPencil.m */; };
 		8435B42715456C0A00C15E87 /* PaperBackgroundCurled.png in Resources */ = {isa = PBXBuildFile; fileRef = 8435B42515456C0A00C15E87 /* PaperBackgroundCurled.png */; };
 		8435B42815456C0A00C15E87 /* PaperBackgroundCurled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8435B42615456C0A00C15E87 /* PaperBackgroundCurled@2x.png */; };
 		843BEDEF149DC4E800D1D19B /* ZSIconNew57.png in Resources */ = {isa = PBXBuildFile; fileRef = 843BEDEE149DC4E800D1D19B /* ZSIconNew57.png */; };
@@ -175,6 +176,8 @@
 		8428AD4A154F2D4700BA8EE0 /* ZSHintGeneratorFixIncorrectGuess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSHintGeneratorFixIncorrectGuess.m; path = "ZenSudoku/Models/Hint Generators/ZSHintGeneratorFixIncorrectGuess.m"; sourceTree = SOURCE_ROOT; };
 		8428AD4C154F30A300BA8EE0 /* ZSHintGeneratorNoHint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSHintGeneratorNoHint.h; path = "ZenSudoku/Models/Hint Generators/ZSHintGeneratorNoHint.h"; sourceTree = SOURCE_ROOT; };
 		8428AD4D154F30A300BA8EE0 /* ZSHintGeneratorNoHint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSHintGeneratorNoHint.m; path = "ZenSudoku/Models/Hint Generators/ZSHintGeneratorNoHint.m"; sourceTree = SOURCE_ROOT; };
+		8428AD4F154F36A200BA8EE0 /* ZSHintGeneratorFixMissingPencil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSHintGeneratorFixMissingPencil.h; path = "ZenSudoku/Models/Hint Generators/ZSHintGeneratorFixMissingPencil.h"; sourceTree = SOURCE_ROOT; };
+		8428AD50154F36A200BA8EE0 /* ZSHintGeneratorFixMissingPencil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSHintGeneratorFixMissingPencil.m; path = "ZenSudoku/Models/Hint Generators/ZSHintGeneratorFixMissingPencil.m"; sourceTree = SOURCE_ROOT; };
 		8435B42515456C0A00C15E87 /* PaperBackgroundCurled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PaperBackgroundCurled.png; path = Resources/Images/PaperBackgroundCurled.png; sourceTree = "<group>"; };
 		8435B42615456C0A00C15E87 /* PaperBackgroundCurled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "PaperBackgroundCurled@2x.png"; path = "Resources/Images/PaperBackgroundCurled@2x.png"; sourceTree = "<group>"; };
 		843BEDEE149DC4E800D1D19B /* ZSIconNew57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ZSIconNew57.png; path = Resources/Images/ZSIconNew57.png; sourceTree = "<group>"; };
@@ -397,6 +400,8 @@
 			children = (
 				8428AD49154F2D4700BA8EE0 /* ZSHintGeneratorFixIncorrectGuess.h */,
 				8428AD4A154F2D4700BA8EE0 /* ZSHintGeneratorFixIncorrectGuess.m */,
+				8428AD4F154F36A200BA8EE0 /* ZSHintGeneratorFixMissingPencil.h */,
+				8428AD50154F36A200BA8EE0 /* ZSHintGeneratorFixMissingPencil.m */,
 				8428AD4C154F30A300BA8EE0 /* ZSHintGeneratorNoHint.h */,
 				8428AD4D154F30A300BA8EE0 /* ZSHintGeneratorNoHint.m */,
 			);
@@ -814,6 +819,7 @@
 				8428AD42154AB8FE00BA8EE0 /* ZSHintCard.m in Sources */,
 				8428AD4B154F2D4700BA8EE0 /* ZSHintGeneratorFixIncorrectGuess.m in Sources */,
 				8428AD4E154F30A300BA8EE0 /* ZSHintGeneratorNoHint.m in Sources */,
+				8428AD51154F36A200BA8EE0 /* ZSHintGeneratorFixMissingPencil.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

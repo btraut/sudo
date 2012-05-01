@@ -9,10 +9,29 @@
 #import "ZSHintGeneratorNoHint.h"
 
 #import "ZSHintCard.h"
+#import "ZSGameBoard.h"
+
+@interface ZSHintGeneratorNoHint () {
+	ZSGameBoard *_gameBoard;
+}
+
+- (void)_sendGameBoardToDevelopers;
+
+@end
 
 @implementation ZSHintGeneratorNoHint
 
+- (void)setGameBoard:(ZSGameBoard *)gameBoard {
+	_gameBoard = gameBoard;
+}
+
+- (void)_sendGameBoardToDevelopers {
+	// Todo: Implement!
+}
+
 - (NSArray *)generateHint {
+	[self _sendGameBoardToDevelopers];
+	
 	NSMutableArray *hintCards = [NSMutableArray array];
 	
 	ZSHintCard *card1 = [[ZSHintCard alloc] init];

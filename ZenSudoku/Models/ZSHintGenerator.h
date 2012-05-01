@@ -8,8 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-#import "ZSFastGameBoard.h"
-
 typedef enum {
 	ZSGameSolveResultSucceeded,
 	ZSGameSolveResultFailedNoSolution,
@@ -40,6 +38,7 @@ typedef struct {
 @end
 
 @class ZSFastGameBoard;
+@class ZSGameBoard;
 
 @interface ZSHintGenerator : NSObject
 
