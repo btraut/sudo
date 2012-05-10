@@ -14,6 +14,7 @@
 #import "ZSHintGeneratorFixIncorrectGuess.h"
 #import "ZSHintGeneratorFixMissingPencil.h"
 #import "ZSHintGeneratorNoHint.h"
+#import "ZSHintGeneratorSolveOnlyChoice.h"
 
 
 @interface ZSHintGenerator () {
@@ -124,12 +125,12 @@
 		return hintCards;
 	}
 	
-	/*
 	// Only Choice
 	if ((hintCards = [self solveOnlyChoice])) {
 		return hintCards;
 	}
-	
+
+	/*
 	// Single Possibility
 	if ((hintCards = [self solveSinglePossibility])) {
 		return hintCards;
@@ -276,7 +277,7 @@
 					// Keep track if a tile has pencils but is missing the correct one.
 					if (!_fastGameBoard.grid[row][col].pencils[_fastGameBoard.grid[row][col].answer - 1]) {
 						++totalTilesWithMissingPencils;
-						[generator addMissingPencil:(_fastGameBoard.grid[row][col].answer - 1) forTileAtRow:row col:col];
+						[generator addMissingPencil:_fastGameBoard.grid[row][col].answer forTileAtRow:row col:col];
 					}
 				} else {
 					++totalTilesWithNoPencils;
@@ -310,16 +311,23 @@
 				continue;
 			}
 			
-			// If the tile only has one pencil mark, it has to be that answer.
-			if (_fastGameBoard.grid[row][col].totalPencils == 1) {
-				// Search through the pencils and find the lone YES.
-				for (NSInteger guess = 1; guess <= _fastGameBoard.size; ++guess) {
-					if (_fastGameBoard.grid[row][col].pencils[guess - 1]) {
-						[_fastGameBoard setGuess:guess forTileAtRow:row col:col];
-						[_fastGameBoard clearInfluencedPencilsForTileAtRow:row col:col];
+			NSInteger totalPencils = 0;
+			NSInteger guessMatch = 0;
+			
+			for (NSInteger guess = 1; guess <= _fastGameBoard.size; ++guess) {
+				if ([_fastGameBoard isGuess:guess validInRow:row col:col]) {
+					guessMatch = guess;
+					
+					if (++totalPencils > 1) {
 						break;
 					}
 				}
+			}
+			
+			if (totalPencils == 1) {
+				ZSHintGeneratorSolveOnlyChoice *generator = [[ZSHintGeneratorSolveOnlyChoice alloc] init];
+				[generator setOnlyChoice:guessMatch forTileInRow:row col:col];
+				return [generator generateHint];
 			}
 		}
 	}

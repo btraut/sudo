@@ -35,7 +35,7 @@ NSString * const kDictionaryKeyHighlightType = @"kDictionaryKeyHighlightType";
 	return self;
 }
 
-- (void)addInstructionHighlightPencilForTileAtRow:(NSInteger)row col:(NSInteger)col pencil:(NSInteger)pencil highlightType:(ZSGameBoardTilePencilTextHintHighlightType)pencilTextHintHighlightType {
+- (void)addInstructionHighlightPencil:(NSInteger)pencil forTileAtRow:(NSInteger)row col:(NSInteger)col highlightType:(ZSGameBoardTilePencilTextHintHighlightType)pencilTextHintHighlightType {
 	NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
 						  [NSNumber numberWithInt:row], kDictionaryKeyTileRow,
 						  [NSNumber numberWithInt:col], kDictionaryKeyTileCol,

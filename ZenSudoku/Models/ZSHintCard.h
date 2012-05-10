@@ -38,7 +38,7 @@
 
 @property (nonatomic, assign) BOOL allowsLearn;
 
-- (void)addInstructionHighlightPencilForTileAtRow:(NSInteger)row col:(NSInteger)col pencil:(NSInteger)pencil highlightType:(ZSGameBoardTilePencilTextHintHighlightType)pencilTextHintHighlightType;
+- (void)addInstructionHighlightPencil:(NSInteger)pencil forTileAtRow:(NSInteger)row col:(NSInteger)col highlightType:(ZSGameBoardTilePencilTextHintHighlightType)pencilTextHintHighlightType;
 - (void)addInstructionHighlightAnswerForTileAtRow:(NSInteger)row col:(NSInteger)col highlightType:(ZSGameBoardTileTextHintHighlightType)textHintHighlightType;
 - (void)addInstructionHighlightTileAtRow:(NSInteger)row col:(NSInteger)col highlightType:(ZSGameBoardTileHintHighlightType)hintHighlightType;
 - (void)addInstructionRemovePencil:(NSInteger)pencil forTileAtRow:(NSInteger)row col:(NSInteger)col;
