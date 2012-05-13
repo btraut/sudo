@@ -49,14 +49,10 @@ NSString * const kRemoveTileAfterErrorKey = @"kRemoveTileAfterErrorKey";
 	
 	// If a game was previously in progress, restore it.
 	if ([[ZSGameController sharedInstance] savedGameInProgress]) {
-		[[ZSGameController sharedInstance] loadSavedGame];
+//		[[ZSGameController sharedInstance] loadSavedGame];
 	}
 	
-	// Set up the window.
-//	ZSMainMenuViewController *mainMenuController = [[ZSMainMenuViewController alloc] initWithStyle:UITableViewStyleGrouped];
-	
     _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-//	_navigationController = [[UINavigationController alloc] initWithRootViewController:mainMenuController];
 	
 	ZSGameBookViewController *gameBookViewController = [[ZSGameBookViewController alloc] init];
 	

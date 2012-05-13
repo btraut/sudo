@@ -15,12 +15,14 @@
 #import "ZSHintGeneratorFixMissingPencil.h"
 #import "ZSHintGeneratorNoHint.h"
 #import "ZSHintGeneratorSolveOnlyChoice.h"
+#import "ZSHintGeneratorSolveSinglePossibility.h"
 
 
 @interface ZSHintGenerator () {
 	
 @private
 	ZSFastGameBoard *_fastGameBoard;
+	ZSFastGameBoard *_scratchBoard;
 	
 	BOOL **_clueIsProvidedInPuzzle;
 	
@@ -90,6 +92,7 @@
 	if (self) {
 		// Create some game boards to store the answers.
 		_fastGameBoard = [[ZSFastGameBoard alloc] initWithSize:size];
+		_scratchBoard = [[ZSFastGameBoard alloc] initWithSize:size];
 		
 		// Create the chain map.
 		[self initChainMap];
@@ -113,6 +116,11 @@
 	[_fastGameBoard copyGuessesFromGameBoard:gameBoard];
 	[_fastGameBoard copyAnswersFromGameBoard:gameBoard];
 	[_fastGameBoard copyPencilsFromGameBoard:gameBoard];
+	
+	[_scratchBoard copyGroupMapFromGameBoard:gameBoard];
+	[_scratchBoard copyGuessesFromGameBoard:gameBoard];
+	[_scratchBoard copyAnswersFromGameBoard:gameBoard];
+	[_scratchBoard addAutoPencils];
 }
 
 #pragma mark - Solving
@@ -130,12 +138,10 @@
 		return hintCards;
 	}
 
-	/*
 	// Single Possibility
 	if ((hintCards = [self solveSinglePossibility])) {
 		return hintCards;
 	}
-	*/
 	
 	// Fix Missing Pencils
 	if ((hintCards = [self fixMissingPencils])) {
@@ -304,30 +310,23 @@
 
 - (NSArray *)solveOnlyChoice {
 	// Iterate over all the tiles on the board.
-	for (NSInteger row = 0; row < _fastGameBoard.size; ++row) {
-		for (NSInteger col = 0; col < _fastGameBoard.size; ++col) {
+	for (NSInteger row = 0; row < _scratchBoard.size; ++row) {
+		for (NSInteger col = 0; col < _scratchBoard.size; ++col) {
 			// Skip the solved tiles.
-			if (_fastGameBoard.grid[row][col].guess) {
+			if (_scratchBoard.grid[row][col].guess) {
 				continue;
 			}
 			
-			NSInteger totalPencils = 0;
-			NSInteger guessMatch = 0;
-			
-			for (NSInteger guess = 1; guess <= _fastGameBoard.size; ++guess) {
-				if ([_fastGameBoard isGuess:guess validInRow:row col:col]) {
-					guessMatch = guess;
-					
-					if (++totalPencils > 1) {
-						break;
+			// If the tile only has one pencil mark, it has to be that answer.
+			if (_scratchBoard.grid[row][col].totalPencils == 1) {
+				// Search through the pencils and find the lone YES.
+				for (NSInteger guess = 1; guess <= _scratchBoard.size; ++guess) {
+					if (_scratchBoard.grid[row][col].pencils[guess - 1]) {
+						ZSHintGeneratorSolveOnlyChoice *generator = [[ZSHintGeneratorSolveOnlyChoice alloc] init];
+						[generator setOnlyChoice:guess forTileInRow:row col:col];
+						return [generator generateHint];
 					}
 				}
-			}
-			
-			if (totalPencils == 1) {
-				ZSHintGeneratorSolveOnlyChoice *generator = [[ZSHintGeneratorSolveOnlyChoice alloc] init];
-				[generator setOnlyChoice:guessMatch forTileInRow:row col:col];
-				return [generator generateHint];
 			}
 		}
 	}
@@ -336,50 +335,48 @@
 }
 
 - (NSArray *)solveSinglePossibility {
-	NSInteger totalSolved = 0;
-	
 	// Iterate over each guess.
-	for (NSInteger guess = 0; guess < _fastGameBoard.size; ++guess) {
+	for (NSInteger guess = 0; guess < _scratchBoard.size; ++guess) {
 		// Iterate over each row.
-		for (NSInteger i = 0; i < _fastGameBoard.size; ++i) {
+		for (NSInteger i = 0; i < _scratchBoard.size; ++i) {
 			// If there is only one tile with the current pencil, that's the answer for that tile.
-			if (_fastGameBoard.totalTilesInRowWithPencil[i][guess] == 1) {
+			if (_scratchBoard.totalTilesInRowWithPencil[i][guess] == 1) {
 				// Iterate over the set and find the tile with the matching pencil.
-				for (NSInteger j = 0; j < _fastGameBoard.size; ++j) {
-					if (!_fastGameBoard.rows[i][j]->guess && _fastGameBoard.rows[i][j]->pencils[guess]) {
-						[_fastGameBoard setGuess:(guess + 1) forTileAtRow:_fastGameBoard.rows[i][j]->row col:_fastGameBoard.rows[i][j]->col];
-						[_fastGameBoard clearInfluencedPencilsForTileAtRow:_fastGameBoard.rows[i][j]->row col:_fastGameBoard.rows[i][j]->col];
-						++totalSolved;
+				for (NSInteger j = 0; j < _scratchBoard.size; ++j) {
+					if (!_scratchBoard.rows[i][j]->guess && _scratchBoard.rows[i][j]->pencils[guess]) {
+						ZSHintGeneratorSolveSinglePossibility *generator = [[ZSHintGeneratorSolveSinglePossibility alloc] init];
+						[generator setSinglePossibility:(guess + 1) forTileInRow:_scratchBoard.rows[i][j]->row col:_scratchBoard.rows[i][j]->col scope:ZSHintGeneratorSolveSinglePossibilityScopeRow];
+						return [generator generateHint];
 					}
 				}
 			}
 		}
 		
 		// Iterate over each col.
-		for (NSInteger i = 0; i < _fastGameBoard.size; ++i) {
+		for (NSInteger i = 0; i < _scratchBoard.size; ++i) {
 			// If there is only one tile with the current pencil, that's the answer for that tile.
-			if (_fastGameBoard.totalTilesInColWithPencil[i][guess] == 1) {
+			if (_scratchBoard.totalTilesInColWithPencil[i][guess] == 1) {
 				// Iterate over the set and find the tile with the matching pencil.
-				for (NSInteger j = 0; j < _fastGameBoard.size; ++j) {
-					if (!_fastGameBoard.cols[i][j]->guess && _fastGameBoard.cols[i][j]->pencils[guess]) {
-						[_fastGameBoard setGuess:(guess + 1) forTileAtRow:_fastGameBoard.cols[i][j]->row col:_fastGameBoard.cols[i][j]->col];
-						[_fastGameBoard clearInfluencedPencilsForTileAtRow:_fastGameBoard.cols[i][j]->row col:_fastGameBoard.cols[i][j]->col];
-						++totalSolved;
+				for (NSInteger j = 0; j < _scratchBoard.size; ++j) {
+					if (!_scratchBoard.cols[i][j]->guess && _scratchBoard.cols[i][j]->pencils[guess]) {
+						ZSHintGeneratorSolveSinglePossibility *generator = [[ZSHintGeneratorSolveSinglePossibility alloc] init];
+						[generator setSinglePossibility:(guess + 1) forTileInRow:_scratchBoard.cols[i][j]->row col:_scratchBoard.cols[i][j]->col scope:ZSHintGeneratorSolveSinglePossibilityScopeCol];
+						return [generator generateHint];
 					}
 				}
 			}
 		}
 		
 		// Iterate over each group.
-		for (NSInteger i = 0; i < _fastGameBoard.size; ++i) {
+		for (NSInteger i = 0; i < _scratchBoard.size; ++i) {
 			// If there is only one tile with the current pencil, that's the answer for that tile.
-			if (_fastGameBoard.totalTilesInGroupWithPencil[i][guess] == 1) {
+			if (_scratchBoard.totalTilesInGroupWithPencil[i][guess] == 1) {
 				// Iterate over the set and find the tile with the matching pencil.
-				for (NSInteger j = 0; j < _fastGameBoard.size; ++j) {
-					if (!_fastGameBoard.groups[i][j]->guess && _fastGameBoard.groups[i][j]->pencils[guess]) {
-						[_fastGameBoard setGuess:(guess + 1) forTileAtRow:_fastGameBoard.groups[i][j]->row col:_fastGameBoard.groups[i][j]->col];
-						[_fastGameBoard clearInfluencedPencilsForTileAtRow:_fastGameBoard.groups[i][j]->row col:_fastGameBoard.groups[i][j]->col];
-						++totalSolved;
+				for (NSInteger j = 0; j < _scratchBoard.size; ++j) {
+					if (!_scratchBoard.groups[i][j]->guess && _scratchBoard.groups[i][j]->pencils[guess]) {
+						ZSHintGeneratorSolveSinglePossibility *generator = [[ZSHintGeneratorSolveSinglePossibility alloc] init];
+						[generator setSinglePossibility:(guess + 1) forTileInRow:_scratchBoard.groups[i][j]->row col:_scratchBoard.groups[i][j]->col scope:ZSHintGeneratorSolveSinglePossibilityScopeGroup];
+						return [generator generateHint];
 					}
 				}
 			}
