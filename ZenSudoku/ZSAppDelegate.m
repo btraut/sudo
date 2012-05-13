@@ -94,6 +94,9 @@ NSString * const kRemoveTileAfterErrorKey = @"kRemoveTileAfterErrorKey";
 	NSString *currentVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
 	[[NSUserDefaults standardUserDefaults] setObject:currentVersion forKey:kLastUsedVersionKey];
 	
+	// Reset settings.
+	[NSUserDefaults resetStandardUserDefaults];
+	
 	// Debug - clear stats and re-save.
 	[[ZSStatisticsController sharedInstance] resetStats];
 	[[ZSStatisticsController sharedInstance] saveStats];
@@ -107,12 +110,12 @@ NSString * const kRemoveTileAfterErrorKey = @"kRemoveTileAfterErrorKey";
 								 [NSNumber numberWithBool:NO], kClearAnswerOptionSelectionAfterPickingTileForPencilKey,
 								 [NSNumber numberWithBool:NO], kClearTileSelectionAfterPickingAnswerOptionForPencilKey,
 								 
-								 // [NSNumber numberWithInt:ZSGameTileAnswerOrderTileFirst], kTileAnswerOrderKey,
+								 [NSNumber numberWithInt:ZSGameTileAnswerOrderTileFirst], kTileAnswerOrderKey,
 								 
-								 // [NSNumber numberWithBool:YES], kClearPencilsAfterGuessingKey,
+								 [NSNumber numberWithBool:YES], kClearPencilsAfterGuessingKey,
 								 
-								 // [NSNumber numberWithInt:ZSShowErrorsOptionAlways], kShowErrorsOptionKey,
-								 // [NSNumber numberWithBool:NO], kRemoveTileAfterErrorKey,
+								 [NSNumber numberWithInt:ZSShowErrorsOptionLogical], kShowErrorsOptionKey,
+								 [NSNumber numberWithBool:NO], kRemoveTileAfterErrorKey,
 								 
 								 nil];
 	
