@@ -23,7 +23,7 @@
 	ZSGame *currentGame = [ZSGameController sharedInstance].currentGame;
 	
 	if (!currentGame) {
-		[[ZSGameController sharedInstance] fetchGameWithDifficulty:ZSGameDifficultyEasy];
+		[[ZSGameController sharedInstance] fetchGameWithDifficulty:ZSGameDifficultyDiabolical];
 		currentGame = [ZSGameController sharedInstance].currentGame;
 	}
 	

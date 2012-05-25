@@ -52,27 +52,40 @@ NSString * const kDBPuzzleDefinitionGroupMapKey = @"kDBPuzzleDefinitionGroupMapK
 }
 
 - (NSDictionary *)getRandomPuzzleWithType:(ZSGameType)type size:(NSInteger)size difficulty:(ZSGameDifficulty)difficulty {
-	// Get total puzzle count.
-	NSInteger totalPuzzles = 0;
-	
-	NSString *totalPuzzleQuery = @"SELECT count(1) AS `count` FROM `puzzles` WHERE `puzzle_type` = ? AND `puzzle_size` = ? AND `puzzle_difficulty` = ?";
-	FMResultSet *totalPuzzlesResult = [db executeQuery:totalPuzzleQuery, [NSNumber numberWithInt:type], [NSNumber numberWithInt:size], [NSNumber numberWithInt:difficulty]];
-	
-	if ([totalPuzzlesResult next]) {
-		totalPuzzles = [totalPuzzlesResult intForColumn:@"count"];
-	}
-	
-	[totalPuzzlesResult close];
-	
-	assert(totalPuzzles);
-	
-	// Pick a random puzzle from the remaining total.
-	NSInteger puzzleNumber = arc4random() % totalPuzzles;
+	// Pick a specific puzzle (debug purposes).
+	BOOL forcePuzzleById = NO;
 	
 	// Fetch a puzzle.
-	NSString *puzzleQuery = @"SELECT `puzzle_id`, `puzzle_guesses`, `puzzle_answers`, `puzzle_group_map` FROM `puzzles` WHERE `puzzle_type` = ? AND `puzzle_size` = ? AND `puzzle_difficulty` = ? LIMIT ?, 1";
-	FMResultSet *result = [db executeQuery:puzzleQuery, [NSNumber numberWithInt:type], [NSNumber numberWithInt:size], [NSNumber numberWithInt:difficulty], [NSNumber numberWithInt:puzzleNumber]];
+	FMResultSet *result;
 	
+	if (forcePuzzleById) {
+		NSInteger puzzleId = 16239;
+		
+		NSString *puzzleQuery = @"SELECT `puzzle_id`, `puzzle_guesses`, `puzzle_answers`, `puzzle_group_map` FROM `puzzles` WHERE `puzzle_id` = ?";
+		result = [db executeQuery:puzzleQuery, [NSNumber numberWithInt:puzzleId]];
+	} else {
+		// Get total puzzle count.
+		NSInteger totalPuzzles = 0;
+		
+		NSString *totalPuzzleQuery = @"SELECT count(1) AS `count` FROM `puzzles` WHERE `puzzle_type` = ? AND `puzzle_size` = ? AND `puzzle_difficulty` = ?";
+		FMResultSet *totalPuzzlesResult = [db executeQuery:totalPuzzleQuery, [NSNumber numberWithInt:type], [NSNumber numberWithInt:size], [NSNumber numberWithInt:difficulty]];
+		
+		if ([totalPuzzlesResult next]) {
+			totalPuzzles = [totalPuzzlesResult intForColumn:@"count"];
+		}
+		
+		[totalPuzzlesResult close];
+		
+		assert(totalPuzzles);
+		
+		// Pick a random puzzle from the remaining total.
+		NSInteger puzzleNumber = arc4random() % totalPuzzles;
+		
+		NSString *puzzleQuery = @"SELECT `puzzle_id`, `puzzle_guesses`, `puzzle_answers`, `puzzle_group_map` FROM `puzzles` WHERE `puzzle_type` = ? AND `puzzle_size` = ? AND `puzzle_difficulty` = ? LIMIT ?, 1";
+		result = [db executeQuery:puzzleQuery, [NSNumber numberWithInt:type], [NSNumber numberWithInt:size], [NSNumber numberWithInt:difficulty], [NSNumber numberWithInt:puzzleNumber]];
+	}
+	
+	// Load the puzzle row into a dictionary.
 	NSMutableDictionary *puzzleDefinition = [NSMutableDictionary dictionary];
 	
 	if ([result next]) {
@@ -84,6 +97,8 @@ NSString * const kDBPuzzleDefinitionGroupMapKey = @"kDBPuzzleDefinitionGroupMapK
 		[puzzleDefinition setObject:[NSNumber numberWithInt:type] forKey:kDBPuzzleDefinitionTypeKey];
 		[puzzleDefinition setObject:[NSNumber numberWithInt:size] forKey:kDBPuzzleDefinitionSizeKey];
 		[puzzleDefinition setObject:[NSNumber numberWithInt:difficulty] forKey:kDBPuzzleDefinitionDifficultyKey];
+		
+		NSLog(@"Chose puzzle id: %i", [result intForColumn:@"puzzle_id"]);
 	}
 	
 	[result close];

@@ -204,6 +204,8 @@
 			grid[row][col].groupId = tile.groupId;
 		}
 	}
+	
+	[self rebuildGroupCache];
 }
 
 - (void)copyGuessesFromGameBoard:(ZSGameBoard *)gameBoard {

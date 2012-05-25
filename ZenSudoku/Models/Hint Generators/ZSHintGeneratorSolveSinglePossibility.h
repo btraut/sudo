@@ -9,15 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "ZSHintGenerator.h"
 
-typedef enum {
-	ZSHintGeneratorSolveSinglePossibilityScopeRow,
-	ZSHintGeneratorSolveSinglePossibilityScopeCol,
-	ZSHintGeneratorSolveSinglePossibilityScopeGroup
-} ZSHintGeneratorSolveSinglePossibilityScope;
-
 @interface ZSHintGeneratorSolveSinglePossibility : NSObject <ZSHintGeneratorUtility>
 
-- (void)setSinglePossibility:(NSInteger)guess forTileInRow:(NSInteger)row col:(NSInteger)col scope:(ZSHintGeneratorSolveSinglePossibilityScope)scope;
+- (void)setSinglePossibility:(NSInteger)guess forTileInRow:(NSInteger)row col:(NSInteger)col scope:(ZSHintGeneratorTileScope)scope;
 
 - (NSArray *)generateHint;
 

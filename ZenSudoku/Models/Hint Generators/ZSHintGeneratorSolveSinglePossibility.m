@@ -14,14 +14,14 @@
 	NSInteger _row;
 	NSInteger _col;
 	NSInteger _guess;
-	ZSHintGeneratorSolveSinglePossibilityScope _scope;
+	ZSHintGeneratorTileScope _scope;
 }
 
 @end
 
 @implementation ZSHintGeneratorSolveSinglePossibility
 
-- (void)setSinglePossibility:(NSInteger)guess forTileInRow:(NSInteger)row col:(NSInteger)col scope:(ZSHintGeneratorSolveSinglePossibilityScope)scope {
+- (void)setSinglePossibility:(NSInteger)guess forTileInRow:(NSInteger)row col:(NSInteger)col scope:(ZSHintGeneratorTileScope)scope {
 	_row = row;
 	_col = col;
 	_guess = guess;
@@ -35,7 +35,7 @@
 	ZSHintCard *card2 = [[ZSHintCard alloc] init];
 	ZSHintCard *card3 = [[ZSHintCard alloc] init];
 	
-	if (_scope == ZSHintGeneratorSolveSinglePossibilityScopeRow) {
+	if (_scope == ZSHintGeneratorTileScopeRow) {
 		card1.text = @"Check this row for any tiles with single possibilities.";
 		card2.text = [NSString stringWithFormat:@"The number %i can only be placed in one spot in this row.", _guess];
 		card3.text = [NSString stringWithFormat:@"The tile at [%i, %i] is the only tile in this row that can be a %i.", (_row + 1), (_col + 1), _guess];
@@ -50,7 +50,7 @@
 				[card3 addInstructionHighlightTileAtRow:_row col:i highlightType:ZSGameBoardTileHintHighlightTypeB];
 			}
 		}
-	} else if (_scope == ZSHintGeneratorSolveSinglePossibilityScopeCol) {
+	} else if (_scope == ZSHintGeneratorTileScopeCol) {
 		card1.text = @"Check this column for any tiles with single possibilities.";
 		card2.text = [NSString stringWithFormat:@"The number %i can only be placed in one spot in this column.", _guess];
 		card3.text = [NSString stringWithFormat:@"The tile at [%i, %i] is the only tile in this column that can be a %i.", (_row + 1), (_col + 1), _guess];

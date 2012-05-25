@@ -129,7 +129,7 @@
 		
 		ZSGameBoardTileViewController *tile = [_gameViewController.gameBoardViewController getGameBoardTileViewControllerAtRow:row col:col];
 		
-		tile.highlightPencilHints[pencil] = pencilTextHintHighlightType;
+		tile.highlightPencilHints[pencil - 1] = pencilTextHintHighlightType;
 	}
 	
 	for (NSDictionary *dict in currentCard.highlightAnswers) {

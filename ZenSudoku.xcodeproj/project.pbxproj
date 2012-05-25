@@ -93,6 +93,7 @@
 		84B300F4148AF6FF00E568CE /* ZSGameHistoryEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B300F3148AF6FD00E568CE /* ZSGameHistoryEntry.m */; };
 		84C6110A14D94414003358FE /* ZSInstructionsRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C6110814D94414003358FE /* ZSInstructionsRootViewController.m */; };
 		84C6110B14D94414003358FE /* ZSInstructionsRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C6110914D94414003358FE /* ZSInstructionsRootViewController.xib */; };
+		84D1CB09156EE5A60027230B /* ZSHintGeneratorEliminatePencilsNakedSubgroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D1CB08156EE5A60027230B /* ZSHintGeneratorEliminatePencilsNakedSubgroup.m */; };
 		84D55014147F1C4A00A7934E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D55013147F1C4A00A7934E /* UIKit.framework */; };
 		84D55016147F1C4A00A7934E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D55015147F1C4A00A7934E /* Foundation.framework */; };
 		84D55018147F1C4A00A7934E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D55017147F1C4A00A7934E /* CoreGraphics.framework */; };
@@ -236,6 +237,8 @@
 		84C6110714D94414003358FE /* ZSInstructionsRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSInstructionsRootViewController.h; path = "View Controllers/ZSInstructionsRootViewController.h"; sourceTree = "<group>"; };
 		84C6110814D94414003358FE /* ZSInstructionsRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSInstructionsRootViewController.m; path = "View Controllers/ZSInstructionsRootViewController.m"; sourceTree = "<group>"; };
 		84C6110914D94414003358FE /* ZSInstructionsRootViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ZSInstructionsRootViewController.xib; path = "View Controllers/ZSInstructionsRootViewController.xib"; sourceTree = "<group>"; };
+		84D1CB07156EE5A60027230B /* ZSHintGeneratorEliminatePencilsNakedSubgroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSHintGeneratorEliminatePencilsNakedSubgroup.h; path = "ZenSudoku/Models/Hint Generators/ZSHintGeneratorEliminatePencilsNakedSubgroup.h"; sourceTree = SOURCE_ROOT; };
+		84D1CB08156EE5A60027230B /* ZSHintGeneratorEliminatePencilsNakedSubgroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSHintGeneratorEliminatePencilsNakedSubgroup.m; path = "ZenSudoku/Models/Hint Generators/ZSHintGeneratorEliminatePencilsNakedSubgroup.m"; sourceTree = SOURCE_ROOT; };
 		84D5500F147F1C4A00A7934E /* ZenSudoku.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZenSudoku.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84D55013147F1C4A00A7934E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		84D55015147F1C4A00A7934E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -416,6 +419,8 @@
 				8499295F155BA8B900D82D34 /* ZSHintGeneratorSolveOnlyChoice.m */,
 				84992962155F0C9700D82D34 /* ZSHintGeneratorSolveSinglePossibility.h */,
 				84992963155F0C9700D82D34 /* ZSHintGeneratorSolveSinglePossibility.m */,
+				84D1CB07156EE5A60027230B /* ZSHintGeneratorEliminatePencilsNakedSubgroup.h */,
+				84D1CB08156EE5A60027230B /* ZSHintGeneratorEliminatePencilsNakedSubgroup.m */,
 			);
 			name = "Logic Technique Hint Generators";
 			path = "Sudoku Solving Utilities";
@@ -834,6 +839,7 @@
 				8428AD51154F36A200BA8EE0 /* ZSHintGeneratorFixMissingPencil.m in Sources */,
 				84992960155BA8B900D82D34 /* ZSHintGeneratorSolveOnlyChoice.m in Sources */,
 				84992964155F0C9700D82D34 /* ZSHintGeneratorSolveSinglePossibility.m in Sources */,
+				84D1CB09156EE5A60027230B /* ZSHintGeneratorEliminatePencilsNakedSubgroup.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

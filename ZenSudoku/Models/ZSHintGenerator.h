@@ -31,6 +31,12 @@ typedef struct {
 	NSInteger matchIndex;
 } ZSXWingSlotMatch;
 
+typedef enum {
+	ZSHintGeneratorTileScopeRow,
+	ZSHintGeneratorTileScopeCol,
+	ZSHintGeneratorTileScopeGroup
+} ZSHintGeneratorTileScope;
+
 @protocol ZSHintGeneratorUtility <NSObject>
 
 - (NSArray *)generateHint;

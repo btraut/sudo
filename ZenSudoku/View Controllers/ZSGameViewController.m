@@ -158,18 +158,12 @@
 		}
 	}
 	
-	// Disable any answer option buttons that are at quota.
-//	for (NSInteger i = 0; i < game.gameBoard.size; ++i) {
-//		if (![game allowsGuess:(i + 1)]) {
-//			ZSGameAnswerOptionViewController *gameAnswerOptionViewController = [gameAnswerOptionsViewController.gameAnswerOptionViewControllers objectAtIndex:i];
-//			gameAnswerOptionViewController.enabled = NO;
-//			[gameAnswerOptionViewController reloadView];
-//		}
-//	}
-	
 	// If the game is already solved, shut off input.
 	if ([game isSolved]) {
 		allowsInput = NO;
+		
+		autoPencilButton.enabled = NO;
+		hintButton.enabled = NO;
 	}
 	
 	// Start the game timer.
@@ -429,6 +423,10 @@
 }
 
 - (void)pencilButtonWasTouched {
+	if (penciling) {
+		[gameBoardViewController deselectTileView];
+	}
+	
 	penciling = !penciling;
 	pencilButton.selected = penciling;
 }
@@ -521,6 +519,8 @@
 	
 	// Prevent future input.
 	allowsInput = NO;
+	autoPencilButton.enabled = NO;
+	hintButton.enabled = NO;
 	
 	// Deselect stuff.
 	[gameBoardViewController deselectTileView];
