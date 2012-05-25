@@ -17,6 +17,7 @@
 #import "ZSHintGeneratorSolveOnlyChoice.h"
 #import "ZSHintGeneratorSolveSinglePossibility.h"
 #import "ZSHintGeneratorEliminatePencilsNakedSubgroup.h"
+#import "ZSHintGeneratorEliminatePencilsHiddenSubgroup.h"
 
 
 @interface ZSHintGenerator () {
@@ -159,14 +160,12 @@
 		return hintCards;
 	}
 	
-	/*
 	// Hidden Pairs
-	hintCards = [self eliminatePencilsHiddenSubgroupForSize:2];
-	
-	if (hintCards) {
+	if ((hintCards = [self eliminatePencilsHiddenSubgroupForSize:2])) {
 		return hintCards;
 	}
 	
+	/*
 	// Pointing Pairs
 	hintCards = [self eliminatePencilsPointingPairs];
 	
@@ -187,14 +186,22 @@
 		return hintCards;
 	}
 	
-	/*
 	// Hidden Triplets
-	hintCards = [self eliminatePencilsHiddenSubgroupForSize:3];
-	
-	if (hintCards) {
+	if ((hintCards = [self eliminatePencilsHiddenSubgroupForSize:3])) {
 		return hintCards;
 	}
 	
+	// Naked Quads
+	if ((hintCards = [self eliminatePencilsNakedSubgroupForSize:4])) {
+		return hintCards;
+	}
+	
+	// Hidden Quads
+	if ((hintCards = [self eliminatePencilsHiddenSubgroupForSize:4])) {
+		return hintCards;
+	}
+	
+	/*
 	// X-Wing
 	hintCards = [self eliminatePencilsXWingOfSize:2];
 	
@@ -418,9 +425,9 @@
 	return nil;
 }
 
-/*
 - (NSArray *)eliminatePencilsHiddenSubgroupForSize:(NSInteger)subgroupSize {
-	NSInteger totalPencilsEliminated = 0;
+	// Initialize a hidden subgroup generator. We may not need it, but it's easier to do this outside the loop.
+	ZSHintGeneratorEliminatePencilsHiddenSubgroup *generator = [[ZSHintGeneratorEliminatePencilsHiddenSubgroup alloc] initWithSubgroupSize:subgroupSize];
 	
 	// Allocate memory used in searching for hidden subgroups. We allocate out of the main loop because
 	// allocation is expensive and all iterations of the loop need roughly the same size arrays.
@@ -468,9 +475,16 @@
 			
 			// If the possible subgroup match count is less than or equal to the subgroup size, we've found a valid subgroup.
 			if (totalTilesWithAnyPencilsInCombination && totalTilesWithAnyPencilsInCombination <= subgroupSize) {
+				// Reset the generator.
+				[generator resetTilesAndInstructions];
+				
+				// Keep track of whether or not the hidden subgroup actually allows us to eliminate pencil marks.
+				BOOL pencilsEliminated = NO;
+				
 				// Iterate over all the tiles in the subgroup and eliminate all pencil marks that aren't in the pencil map.
 				for (NSInteger subgroupMatchIndex = 0; subgroupMatchIndex < totalTilesWithAnyPencilsInCombination; ++subgroupMatchIndex) {
 					for (NSInteger pencilToEliminate = 0; pencilToEliminate < _fastGameBoard.size; ++pencilToEliminate) {
+						// Only eliminate pencils that exist outside the subgroup.
 						BOOL matchesHiddenPencil = NO;
 						
 						for (NSInteger currentCombinationIndex = 0; currentCombinationIndex < subgroupSize; ++currentCombinationIndex) {
@@ -484,11 +498,55 @@
 							continue;
 						}
 						
+						// Check if the tile contains the current pencil. If so, we can eliminate it.
 						if (subgroupMatches[subgroupMatchIndex]->pencils[pencilToEliminate]) {
-							[_fastGameBoard setPencil:NO forPencilNumber:(pencilToEliminate + 1) forTileAtRow:subgroupMatches[subgroupMatchIndex]->row col:subgroupMatches[subgroupMatchIndex]->col];
-							++totalPencilsEliminated;
+							pencilsEliminated = YES;
+
+							ZSHintGeneratorEliminatePencilsHiddenSubgroupInstruction instruction;
+							instruction.row = subgroupMatches[subgroupMatchIndex]->row;
+							instruction.col = subgroupMatches[subgroupMatchIndex]->col;
+							instruction.pencil = (pencilToEliminate + 1);
+							[generator addPencilToEliminate:instruction];
 						}
 					}
+				}
+				
+				if (pencilsEliminated) {
+					// Set the scope. Warning: this isn't the smartest way to set scope considering allSets could change up the order.
+					if (setIndex < _fastGameBoard.size) {
+						generator.scope = ZSHintGeneratorTileScopeRow;
+					} else if (setIndex < _fastGameBoard.size * 2) {
+						generator.scope = ZSHintGeneratorTileScopeCol;
+					} else {
+						generator.scope = ZSHintGeneratorTileScopeGroup;
+					}
+					
+					// Add all subgroup pencils.
+					for (NSInteger currentCombinationIndex = 0; currentCombinationIndex < subgroupSize; ++currentCombinationIndex) {
+						[generator addSubgroupPencil:(pencilMap[combinationMap[currentCombinationIndex]] + 1)];
+					}
+					
+					// Add all the tiles in the subgroup.
+					for (NSInteger subgroupMatchIndex = 0; subgroupMatchIndex < totalTilesWithAnyPencilsInCombination; ++subgroupMatchIndex) {
+						ZSHintGeneratorEliminatePencilsHiddenSubgroupInstruction tile;
+						tile.row = subgroupMatches[subgroupMatchIndex]->row;
+						tile.col = subgroupMatches[subgroupMatchIndex]->col;
+						[generator addSubgroupTile:tile];
+					}
+					
+					// Add all the tiles in the group.
+					for (NSInteger innerSetIndex = 0; innerSetIndex < _fastGameBoard.size; ++innerSetIndex) {
+						ZSHintGeneratorEliminatePencilsHiddenSubgroupInstruction tile;
+						tile.row = currentSet[innerSetIndex]->row;
+						tile.col = currentSet[innerSetIndex]->col;
+						[generator addGroupTile:tile];
+					}
+					
+					free(subgroupMatches);
+					free(combinationMap);
+					free(pencilMap);
+					
+					return [generator generateHint];
 				}
 			}
 		} while ([self setNextCombinationInArray:combinationMap ofLength:subgroupSize totalItems:totalPencilsInSet]);
@@ -498,9 +556,8 @@
 	free(combinationMap);
 	free(pencilMap);
 	
-	return totalPencilsEliminated;
+	return nil;
 }
-*/
 
 - (NSArray *)eliminatePencilsNakedSubgroupForSize:(NSInteger)subgroupSize {
 	// Initialize a naked subgroup generator. We may not need it, but it's easier to do this outside the loop.
@@ -656,7 +713,7 @@
 							ZSHintGeneratorEliminatePencilsNakedSubgroupInstruction subGroupTile;
 							subGroupTile.row = innerCurrentSet[setIndex]->row;
 							subGroupTile.col = innerCurrentSet[setIndex]->col;
-							[generator addSubGroupTile:subGroupTile];
+							[generator addSubgroupTile:subGroupTile];
 							continue;
 						}
 						

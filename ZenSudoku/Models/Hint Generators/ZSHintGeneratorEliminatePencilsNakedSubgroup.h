@@ -30,7 +30,7 @@ typedef struct {
 - (void)resetTilesAndInstructions;
 
 - (void)addGroupTile:(ZSHintGeneratorEliminatePencilsNakedSubgroupInstruction)tile;
-- (void)addSubGroupTile:(ZSHintGeneratorEliminatePencilsNakedSubgroupInstruction)tile;
+- (void)addSubgroupTile:(ZSHintGeneratorEliminatePencilsNakedSubgroupInstruction)tile;
 - (void)addPencilToEliminate:(ZSHintGeneratorEliminatePencilsNakedSubgroupInstruction)tile;
 
 - (NSArray *)generateHint;

@@ -81,7 +81,7 @@
 	_groupTiles[_totalGroupTiles++] = tile;
 }
 
-- (void)addSubGroupTile:(ZSHintGeneratorEliminatePencilsNakedSubgroupInstruction)tile {
+- (void)addSubgroupTile:(ZSHintGeneratorEliminatePencilsNakedSubgroupInstruction)tile {
 	_subGroupTiles[_totalSubGroupTiles++] = tile;
 }
 

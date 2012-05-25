@@ -246,11 +246,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "ZenSudoku/Models/ZSHintGenerator.m"
-         timestampString = "359604226.794541"
+         timestampString = "359680234.558811"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "316"
-         endingLineNumber = "316"
+         startingLineNumber = "323"
+         endingLineNumber = "323"
          landmarkName = "-solveOnlyChoice"
          landmarkType = "5">
       </FileBreakpoint>
@@ -259,11 +259,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "ZenSudoku/Models/ZSHintGenerator.m"
-         timestampString = "359604226.794541"
+         timestampString = "359680234.558811"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "633"
-         endingLineNumber = "633"
+         startingLineNumber = "690"
+         endingLineNumber = "690"
          landmarkName = "-eliminatePencilsNakedSubgroupForSize:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -272,12 +272,25 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "ZenSudoku/Models/ZSHintGenerator.m"
-         timestampString = "359604226.794541"
+         timestampString = "359680234.558811"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "609"
-         endingLineNumber = "609"
+         startingLineNumber = "666"
+         endingLineNumber = "666"
          landmarkName = "-eliminatePencilsNakedSubgroupForSize:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "ZenSudoku/Model Controllers/ZSPuzzleFetcher.m"
+         timestampString = "359679793.183617"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "60"
+         endingLineNumber = "60"
+         landmarkName = "-getRandomPuzzleWithType:size:difficulty:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
