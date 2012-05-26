@@ -9,12 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "ZSHintGenerator.h"
 
-typedef struct {
-	NSInteger row;
-	NSInteger col;
-	NSInteger pencil;
-} ZSHintGeneratorEliminatePencilsNakedSubgroupInstruction;
-
 @interface ZSHintGeneratorEliminatePencilsNakedSubgroup : NSObject <ZSHintGeneratorUtility> {
 	BOOL subgroupExistsInSameRow;
 	BOOL subgroupExistsInSameCol;
@@ -31,9 +25,9 @@ typedef struct {
 
 - (void)resetTilesAndInstructions;
 
-- (void)addGroupTile:(ZSHintGeneratorEliminatePencilsNakedSubgroupInstruction)tile;
-- (void)addSubgroupTile:(ZSHintGeneratorEliminatePencilsNakedSubgroupInstruction)tile;
-- (void)addPencilToEliminate:(ZSHintGeneratorEliminatePencilsNakedSubgroupInstruction)tile;
+- (void)addGroupTile:(ZSHintGeneratorTileInstruction)tile;
+- (void)addSubgroupTile:(ZSHintGeneratorTileInstruction)tile;
+- (void)addPencilToEliminate:(ZSHintGeneratorTileInstruction)tile;
 
 - (NSArray *)generateHint;
 

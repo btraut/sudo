@@ -18,6 +18,7 @@
 #import "ZSHintGeneratorSolveSinglePossibility.h"
 #import "ZSHintGeneratorEliminatePencilsNakedSubgroup.h"
 #import "ZSHintGeneratorEliminatePencilsHiddenSubgroup.h"
+#import "ZSHintGeneratorEliminatePencilsPointingPairs.h"
 
 
 @interface ZSHintGenerator () {
@@ -165,18 +166,14 @@
 		return hintCards;
 	}
 	
-	/*
 	// Pointing Pairs
-	hintCards = [self eliminatePencilsPointingPairs];
-	
-	if (hintCards) {
+	if ((hintCards = [self eliminatePencilsPointingPairs])) {
 		return hintCards;
 	}
 	
+	/*
 	// Box Line Reduction
-	hintCards = [self eliminatePencilsBoxLineReduction];
-	
-	if (hintCards) {
+	if ((hintCards = [self eliminatePencilsBoxLineReduction])) {
 		return hintCards;
 	}
 	*/
@@ -502,7 +499,7 @@
 						if (subgroupMatches[subgroupMatchIndex]->pencils[pencilToEliminate]) {
 							pencilsEliminated = YES;
 
-							ZSHintGeneratorEliminatePencilsHiddenSubgroupInstruction instruction;
+							ZSHintGeneratorTileInstruction instruction;
 							instruction.row = subgroupMatches[subgroupMatchIndex]->row;
 							instruction.col = subgroupMatches[subgroupMatchIndex]->col;
 							instruction.pencil = (pencilToEliminate + 1);
@@ -528,7 +525,7 @@
 					
 					// Add all the tiles in the subgroup.
 					for (NSInteger subgroupMatchIndex = 0; subgroupMatchIndex < totalTilesWithAnyPencilsInCombination; ++subgroupMatchIndex) {
-						ZSHintGeneratorEliminatePencilsHiddenSubgroupInstruction tile;
+						ZSHintGeneratorTileInstruction tile;
 						tile.row = subgroupMatches[subgroupMatchIndex]->row;
 						tile.col = subgroupMatches[subgroupMatchIndex]->col;
 						[generator addSubgroupTile:tile];
@@ -536,7 +533,7 @@
 					
 					// Add all the tiles in the group.
 					for (NSInteger innerSetIndex = 0; innerSetIndex < _fastGameBoard.size; ++innerSetIndex) {
-						ZSHintGeneratorEliminatePencilsHiddenSubgroupInstruction tile;
+						ZSHintGeneratorTileInstruction tile;
 						tile.row = currentSet[innerSetIndex]->row;
 						tile.col = currentSet[innerSetIndex]->col;
 						[generator addGroupTile:tile];
@@ -697,7 +694,7 @@
 					// Make another pass over the same group, this time keeping track of the group tiles and pencils to eliminate.
 					for (NSInteger setIndex = 0; setIndex < _fastGameBoard.size; ++setIndex) {
 						// Add the tile to the list of group tiles.
-						ZSHintGeneratorEliminatePencilsNakedSubgroupInstruction groupTile;
+						ZSHintGeneratorTileInstruction groupTile;
 						groupTile.row = innerCurrentSet[setIndex]->row;
 						groupTile.col = innerCurrentSet[setIndex]->col;
 						[generator addGroupTile:groupTile];
@@ -712,7 +709,7 @@
 						}
 						
 						if (tileIsInNakedSubgroup) {
-							ZSHintGeneratorEliminatePencilsNakedSubgroupInstruction subGroupTile;
+							ZSHintGeneratorTileInstruction subGroupTile;
 							subGroupTile.row = innerCurrentSet[setIndex]->row;
 							subGroupTile.col = innerCurrentSet[setIndex]->col;
 							[generator addSubgroupTile:subGroupTile];
@@ -730,7 +727,7 @@
 								) {
 									pencilsToBeEliminated = YES;
 									
-									ZSHintGeneratorEliminatePencilsNakedSubgroupInstruction instruction;
+									ZSHintGeneratorTileInstruction instruction;
 									instruction.row = innerCurrentSet[setIndex]->row;
 									instruction.col = innerCurrentSet[setIndex]->col;
 									instruction.pencil = (pencilToEliminate + 1);
@@ -761,10 +758,7 @@
 	return nil;
 }
 
-/*
 - (NSArray *)eliminatePencilsPointingPairs {
-	NSInteger totalPencilsEliminated = 0;
-	
 	// Loop over all groups.
 	for (NSInteger groupIndex = 0; groupIndex < _fastGameBoard.size; ++groupIndex) {
 		// Cache the current group.
@@ -816,36 +810,99 @@
 				if (rowIsAligned && foundPencils != _fastGameBoard.totalTilesInRowWithPencil[alignedRow][guess]) {
 					ZSGameTileStub **rowSet = _fastGameBoard.rows[alignedRow];
 					
+					ZSHintGeneratorEliminatePencilsPointingPairs *generator = [[ZSHintGeneratorEliminatePencilsPointingPairs alloc] init];
+					
+					generator.targetPencil = (guess + 1);
+					
+					for (NSInteger i = 0; i < _fastGameBoard.size; ++i) {
+						// Add all row tiles.
+						ZSHintGeneratorTileInstruction rowTile;
+						rowTile.row = rowSet[i]->row;
+						rowTile.col = rowSet[i]->col;
+						[generator addRowOrColTile:rowTile];
+						
+						// Add all group tiles.
+						ZSHintGeneratorTileInstruction groupTile;
+						groupTile.row = currentGroup[i]->row;
+						groupTile.col = currentGroup[i]->col;
+						[generator addGroupTile:groupTile];
+						
+						// If the row tile also exists within the group, add it.
+						if (rowSet[i]->groupId == currentGroup[0]->groupId && rowSet[i]->pencils[guess]) {
+							ZSHintGeneratorTileInstruction pointingPairTile;
+							pointingPairTile.row = rowSet[i]->row;
+							pointingPairTile.col = rowSet[i]->col;
+							[generator addPointingPairTile:pointingPairTile];
+						}
+					}
+					
 					for (NSInteger i = 0; i < _fastGameBoard.size; ++i) {
 						if (rowSet[i]->groupId != currentGroupId) {
 							if (rowSet[i]->pencils[guess]) {
-								[_fastGameBoard setPencil:NO forPencilNumber:(guess + 1) forTileAtRow:rowSet[i]->row col:rowSet[i]->col];
-								++totalPencilsEliminated;
+								ZSHintGeneratorTileInstruction instruction;
+								instruction.row = rowSet[i]->row;
+								instruction.col = rowSet[i]->col;
+								instruction.pencil = (guess + 1);
+								[generator addPencilToEliminate:instruction];
 							}
 						}
 					}
+					
+					return [generator generateHint];
 				}
 				
 				// If all the pencils found were in the same col, eliminate all possibilities in the rest of that col.
 				if (colIsAligned && foundPencils != _fastGameBoard.totalTilesInColWithPencil[alignedCol][guess]) {
 					ZSGameTileStub **colSet = _fastGameBoard.cols[alignedCol];
 					
+					ZSHintGeneratorEliminatePencilsPointingPairs *generator = [[ZSHintGeneratorEliminatePencilsPointingPairs alloc] init];
+					
+					generator.targetPencil = (guess + 1);
+					
+					for (NSInteger i = 0; i < _fastGameBoard.size; ++i) {
+						// Add all row tiles.
+						ZSHintGeneratorTileInstruction colTile;
+						colTile.row = colSet[i]->row;
+						colTile.col = colSet[i]->col;
+						[generator addRowOrColTile:colTile];
+						
+						// Add all group tiles.
+						ZSHintGeneratorTileInstruction groupTile;
+						groupTile.row = currentGroup[i]->row;
+						groupTile.col = currentGroup[i]->col;
+						[generator addGroupTile:groupTile];
+						
+						// If the row tile also exists within the group, add it.
+						if (colSet[i]->groupId == currentGroup[0]->groupId && colSet[i]->pencils[guess]) {
+							ZSHintGeneratorTileInstruction pointingPairTile;
+							pointingPairTile.row = colSet[i]->row;
+							pointingPairTile.col = colSet[i]->col;
+							[generator addPointingPairTile:pointingPairTile];
+						}
+					}
+					
 					for (NSInteger i = 0; i < _fastGameBoard.size; ++i) {
 						if (colSet[i]->groupId != currentGroupId) {
 							if (colSet[i]->pencils[guess]) {
-								[_fastGameBoard setPencil:NO forPencilNumber:(guess + 1) forTileAtRow:colSet[i]->row col:colSet[i]->col];
-								++totalPencilsEliminated;
+								ZSHintGeneratorTileInstruction instruction;
+								instruction.row = colSet[i]->row;
+								instruction.col = colSet[i]->col;
+								instruction.pencil = (guess + 1);
+								[generator addPencilToEliminate:instruction];
 							}
 						}
 					}
+					
+					return [generator generateHint];
 				}
 			}
 		}
 	}
 	
-	return totalPencilsEliminated;
+	return nil;
 }
 
+/*
 - (NSArray *)eliminatePencilsBoxLineReduction {
 	NSInteger totalPencilsEliminated = 0;
 	

@@ -37,6 +37,12 @@ typedef enum {
 	ZSHintGeneratorTileScopeGroup
 } ZSHintGeneratorTileScope;
 
+typedef struct {
+	NSInteger row;
+	NSInteger col;
+	NSInteger pencil;
+} ZSHintGeneratorTileInstruction;
+
 @protocol ZSHintGeneratorUtility <NSObject>
 
 - (NSArray *)generateHint;

@@ -1,83 +1,73 @@
 //
-//  ZSHintGeneratorEliminatePencilsHiddenSubgroup.m
+//  ZSHintGeneratorEliminatePencilsPointingPairs.m
 //  ZenSudoku
 //
 //  Created by Brent Traut on 4/30/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "ZSHintGeneratorEliminatePencilsHiddenSubgroup.h"
+#import "ZSHintGeneratorEliminatePencilsPointingPairs.h"
 
 #import "ZSHintCard.h"
 
-@interface ZSHintGeneratorEliminatePencilsHiddenSubgroup () {
+@interface ZSHintGeneratorEliminatePencilsPointingPairs () {
 	BOOL _initialized;
-	NSInteger _subgroupSize;
 	
-	NSInteger _totalSubgroupPencils;
-	NSInteger *_subgroupPencils;
-	
+	ZSHintGeneratorTileInstruction *_pointingPairTiles;
 	ZSHintGeneratorTileInstruction *_groupTiles;
-	ZSHintGeneratorTileInstruction *_subGroupTiles;
+	ZSHintGeneratorTileInstruction *_rowOrColTiles;
 	ZSHintGeneratorTileInstruction *_pencilsToEliminate;
 	
+	NSInteger _totalPointingPairTiles;
 	NSInteger _totalGroupTiles;
-	NSInteger _totalSubGroupTiles;
+	NSInteger _totalRowOrColTiles;
 	NSInteger _totalPencilsToEliminate;
 }
 
-- (void)_allocTilesAndInstructionsWithSubgroupSize:(NSInteger)size;
+- (void)_allocTilesAndInstructions;
 - (void)_freeTilesAndInstructions;
 
 @end
 
-@implementation ZSHintGeneratorEliminatePencilsHiddenSubgroup
+@implementation ZSHintGeneratorEliminatePencilsPointingPairs
 
-@synthesize scope;
+@synthesize scope, targetPencil;
 
 - (id)init {
-	return [self initWithSubgroupSize:2];
-}
-
-- (id)initWithSubgroupSize:(NSInteger)size {
 	self = [super init];
 	
 	if (self) {
-		_subgroupSize = size;
-		[self _allocTilesAndInstructionsWithSubgroupSize:size];
+		[self _allocTilesAndInstructions];
 	}
 	
 	return self;
 }
 
 - (void)resetTilesAndInstructions {
-	_totalSubgroupPencils = 0;
-	
+	_totalPointingPairTiles = 0;
 	_totalGroupTiles = 0;
-	_totalSubGroupTiles = 0;
+	_totalRowOrColTiles = 0;
 	_totalPencilsToEliminate = 0;
 }
 
-- (void)_allocTilesAndInstructionsWithSubgroupSize:(NSInteger)size {
+- (void)_allocTilesAndInstructions {
 	if (_initialized) {
 		[self _freeTilesAndInstructions];
 	}
 	
-	_subgroupPencils = malloc(sizeof(NSInteger) * size);
-	
-	_groupTiles = malloc(sizeof(ZSHintGeneratorTileInstruction) * 9 * 3);
-	_subGroupTiles = malloc(sizeof(ZSHintGeneratorTileInstruction) * size * 3);
-	_pencilsToEliminate = malloc(sizeof(ZSHintGeneratorTileInstruction) * 9 * 9 * 3);
+	_pointingPairTiles = malloc(sizeof(ZSHintGeneratorTileInstruction) * 3);
+	_groupTiles = malloc(sizeof(ZSHintGeneratorTileInstruction) * 9);
+	_rowOrColTiles = malloc(sizeof(ZSHintGeneratorTileInstruction) * 9);
+	_pencilsToEliminate = malloc(sizeof(ZSHintGeneratorTileInstruction) * 6);
 	
 	[self resetTilesAndInstructions];
 }
 
 - (void)_freeTilesAndInstructions {
 	free(_pencilsToEliminate);
-	free(_subGroupTiles);
+	free(_rowOrColTiles);
 	free(_groupTiles);
-	
-	free(_subgroupPencils);
+	free(_pointingPairTiles);
 }
 
 - (void)dealloc {
@@ -86,16 +76,16 @@
 	}
 }
 
-- (void)addSubgroupPencil:(NSInteger)pencil {
-	_subgroupPencils[_totalSubgroupPencils++] = pencil;
+- (void)addPointingPairTile:(ZSHintGeneratorTileInstruction)tile {
+	_pointingPairTiles[_totalPointingPairTiles++] = tile;
 }
 
 - (void)addGroupTile:(ZSHintGeneratorTileInstruction)tile {
 	_groupTiles[_totalGroupTiles++] = tile;
 }
 
-- (void)addSubgroupTile:(ZSHintGeneratorTileInstruction)tile {
-	_subGroupTiles[_totalSubGroupTiles++] = tile;
+- (void)addRowOrColTile:(ZSHintGeneratorTileInstruction)tile {
+	_rowOrColTiles[_totalRowOrColTiles++] = tile;
 }
 
 - (void)addPencilToEliminate:(ZSHintGeneratorTileInstruction)tile {
@@ -103,21 +93,7 @@
 }
 
 - (NSArray *)generateHint {
-	NSString *groupName = (scope == ZSHintGeneratorTileScopeRow ? @"row" : (scope == ZSHintGeneratorTileScopeCol ? @"column" : @"group"));
-	
-	NSString *subgroupName;
-	NSString *possibilities;
-	
-	if (_subgroupSize == 2) {
-		subgroupName = @"pair";
-		possibilities = [NSString stringWithFormat:@"%i and %i", _subgroupPencils[0], _subgroupPencils[1]];
-	} else if (_subgroupSize == 3) {
-		subgroupName = @"triplet";
-		possibilities = [NSString stringWithFormat:@"%i, %i, and/or %i", _subgroupPencils[0], _subgroupPencils[1], _subgroupPencils[2]];
-	} else {
-		subgroupName = @"quad";
-		possibilities = [NSString stringWithFormat:@"%i, %i, %i, and/or %i", _subgroupPencils[0], _subgroupPencils[1], _subgroupPencils[2], _subgroupPencils[3]];
-	}
+	NSString *scopeName = (scope == ZSHintGeneratorTileScopeRow ? @"row" : (scope == ZSHintGeneratorTileScopeCol ? @"column" : @"group"));
 	
 	NSMutableArray *hintCards = [NSMutableArray array];
 	
@@ -125,24 +101,29 @@
 	ZSHintCard *card1 = [[ZSHintCard alloc] init];
 	card1.text = @"Examine the highlighted tiles. What is special about them?";
 	
-	for (NSInteger i = 0; i < _totalSubGroupTiles; ++i) {
-		ZSHintGeneratorTileInstruction *instruction = &_subGroupTiles[i];
+	for (NSInteger i = 0; i < _totalPointingPairTiles; ++i) {
+		ZSHintGeneratorTileInstruction *instruction = &_pointingPairTiles[i];
 		[card1 addInstructionHighlightTileAtRow:instruction->row col:instruction->col highlightType:ZSGameBoardTileHintHighlightTypeA];
 	}
 	
 	[hintCards addObject:card1];
 	
-	// Step 2: Tiles form a hidden pair/triplet/quad.
+	// Step 2: Tiles form a pointing pair.
 	ZSHintCard *card2 = [[ZSHintCard alloc] init];
-	card2.text = [NSString stringWithFormat:@"The highlighted tiles form a hidden %@ because they are the only tiles in their %@ that have possibilities %@.", subgroupName, groupName, possibilities];
+	card2.text = [NSString stringWithFormat:@"The highlighted tiles form a pointing pair. They are the only tiles in their group with possibility %i and they are in the same %@.", targetPencil, scopeName];
 	
 	for (NSInteger i = 0; i < _totalGroupTiles; ++i) {
 		ZSHintGeneratorTileInstruction *instruction = &_groupTiles[i];
+		[card2 addInstructionHighlightTileAtRow:instruction->row col:instruction->col highlightType:ZSGameBoardTileHintHighlightTypeC];
+	}
+	
+	for (NSInteger i = 0; i < _totalRowOrColTiles; ++i) {
+		ZSHintGeneratorTileInstruction *instruction = &_rowOrColTiles[i];
 		[card2 addInstructionHighlightTileAtRow:instruction->row col:instruction->col highlightType:ZSGameBoardTileHintHighlightTypeB];
 	}
 	
-	for (NSInteger i = 0; i < _totalSubGroupTiles; ++i) {
-		ZSHintGeneratorTileInstruction *instruction = &_subGroupTiles[i];
+	for (NSInteger i = 0; i < _totalPointingPairTiles; ++i) {
+		ZSHintGeneratorTileInstruction *instruction = &_pointingPairTiles[i];
 		[card2 addInstructionHighlightTileAtRow:instruction->row col:instruction->col highlightType:ZSGameBoardTileHintHighlightTypeA];
 	}
 	
@@ -151,15 +132,20 @@
 	// Step 3: Highlight pencils within scope.
 	ZSHintCard *card3 = [[ZSHintCard alloc] init];
 	NSString *totalPencilsPossibilities = (_totalPencilsToEliminate == 1 ? @"possibility" : @"possibilities");
-	card3.text = [NSString stringWithFormat:@"This allows us to eliminate %i %@ in the tiles that make up the hidden %@.", _totalPencilsToEliminate, totalPencilsPossibilities, subgroupName];
+	card3.text = [NSString stringWithFormat:@"The pointing pair helps eliminate %i %@ in the same %@.", _totalPencilsToEliminate, totalPencilsPossibilities, scopeName];
 	
 	for (NSInteger i = 0; i < _totalGroupTiles; ++i) {
 		ZSHintGeneratorTileInstruction *instruction = &_groupTiles[i];
+		[card3 addInstructionHighlightTileAtRow:instruction->row col:instruction->col highlightType:ZSGameBoardTileHintHighlightTypeC];
+	}
+	
+	for (NSInteger i = 0; i < _totalRowOrColTiles; ++i) {
+		ZSHintGeneratorTileInstruction *instruction = &_rowOrColTiles[i];
 		[card3 addInstructionHighlightTileAtRow:instruction->row col:instruction->col highlightType:ZSGameBoardTileHintHighlightTypeB];
 	}
 	
-	for (NSInteger i = 0; i < _totalSubGroupTiles; ++i) {
-		ZSHintGeneratorTileInstruction *instruction = &_subGroupTiles[i];
+	for (NSInteger i = 0; i < _totalPointingPairTiles; ++i) {
+		ZSHintGeneratorTileInstruction *instruction = &_pointingPairTiles[i];
 		[card3 addInstructionHighlightTileAtRow:instruction->row col:instruction->col highlightType:ZSGameBoardTileHintHighlightTypeA];
 	}
 	
@@ -170,18 +156,23 @@
 	
 	[hintCards addObject:card3];
 	
-	// Step 4: Remove tiles.
+	// Step 4: Remove pencils.
 	ZSHintCard *card4 = [[ZSHintCard alloc] init];
 	NSString *totalPencilsWere = (_totalPencilsToEliminate == 1 ? @"was" : @"were");
-	card4.text = [NSString stringWithFormat:@"%i %@ %@ eliminated.", _totalPencilsToEliminate, totalPencilsPossibilities, totalPencilsWere];
+	card4.text = [NSString stringWithFormat:@"%i %@ %@ eliminated from the %@.", _totalPencilsToEliminate, totalPencilsPossibilities, totalPencilsWere, scopeName];
 	
 	for (NSInteger i = 0; i < _totalGroupTiles; ++i) {
 		ZSHintGeneratorTileInstruction *instruction = &_groupTiles[i];
+		[card4 addInstructionHighlightTileAtRow:instruction->row col:instruction->col highlightType:ZSGameBoardTileHintHighlightTypeC];
+	}
+	
+	for (NSInteger i = 0; i < _totalRowOrColTiles; ++i) {
+		ZSHintGeneratorTileInstruction *instruction = &_rowOrColTiles[i];
 		[card4 addInstructionHighlightTileAtRow:instruction->row col:instruction->col highlightType:ZSGameBoardTileHintHighlightTypeB];
 	}
 	
-	for (NSInteger i = 0; i < _totalSubGroupTiles; ++i) {
-		ZSHintGeneratorTileInstruction *instruction = &_subGroupTiles[i];
+	for (NSInteger i = 0; i < _totalPointingPairTiles; ++i) {
+		ZSHintGeneratorTileInstruction *instruction = &_pointingPairTiles[i];
 		[card4 addInstructionHighlightTileAtRow:instruction->row col:instruction->col highlightType:ZSGameBoardTileHintHighlightTypeA];
 	}
 	
