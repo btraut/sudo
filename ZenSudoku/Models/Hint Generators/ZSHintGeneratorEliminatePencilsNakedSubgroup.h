@@ -19,6 +19,8 @@ typedef struct {
 	BOOL subgroupExistsInSameRow;
 	BOOL subgroupExistsInSameCol;
 	BOOL subgroupExistsInSameGroup;
+	
+	NSInteger totalPencilsToEliminate;
 }
 
 @property (nonatomic, assign) BOOL subgroupExistsInSameRow;

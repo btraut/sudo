@@ -670,7 +670,7 @@
 				generator.subgroupExistsInSameGroup = tilesAreInSameGroup;
 				
 				// Keep track of how many pencils we actually eliminate.
-				BOOL containsPencilsToBeEliminated = NO;
+				BOOL pencilsToBeEliminated = NO;
 				
 				// Make a list of sets to check for similar possibilities.
 				ZSGameTileStub **innerSets[3];
@@ -687,6 +687,8 @@
 				if (tilesAreInSameGroup) {
 					innerSets[totalInnerSets++] = _fastGameBoard.groups[subgroupGroup];
 				}
+				
+				BOOL addedFirstInnerSetPencils = NO;
 				
 				// Loop through all the tiles in all the sets (row, column, and/or group) and look for pencils to eliminate.
 				for (NSInteger innerSetIndex = 0; innerSetIndex < totalInnerSets; ++innerSetIndex) {
@@ -722,19 +724,26 @@
 							NSInteger pencilToEliminate = pencilMap[combinationMap[currentCombinationIndex]];
 							
 							if (innerCurrentSet[setIndex]->pencils[pencilToEliminate]) {
-								++containsPencilsToBeEliminated;
-								
-								ZSHintGeneratorEliminatePencilsNakedSubgroupInstruction instruction;
-								instruction.row = innerCurrentSet[setIndex]->row;
-								instruction.col = innerCurrentSet[setIndex]->col;
-								instruction.pencil = (pencilToEliminate + 1);
-								[generator addPencilToEliminate:instruction];
+								if (
+									((tilesAreInSameRow || tilesAreInSameCol) && tilesAreInSameGroup && !addedFirstInnerSetPencils) ||
+									!tilesAreInSameGroup
+								) {
+									pencilsToBeEliminated = YES;
+									
+									ZSHintGeneratorEliminatePencilsNakedSubgroupInstruction instruction;
+									instruction.row = innerCurrentSet[setIndex]->row;
+									instruction.col = innerCurrentSet[setIndex]->col;
+									instruction.pencil = (pencilToEliminate + 1);
+									[generator addPencilToEliminate:instruction];
+								}
 							}
 						}
 					}
+					
+					addedFirstInnerSetPencils = YES;
 				}
 				
-				if (containsPencilsToBeEliminated) {
+				if (pencilsToBeEliminated) {
 					free(subgroupMatches);
 					free(combinationMap);
 					free(pencilMap);
