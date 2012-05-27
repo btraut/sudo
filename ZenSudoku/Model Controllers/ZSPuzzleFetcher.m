@@ -53,7 +53,7 @@ NSString * const kDBPuzzleDefinitionGroupMapKey = @"kDBPuzzleDefinitionGroupMapK
 
 - (NSDictionary *)getRandomPuzzleWithType:(ZSGameType)type size:(NSInteger)size difficulty:(ZSGameDifficulty)difficulty {
 	// Pick a specific puzzle (debug purposes).
-	BOOL forcePuzzleById = YES;
+	BOOL forcePuzzleById = NO;
 	
 	// Fetch a puzzle.
 	FMResultSet *result;
