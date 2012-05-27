@@ -59,7 +59,7 @@ NSString * const kDBPuzzleDefinitionGroupMapKey = @"kDBPuzzleDefinitionGroupMapK
 	FMResultSet *result;
 	
 	if (forcePuzzleById) {
-		NSInteger puzzleId = 16240;
+		NSInteger puzzleId = 16241;
 		
 		NSString *puzzleQuery = @"SELECT `puzzle_id`, `puzzle_guesses`, `puzzle_answers`, `puzzle_group_map` FROM `puzzles` WHERE `puzzle_id` = ?";
 		result = [db executeQuery:puzzleQuery, [NSNumber numberWithInt:puzzleId]];

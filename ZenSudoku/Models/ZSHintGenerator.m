@@ -19,6 +19,7 @@
 #import "ZSHintGeneratorEliminatePencilsNakedSubgroup.h"
 #import "ZSHintGeneratorEliminatePencilsHiddenSubgroup.h"
 #import "ZSHintGeneratorEliminatePencilsPointingPairs.h"
+#import "ZSHintGeneratorEliminatePencilsBoxLineReduction.h"
 
 
 @interface ZSHintGenerator () {
@@ -155,7 +156,12 @@
 	if ((hintCards = [self solveOnlyChoiceUserBoard])) {
 		return hintCards;
 	}
-		
+	
+	// Single Possibility (User Board)
+	if ((hintCards = [self solveSinglePossibilityUserBoard])) {
+		return hintCards;
+	}
+	
 	// Naked Pairs
 	if ((hintCards = [self eliminatePencilsNakedSubgroupForSize:2])) {
 		return hintCards;
@@ -171,12 +177,10 @@
 		return hintCards;
 	}
 	
-	/*
 	// Box Line Reduction
 	if ((hintCards = [self eliminatePencilsBoxLineReduction])) {
 		return hintCards;
 	}
-	*/
 	
 	// Naked Triplets
 	if ((hintCards = [self eliminatePencilsNakedSubgroupForSize:3])) {
@@ -412,6 +416,60 @@
 					if (!_scratchBoard.groups[i][j]->guess && _scratchBoard.groups[i][j]->pencils[guess]) {
 						ZSHintGeneratorSolveSinglePossibility *generator = [[ZSHintGeneratorSolveSinglePossibility alloc] init];
 						[generator setSinglePossibility:(guess + 1) forTileInRow:_scratchBoard.groups[i][j]->row col:_scratchBoard.groups[i][j]->col scope:ZSHintGeneratorTileScopeGroup];
+						return [generator generateHint];
+					}
+				}
+			}
+		}
+	}
+	
+	return nil;
+}
+
+- (NSArray *)solveSinglePossibilityUserBoard {
+	// Iterate over each guess.
+	for (NSInteger guess = 0; guess < _fastGameBoard.size; ++guess) {
+		// Iterate over each row.
+		for (NSInteger i = 0; i < _fastGameBoard.size; ++i) {
+			// If there is only one tile with the current pencil, that's the answer for that tile.
+			if (_fastGameBoard.totalTilesInRowWithPencil[i][guess] == 1) {
+				// Iterate over the set and find the tile with the matching pencil.
+				for (NSInteger j = 0; j < _fastGameBoard.size; ++j) {
+					if (!_fastGameBoard.rows[i][j]->guess && _fastGameBoard.rows[i][j]->pencils[guess]) {
+						ZSHintGeneratorSolveSinglePossibility *generator = [[ZSHintGeneratorSolveSinglePossibility alloc] init];
+						[generator setSinglePossibility:(guess + 1) forTileInRow:_fastGameBoard.rows[i][j]->row col:_fastGameBoard.rows[i][j]->col scope:ZSHintGeneratorTileScopeRow];
+						return [generator generateHint];
+					}
+				}
+			}
+		}
+		
+		// Iterate over each col.
+		for (NSInteger i = 0; i < _fastGameBoard.size; ++i) {
+			// If there is only one tile with the current pencil, that's the answer for that tile.
+			if (_fastGameBoard.totalTilesInColWithPencil[i][guess] == 1) {
+				// Iterate over the set and find the tile with the matching pencil.
+				for (NSInteger j = 0; j < _fastGameBoard.size; ++j) {
+					if (!_fastGameBoard.cols[i][j]->guess && _fastGameBoard.cols[i][j]->pencils[guess]) {
+						ZSHintGeneratorSolveSinglePossibility *generator = [[ZSHintGeneratorSolveSinglePossibility alloc] init];
+						[generator setSinglePossibility:(guess + 1) forTileInRow:_fastGameBoard.cols[i][j]->row col:_fastGameBoard.cols[i][j]->col scope:ZSHintGeneratorTileScopeCol];
+						return [generator generateHint];
+					}
+				}
+			}
+		}
+		
+		// Iterate over each group.
+		for (NSInteger i = 0; i < _fastGameBoard.size; ++i) {
+			// If there is only one tile with the current pencil, that's the answer for that tile.
+			if (_fastGameBoard.totalTilesInGroupWithPencil[i][guess] == 1) {
+				// Iterate over the set and find the tile with the matching pencil.
+				for (NSInteger j = 0; j < _fastGameBoard.size; ++j) {
+					NSLog(@"%i", _fastGameBoard.groups[i][j]->guess);
+					
+					if (!_fastGameBoard.groups[i][j]->guess && _fastGameBoard.groups[i][j]->pencils[guess]) {
+						ZSHintGeneratorSolveSinglePossibility *generator = [[ZSHintGeneratorSolveSinglePossibility alloc] init];
+						[generator setSinglePossibility:(guess + 1) forTileInRow:_fastGameBoard.groups[i][j]->row col:_fastGameBoard.groups[i][j]->col scope:ZSHintGeneratorTileScopeGroup];
 						return [generator generateHint];
 					}
 				}
@@ -902,17 +960,16 @@
 	return nil;
 }
 
-/*
 - (NSArray *)eliminatePencilsBoxLineReduction {
-	NSInteger totalPencilsEliminated = 0;
-	
 	for (NSInteger guess = 0; guess < _fastGameBoard.size; ++guess) {
+		// Loop over all rows.
 		for (NSInteger row = 0; row < _fastGameBoard.size; ++row) {
 			if (_fastGameBoard.totalTilesInRowWithPencil[row][guess] && _fastGameBoard.totalTilesInRowWithPencil[row][guess] <= 3) {
 				BOOL allPencilsInSameGroup = YES;
 				NSInteger totalPencilsFound = 0;
 				NSInteger group = 0;
 				
+				// Check to see if all of the pencils are in the same group.
 				for (NSInteger i = 0; i < _fastGameBoard.size; ++i) {
 					if (!_fastGameBoard.rows[row][i]->guess && _fastGameBoard.rows[row][i]->pencils[guess]) {
 						if (totalPencilsFound) {
@@ -928,27 +985,59 @@
 					}
 				}
 				
-				if (allPencilsInSameGroup) {
+				// If all the pencils in this row are in the same group, we can eliminate all other of the same pencil from that group.
+				if (allPencilsInSameGroup && _fastGameBoard.totalTilesInGroupWithPencil[group][guess] > totalPencilsFound) {
+					ZSHintGeneratorEliminatePencilsBoxLineReduction *generator = [[ZSHintGeneratorEliminatePencilsBoxLineReduction alloc] init];
+					
+					generator.targetPencil = (guess + 1);
+					
 					for (NSInteger i = 0; i < _fastGameBoard.size; ++i) {
+						// Add all row tiles.
+						ZSHintGeneratorTileInstruction rowTile;
+						rowTile.row = _fastGameBoard.rows[row][i]->row;
+						rowTile.col = _fastGameBoard.rows[row][i]->col;
+						[generator addRowOrColTile:rowTile];
+						
+						// Add all group tiles.
+						ZSHintGeneratorTileInstruction groupTile;
+						groupTile.row = _fastGameBoard.groups[group][i]->row;
+						groupTile.col = _fastGameBoard.groups[group][i]->col;
+						[generator addGroupTile:groupTile];
+						
+						// If the row tile also exists within the group, add it.
 						if (_fastGameBoard.groups[group][i]->row == row) {
+							if (!_fastGameBoard.groups[group][i]->guess) {
+								ZSHintGeneratorTileInstruction boxLineReductionTile;
+								boxLineReductionTile.row = _fastGameBoard.groups[group][i]->row;
+								boxLineReductionTile.col = _fastGameBoard.groups[group][i]->col;
+								[generator addBoxLineReductionTile:boxLineReductionTile];
+							}
+							
 							continue;
 						}
 						
 						if (!_fastGameBoard.groups[group][i]->guess && _fastGameBoard.groups[group][i]->pencils[guess]) {
-							[_fastGameBoard setPencil:NO forPencilNumber:(guess + 1) forTileAtRow:_fastGameBoard.groups[group][i]->row col:_fastGameBoard.groups[group][i]->col];
-							++totalPencilsEliminated;
+							ZSHintGeneratorTileInstruction instruction;
+							instruction.row = _fastGameBoard.groups[group][i]->row;
+							instruction.col = _fastGameBoard.groups[group][i]->col;
+							instruction.pencil = (guess + 1);
+							[generator addPencilToEliminate:instruction];
 						}
 					}
+					
+					return [generator generateHint];
 				}
 			}
 		}
 		
+		// Loop over all cols.
 		for (NSInteger col = 0; col < _fastGameBoard.size; ++col) {
 			if (_fastGameBoard.totalTilesInColWithPencil[col][guess] && _fastGameBoard.totalTilesInColWithPencil[col][guess] <= 3) {
 				BOOL allPencilsInSameGroup = YES;
 				NSInteger totalPencilsFound = 0;
 				NSInteger group = 0;
 				
+				// Check to see if all of the pencils are in the same group.
 				for (NSInteger i = 0; i < _fastGameBoard.size; ++i) {
 					if (!_fastGameBoard.cols[col][i]->guess && _fastGameBoard.cols[col][i]->pencils[guess]) {
 						if (totalPencilsFound) {
@@ -964,25 +1053,56 @@
 					}
 				}
 				
-				if (allPencilsInSameGroup) {
+				// If all the pencils in this col are in the same group, we can eliminate all other of the same pencil from that group.
+				if (allPencilsInSameGroup && _fastGameBoard.totalTilesInGroupWithPencil[group][guess] > totalPencilsFound) {
+					ZSHintGeneratorEliminatePencilsBoxLineReduction *generator = [[ZSHintGeneratorEliminatePencilsBoxLineReduction alloc] init];
+					
+					generator.targetPencil = (guess + 1);
+					
 					for (NSInteger i = 0; i < _fastGameBoard.size; ++i) {
+						// Add all col tiles.
+						ZSHintGeneratorTileInstruction colTile;
+						colTile.row = _fastGameBoard.cols[col][i]->row;
+						colTile.col = _fastGameBoard.cols[col][i]->col;
+						[generator addRowOrColTile:colTile];
+						
+						// Add all group tiles.
+						ZSHintGeneratorTileInstruction groupTile;
+						groupTile.row = _fastGameBoard.groups[group][i]->row;
+						groupTile.col = _fastGameBoard.groups[group][i]->col;
+						[generator addGroupTile:groupTile];
+						
+						// If the col tile also exists within the group, add it.
 						if (_fastGameBoard.groups[group][i]->col == col) {
+							if (!_fastGameBoard.groups[group][i]->guess) {
+								ZSHintGeneratorTileInstruction boxLineReductionTile;
+								boxLineReductionTile.row = _fastGameBoard.groups[group][i]->row;
+								boxLineReductionTile.col = _fastGameBoard.groups[group][i]->col;
+								[generator addBoxLineReductionTile:boxLineReductionTile];
+							}
+							
 							continue;
 						}
 						
 						if (!_fastGameBoard.groups[group][i]->guess && _fastGameBoard.groups[group][i]->pencils[guess]) {
-							[_fastGameBoard setPencil:NO forPencilNumber:(guess + 1) forTileAtRow:_fastGameBoard.groups[group][i]->row col:_fastGameBoard.groups[group][i]->col];
-							++totalPencilsEliminated;
+							ZSHintGeneratorTileInstruction instruction;
+							instruction.row = _fastGameBoard.groups[group][i]->row;
+							instruction.col = _fastGameBoard.groups[group][i]->col;
+							instruction.pencil = (guess + 1);
+							[generator addPencilToEliminate:instruction];
 						}
 					}
+					
+					return [generator generateHint];
 				}
 			}
 		}
 	}
 	
-	return totalPencilsEliminated;
+	return nil;
 }
 
+/*
 - (NSArray *)eliminatePencilsXWingOfSize:(NSInteger)size {
 	NSArray *hintCards = nil;
 	

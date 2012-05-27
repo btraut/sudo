@@ -96,6 +96,7 @@
 		84D1CB09156EE5A60027230B /* ZSHintGeneratorEliminatePencilsNakedSubgroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D1CB08156EE5A60027230B /* ZSHintGeneratorEliminatePencilsNakedSubgroup.m */; };
 		84D1CB1115703CB00027230B /* ZSHintGeneratorEliminatePencilsHiddenSubgroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D1CB1015703CB00027230B /* ZSHintGeneratorEliminatePencilsHiddenSubgroup.m */; };
 		84D1CB141571829E0027230B /* ZSHintGeneratorEliminatePencilsPointingPairs.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D1CB131571829E0027230B /* ZSHintGeneratorEliminatePencilsPointingPairs.m */; };
+		84D1CB171571A5280027230B /* ZSHintGeneratorEliminatePencilsBoxLineReduction.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D1CB161571A5280027230B /* ZSHintGeneratorEliminatePencilsBoxLineReduction.m */; };
 		84D55014147F1C4A00A7934E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D55013147F1C4A00A7934E /* UIKit.framework */; };
 		84D55016147F1C4A00A7934E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D55015147F1C4A00A7934E /* Foundation.framework */; };
 		84D55018147F1C4A00A7934E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D55017147F1C4A00A7934E /* CoreGraphics.framework */; };
@@ -245,6 +246,8 @@
 		84D1CB1015703CB00027230B /* ZSHintGeneratorEliminatePencilsHiddenSubgroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSHintGeneratorEliminatePencilsHiddenSubgroup.m; path = "ZenSudoku/Models/Hint Generators/ZSHintGeneratorEliminatePencilsHiddenSubgroup.m"; sourceTree = SOURCE_ROOT; };
 		84D1CB121571829D0027230B /* ZSHintGeneratorEliminatePencilsPointingPairs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSHintGeneratorEliminatePencilsPointingPairs.h; path = "ZenSudoku/Models/Hint Generators/ZSHintGeneratorEliminatePencilsPointingPairs.h"; sourceTree = SOURCE_ROOT; };
 		84D1CB131571829E0027230B /* ZSHintGeneratorEliminatePencilsPointingPairs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSHintGeneratorEliminatePencilsPointingPairs.m; path = "ZenSudoku/Models/Hint Generators/ZSHintGeneratorEliminatePencilsPointingPairs.m"; sourceTree = SOURCE_ROOT; };
+		84D1CB151571A5270027230B /* ZSHintGeneratorEliminatePencilsBoxLineReduction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSHintGeneratorEliminatePencilsBoxLineReduction.h; path = "ZenSudoku/Models/Hint Generators/ZSHintGeneratorEliminatePencilsBoxLineReduction.h"; sourceTree = SOURCE_ROOT; };
+		84D1CB161571A5280027230B /* ZSHintGeneratorEliminatePencilsBoxLineReduction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSHintGeneratorEliminatePencilsBoxLineReduction.m; path = "ZenSudoku/Models/Hint Generators/ZSHintGeneratorEliminatePencilsBoxLineReduction.m"; sourceTree = SOURCE_ROOT; };
 		84D5500F147F1C4A00A7934E /* ZenSudoku.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZenSudoku.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84D55013147F1C4A00A7934E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		84D55015147F1C4A00A7934E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -431,6 +434,8 @@
 				84D1CB1015703CB00027230B /* ZSHintGeneratorEliminatePencilsHiddenSubgroup.m */,
 				84D1CB121571829D0027230B /* ZSHintGeneratorEliminatePencilsPointingPairs.h */,
 				84D1CB131571829E0027230B /* ZSHintGeneratorEliminatePencilsPointingPairs.m */,
+				84D1CB151571A5270027230B /* ZSHintGeneratorEliminatePencilsBoxLineReduction.h */,
+				84D1CB161571A5280027230B /* ZSHintGeneratorEliminatePencilsBoxLineReduction.m */,
 			);
 			name = "Logic Technique Hint Generators";
 			path = "Sudoku Solving Utilities";
@@ -852,6 +857,7 @@
 				84D1CB09156EE5A60027230B /* ZSHintGeneratorEliminatePencilsNakedSubgroup.m in Sources */,
 				84D1CB1115703CB00027230B /* ZSHintGeneratorEliminatePencilsHiddenSubgroup.m in Sources */,
 				84D1CB141571829E0027230B /* ZSHintGeneratorEliminatePencilsPointingPairs.m in Sources */,
+				84D1CB171571A5280027230B /* ZSHintGeneratorEliminatePencilsBoxLineReduction.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
