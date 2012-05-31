@@ -84,7 +84,7 @@
 	[self.view addSubview:gameBoardViewController.view];
 	
 	// Build the answer options.
-	gameAnswerOptionsViewController = [ZSGameAnswerOptionsViewController gameAnswerOptionsViewControllerForGame:game];
+	gameAnswerOptionsViewController = [[ZSGameAnswerOptionsViewController alloc] initWithGameViewController:self];
 	gameAnswerOptionsViewController.view.frame = CGRectMake(6, 371, gameAnswerOptionsViewController.view.frame.size.width, gameAnswerOptionsViewController.view.frame.size.height);
 	gameAnswerOptionsViewController.delegate = self;
 	[self.view addSubview:gameAnswerOptionsViewController.view];
@@ -258,6 +258,8 @@
 				[gameAnswerOptionsViewController deselectGameAnswerOptionView];
 			}
 		}
+		
+		[gameAnswerOptionsViewController reloadView];
 	} else {
 		// If there was a previously selected tile, deselect it. Otherwise, select the new one.
 		if (selectedTileView == tileView) {
@@ -268,6 +270,7 @@
 			// Only allow the selection if the tile/guess order settings allow the tile to be selected before the answer option.
 			if (gameTileAnswerOrder == ZSGameTileAnswerOrderHybrid || gameTileAnswerOrder == ZSGameTileAnswerOrderTileFirst) {
 				[gameBoardViewController selectTileView:tileView];
+				[gameAnswerOptionsViewController reloadView];
 			}
 		}
 	}
@@ -367,6 +370,8 @@
 				[gameBoardViewController resetErrorHighlights];
 			}
 		}
+		
+		[gameAnswerOptionsViewController reloadView];
 	} else {
 		// If there was a previously selected answer option, deselect it. Otherwise, select the new one.
 		if (selectedGameAnswerOptionView == gameAnswerOptionView) {
@@ -477,12 +482,14 @@
 }
 
 - (void)pencilButtonWasTouched {
-	if (penciling) {
-		[gameBoardViewController deselectTileView];
-	}
+	// if (penciling) {
+	// 	[gameBoardViewController deselectTileView];
+	// }
 	
 	penciling = !penciling;
 	pencilButton.selected = penciling;
+	
+	[gameAnswerOptionsViewController reloadView];
 }
 
 - (void)autoPencilButtonWasTouched {
@@ -508,16 +515,20 @@
 	if (gameBoardViewController.selectedTileView) {
 		[gameBoardViewController resetSimilarHighlights];
 	}
+	
+	[gameAnswerOptionsViewController reloadView];
 }
 
 - (void)undoButtonWasTouched {
 	[gameBoardViewController deselectTileView];
 	[game undo];
+	[gameAnswerOptionsViewController reloadView];
 }
 
 - (void)redoButtonWasTouched {
 	[gameBoardViewController deselectTileView];
 	[game redo];
+	[gameAnswerOptionsViewController reloadView];
 }
 
 #pragma mark - ZSGameDelegate Methods

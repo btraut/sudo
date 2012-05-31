@@ -90,6 +90,8 @@
 		84AC26E01480DDBA00E966A5 /* ZSGameTile.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC26DF1480DDBA00E966A5 /* ZSGameTile.m */; };
 		84AC26E41480EB7E00E966A5 /* ZSGameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC26E31480EB7D00E966A5 /* ZSGameController.m */; };
 		84AC6B411508B35F00C2F192 /* UIColor+ColorWithHex.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC6B401508B35F00C2F192 /* UIColor+ColorWithHex.m */; };
+		84B0B1CC15777F1900A99510 /* BlueAnswerOptionSelection.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B0B1CA15777F1900A99510 /* BlueAnswerOptionSelection.png */; };
+		84B0B1CD15777F1900A99510 /* BlueAnswerOptionSelection@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B0B1CB15777F1900A99510 /* BlueAnswerOptionSelection@2x.png */; };
 		84B300F4148AF6FF00E568CE /* ZSGameHistoryEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B300F3148AF6FD00E568CE /* ZSGameHistoryEntry.m */; };
 		84C6110A14D94414003358FE /* ZSInstructionsRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C6110814D94414003358FE /* ZSInstructionsRootViewController.m */; };
 		84C6110B14D94414003358FE /* ZSInstructionsRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C6110914D94414003358FE /* ZSInstructionsRootViewController.xib */; };
@@ -235,6 +237,8 @@
 		84AC26E31480EB7D00E966A5 /* ZSGameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSGameController.m; path = "Model Controllers/ZSGameController.m"; sourceTree = "<group>"; };
 		84AC6B3F1508B35F00C2F192 /* UIColor+ColorWithHex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+ColorWithHex.h"; path = "External/UIColor+ColorWithHex/UIColor+ColorWithHex.h"; sourceTree = "<group>"; };
 		84AC6B401508B35F00C2F192 /* UIColor+ColorWithHex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+ColorWithHex.m"; path = "External/UIColor+ColorWithHex/UIColor+ColorWithHex.m"; sourceTree = "<group>"; };
+		84B0B1CA15777F1900A99510 /* BlueAnswerOptionSelection.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BlueAnswerOptionSelection.png; path = Resources/Images/BlueAnswerOptionSelection.png; sourceTree = "<group>"; };
+		84B0B1CB15777F1900A99510 /* BlueAnswerOptionSelection@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BlueAnswerOptionSelection@2x.png"; path = "Resources/Images/BlueAnswerOptionSelection@2x.png"; sourceTree = "<group>"; };
 		84B300F2148AF6FD00E568CE /* ZSGameHistoryEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSGameHistoryEntry.h; path = Models/ZSGameHistoryEntry.h; sourceTree = "<group>"; };
 		84B300F3148AF6FD00E568CE /* ZSGameHistoryEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSGameHistoryEntry.m; path = Models/ZSGameHistoryEntry.m; sourceTree = "<group>"; };
 		84C6110714D94414003358FE /* ZSInstructionsRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSInstructionsRootViewController.h; path = "View Controllers/ZSInstructionsRootViewController.h"; sourceTree = "<group>"; };
@@ -492,6 +496,8 @@
 				8435B42615456C0A00C15E87 /* PaperBackgroundCurled@2x.png */,
 				8428AD3A154A52F700BA8EE0 /* Default.png */,
 				8428AD3B154A52F700BA8EE0 /* Default@2x.png */,
+				84B0B1CA15777F1900A99510 /* BlueAnswerOptionSelection.png */,
+				84B0B1CB15777F1900A99510 /* BlueAnswerOptionSelection@2x.png */,
 				8494BE6914FAACCC00010233 /* Board.png */,
 				8494BE6A14FAACCC00010233 /* Board@2x.png */,
 				8494BE6F14FB117100010233 /* Pencil@2x.png */,
@@ -773,6 +779,8 @@
 				8428AD3C154A52F700BA8EE0 /* Default.png in Resources */,
 				8428AD3D154A52F700BA8EE0 /* Default@2x.png in Resources */,
 				8428AD3F154AA62600BA8EE0 /* HintPaper.png in Resources */,
+				84B0B1CC15777F1900A99510 /* BlueAnswerOptionSelection.png in Resources */,
+				84B0B1CD15777F1900A99510 /* BlueAnswerOptionSelection@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

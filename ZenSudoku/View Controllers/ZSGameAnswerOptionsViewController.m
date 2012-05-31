@@ -9,11 +9,13 @@
 #import "ZSGameAnswerOptionsViewController.h"
 #import "ZSGameAnswerOptionViewController.h"
 #import "ZSGameViewController.h"
+#import "ZSGameBoardViewController.h"
+#import "ZSGameTile.h"
 #import "ZSGame.h"
 #import "ZSGameBoard.h"
 
 #define DEFAULT_FRAME_HEIGHT 300
-#define DEFAUTL_FRAME_WIDTH 31
+#define DEFAULT_FRAME_WIDTH 31
 
 @interface ZSGameAnswerOptionsViewController () {
 	BOOL _answerOptionIsBeingTouched;
@@ -24,20 +26,16 @@
 
 @implementation ZSGameAnswerOptionsViewController
 
-@synthesize game;
+@synthesize gameViewController;
 @synthesize delegate;
 @synthesize gameAnswerOptionViewControllers, pencilToggleButton;
 @synthesize selectedGameAnswerOptionView;
 
-+ (id)gameAnswerOptionsViewControllerForGame:(ZSGame *)newGame {
-	return [[ZSGameAnswerOptionsViewController alloc] initWithGame:newGame];
-}
-
-- (id)initWithGame:(ZSGame *)newGame {
+- (id)initWithGameViewController:(ZSGameViewController *)newGameViewController {
 	self = [self init];
 	
 	if (self) {
-		game = newGame;
+		gameViewController = newGameViewController;
 	}
 	
 	return self;
@@ -50,7 +48,7 @@
 #pragma mark - View Lifecycle
 
 - (void)loadView {
-	self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, DEFAULT_FRAME_HEIGHT, DEFAUTL_FRAME_WIDTH)];
+	self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, DEFAULT_FRAME_HEIGHT, DEFAULT_FRAME_WIDTH)];
 	self.view.userInteractionEnabled = YES;
 }
 
@@ -63,15 +61,16 @@
 	
 	NSInteger xOffset = 0;
 	
-	for (NSInteger i = 0; i < game.gameBoard.size; i++) {
+	for (NSInteger i = 0; i < gameViewController.game.gameBoard.size; i++) {
 		gameAnswerOptionViewController = [[ZSGameAnswerOptionViewController alloc] initWithGameAnswerOption:(ZSGameAnswerOption)i];
 		gameAnswerOptionViewController.view.frame = CGRectMake(xOffset, 0, gameAnswerOptionViewController.view.frame.size.width, gameAnswerOptionViewController.view.frame.size.height);
 		gameAnswerOptionViewController.delegate = self;
+		gameAnswerOptionViewController.gameAnswerOptionsViewController = self;
 		
 		[self.view addSubview:gameAnswerOptionViewController.view];
 		[buttons addObject:gameAnswerOptionViewController];
 		
-		xOffset += DEFAUTL_FRAME_WIDTH;
+		xOffset += DEFAULT_FRAME_WIDTH;
 	}
 	
 	gameAnswerOptionViewControllers = [NSArray arrayWithArray:buttons];
@@ -87,13 +86,18 @@
 }
 
 - (void)reloadView {
+	ZSGameBoardTileViewController *selectedTile = gameViewController.gameBoardViewController.selectedTileView;
+	
 	for (ZSGameAnswerOptionViewController *gameAnswerOptionViewController in gameAnswerOptionViewControllers) {
 		// Check if the answer option is at quota.
-		if ([game allowsGuess:((NSInteger)gameAnswerOptionViewController.gameAnswerOption + 1)]) {
+		if ([gameViewController.game allowsGuess:((NSInteger)gameAnswerOptionViewController.gameAnswerOption + 1)]) {
 			gameAnswerOptionViewController.enabled = YES;
+			gameAnswerOptionViewController.toggled = [selectedTile.tile getPencilForGuess:((NSInteger)gameAnswerOptionViewController.gameAnswerOption + 1)];
 		} else {
 			gameAnswerOptionViewController.enabled = NO;
 		}
+		
+		gameAnswerOptionViewController.selected = selectedTile.tile.guess && selectedTile.tile.guess == ((NSInteger)gameAnswerOptionViewController.gameAnswerOption + 1);
 		
 		// Reload the answer option.
 		[gameAnswerOptionViewController reloadView];

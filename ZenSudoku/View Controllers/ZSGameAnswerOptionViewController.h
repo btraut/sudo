@@ -10,6 +10,7 @@
 #import "ZSGame.h"
 
 @class ZSGameAnswerOptionViewController;
+@class ZSGameAnswerOptionsViewController;
 
 @protocol ZSGameAnswerOptionTouchDelegate <NSObject>
 
@@ -20,16 +21,23 @@
 @end
 
 @interface ZSGameAnswerOptionViewController : UIViewController {
+	ZSGameAnswerOptionsViewController *gameAnswerOptionsViewController;
+	
 	ZSGameAnswerOption gameAnswerOption;
 	BOOL selected;
 	BOOL enabled;
+	BOOL toggled;
 	
 	NSObject *delegate;
 }
 
+@property (nonatomic, strong) ZSGameAnswerOptionsViewController *gameAnswerOptionsViewController;
+
 @property (assign) ZSGameAnswerOption gameAnswerOption;
-@property (assign, readonly) BOOL selected;
+
+@property (assign) BOOL selected;
 @property (assign) BOOL enabled;
+@property (assign) BOOL toggled;
 
 @property (strong) NSObject *delegate;
 

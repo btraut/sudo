@@ -10,10 +10,10 @@
 #import "ZSGame.h"
 #import "ZSGameAnswerOptionViewController.h"
 
-@class ZSGame;
+@class ZSGameViewController;
 
 @interface ZSGameAnswerOptionsViewController : UIViewController <ZSGameAnswerOptionTouchDelegate> {
-	ZSGame *game;
+	ZSGameViewController *gameViewController;
 	
 	NSObject *delegate;
 	
@@ -23,9 +23,7 @@
 	ZSGameAnswerOptionViewController *selectedGameAnswerOptionView;
 }
 
-+ (id)gameAnswerOptionsViewControllerForGame:(ZSGame *)newGame;
-
-- (id)initWithGame:(ZSGame *)newGame;
+- (id)initWithGameViewController:(ZSGameViewController *)newGameViewController;
 
 - (ZSGameAnswerOptionViewController *)getGameAnswerOptionViewControllerForGameAnswerOption:(ZSGameAnswerOption)gameAnswerOption;
 
@@ -38,7 +36,7 @@
 - (void)selectGameAnswerOptionView:(ZSGameAnswerOptionViewController *)gameAnswerOptionViewController;
 - (void)deselectGameAnswerOptionView;
 
-@property (strong) ZSGame *game;
+@property (strong) ZSGameViewController *gameViewController;
 
 @property (strong) NSObject *delegate;
 

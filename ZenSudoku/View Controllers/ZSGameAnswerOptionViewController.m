@@ -7,8 +7,25 @@
 //
 
 #import "ZSGameAnswerOptionViewController.h"
+#import "ZSGameAnswerOptionsViewController.h"
+#import "ZSGameViewController.h"
+#import "UIColor+ColorWithHex.h"
+
+// Tile Color Constants
+NSString * const kTextColorAnswerOptionNormal = @"#FF000000";
+NSString * const kTextColorAnswerOptionDisabled = @"#22000000";
+NSString * const kTextColorAnswerOptionToggledOn = @"#FF000000";
+NSString * const kTextColorAnswerOptionToggledOff = @"#77000000";
+
+NSString * const kTextShadowColorAnswerOptionNormal = @"FFFFFFFF";
+NSString * const kTextShadowColorAnswerOptionDisabled = @"22FFFFFF";
+NSString * const kTextShadowColorAnswerOptionToggledOn = @"FFFFFFFF";
+NSString * const kTextShadowColorAnswerOptionToggledOff = @"77FFFFFF";
 
 @interface ZSGameAnswerOptionViewController () {
+	UILabel *_labelView;
+	UIImageView *_selectionView;
+	
 	BOOL _previousTouchWasInBounds;
 }
 
@@ -16,7 +33,9 @@
 
 @implementation ZSGameAnswerOptionViewController
 
-@synthesize gameAnswerOption, selected, enabled;
+@synthesize gameAnswerOptionsViewController;
+@synthesize gameAnswerOption;
+@synthesize selected, enabled, toggled;
 @synthesize delegate;
 
 - (id)init {
@@ -44,20 +63,31 @@
 #pragma mark - View Lifecycle
 
 - (void)loadView {
-	UILabel *theView = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 31, 31)];
-	theView.font = [UIFont fontWithName:@"ReklameScript-Regular" size:34.0f];
-	theView.textAlignment = UITextAlignmentCenter;
-	theView.backgroundColor = [UIColor clearColor];
-	theView.userInteractionEnabled = YES;
-	
-	self.view = theView;
-	
+	_labelView = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 31, 31)];
+	_labelView.font = [UIFont fontWithName:@"ReklameScript-Regular" size:34.0f];
+	_labelView.textAlignment = UITextAlignmentCenter;
+	_labelView.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
+	_labelView.lineBreakMode = UILineBreakModeClip;
+	_labelView.textColor = [UIColor colorWithAlphaHexString:kTextColorAnswerOptionNormal];
+	_labelView.backgroundColor = [UIColor clearColor];
+	_labelView.shadowColor = [UIColor colorWithAlphaHexString:kTextShadowColorAnswerOptionNormal];
+	_labelView.shadowOffset = CGSizeMake(0, 1);
 	[self setLabel];
+	
+	UIImage *selectionImage = [UIImage imageNamed:@"BlueAnswerOptionSelection"];
+	_selectionView = [[UIImageView alloc] initWithImage:selectionImage];
+	_selectionView.frame = CGRectMake(-4, -4, _selectionView.frame.size.width, _selectionView.frame.size.height);
+	_selectionView.alpha = 0.4f;
+	_selectionView.hidden = YES;
+	
+	self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 31, 31)];
+	self.view.clipsToBounds = NO;
+	
+	[self.view addSubview:_selectionView];
+	[self.view addSubview:_labelView];
 }
 
 - (void)setLabel {
-	UILabel *theView = (UILabel *)self.view;
-	
 	switch (gameAnswerOption) {
 		case ZSGameAnswerOption1:
 		case ZSGameAnswerOption2:
@@ -68,7 +98,7 @@
 		case ZSGameAnswerOption7:
 		case ZSGameAnswerOption8:
 		case ZSGameAnswerOption9:
-			theView.text = [NSString stringWithFormat:@"%i", ((NSInteger)gameAnswerOption + 1)];
+			_labelView.text = [NSString stringWithFormat:@"%i", ((NSInteger)gameAnswerOption + 1)];
 			break;
 		
 		default:
@@ -77,25 +107,25 @@
 }
 
 - (void)reloadView {
-	UILabel *theView = (UILabel *)self.view;
-	
 	if (enabled) {
-		theView.textColor = [UIColor blackColor];
+		if (gameAnswerOptionsViewController.gameViewController.penciling) {
+			if (toggled) {
+				_labelView.textColor = [UIColor colorWithAlphaHexString:kTextColorAnswerOptionToggledOn];
+				_labelView.shadowColor = [UIColor colorWithAlphaHexString:kTextShadowColorAnswerOptionToggledOn];
+			} else {
+				_labelView.textColor = [UIColor colorWithAlphaHexString:kTextColorAnswerOptionToggledOff];
+				_labelView.shadowColor = [UIColor colorWithAlphaHexString:kTextShadowColorAnswerOptionToggledOff];
+			}
+		} else {
+			_labelView.textColor = [UIColor colorWithAlphaHexString:kTextColorAnswerOptionNormal];
+			_labelView.shadowColor = [UIColor colorWithAlphaHexString:kTextShadowColorAnswerOptionNormal];
+		}
 	} else {
-		theView.textColor = [UIColor colorWithWhite:0.5 alpha:1.0];
+		_labelView.textColor = [UIColor colorWithAlphaHexString:kTextColorAnswerOptionDisabled];
+		_labelView.shadowColor = [UIColor colorWithAlphaHexString:kTextShadowColorAnswerOptionDisabled];
 	}
-}
-
-#pragma mark - Sudoku Stuff
-
-- (void)setSelected:(BOOL)newSelected {
-	selected = newSelected;
 	
-	if (selected) {
-		self.view.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:1.0 alpha:0.2];
-	} else {
-		self.view.backgroundColor = [UIColor clearColor];
-	}
+	_selectionView.hidden = !selected;
 }
 
 #pragma mark - Touch Events
