@@ -8,6 +8,12 @@
 
 #import "ZSGameAnswerOptionViewController.h"
 
+@interface ZSGameAnswerOptionViewController () {
+	BOOL _previousTouchWasInBounds;
+}
+
+@end
+
 @implementation ZSGameAnswerOptionViewController
 
 @synthesize gameAnswerOption, selected, enabled;
@@ -47,18 +53,6 @@
 	self.view = theView;
 	
 	[self setLabel];
-}
-
-- (void)viewDidLoad {
-	[super viewDidLoad];
-	
-	// Listen to the view's taps.
-	UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap)];
-	[self.view addGestureRecognizer:gestureRecognizer];
-}
-
-- (void)viewDidUnload {
-	[super viewDidUnload];
 }
 
 - (void)setLabel {
@@ -106,9 +100,21 @@
 
 #pragma mark - Touch Events
 
+- (void)handleTouchEnter {
+	if (enabled) {
+		[(id<ZSGameAnswerOptionTouchDelegate>)delegate gameAnswerOptionTouchEntered:self];
+	}
+}
+
+- (void)handleTouchExit {
+	if (enabled) {
+		[(id<ZSGameAnswerOptionTouchDelegate>)delegate gameAnswerOptionTouchExited:self];
+	}
+}
+
 - (void)handleTap {
 	if (enabled) {
-		[(id<ZSGameAnswerOptionTouchDelegate>)delegate gameAnswerOptionWasTouched:self];
+		[(id<ZSGameAnswerOptionTouchDelegate>)delegate gameAnswerOptionTapped:self];
 	}
 }
 

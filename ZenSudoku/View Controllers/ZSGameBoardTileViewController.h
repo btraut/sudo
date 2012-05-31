@@ -15,6 +15,7 @@ typedef enum {
 	ZSGameBoardTileTextTypeAnswer,
 	ZSGameBoardTileTextTypeGuess,
 	ZSGameBoardTileTextTypeGuessSelected,
+	ZSGameBoardTileTextTypeGuessFingerDown,
 	ZSGameBoardTileTextTypeGuessError,
 	ZSGameBoardTileTextTypeGuessErrorSelected,
 	ZSGameBoardTileTextTypeHighlightHintA,
@@ -74,6 +75,8 @@ typedef enum {
     ZSGameBoardTileTextType textType;
     ZSGameBoardTileBackgroundType backgroundType;
     
+	BOOL ghosted;
+	NSInteger ghostedValue;
 	BOOL selected;
 	BOOL error;
 	BOOL highlightedSimilar;
@@ -93,6 +96,8 @@ typedef enum {
 @property (assign) ZSGameBoardTileTextType textType;
 @property (assign) ZSGameBoardTileBackgroundType backgroundType;
 
+@property (assign) BOOL ghosted;
+@property (assign) NSInteger ghostedValue;
 @property (assign) BOOL selected;
 @property (assign) BOOL highlightedSimilar;
 @property (assign) BOOL highlightedError;
@@ -118,11 +123,13 @@ typedef enum {
 extern NSString * const kTextColorAnswer;
 extern NSString * const kTextColorGuess;
 extern NSString * const kTextColorGuessSelected;
+extern NSString * const kTextColorGuessFingerDown;
 extern NSString * const kTextColorError;
 extern NSString * const kTextColorErrorSelected;
 
 extern NSString * const kTextShadowColorGuess;
 extern NSString * const kTextShadowColorGuessSelected;
+extern NSString * const kTextShadowColorGuessFingerDown;
 
 extern NSString * const kTileColorDefault;
 extern NSString * const kTileColorSelected;

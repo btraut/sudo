@@ -16,6 +16,7 @@
 NSString * const kTextColorAnswer = @"#FF2B2B2B";
 NSString * const kTextColorGuess = @"#FF666666";
 NSString * const kTextColorGuessSelected = @"#FF595959";
+NSString * const kTextColorGuessFingerDown = @"#FF666666";
 NSString * const kTextColorError = @"#FFA70404";
 NSString * const kTextColorErrorSelected = @"#FFA70404";
 NSString * const kTextColorHighlightHintA = @"#FFA70404";
@@ -27,6 +28,7 @@ NSString * const kTextColorPencilHighlightHintB = @"#FF16BE3D";
 
 NSString * const kTextShadowColorGuess = @"66FFFFFF";
 NSString * const kTextShadowColorGuessSelected = @"44FFFFFF";
+NSString * const kTextShadowColorGuessFingerDown = @"66FFFFFF";
 
 NSString * const kTileColorDefault = @"#00FFFFFF";
 NSString * const kTileColorSelected = @"#CC2F83D4";
@@ -44,13 +46,14 @@ NSString * const kTileColorHighlightHintD = @"#4C2FADD4";
 
 @synthesize tile, delegate;
 @synthesize textType, backgroundType;
-@synthesize selected, highlightedSimilar, highlightedError, error;
+@synthesize ghosted, ghostedValue, selected, highlightedSimilar, highlightedError, error;
 @synthesize highlightedHintType, highlightGuessHint, highlightPencilHints;
 
 - (id)init {
 	self = [super init];
 	
 	if (self) {
+		ghosted = NO;
 		selected = NO;
 		highlightedSimilar = NO;
 		highlightedError = NO;
@@ -144,7 +147,10 @@ NSString * const kTileColorHighlightHintD = @"#4C2FADD4";
 
 - (void)reloadView {
 	// Choose whether to show the guess or pencil marks.
-	if (tile.guess) {
+	if (ghosted) {
+		guessView.text = [NSString stringWithFormat:@"%i", ghostedValue];
+		[self showGuess];		
+	} else if (tile.guess) {
 		guessView.text = [NSString stringWithFormat:@"%i", tile.guess];
 		[self showGuess];		
 	} else {
@@ -168,7 +174,12 @@ NSString * const kTileColorHighlightHintD = @"#4C2FADD4";
 			
 		case ZSGameBoardTileTextTypeGuessSelected:
 			guessView.textColor = [UIColor colorWithAlphaHexString:kTextColorGuessSelected];
-			guessView.shadowColor = [UIColor colorWithAlphaHexString:kTextShadowColorGuessSelected];
+			guessView.shadowColor = [UIColor colorWithAlphaHexString:kTextShadowColorGuessFingerDown];
+			break;
+			
+		case ZSGameBoardTileTextTypeGuessFingerDown:
+			guessView.textColor = [UIColor colorWithAlphaHexString:kTextColorGuessFingerDown];
+			guessView.shadowColor = [UIColor colorWithAlphaHexString:kTextShadowColorGuess];
 			break;
 			
 		case ZSGameBoardTileTextTypeGuessError:
@@ -243,40 +254,44 @@ NSString * const kTileColorHighlightHintD = @"#4C2FADD4";
 
 - (void)reloadTextAndBackgroundType {
 	// Choose the text color.
-	if (tile.guess) {
-		if (highlightGuessHint == ZSGameBoardTileTextHintHighlightTypeNone) {
-			if (tile.locked) {
-				textType = ZSGameBoardTileTextTypeAnswer;
-			} else {
-				if (selected) {
-					if (error) {
-						textType = ZSGameBoardTileTextTypeGuessErrorSelected;
-					} else {
-						textType = ZSGameBoardTileTextTypeGuessSelected;
-					}
+	if (ghosted) {
+		textType = ZSGameBoardTileTextTypeGuessFingerDown;
+	} else {
+		if (tile.guess) {
+			if (highlightGuessHint == ZSGameBoardTileTextHintHighlightTypeNone) {
+				if (tile.locked) {
+					textType = ZSGameBoardTileTextTypeAnswer;
 				} else {
-					if (error) {
-						textType = ZSGameBoardTileTextTypeGuessError;
+					if (selected) {
+						if (error) {
+							textType = ZSGameBoardTileTextTypeGuessErrorSelected;
+						} else {
+							textType = ZSGameBoardTileTextTypeGuessSelected;
+						}
 					} else {
-						textType = ZSGameBoardTileTextTypeGuess;
+						if (error) {
+							textType = ZSGameBoardTileTextTypeGuessError;
+						} else {
+							textType = ZSGameBoardTileTextTypeGuess;
+						}
 					}
+				}
+			} else {
+				switch (highlightGuessHint) {
+					case ZSGameBoardTileTextHintHighlightTypeA: textType = ZSGameBoardTileTextTypeHighlightHintA; break;
+					case ZSGameBoardTileTextHintHighlightTypeB: textType = ZSGameBoardTileTextTypeHighlightHintB; break;
+					default: break;
 				}
 			}
 		} else {
-			switch (highlightGuessHint) {
-				case ZSGameBoardTileTextHintHighlightTypeA: textType = ZSGameBoardTileTextTypeHighlightHintA; break;
-				case ZSGameBoardTileTextHintHighlightTypeB: textType = ZSGameBoardTileTextTypeHighlightHintB; break;
-				default: break;
-			}
-		}
-	} else {
-		for (NSInteger i = 0; i < 9; ++i) {
-			UILabel *pencilView = [pencilViews objectAtIndex:i];
-			
-			switch (highlightPencilHints[i]) {
-				case ZSGameBoardTilePencilTextTypeNormal: pencilView.textColor = [UIColor colorWithAlphaHexString:kTextColorPencil]; break;
-				case ZSGameBoardTilePencilTextTypeHighlightHintA: pencilView.textColor = [UIColor colorWithAlphaHexString:kTextColorPencilHighlightHintA]; break;
-				case ZSGameBoardTilePencilTextTypeHighlightHintB: pencilView.textColor = [UIColor colorWithAlphaHexString:kTextColorPencilHighlightHintB]; break;
+			for (NSInteger i = 0; i < 9; ++i) {
+				UILabel *pencilView = [pencilViews objectAtIndex:i];
+				
+				switch (highlightPencilHints[i]) {
+					case ZSGameBoardTilePencilTextTypeNormal: pencilView.textColor = [UIColor colorWithAlphaHexString:kTextColorPencil]; break;
+					case ZSGameBoardTilePencilTextTypeHighlightHintA: pencilView.textColor = [UIColor colorWithAlphaHexString:kTextColorPencilHighlightHintA]; break;
+					case ZSGameBoardTilePencilTextTypeHighlightHintB: pencilView.textColor = [UIColor colorWithAlphaHexString:kTextColorPencilHighlightHintB]; break;
+				}
 			}
 		}
 	}

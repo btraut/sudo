@@ -13,7 +13,9 @@
 
 @protocol ZSGameAnswerOptionTouchDelegate <NSObject>
 
-- (void)gameAnswerOptionWasTouched:(ZSGameAnswerOptionViewController *)gameAnswerOptionView;
+- (void)gameAnswerOptionTouchEntered:(ZSGameAnswerOptionViewController *)gameAnswerOptionView;
+- (void)gameAnswerOptionTouchExited:(ZSGameAnswerOptionViewController *)gameAnswerOptionView;
+- (void)gameAnswerOptionTapped:(ZSGameAnswerOptionViewController *)gameAnswerOptionView;
 
 @end
 
@@ -37,5 +39,9 @@
 - (void)reloadView;
 
 - (void)setSelected:(BOOL)selected;
+
+- (void)handleTouchEnter;
+- (void)handleTouchExit;
+- (void)handleTap;
 
 @end

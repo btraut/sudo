@@ -88,6 +88,7 @@
 	gameAnswerOptionsViewController.view.frame = CGRectMake(6, 371, gameAnswerOptionsViewController.view.frame.size.width, gameAnswerOptionsViewController.view.frame.size.height);
 	gameAnswerOptionsViewController.delegate = self;
 	[self.view addSubview:gameAnswerOptionsViewController.view];
+	[gameAnswerOptionsViewController reloadView];
 	
 	// Build pencil button.
 	pencilButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -272,7 +273,57 @@
 	}
 }
 
-- (void)gameAnswerOptionWasTouchedWithGameAnswerOption:(ZSGameAnswerOption)gameAnswerOption {
+- (void)gameAnswerOptionTouchEnteredWithGameAnswerOption:(ZSGameAnswerOption)gameAnswerOption {
+	// If we aren't allowing input, end here.
+	if (!allowsInput) {
+		return;
+	}
+	
+	// Save the selected tile and answer option. One or both may be nil.
+	ZSGameBoardTileViewController *selectedTileView = gameBoardViewController.selectedTileView;
+	
+	// Only show a preview if a tile is selected.
+	if (selectedTileView) {
+		// Only allow the modification if the tile is user-entered.
+		if (selectedTileView.tile.locked) {
+			return;
+		}
+		
+		// No previews for pencils.
+		if (!penciling) {
+			selectedTileView.ghosted = YES;
+			selectedTileView.ghostedValue = (NSInteger)gameAnswerOption + 1;
+			[selectedTileView reloadView];
+		}
+	}
+}
+
+- (void)gameAnswerOptionTouchExitedWithGameAnswerOption:(ZSGameAnswerOption)gameAnswerOption {
+	// If we aren't allowing input, end here.
+	if (!allowsInput) {
+		return;
+	}
+	
+	// Save the selected tile and answer option. One or both may be nil.
+	ZSGameBoardTileViewController *selectedTileView = gameBoardViewController.selectedTileView;
+	
+	// Only show a preview if a tile is selected.
+	if (selectedTileView) {
+		// Only allow the modification if the tile is user-entered.
+		if (selectedTileView.tile.locked) {
+			return;
+		}
+		
+		// No previews for pencils.
+		if (!penciling) {
+			selectedTileView.ghosted = NO;
+			selectedTileView.ghostedValue = 0;
+			[selectedTileView reloadView];
+		}
+	}
+}
+
+- (void)gameAnswerOptionTappedWithGameAnswerOption:(ZSGameAnswerOption)gameAnswerOption {
 	// Fetch the touched game answer option view controller.
 	ZSGameAnswerOptionViewController *gameAnswerOptionView = [gameAnswerOptionsViewController.gameAnswerOptionViewControllers objectAtIndex:gameAnswerOption];
 	
@@ -343,6 +394,9 @@
 
 - (void)setAnswerForGameBoardTile:(ZSGameBoardTileViewController *)tileView withAnswerOption:(ZSGameAnswerOptionViewController *)answerOptionView {
 	NSInteger guess = ((NSInteger)answerOptionView.gameAnswerOption + 1);
+	
+	tileView.ghosted = NO;
+	tileView.ghostedValue = 0;
 	
 	if (tileView.tile.guess == guess) {
 		// The user is picking the same guess that already exists in the tile. Clear the guess.
@@ -476,21 +530,7 @@
 	[[gameBoardViewController getGameBoardTileViewControllerAtRow:row col:col] reloadView];
 	
 	// Reload the answer options to reflect the available options.
-	// [gameAnswerOptionsViewController reloadView];
-	
-//	// If there was previously a guess and it's being replaced or erased, and its answer option was disabled due to quota, re-enable it.
-//	if (tileView.tile.guess && ![game allowsGuess:tileView.tile.guess]) {
-//		ZSGameAnswerOptionViewController *disabledGameAnswerOptionViewController = [[gameAnswerOptionsViewController gameAnswerOptionViewControllers] objectAtIndex:(tileView.tile.guess - 1)];
-//		disabledGameAnswerOptionViewController.enabled = YES;
-//		[disabledGameAnswerOptionViewController reloadView];
-//	}
-//	
-//	// If the new guess is at quota, disable the answer option for it.
-//	if (![game allowsGuess:tileView.tile.guess]) {
-//		answerOptionView.enabled = NO;
-//		[gameAnswerOptionsViewController deselectGameAnswerOptionView];
-//		[gameAnswerOptionsViewController reloadView];
-//	}
+	[gameAnswerOptionsViewController reloadView];
 }
 
 - (void)tilePencilDidChange:(BOOL)isSet forPencilNumber:(NSInteger)pencilNumber forTileAtRow:(NSInteger)row col:(NSInteger)col {

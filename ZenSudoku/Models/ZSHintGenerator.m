@@ -869,7 +869,7 @@
 					ZSGameTileStub **rowSet = _fastGameBoard.rows[alignedRow];
 					
 					ZSHintGeneratorEliminatePencilsPointingPairs *generator = [[ZSHintGeneratorEliminatePencilsPointingPairs alloc] init];
-					
+					generator.scope = ZSHintGeneratorTileScopeRow;
 					generator.targetPencil = (guess + 1);
 					
 					for (NSInteger i = 0; i < _fastGameBoard.size; ++i) {
@@ -914,7 +914,7 @@
 					ZSGameTileStub **colSet = _fastGameBoard.cols[alignedCol];
 					
 					ZSHintGeneratorEliminatePencilsPointingPairs *generator = [[ZSHintGeneratorEliminatePencilsPointingPairs alloc] init];
-					
+					generator.scope = ZSHintGeneratorTileScopeCol;
 					generator.targetPencil = (guess + 1);
 					
 					for (NSInteger i = 0; i < _fastGameBoard.size; ++i) {

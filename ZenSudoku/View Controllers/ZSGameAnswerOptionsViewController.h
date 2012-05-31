@@ -31,7 +31,10 @@
 
 - (void)reloadView;
 
-- (void)gameAnswerOptionWasTouched:(ZSGameAnswerOptionViewController *)gameAnswerOptionView;
+- (void)gameAnswerOptionTouchEntered:(ZSGameAnswerOptionViewController *)gameAnswerOptionView;
+- (void)gameAnswerOptionTouchExited:(ZSGameAnswerOptionViewController *)gameAnswerOptionView;
+- (void)gameAnswerOptionTapped:(ZSGameAnswerOptionViewController *)gameAnswerOptionView;
+
 - (void)selectGameAnswerOptionView:(ZSGameAnswerOptionViewController *)gameAnswerOptionViewController;
 - (void)deselectGameAnswerOptionView;
 

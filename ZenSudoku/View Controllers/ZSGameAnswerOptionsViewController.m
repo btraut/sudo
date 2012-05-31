@@ -12,6 +12,16 @@
 #import "ZSGame.h"
 #import "ZSGameBoard.h"
 
+#define DEFAULT_FRAME_HEIGHT 300
+#define DEFAUTL_FRAME_WIDTH 31
+
+@interface ZSGameAnswerOptionsViewController () {
+	BOOL _answerOptionIsBeingTouched;
+	ZSGameAnswerOption _previousTouchedAnswerOption;
+}
+
+@end
+
 @implementation ZSGameAnswerOptionsViewController
 
 @synthesize game;
@@ -40,7 +50,8 @@
 #pragma mark - View Lifecycle
 
 - (void)loadView {
-	self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 30)];
+	self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, DEFAULT_FRAME_HEIGHT, DEFAUTL_FRAME_WIDTH)];
+	self.view.userInteractionEnabled = YES;
 }
 
 - (void)viewDidLoad {
@@ -60,7 +71,7 @@
 		[self.view addSubview:gameAnswerOptionViewController.view];
 		[buttons addObject:gameAnswerOptionViewController];
 		
-		xOffset += 31;
+		xOffset += DEFAUTL_FRAME_WIDTH;
 	}
 	
 	gameAnswerOptionViewControllers = [NSArray arrayWithArray:buttons];
@@ -77,6 +88,14 @@
 
 - (void)reloadView {
 	for (ZSGameAnswerOptionViewController *gameAnswerOptionViewController in gameAnswerOptionViewControllers) {
+		// Check if the answer option is at quota.
+		if ([game allowsGuess:((NSInteger)gameAnswerOptionViewController.gameAnswerOption + 1)]) {
+			gameAnswerOptionViewController.enabled = YES;
+		} else {
+			gameAnswerOptionViewController.enabled = NO;
+		}
+		
+		// Reload the answer option.
 		[gameAnswerOptionViewController reloadView];
 	}
 }
@@ -101,10 +120,112 @@
 	}
 }
 
+#pragma mark - Handle Touches
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+	// Figure out which (if any) option is being touched.
+	UITouch *touch = [touches anyObject];
+	ZSGameAnswerOptionViewController *touchedViewController;
+	
+	CGPoint touchPoint = [touch locationInView:self.view];
+	BOOL touchIsInBounds = touchPoint.x >= 0 && touchPoint.y >= 0 && touchPoint.x < self.view.frame.size.width && touchPoint.y < self.view.frame.size.height;
+	
+	if (touchIsInBounds) {
+		for (ZSGameAnswerOptionViewController *viewController in gameAnswerOptionViewControllers) {
+			if (touchPoint.x >= viewController.view.frame.origin.x && touchPoint.x < viewController.view.frame.origin.x + viewController.view.frame.size.width) {
+				touchedViewController = viewController;
+				break;
+			}
+		}
+	}
+	
+	// Mark the option as touched.
+	if (touchedViewController && touchedViewController.enabled) {
+		[touchedViewController handleTouchEnter];
+		
+		_answerOptionIsBeingTouched = YES;
+		_previousTouchedAnswerOption = touchedViewController.gameAnswerOption;
+	}
+}
+
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+	// Figure out which (if any) option is being touched.
+	UITouch *touch = [touches anyObject];
+	ZSGameAnswerOptionViewController *touchedViewController;
+	
+	CGPoint touchPoint = [touch locationInView:self.view];
+	BOOL touchIsInBounds = touchPoint.x >= 0 && touchPoint.y >= 0 && touchPoint.x < self.view.frame.size.width && touchPoint.y < self.view.frame.size.height;
+	
+	if (touchIsInBounds) {
+		for (ZSGameAnswerOptionViewController *viewController in gameAnswerOptionViewControllers) {
+			if (touchPoint.x >= viewController.view.frame.origin.x && touchPoint.x < viewController.view.frame.origin.x + viewController.view.frame.size.width) {
+				touchedViewController = viewController;
+				break;
+			}
+		}
+	}
+	
+	// If the user is touching a tile, mark it touched. If a previous one was being touched, turn that one off first.
+	if (touchedViewController && touchedViewController.enabled) {
+		if (_answerOptionIsBeingTouched) {
+			if (_previousTouchedAnswerOption != touchedViewController.gameAnswerOption) {
+				[[self getGameAnswerOptionViewControllerForGameAnswerOption:_previousTouchedAnswerOption] handleTouchExit];
+				[touchedViewController handleTouchEnter];
+			}
+		} else {
+			[touchedViewController handleTouchEnter];
+		}
+		
+		_answerOptionIsBeingTouched = YES;
+		_previousTouchedAnswerOption = touchedViewController.gameAnswerOption;
+	} else {
+		if (_answerOptionIsBeingTouched) {
+			_answerOptionIsBeingTouched = NO;
+			[[self getGameAnswerOptionViewControllerForGameAnswerOption:_previousTouchedAnswerOption] handleTouchExit];
+		}
+	}
+}
+
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+	// Figure out which (if any) option is being touched.
+	UITouch *touch = [touches anyObject];
+	ZSGameAnswerOptionViewController *touchedViewController;
+	
+	CGPoint touchPoint = [touch locationInView:self.view];
+	BOOL touchIsInBounds = touchPoint.x >= 0 && touchPoint.y >= 0 && touchPoint.x < self.view.frame.size.width && touchPoint.y < self.view.frame.size.height;
+	
+	if (touchIsInBounds) {
+		for (ZSGameAnswerOptionViewController *viewController in gameAnswerOptionViewControllers) {
+			if (touchPoint.x >= viewController.view.frame.origin.x && touchPoint.x < viewController.view.frame.origin.x + viewController.view.frame.size.width) {
+				touchedViewController = viewController;
+				break;
+			}
+		}
+	}
+	
+	// If an answer option was being touched, turn it off and register a tap.
+	if (touchedViewController && touchedViewController.enabled) {
+		[touchedViewController handleTouchExit];
+		[touchedViewController handleTap];
+	}
+	
+	_answerOptionIsBeingTouched = NO;
+}
+
 #pragma mark - Delegate Responsibilities
 
-- (void)gameAnswerOptionWasTouched:(ZSGameAnswerOptionViewController *)newSelected {
-	[(ZSGameViewController *)delegate gameAnswerOptionWasTouchedWithGameAnswerOption:newSelected.gameAnswerOption];
+- (void)gameAnswerOptionTouchEntered:(ZSGameAnswerOptionViewController *)touchedView {
+	[(ZSGameViewController *)delegate gameAnswerOptionTouchEnteredWithGameAnswerOption:touchedView.gameAnswerOption];
+}
+
+- (void)gameAnswerOptionTouchExited:(ZSGameAnswerOptionViewController *)touchedView {
+	[(ZSGameViewController *)delegate gameAnswerOptionTouchExitedWithGameAnswerOption:touchedView.gameAnswerOption];
+}
+
+- (void)gameAnswerOptionTapped:(ZSGameAnswerOptionViewController *)touchedView {
+	[(ZSGameViewController *)delegate gameAnswerOptionTappedWithGameAnswerOption:touchedView.gameAnswerOption];
 }
 
 @end
