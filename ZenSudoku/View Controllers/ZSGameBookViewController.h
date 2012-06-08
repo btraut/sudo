@@ -10,12 +10,15 @@
 
 #import "ZSGame.h"
 #import "ZSGameViewController.h"
+#import "ZSFoldedCornerView.h"
 
 @class ZSHintViewController;
 
-@interface ZSGameBookViewController : UIViewController <ZSHintDelegate> {
+@interface ZSGameBookViewController : UIViewController <ZSHintDelegate, ZSFoldedCornerTouchDelegate> {
 	ZSGameViewController *currentGameViewController;
 	ZSGameViewController *previousGameViewController;
+	
+	ZSFoldedCornerView *foldedCornerView;
 	
 	ZSHintViewController *hintViewController;
 	

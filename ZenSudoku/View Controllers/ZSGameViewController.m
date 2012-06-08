@@ -264,6 +264,7 @@
 		// If there was a previously selected tile, deselect it. Otherwise, select the new one.
 		if (selectedTileView == tileView) {
 			[gameBoardViewController deselectTileView];
+			[gameAnswerOptionsViewController reloadView];
 		} else {
 			ZSGameTileAnswerOrder gameTileAnswerOrder = [[NSUserDefaults standardUserDefaults] integerForKey:kTileAnswerOrderKey];
 			

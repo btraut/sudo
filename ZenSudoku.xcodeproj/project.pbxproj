@@ -92,6 +92,11 @@
 		84AC6B411508B35F00C2F192 /* UIColor+ColorWithHex.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC6B401508B35F00C2F192 /* UIColor+ColorWithHex.m */; };
 		84B0B1CC15777F1900A99510 /* BlueAnswerOptionSelection.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B0B1CA15777F1900A99510 /* BlueAnswerOptionSelection.png */; };
 		84B0B1CD15777F1900A99510 /* BlueAnswerOptionSelection@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B0B1CB15777F1900A99510 /* BlueAnswerOptionSelection@2x.png */; };
+		84B0B1D5157D859300A99510 /* BackwardsPage.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B0B1D3157D859300A99510 /* BackwardsPage.png */; };
+		84B0B1D6157D859300A99510 /* BackwardsPage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B0B1D4157D859300A99510 /* BackwardsPage@2x.png */; };
+		84B0B1D9157D8AA900A99510 /* ZSFoldedCornerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B0B1D8157D8AA800A99510 /* ZSFoldedCornerView.m */; };
+		84B0B1DF157FF86A00A99510 /* BackwardsPageGuide@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B0B1DE157FF86A00A99510 /* BackwardsPageGuide@2x.png */; };
+		84B0B1E615801A4200A99510 /* ShadowBlob@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B0B1E515801A4200A99510 /* ShadowBlob@2x.png */; };
 		84B300F4148AF6FF00E568CE /* ZSGameHistoryEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B300F3148AF6FD00E568CE /* ZSGameHistoryEntry.m */; };
 		84C6110A14D94414003358FE /* ZSInstructionsRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C6110814D94414003358FE /* ZSInstructionsRootViewController.m */; };
 		84C6110B14D94414003358FE /* ZSInstructionsRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C6110914D94414003358FE /* ZSInstructionsRootViewController.xib */; };
@@ -239,6 +244,12 @@
 		84AC6B401508B35F00C2F192 /* UIColor+ColorWithHex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+ColorWithHex.m"; path = "External/UIColor+ColorWithHex/UIColor+ColorWithHex.m"; sourceTree = "<group>"; };
 		84B0B1CA15777F1900A99510 /* BlueAnswerOptionSelection.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BlueAnswerOptionSelection.png; path = Resources/Images/BlueAnswerOptionSelection.png; sourceTree = "<group>"; };
 		84B0B1CB15777F1900A99510 /* BlueAnswerOptionSelection@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BlueAnswerOptionSelection@2x.png"; path = "Resources/Images/BlueAnswerOptionSelection@2x.png"; sourceTree = "<group>"; };
+		84B0B1D3157D859300A99510 /* BackwardsPage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BackwardsPage.png; path = Resources/Images/BackwardsPage.png; sourceTree = "<group>"; };
+		84B0B1D4157D859300A99510 /* BackwardsPage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BackwardsPage@2x.png"; path = "Resources/Images/BackwardsPage@2x.png"; sourceTree = "<group>"; };
+		84B0B1D7157D8AA800A99510 /* ZSFoldedCornerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSFoldedCornerView.h; path = "View Controllers/ZSFoldedCornerView.h"; sourceTree = "<group>"; };
+		84B0B1D8157D8AA800A99510 /* ZSFoldedCornerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSFoldedCornerView.m; path = "View Controllers/ZSFoldedCornerView.m"; sourceTree = "<group>"; };
+		84B0B1DE157FF86A00A99510 /* BackwardsPageGuide@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BackwardsPageGuide@2x.png"; path = "Resources/Images/BackwardsPageGuide@2x.png"; sourceTree = "<group>"; };
+		84B0B1E515801A4200A99510 /* ShadowBlob@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ShadowBlob@2x.png"; path = "Resources/Images/ShadowBlob@2x.png"; sourceTree = "<group>"; };
 		84B300F2148AF6FD00E568CE /* ZSGameHistoryEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSGameHistoryEntry.h; path = Models/ZSGameHistoryEntry.h; sourceTree = "<group>"; };
 		84B300F3148AF6FD00E568CE /* ZSGameHistoryEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSGameHistoryEntry.m; path = Models/ZSGameHistoryEntry.m; sourceTree = "<group>"; };
 		84C6110714D94414003358FE /* ZSInstructionsRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSInstructionsRootViewController.h; path = "View Controllers/ZSInstructionsRootViewController.h"; sourceTree = "<group>"; };
@@ -490,10 +501,14 @@
 		84AC26C31480835600E966A5 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				84B0B1E515801A4200A99510 /* ShadowBlob@2x.png */,
+				84B0B1DE157FF86A00A99510 /* BackwardsPageGuide@2x.png */,
 				849B69EE14F2666400870F09 /* PaperBackground.png */,
 				849B69EF14F2666400870F09 /* PaperBackground@2x.png */,
 				8435B42515456C0A00C15E87 /* PaperBackgroundCurled.png */,
 				8435B42615456C0A00C15E87 /* PaperBackgroundCurled@2x.png */,
+				84B0B1D3157D859300A99510 /* BackwardsPage.png */,
+				84B0B1D4157D859300A99510 /* BackwardsPage@2x.png */,
 				8428AD3A154A52F700BA8EE0 /* Default.png */,
 				8428AD3B154A52F700BA8EE0 /* Default@2x.png */,
 				84B0B1CA15777F1900A99510 /* BlueAnswerOptionSelection.png */,
@@ -649,6 +664,8 @@
 				8428AD33154A48F700BA8EE0 /* ZSHintViewController.h */,
 				8428AD34154A48F700BA8EE0 /* ZSHintViewController.m */,
 				8428AD35154A48F700BA8EE0 /* ZSHintViewController.xib */,
+				84B0B1D7157D8AA800A99510 /* ZSFoldedCornerView.h */,
+				84B0B1D8157D8AA800A99510 /* ZSFoldedCornerView.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -781,6 +798,10 @@
 				8428AD3F154AA62600BA8EE0 /* HintPaper.png in Resources */,
 				84B0B1CC15777F1900A99510 /* BlueAnswerOptionSelection.png in Resources */,
 				84B0B1CD15777F1900A99510 /* BlueAnswerOptionSelection@2x.png in Resources */,
+				84B0B1D5157D859300A99510 /* BackwardsPage.png in Resources */,
+				84B0B1D6157D859300A99510 /* BackwardsPage@2x.png in Resources */,
+				84B0B1DF157FF86A00A99510 /* BackwardsPageGuide@2x.png in Resources */,
+				84B0B1E615801A4200A99510 /* ShadowBlob@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -866,6 +887,7 @@
 				84D1CB1115703CB00027230B /* ZSHintGeneratorEliminatePencilsHiddenSubgroup.m in Sources */,
 				84D1CB141571829E0027230B /* ZSHintGeneratorEliminatePencilsPointingPairs.m in Sources */,
 				84D1CB171571A5280027230B /* ZSHintGeneratorEliminatePencilsBoxLineReduction.m in Sources */,
+				84B0B1D9157D8AA900A99510 /* ZSFoldedCornerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

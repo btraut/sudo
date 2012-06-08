@@ -13,6 +13,13 @@
 #import "ZSGameViewController.h"
 #import "ZSGameBoardViewController.h"
 #import "ZSHintViewController.h"
+#import "ZSFoldedCornerView.h"
+
+@interface ZSGameBookViewController () {
+	CGPoint _foldedCornerTouchStartPoint;
+}
+
+@end
 
 @implementation ZSGameBookViewController
 
@@ -30,6 +37,12 @@
 	currentGameViewController = [[ZSGameViewController alloc] initWithGame:currentGame];
 	currentGameViewController.hintDelegate = self;
 	[self.view addSubview:currentGameViewController.view];
+	
+	// Create the folded corner.
+	foldedCornerView = [[ZSFoldedCornerView alloc] init];
+	foldedCornerView.touchDelegate = self;
+	[self.view addSubview:foldedCornerView];
+	[foldedCornerView redraw];
 	
 	// Create the hint.
 	hintViewController = [[ZSHintViewController alloc] initWithNibName:@"ZSHintViewController" bundle:[NSBundle mainBundle]];
@@ -97,6 +110,22 @@
 	currentGameViewController.view.frame = CGRectMake(0, 0, currentGameViewController.view.frame.size.width, currentGameViewController.view.frame.size.height);
 	
 	[UIView commitAnimations];
+}
+
+- (void)foldedCornerTouchStarted:(CGPoint)startPoint {
+	_foldedCornerTouchStartPoint = startPoint;
+}
+
+- (void)foldedCornerTouchMoved:(CGPoint)touchPoint {
+	CGPoint panDelta = CGPointMake(touchPoint.x - _foldedCornerTouchStartPoint.x, touchPoint.y - _foldedCornerTouchStartPoint.y);
+	
+	float newWidth = 50 - (panDelta.x * 1.22);
+	[foldedCornerView setNeedsDisplay];
+}
+
+- (void)foldedCornerTouchEnded {
+	float newWidth = 50;
+	[foldedCornerView setNeedsDisplay];
 }
 
 @end
