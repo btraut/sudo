@@ -22,8 +22,13 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 	UIImage *_cornerImage;
 	UIImage *_shadowBlobImage;
 	
+	CGImageRef _cornerImageCG;
+	CGImageRef _shadowBlobImageCG;
+	
 	CGGradientRef _dropShadowGradient;
 	CGGradientRef _innerShadowGradient;
+	
+	CGFloat _frameHeightClipped;
 	
 	NSInteger graphicsMultipleFactor;
 }
@@ -59,7 +64,10 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 		
 		// Load the images.
 		_cornerImage = [UIImage imageNamed:@"BackwardsPage.png"];
+		_cornerImageCG = [_cornerImage CGImage];
+		
 		_shadowBlobImage = [UIImage imageNamed:@"ShadowBlob.png"];
+		_shadowBlobImageCG = [_shadowBlobImage CGImage];
 		
 		// Init the fold point defaults.
 		_foldStartPoint = CGPointMake(DEFAULT_WIDTH, DEFAULT_HEIGHT);
@@ -141,8 +149,15 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 }
 
 - (void)resizeFrame {
-	// Resize the frame.
-	self.frame = CGRectMake(314 - (underShadowFoldedPageOffset.width + frameDimensions.width), 0, underShadowFoldedPageOffset.width + frameDimensions.width, underShadowFoldedPageOffset.height + frameDimensions.height);
+	CGFloat frameHeight = underShadowFoldedPageOffset.height + frameDimensions.height;
+	_frameHeightClipped = 0;
+	
+	if (frameHeight > self.superview.frame.size.height) {
+		_frameHeightClipped = frameHeight - self.superview.frame.size.height;
+		frameHeight = self.superview.frame.size.height;
+	}
+	
+	self.frame = CGRectMake(314 - (underShadowFoldedPageOffset.width + frameDimensions.width), 0, underShadowFoldedPageOffset.width + frameDimensions.width, frameHeight);
 }
 
 - (void)drawRect:(CGRect)rect {
@@ -158,12 +173,14 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 	
 	// Position the folded corner image.
 	CGAffineTransform cornerTransform = CGAffineTransformIdentity;
+	cornerTransform = CGAffineTransformTranslate(cornerTransform, 0, -_frameHeightClipped);
 	cornerTransform = CGAffineTransformTranslate(cornerTransform, underShadowFoldedPageOffset.width, underShadowFoldedPageOffset.height);
 	cornerTransform = CGAffineTransformTranslate(cornerTransform, cornerTranslation.x, cornerTranslation.y);
 	cornerTransform = CGAffineTransformRotate(cornerTransform, theta);
 	cornerTransform = CGAffineTransformRotate(cornerTransform, M_PI / 2);
 	cornerTransform = CGAffineTransformScale(cornerTransform, 1, -1);
 	CGContextConcatCTM(context, cornerTransform);
+
 	
 	// Start a separate graphics context for the under shadow.
 	CGContextSaveGState(context);
@@ -186,15 +203,16 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 	underShadowTransform = CGAffineTransformIdentity;
 	underShadowTransform = CGAffineTransformScale(underShadowTransform, underShadowDimensions.height, underShadowDimensions.width);
 	underShadowTransform = CGAffineTransformScale(underShadowTransform, 1 / _shadowBlobImage.size.height, 1 / _shadowBlobImage.size.width);
+	underShadowTransform = CGAffineTransformTranslate(underShadowTransform, 0, _shadowBlobImage.size.height);
+	underShadowTransform = CGAffineTransformScale(underShadowTransform, 1, -1);
 	CGContextConcatCTM(context, underShadowTransform);
-
 	
 	// Draw the shadow blob image.
-	[_shadowBlobImage drawAtPoint:CGPointMake(0, 0)];
-	
+	CGContextDrawImage(context, CGRectMake(0, 0, _shadowBlobImage.size.width, _shadowBlobImage.size.height), _shadowBlobImageCG);
+
 	// Finish up the graphics context for the under shadow.
 	CGContextRestoreGState(context);
-	
+	 
 	// Draw the drop shadow gradient.
 	CGContextDrawLinearGradient(context, _dropShadowGradient, shadowStart, CGPointMake(shadowStart.x * 7 / 4, shadowStart.y * 7 / 4), 0);
 	
@@ -206,8 +224,20 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 	CGContextClosePath(context);
 	CGContextClip(context);
 	
+	// Start another context session.
+	CGContextSaveGState(context);
+	
+	// CGContextDrawImage draws images upsidedown, so use a transform to fix it.
+	cornerTransform = CGAffineTransformIdentity;
+	cornerTransform = CGAffineTransformTranslate(cornerTransform, 0, _cornerImage.size.height);
+	cornerTransform = CGAffineTransformScale(cornerTransform, 1, -1);
+	CGContextConcatCTM(context, cornerTransform);
+	
 	// Draw the folded corner image.
-	[_cornerImage drawAtPoint:CGPointMake(0, 0)];
+	CGContextDrawImage(context, CGRectMake(0, 0, _cornerImage.size.width, _cornerImage.size.height), _cornerImageCG);
+	
+	// Restore the previous context.
+	CGContextRestoreGState(context);
 	
 	// Draw the inner shadow gradient.
 	CGContextDrawLinearGradient(context, _innerShadowGradient, shadowStart, CGPointMake(shadowStart.x * 1 / 4, shadowStart.y * 1 / 4), kCGGradientDrawsBeforeStartLocation);
@@ -217,30 +247,37 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 }
 
 - (void)setEffectiveFoldPointForTouchPoint:(CGPoint)touchPoint {
-	CGPoint effectiveTouchPoint = touchPoint;
+	double parentWidth = self.superview.frame.size.width;
 	
+	CGPoint effectiveTouchPoint = touchPoint;
 	if (effectiveTouchPoint.y < 0) {
 		effectiveTouchPoint.y = 0;
 	}
 	
-	double parentWidth = [self superview].frame.size.width;
-	double touchLengthSquared = (touchPoint.x * touchPoint.x) + (touchPoint.y * touchPoint.y);
+	CGPoint paperTipPoint = CGPointMake((parentWidth - _foldStartPoint.x) + (effectiveTouchPoint.x - _touchStartPoint.x), _foldStartPoint.y + (effectiveTouchPoint.y - _touchStartPoint.y));
+	
+	double touchLengthSquared = (paperTipPoint.x * paperTipPoint.x) + (paperTipPoint.y * paperTipPoint.y);
 	double maxLengthSquared = parentWidth * parentWidth;
 	
 	// If the paper isn't folded too much by the current touch point, calculate an effective fold point that would lie within the fold limits.
 	if (touchLengthSquared > maxLengthSquared) {
 		double touchLength = sqrt(touchLengthSquared);
 		double ratio = parentWidth / touchLength;
-		effectiveTouchPoint.x = effectiveTouchPoint.x * ratio;
-		effectiveTouchPoint.y = effectiveTouchPoint.y * ratio;
+		paperTipPoint.x = paperTipPoint.x * ratio;
+		paperTipPoint.y = paperTipPoint.y * ratio;
 	}
 	
-	_foldPoint = CGPointMake(_foldStartPoint.x - (effectiveTouchPoint.x - _touchStartPoint.x), _foldStartPoint.y + (effectiveTouchPoint.y - _touchStartPoint.y));
+	_foldPoint = CGPointMake(parentWidth - paperTipPoint.x, paperTipPoint.y);
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
 	UITouch *touch = [touches anyObject];
 	_touchStartPoint = [touch locationInView:[self superview]];
+
+	CGPoint touchPoint = [touch locationInView:[self superview]];
+	[self setEffectiveFoldPointForTouchPoint:touchPoint];
+	
+	[self redraw];
 	
 	[touchDelegate foldedCornerTouchStarted:_foldPoint];
 }
