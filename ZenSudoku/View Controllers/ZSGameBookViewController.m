@@ -14,35 +14,58 @@
 #import "ZSGameBoardViewController.h"
 #import "ZSHintViewController.h"
 #import "ZSFoldedCornerView.h"
-
-@interface ZSGameBookViewController () {
-	CGPoint _foldedCornerTouchStartPoint;
-}
-
-@end
+#import "ZSFoldedPageView.h"
 
 @implementation ZSGameBookViewController
+
+@synthesize currentGameViewController, nextGameViewController;
+
+- (void)loadView {
+	self.view = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"PaperBackground.png"]];
+	self.view.frame = CGRectMake(0, 0, 320, 460);
+	self.view.userInteractionEnabled = YES;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
-	// Create the game view.
-	ZSGame *currentGame = [ZSGameController sharedInstance].currentGame;
+	// Create the new game view.
+	ZSGame *newGame = [[ZSGameController sharedInstance] fetchGameWithDifficulty:ZSGameDifficultyDiabolical];
+	nextGameViewController = [[ZSGameViewController alloc] initWithGame:newGame];
+	nextGameViewController.hintDelegate = self;
+	[self.view addSubview:nextGameViewController.view];
 	
-	if (!currentGame) {
-		[[ZSGameController sharedInstance] fetchGameWithDifficulty:ZSGameDifficultyDiabolical];
-		currentGame = [ZSGameController sharedInstance].currentGame;
+	// Create the game view.
+	ZSGame *currentGame;
+	
+	if (false && [[ZSGameController sharedInstance] savedGameInProgress]) {
+		currentGame = [[ZSGameController sharedInstance] loadSavedGame];
+	} else {
+		currentGame = [[ZSGameController sharedInstance] fetchGameWithDifficulty:ZSGameDifficultyDiabolical];
 	}
 	
 	currentGameViewController = [[ZSGameViewController alloc] initWithGame:currentGame];
 	currentGameViewController.hintDelegate = self;
 	[self.view addSubview:currentGameViewController.view];
 	
+	// Create the page curl gradient on the left.
+	UIImageView *pageCurlGradient = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"PageCurlGradient.png"]];
+	pageCurlGradient.frame = CGRectMake(0, 0, 17, 460);
+	[self.view addSubview:pageCurlGradient];
+	
 	// Create the folded corner.
 	foldedCornerView = [[ZSFoldedCornerView alloc] init];
 	foldedCornerView.touchDelegate = self;
 	[self.view addSubview:foldedCornerView];
+	
 	[foldedCornerView redraw];
+	currentGameViewController.foldDimensions = foldedCornerView.foldDimensions;
+	[currentGameViewController.view setNeedsDisplay];
+	
+	// Create the page curl on the left. This needs to go over the top of the folded corner.
+	UIImageView *pageCurl = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"PageCurl.png"]];
+	pageCurl.frame = CGRectMake(0, 0, 17, 460);
+	[self.view addSubview:pageCurl];
 	
 	// Create the hint.
 	hintViewController = [[ZSHintViewController alloc] initWithNibName:@"ZSHintViewController" bundle:[NSBundle mainBundle]];
@@ -51,16 +74,16 @@
 }
 
 - (void)startNewGame {
-	previousGameViewController = currentGameViewController;
+//	previousGameViewController = currentGameViewController;
 	
-	[[ZSGameController sharedInstance] fetchGameWithDifficulty:previousGameViewController.game.difficulty];
-	ZSGame *currentGame = [ZSGameController sharedInstance].currentGame;
-	
-	currentGameViewController = [[ZSGameViewController alloc] initWithGame:currentGame];
-	currentGameViewController.hintDelegate = self;
-	
-	[self.view addSubview:currentGameViewController.view];
-	[previousGameViewController.view removeFromSuperview];
+//	[[ZSGameController sharedInstance] fetchGameWithDifficulty:previousGameViewController.game.difficulty];
+//	ZSGame *currentGame = [ZSGameController sharedInstance].currentGame;
+//	
+//	currentGameViewController = [[ZSGameViewController alloc] initWithGame:currentGame];
+//	currentGameViewController.hintDelegate = self;
+//	
+//	[self.view addSubview:currentGameViewController.view];
+//	[previousGameViewController.view removeFromSuperview];
 }
 
 - (BOOL)getHintsShown {
@@ -113,19 +136,26 @@
 }
 
 - (void)foldedCornerTouchStarted:(CGPoint)startPoint {
-	_foldedCornerTouchStartPoint = startPoint;
+	currentGameViewController.foldDimensions = foldedCornerView.foldDimensions;
+	
+	[(ZSFoldedPageView *)currentGameViewController.view createScreenshotFromView];
+	[(ZSFoldedPageView *)currentGameViewController.view setAllSubViewsHidden:YES];
+	
+	[currentGameViewController.view setNeedsDisplay];
 }
 
 - (void)foldedCornerTouchMoved:(CGPoint)touchPoint {
-	CGPoint panDelta = CGPointMake(touchPoint.x - _foldedCornerTouchStartPoint.x, touchPoint.y - _foldedCornerTouchStartPoint.y);
-	
-	float newWidth = 50 - (panDelta.x * 1.22);
-	[foldedCornerView setNeedsDisplay];
+	currentGameViewController.foldDimensions = foldedCornerView.foldDimensions;
+	[currentGameViewController.view setNeedsDisplay];
 }
 
 - (void)foldedCornerTouchEnded {
-	float newWidth = 50;
-	[foldedCornerView setNeedsDisplay];
+	currentGameViewController.foldDimensions = foldedCornerView.foldDimensions;
+	
+	[(ZSFoldedPageView *)currentGameViewController.view restoreScreenshotFromOriginal];
+	[(ZSFoldedPageView *)currentGameViewController.view setAllSubViewsHidden:NO];
+	
+	[currentGameViewController.view setNeedsDisplay];
 }
 
 @end

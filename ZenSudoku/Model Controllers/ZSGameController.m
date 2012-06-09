@@ -29,9 +29,9 @@ NSString * const kSavedGameFileName = @"SavedGame.plist";
 
 #pragma mark Game Creation
 
-- (void)fetchGameWithDifficulty:(ZSGameDifficulty)difficulty {
+- (ZSGame *)fetchGameWithDifficulty:(ZSGameDifficulty)difficulty {
 	ZSPuzzleFetcher *fetcher = [[ZSPuzzleFetcher alloc] init];
-	currentGame = [fetcher fetchGameWithType:ZSGameTypeTraditional size:9 difficulty:difficulty];
+	return [fetcher fetchGameWithType:ZSGameTypeTraditional size:9 difficulty:difficulty];
 }
 
 - (void)clearCurrentGame {
@@ -46,20 +46,20 @@ NSString * const kSavedGameFileName = @"SavedGame.plist";
 	return [[NSFileManager defaultManager] fileExistsAtPath:savedGameFilePath];
 }
 
-- (void)loadSavedGame {
+- (ZSGame *)loadSavedGame {
 	ZSAppDelegate *appDelegate = (ZSAppDelegate *)[[UIApplication sharedApplication] delegate];
 	NSString *savedGameFilePath = [appDelegate getPathForFileName:kSavedGameFileName];
 	NSDictionary *dictionaryRepresentation = [[NSDictionary alloc] initWithContentsOfFile:savedGameFilePath];
-	currentGame = [[ZSGame alloc] initWithDictionaryRepresentation:dictionaryRepresentation];
+	return [[ZSGame alloc] initWithDictionaryRepresentation:dictionaryRepresentation];
 }
 
-- (void)saveGame {
+- (void)saveGame:(ZSGame *)game {
 	[self clearSavedGame];
 	
 	if (currentGame) {
 		ZSAppDelegate *appDelegate = (ZSAppDelegate *)[[UIApplication sharedApplication] delegate];
 		NSString *savedGameFilePath = [appDelegate getPathForFileName:kSavedGameFileName];
-		NSDictionary *dictionaryRepresentation = [currentGame getDictionaryRepresentation];
+		NSDictionary *dictionaryRepresentation = [game getDictionaryRepresentation];
 		
 		[dictionaryRepresentation writeToFile:savedGameFilePath atomically:YES];
 	}

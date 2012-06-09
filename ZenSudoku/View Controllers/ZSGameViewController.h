@@ -45,6 +45,8 @@
 	UILabel *title;
 	
 	NSObject<ZSHintDelegate> *hintDelegate;
+	
+	CGSize foldDimensions;
 }
 
 @property (strong) ZSGame *game;
@@ -58,6 +60,8 @@
 @property (assign) BOOL allowsInput;
 
 @property (strong) NSObject<ZSHintDelegate> *hintDelegate;
+
+@property (nonatomic, assign) CGSize foldDimensions;
 
 - (id)initWithGame:(ZSGame *)game;
 

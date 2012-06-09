@@ -25,15 +25,6 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 	CGGradientRef _dropShadowGradient;
 	CGGradientRef _innerShadowGradient;
 	
-	double H, phi, theta;
-	CGPoint cornerTranslation;
-	CGSize frameDimensions;
-	CGSize foldDimensions;
-	
-	CGPoint shadowStart;
-	CGSize underShadowDimensions;
-	CGSize underShadowFoldedPageOffset;
-	
 	NSInteger graphicsMultipleFactor;
 }
 
@@ -42,6 +33,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 @implementation ZSFoldedCornerView
 
 @synthesize touchDelegate;
+@synthesize H, phi, theta, cornerTranslation, frameDimensions, foldDimensions, shadowStart, underShadowDimensions, underShadowFoldedPageOffset;
 
 - (id)init {
 	return [self initWithFrame:CGRectMake(314 - 50, 0, 50, 50)];
@@ -83,7 +75,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 		_dropShadowGradient = CGGradientCreateWithColorComponents(rgb, dropShadowGradientColors, NULL, sizeof(dropShadowGradientColors) / (sizeof(dropShadowGradientColors[0]) * 4));
 		
 		CGFloat innerShadowGradientColors[] = {
-			0.0 / 255.0, 0.0 / 255.0, 0.0 / 255.0, 0.05,
+			0.0 / 255.0, 0.0 / 255.0, 0.0 / 255.0, 0.08,
 			0.0 / 255.0, 0.0 / 255.0, 0.0 / 255.0, 0.0,
 		};
 		_innerShadowGradient = CGGradientCreateWithColorComponents(rgb, innerShadowGradientColors, NULL, sizeof(innerShadowGradientColors) / (sizeof(innerShadowGradientColors[0]) * 4));
@@ -99,33 +91,43 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 }
 
 - (void)recalculateDimensions {
+	double cosPhi, sinPhi, tanPhi;
+	
 	// Start with the math.
 	H = sqrt(_foldPoint.x * _foldPoint.x + _foldPoint.y * _foldPoint.y);
 	
 	if (_foldPoint.x < _foldPoint.y) {
-		phi = atan(_foldPoint.x / _foldPoint.y);
+		tanPhi = _foldPoint.x / _foldPoint.y;
+		phi = atan(tanPhi);
+		cosPhi = cos(phi);
+		sinPhi = sin(phi);
+		
 		theta = (M_PI / 2) - 2 * phi;
-		frameDimensions.width = H / (2 * sin(phi));
+		frameDimensions.width = H / (2 * sinPhi);
 		frameDimensions.height = _foldPoint.y;
 		cornerTranslation.x = frameDimensions.width - _foldPoint.x;
 		cornerTranslation.y = 0;
 		foldDimensions.width = frameDimensions.width;
-		foldDimensions.height = frameDimensions.width * tan(phi);
+		foldDimensions.height = frameDimensions.width * tanPhi;
 		
-		shadowStart.x = H * sin(phi) / 2;
-		shadowStart.y = H * cos(phi) / 2;
+		shadowStart.x = H * sinPhi / 2;
+		shadowStart.y = H * cosPhi / 2;
 	} else {
-		phi = atan(_foldPoint.y / _foldPoint.x);
+		tanPhi = _foldPoint.y / _foldPoint.x;
+		phi = atan(tanPhi);
+		cosPhi = cos(phi);
+		sinPhi = sin(phi);
+		
 		theta = - ((M_PI / 2) - 2 * phi);
 		frameDimensions.width = _foldPoint.x;
-		frameDimensions.height = H / (2 * sin(phi));
+		frameDimensions.height = H / (2 * sinPhi);
 		cornerTranslation.x = 0;
 		cornerTranslation.y = frameDimensions.height - _foldPoint.y;
-		foldDimensions.width = frameDimensions.height * tan(phi);
+		foldDimensions.width = frameDimensions.height * tanPhi;
 		foldDimensions.height = frameDimensions.height;
 		
-		shadowStart.x = H * cos(phi) / 2;
-		shadowStart.y = H * sin(phi) / 2;
+		shadowStart.x = H * cosPhi / 2;
+		shadowStart.y = H * sinPhi / 2;
 	}
 	
 	underShadowDimensions.width = 1.22 * foldDimensions.height;
@@ -214,24 +216,51 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 	CGContextRestoreGState(context);
 }
 
+- (void)setEffectiveFoldPointForTouchPoint:(CGPoint)touchPoint {
+	CGPoint effectiveTouchPoint = touchPoint;
+	
+	if (effectiveTouchPoint.y < 0) {
+		effectiveTouchPoint.y = 0;
+	}
+	
+	double parentWidth = [self superview].frame.size.width;
+	double touchLengthSquared = (touchPoint.x * touchPoint.x) + (touchPoint.y * touchPoint.y);
+	double maxLengthSquared = parentWidth * parentWidth;
+	
+	// If the paper isn't folded too much by the current touch point, calculate an effective fold point that would lie within the fold limits.
+	if (touchLengthSquared > maxLengthSquared) {
+		double touchLength = sqrt(touchLengthSquared);
+		double ratio = parentWidth / touchLength;
+		effectiveTouchPoint.x = effectiveTouchPoint.x * ratio;
+		effectiveTouchPoint.y = effectiveTouchPoint.y * ratio;
+	}
+	
+	_foldPoint = CGPointMake(_foldStartPoint.x - (effectiveTouchPoint.x - _touchStartPoint.x), _foldStartPoint.y + (effectiveTouchPoint.y - _touchStartPoint.y));
+}
+
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
 	UITouch *touch = [touches anyObject];
 	_touchStartPoint = [touch locationInView:[self superview]];
+	
+	[touchDelegate foldedCornerTouchStarted:_foldPoint];
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
 	UITouch *touch = [touches anyObject];
 	CGPoint touchPoint = [touch locationInView:[self superview]];
-	
-	_foldPoint = CGPointMake(_foldStartPoint.x - (touchPoint.x - _touchStartPoint.x), _foldStartPoint.y + (touchPoint.y - _touchStartPoint.y));
+	[self setEffectiveFoldPointForTouchPoint:touchPoint];
 	
 	[self redraw];
+	
+	[touchDelegate foldedCornerTouchMoved:_foldPoint];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
 	_foldPoint = _foldStartPoint;
 	
 	[self redraw];
+	
+	[touchDelegate foldedCornerTouchEnded];
 }
 
 - (void)redraw {

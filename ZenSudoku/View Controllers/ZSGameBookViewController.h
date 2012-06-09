@@ -16,7 +16,7 @@
 
 @interface ZSGameBookViewController : UIViewController <ZSHintDelegate, ZSFoldedCornerTouchDelegate> {
 	ZSGameViewController *currentGameViewController;
-	ZSGameViewController *previousGameViewController;
+	ZSGameViewController *nextGameViewController;
 	
 	ZSFoldedCornerView *foldedCornerView;
 	
@@ -24,6 +24,9 @@
 	
 	BOOL hintsShown;
 }
+
+@property (nonatomic, strong) ZSGameViewController *currentGameViewController;
+@property (nonatomic, strong) ZSGameViewController *nextGameViewController;
 
 - (BOOL)getHintsShown;
 - (void)beginHintDeck:(NSArray *)hintDeck forGameViewController:(ZSGameViewController *)gameViewController;

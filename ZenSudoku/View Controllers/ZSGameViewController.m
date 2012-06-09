@@ -16,6 +16,7 @@
 #import "ZSGameController.h"
 #import "ZSHintGenerator.h"
 #import "ZSHintCard.h"
+#import "ZSFoldedPageView.h"
 
 #import "TestFlight.h"
 
@@ -26,6 +27,7 @@
 @synthesize pencilButton, penciling;
 @synthesize allowsInput;
 @synthesize hintDelegate;
+@synthesize foldDimensions;
 
 - (id)initWithGame:(ZSGame *)newGame {
 	self = [self init];
@@ -39,6 +41,8 @@
 		penciling = NO;
 		
 		allowsInput = YES;
+		
+		foldDimensions = CGSizeMake(45, 49);
 	}
 	
 	return self;
@@ -47,9 +51,11 @@
 #pragma mark - View Lifecycle
 
 - (void)loadView {
-	self.view = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"PaperBackgroundCurled.png"]];
-	self.view.frame = CGRectMake(0, 0, 320, 460);
+	ZSFoldedPageView *newView = [[ZSFoldedPageView alloc] init];
+	newView.foldSizeDelegate = self;
+	self.view = newView;
 	self.view.userInteractionEnabled = YES;
+	self.view.clipsToBounds = YES;
 }
 
 - (void)viewDidLoad {

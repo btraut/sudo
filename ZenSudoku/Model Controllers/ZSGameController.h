@@ -13,18 +13,18 @@
 	ZSGame *currentGame;
 }
 
-@property (strong, readonly) ZSGame *currentGame;
+@property (nonatomic, strong) ZSGame *currentGame;
 
 + (ZSGameController *)sharedInstance;
 
 // Game Management
-- (void)fetchGameWithDifficulty:(ZSGameDifficulty)difficulty;
+- (ZSGame *)fetchGameWithDifficulty:(ZSGameDifficulty)difficulty;
 - (void)clearCurrentGame;
 
 // Saved Games
 - (BOOL)savedGameInProgress;
-- (void)loadSavedGame;
-- (void)saveGame;
+- (ZSGame *)loadSavedGame;
+- (void)saveGame:(ZSGame *)game;
 - (void)clearSavedGame;
 
 // Utilities

@@ -47,11 +47,6 @@ NSString * const kRemoveTileAfterErrorKey = @"kRemoveTileAfterErrorKey";
 	// Set user defaults.
 	[self setUserDefaults];
 	
-	// If a game was previously in progress, restore it.
-	if ([[ZSGameController sharedInstance] savedGameInProgress]) {
-//		[[ZSGameController sharedInstance] loadSavedGame];
-	}
-	
     _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
 	ZSGameBookViewController *gameBookViewController = [[ZSGameBookViewController alloc] init];
@@ -69,7 +64,9 @@ NSString * const kRemoveTileAfterErrorKey = @"kRemoveTileAfterErrorKey";
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
-	[[ZSGameController sharedInstance] saveGame];
+	ZSGameBookViewController *gameBookViewController = (ZSGameBookViewController *)_window.rootViewController;
+	
+	[[ZSGameController sharedInstance] saveGame:gameBookViewController.currentGameViewController.game];
 	[[ZSStatisticsController sharedInstance] saveStats];
 }
 
