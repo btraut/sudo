@@ -16,6 +16,7 @@
 		841F854A14C40F5600DFFABC /* ZSStatisticsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841F854914C40F5500DFFABC /* ZSStatisticsController.m */; };
 		841F854E14C4287700DFFABC /* ZSStatisticsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841F854C14C4287600DFFABC /* ZSStatisticsViewController.m */; };
 		84262F1F15830B0600CA6899 /* ShadowBlob2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84262F1E15830B0600CA6899 /* ShadowBlob2@2x.png */; };
+		84262F261585C24700CA6899 /* BackwardsPageGuide@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84262F251585C24700CA6899 /* BackwardsPageGuide@2x.png */; };
 		8426A77D14ED1656006DAD1C /* IASKAppSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8426A75714ED1656006DAD1C /* IASKAppSettingsViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8426A77E14ED1656006DAD1C /* IASKAppSettingsWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8426A75914ED1656006DAD1C /* IASKAppSettingsWebViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8426A77F14ED1656006DAD1C /* IASKSpecifierValuesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8426A75B14ED1656006DAD1C /* IASKSpecifierValuesViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -138,6 +139,7 @@
 		841F854B14C4287600DFFABC /* ZSStatisticsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSStatisticsViewController.h; path = "View Controllers/ZSStatisticsViewController.h"; sourceTree = "<group>"; };
 		841F854C14C4287600DFFABC /* ZSStatisticsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSStatisticsViewController.m; path = "View Controllers/ZSStatisticsViewController.m"; sourceTree = "<group>"; };
 		84262F1E15830B0600CA6899 /* ShadowBlob2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ShadowBlob2@2x.png"; path = "Resources/Images/ShadowBlob2@2x.png"; sourceTree = "<group>"; };
+		84262F251585C24700CA6899 /* BackwardsPageGuide@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BackwardsPageGuide@2x.png"; path = "Resources/Images/BackwardsPageGuide@2x.png"; sourceTree = "<group>"; };
 		8426A75614ED1656006DAD1C /* IASKAppSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASKAppSettingsViewController.h; sourceTree = "<group>"; };
 		8426A75714ED1656006DAD1C /* IASKAppSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASKAppSettingsViewController.m; sourceTree = "<group>"; };
 		8426A75814ED1656006DAD1C /* IASKAppSettingsWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASKAppSettingsWebViewController.h; sourceTree = "<group>"; };
@@ -481,6 +483,7 @@
 		8472509315829D3A0073D113 /* Global Page Parts */ = {
 			isa = PBXGroup;
 			children = (
+				84262F251585C24700CA6899 /* BackwardsPageGuide@2x.png */,
 				8472508F15829D330073D113 /* PageCurl.png */,
 				8472509015829D330073D113 /* PageCurl@2x.png */,
 				84C092E11582D38F005799F8 /* PageCurlGradient.png */,
@@ -839,6 +842,7 @@
 				84C092E31582D38F005799F8 /* PageCurlGradient.png in Resources */,
 				84C092E41582D38F005799F8 /* PageCurlGradient@2x.png in Resources */,
 				84262F1F15830B0600CA6899 /* ShadowBlob2@2x.png in Resources */,
+				84262F261585C24700CA6899 /* BackwardsPageGuide@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

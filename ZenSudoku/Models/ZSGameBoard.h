@@ -25,7 +25,6 @@
 	
 	@private
 	
-	NSArray *_groupMap;
 	NSArray *_tiles;
 }
 

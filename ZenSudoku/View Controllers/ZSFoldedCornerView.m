@@ -11,8 +11,8 @@
 #include <math.h>
 static inline double radians (double degrees) {return degrees * M_PI/180;}
 
-#define DEFAULT_WIDTH 45
-#define DEFAULT_HEIGHT 49
+#define DEFAULT_WIDTH 48
+#define DEFAULT_HEIGHT 51
 
 @interface ZSFoldedCornerView () {
 	CGPoint _touchStartPoint;
@@ -41,7 +41,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 @synthesize H, phi, theta, cornerTranslation, frameDimensions, foldDimensions, shadowStart, underShadowDimensions, underShadowFoldedPageOffset;
 
 - (id)init {
-	return [self initWithFrame:CGRectMake(314 - 50, 0, 50, 50)];
+	return [self initWithFrame:CGRectMake(0, 0, 314, 460)];
 }
 
 - (id)initWithFrame:(CGRect)frame {
@@ -119,7 +119,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 		foldDimensions.height = frameDimensions.width * tanPhi;
 		
 		shadowStart.x = H * sinPhi / 2;
-		shadowStart.y = H * cosPhi / 2;
+		shadowStart.y = -H * cosPhi / 2;
 	} else {
 		tanPhi = _foldPoint.y / _foldPoint.x;
 		phi = atan(tanPhi);
@@ -135,8 +135,16 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 		foldDimensions.height = frameDimensions.height;
 		
 		shadowStart.x = H * cosPhi / 2;
-		shadowStart.y = H * sinPhi / 2;
+		shadowStart.y = -H * sinPhi / 2;
 	}
+	
+//	if (foldDimensions.width > _cornerImage.size.width) {
+//		foldDimensions.width = _cornerImage.size.width;
+//	}
+//	
+//	if (foldDimensions.height > _cornerImage.size.height) {
+//		foldDimensions.height = _cornerImage.size.height;
+//	}
 	
 	underShadowDimensions.width = 1.22 * foldDimensions.height;
 	underShadowDimensions.height = 1.22 * foldDimensions.width;
@@ -148,16 +156,12 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 	underShadowFoldedPageOffset.height = crossDimension * cos(crossAngle);
 }
 
-- (void)resizeFrame {
-	CGFloat frameHeight = underShadowFoldedPageOffset.height + frameDimensions.height;
-	_frameHeightClipped = 0;
-	
-	if (frameHeight > self.superview.frame.size.height) {
-		_frameHeightClipped = frameHeight - self.superview.frame.size.height;
-		frameHeight = self.superview.frame.size.height;
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
+	if (point.x >= self.frame.size.width - _foldStartPoint.x && point.y <= _foldStartPoint.y) {
+		return YES;
 	}
 	
-	self.frame = CGRectMake(314 - (underShadowFoldedPageOffset.width + frameDimensions.width), 0, underShadowFoldedPageOffset.width + frameDimensions.width, frameHeight);
+	return NO;
 }
 
 - (void)drawRect:(CGRect)rect {
@@ -166,79 +170,69 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 	CGContextSaveGState(context);
 	
 	// Reset the context.
-	CGAffineTransform t0 = CGContextGetCTM(context);
-	t0 = CGAffineTransformInvert(t0);
-	CGContextConcatCTM(context, t0);
-	CGContextScaleCTM(context, graphicsMultipleFactor, graphicsMultipleFactor);
+	CGAffineTransform resetContextTransform = CGContextGetCTM(context);
+	resetContextTransform = CGAffineTransformInvert(resetContextTransform);
+	resetContextTransform = CGAffineTransformScale(resetContextTransform, graphicsMultipleFactor, graphicsMultipleFactor);
+	CGContextConcatCTM(context, resetContextTransform);
 	
-	// Position the folded corner image.
+	// Shift context to the perspective of the folded paper (page tipped on its side and rotated to the angle based on the user's drag position). All
+	// subsequent effects drawn will be relative to the result of this transform.
 	CGAffineTransform cornerTransform = CGAffineTransformIdentity;
-	cornerTransform = CGAffineTransformTranslate(cornerTransform, 0, -_frameHeightClipped);
+	cornerTransform = CGAffineTransformTranslate(cornerTransform, self.frame.size.width - (underShadowFoldedPageOffset.width + frameDimensions.width), self.frame.size.height - (underShadowFoldedPageOffset.height + frameDimensions.height));
 	cornerTransform = CGAffineTransformTranslate(cornerTransform, underShadowFoldedPageOffset.width, underShadowFoldedPageOffset.height);
 	cornerTransform = CGAffineTransformTranslate(cornerTransform, cornerTranslation.x, cornerTranslation.y);
 	cornerTransform = CGAffineTransformRotate(cornerTransform, theta);
 	cornerTransform = CGAffineTransformRotate(cornerTransform, M_PI / 2);
-	cornerTransform = CGAffineTransformScale(cornerTransform, 1, -1);
 	CGContextConcatCTM(context, cornerTransform);
-
+	
+	// ===================================== Start of shadow drawing ===================================== //
 	
 	// Start a separate graphics context for the under shadow.
 	CGContextSaveGState(context);
 	
 	// Transform the shadow blob.
 	CGAffineTransform underShadowTransform = CGAffineTransformIdentity;
-	underShadowTransform = CGAffineTransformTranslate(underShadowTransform, -0.22 * foldDimensions.width, -0.22 * foldDimensions.height);
+	underShadowTransform = CGAffineTransformTranslate(underShadowTransform, foldDimensions.width - underShadowDimensions.height, underShadowDimensions.width - foldDimensions.height);
 	CGContextConcatCTM(context, underShadowTransform);
 	
 	// Cut the corner off the folded section.
 	CGContextMoveToPoint(context, 0, 0);
-	CGContextAddLineToPoint(context, 1.22 * foldDimensions.width, 0);
-	CGContextAddLineToPoint(context, 1.22 * foldDimensions.width, 0.22 * foldDimensions.height);
-	CGContextAddLineToPoint(context, 0.22 * foldDimensions.width, 1.22 * foldDimensions.height);
-	CGContextAddLineToPoint(context, 0, 1.22 * foldDimensions.height);
+	CGContextAddLineToPoint(context, underShadowDimensions.height, 0);
+	CGContextAddLineToPoint(context, underShadowDimensions.height, foldDimensions.height - underShadowDimensions.width);
+	CGContextAddLineToPoint(context, underShadowDimensions.height - foldDimensions.width, -underShadowDimensions.width);
+	CGContextAddLineToPoint(context, 0, -underShadowDimensions.width);
 	CGContextAddLineToPoint(context, 0, 0);
 	CGContextClosePath(context);
 	CGContextClip(context);
 	
+	// Resize and position the shadow graphic.
 	underShadowTransform = CGAffineTransformIdentity;
 	underShadowTransform = CGAffineTransformScale(underShadowTransform, underShadowDimensions.height, underShadowDimensions.width);
 	underShadowTransform = CGAffineTransformScale(underShadowTransform, 1 / _shadowBlobImage.size.height, 1 / _shadowBlobImage.size.width);
-	underShadowTransform = CGAffineTransformTranslate(underShadowTransform, 0, _shadowBlobImage.size.height);
-	underShadowTransform = CGAffineTransformScale(underShadowTransform, 1, -1);
 	CGContextConcatCTM(context, underShadowTransform);
 	
 	// Draw the shadow blob image.
-	CGContextDrawImage(context, CGRectMake(0, 0, _shadowBlobImage.size.width, _shadowBlobImage.size.height), _shadowBlobImageCG);
-
+	CGContextDrawImage(context, CGRectMake(0, -_shadowBlobImage.size.height, _shadowBlobImage.size.width, _shadowBlobImage.size.height), _shadowBlobImageCG);
+	
 	// Finish up the graphics context for the under shadow.
 	CGContextRestoreGState(context);
-	 
-	// Draw the drop shadow gradient.
+	
+	// ====================================== End of shadow drawing ====================================== //
+	
+	// Draw the drop shadow gradient (the gradient that lies outside the folded corner to the top/right).
 	CGContextDrawLinearGradient(context, _dropShadowGradient, shadowStart, CGPointMake(shadowStart.x * 7 / 4, shadowStart.y * 7 / 4), 0);
 	
 	// Cut the corner off the folded section.
 	CGContextMoveToPoint(context, 0, 0);
 	CGContextAddLineToPoint(context, foldDimensions.width, 0);
-	CGContextAddLineToPoint(context, 0, foldDimensions.height);
+	CGContextAddLineToPoint(context, 0, -foldDimensions.height);
 	CGContextAddLineToPoint(context, 0, 0);
 	CGContextClosePath(context);
 	CGContextClip(context);
-	
-	// Start another context session.
-	CGContextSaveGState(context);
-	
-	// CGContextDrawImage draws images upsidedown, so use a transform to fix it.
-	cornerTransform = CGAffineTransformIdentity;
-	cornerTransform = CGAffineTransformTranslate(cornerTransform, 0, _cornerImage.size.height);
-	cornerTransform = CGAffineTransformScale(cornerTransform, 1, -1);
-	CGContextConcatCTM(context, cornerTransform);
-	
+		
 	// Draw the folded corner image.
-	CGContextDrawImage(context, CGRectMake(0, 0, _cornerImage.size.width, _cornerImage.size.height), _cornerImageCG);
-	
-	// Restore the previous context.
-	CGContextRestoreGState(context);
-	
+	CGContextDrawImage(context, CGRectMake(0, -_cornerImage.size.height, _cornerImage.size.width, _cornerImage.size.height), _cornerImageCG);
+
 	// Draw the inner shadow gradient.
 	CGContextDrawLinearGradient(context, _innerShadowGradient, shadowStart, CGPointMake(shadowStart.x * 1 / 4, shadowStart.y * 1 / 4), kCGGradientDrawsBeforeStartLocation);
 	
@@ -273,7 +267,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
 	UITouch *touch = [touches anyObject];
 	_touchStartPoint = [touch locationInView:[self superview]];
-
+	
 	CGPoint touchPoint = [touch locationInView:[self superview]];
 	[self setEffectiveFoldPointForTouchPoint:touchPoint];
 	
@@ -302,7 +296,6 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 
 - (void)redraw {
 	[self recalculateDimensions];
-	[self resizeFrame];
 	[super setNeedsDisplay];
 }
 

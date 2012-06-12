@@ -56,6 +56,7 @@
 	// Create the folded corner.
 	foldedCornerView = [[ZSFoldedCornerView alloc] init];
 	foldedCornerView.touchDelegate = self;
+	foldedCornerView.frame = CGRectMake(0, 0, currentGameViewController.view.frame.size.width, currentGameViewController.view.frame.size.height);
 	[self.view addSubview:foldedCornerView];
 	
 	[foldedCornerView redraw];
