@@ -13,7 +13,7 @@
 #import "ZSGameViewController.h"
 #import "ZSGameBoardViewController.h"
 #import "ZSHintViewController.h"
-#import "ZSFoldedCornerView.h"
+#import "ZSFoldedCornerViewController.h"
 #import "ZSFoldedPageView.h"
 
 @implementation ZSGameBookViewController
@@ -35,6 +35,8 @@
 	nextGameViewController.hintDelegate = self;
 	[self.view addSubview:nextGameViewController.view];
 	
+	nextGameViewController.foldedCornerViewController.view.hidden = YES;
+	
 	// Create the game view.
 	ZSGame *currentGame;
 	
@@ -52,16 +54,6 @@
 	UIImageView *pageCurlGradient = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"PageCurlGradient.png"]];
 	pageCurlGradient.frame = CGRectMake(0, 0, 17, 460);
 	[self.view addSubview:pageCurlGradient];
-	
-	// Create the folded corner.
-	foldedCornerView = [[ZSFoldedCornerView alloc] init];
-	foldedCornerView.touchDelegate = self;
-	foldedCornerView.frame = CGRectMake(0, 0, currentGameViewController.view.frame.size.width, currentGameViewController.view.frame.size.height);
-	[self.view addSubview:foldedCornerView];
-	
-	[foldedCornerView redraw];
-	currentGameViewController.foldDimensions = foldedCornerView.foldDimensions;
-	[currentGameViewController.view setNeedsDisplay];
 	
 	// Create the page curl on the left. This needs to go over the top of the folded corner.
 	UIImageView *pageCurl = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"PageCurl.png"]];
@@ -134,29 +126,6 @@
 	currentGameViewController.view.frame = CGRectMake(0, 0, currentGameViewController.view.frame.size.width, currentGameViewController.view.frame.size.height);
 	
 	[UIView commitAnimations];
-}
-
-- (void)foldedCornerTouchStarted:(CGPoint)startPoint {
-	currentGameViewController.foldDimensions = foldedCornerView.foldDimensions;
-	
-	[(ZSFoldedPageView *)currentGameViewController.view createScreenshotFromView];
-	[(ZSFoldedPageView *)currentGameViewController.view setAllSubViewsHidden:YES];
-	
-	[currentGameViewController.view setNeedsDisplay];
-}
-
-- (void)foldedCornerTouchMoved:(CGPoint)touchPoint {
-	currentGameViewController.foldDimensions = foldedCornerView.foldDimensions;
-	[currentGameViewController.view setNeedsDisplay];
-}
-
-- (void)foldedCornerTouchEnded {
-	currentGameViewController.foldDimensions = foldedCornerView.foldDimensions;
-	
-	[(ZSFoldedPageView *)currentGameViewController.view restoreScreenshotFromOriginal];
-	[(ZSFoldedPageView *)currentGameViewController.view setAllSubViewsHidden:NO];
-	
-	[currentGameViewController.view setNeedsDisplay];
 }
 
 @end

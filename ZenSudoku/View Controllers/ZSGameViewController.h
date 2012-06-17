@@ -10,6 +10,7 @@
 #import "ZSGame.h"
 #import "ZSGameBoardTileViewController.h"
 #import "ZSGameAnswerOptionViewController.h"
+#import "ZSFoldedCornerViewController.h"
 
 @class ZSGameBoardViewController;
 @class ZSGameAnswerOptionsViewController;
@@ -24,12 +25,14 @@
 
 @end
 
-@interface ZSGameViewController : UIViewController <ZSGameDelegate> {
+@interface ZSGameViewController : UIViewController <ZSGameDelegate, ZSFoldedCornerGLViewControllerTouchDelegate> {
 	ZSGame *game;
 	ZSHintGenerator *hintGenerator;
 	
 	ZSGameBoardViewController *gameBoardViewController;
 	ZSGameAnswerOptionsViewController *gameAnswerOptionsViewController;
+	
+	ZSFoldedCornerViewController *foldedCornerViewController;
 	
 	UIButton *pencilButton;
 	BOOL penciling;
@@ -45,8 +48,6 @@
 	UILabel *title;
 	
 	NSObject<ZSHintDelegate> *hintDelegate;
-	
-	CGSize foldDimensions;
 }
 
 @property (strong) ZSGame *game;
@@ -54,14 +55,14 @@
 @property (strong, readonly) ZSGameBoardViewController *gameBoardViewController;
 @property (strong, readonly) ZSGameAnswerOptionsViewController *gameAnswerOptionsViewController;
 
+@property (strong, readonly) ZSFoldedCornerViewController *foldedCornerViewController;
+
 @property (strong, readonly) UIButton *pencilButton;
 @property (assign) BOOL penciling;
 
 @property (assign) BOOL allowsInput;
 
 @property (strong) NSObject<ZSHintDelegate> *hintDelegate;
-
-@property (nonatomic, assign) CGSize foldDimensions;
 
 - (id)initWithGame:(ZSGame *)game;
 

@@ -66,7 +66,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 		_cornerImage = [UIImage imageNamed:@"BackwardsPage.png"];
 		_cornerImageCG = [_cornerImage CGImage];
 		
-		_shadowBlobImage = [UIImage imageNamed:@"ShadowBlob.png"];
+		_shadowBlobImage = [UIImage imageNamed:@"ShadowBlobTest2.png"];
 		_shadowBlobImageCG = [_shadowBlobImage CGImage];
 		
 		// Init the fold point defaults.

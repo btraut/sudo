@@ -17,6 +17,7 @@
 #import "ZSHintGenerator.h"
 #import "ZSHintCard.h"
 #import "ZSFoldedPageView.h"
+#import "ZSFoldedCornerViewController.h"
 
 #import "TestFlight.h"
 
@@ -24,10 +25,10 @@
 
 @synthesize game;
 @synthesize gameBoardViewController, gameAnswerOptionsViewController;
+@synthesize foldedCornerViewController;
 @synthesize pencilButton, penciling;
 @synthesize allowsInput;
 @synthesize hintDelegate;
-@synthesize foldDimensions;
 
 - (id)initWithGame:(ZSGame *)newGame {
 	self = [self init];
@@ -41,8 +42,6 @@
 		penciling = NO;
 		
 		allowsInput = YES;
-		
-		foldDimensions = CGSizeMake(45, 49);
 	}
 	
 	return self;
@@ -52,7 +51,7 @@
 
 - (void)loadView {
 	ZSFoldedPageView *newView = [[ZSFoldedPageView alloc] init];
-	newView.foldSizeDelegate = self;
+	newView.foldDimensions = CGSizeMake(45, 49);
 	self.view = newView;
 	self.view.userInteractionEnabled = YES;
 	self.view.clipsToBounds = YES;
@@ -135,6 +134,11 @@
 	
 	[self.view addSubview:hintButton];
 	
+	// Build the folded corner.
+	foldedCornerViewController = [[ZSFoldedCornerViewController alloc] init];
+	[self.view addSubview:foldedCornerViewController.view];
+	foldedCornerViewController.touchDelegate = self;
+	
 	// Reload errors.
 	[self setErrors];
 	[gameBoardViewController reloadView];
@@ -182,13 +186,11 @@
 	[super viewDidUnload];
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-	// Start the game timer.
-	[game stopGameTimer];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-	return (interfaceOrientation == UIInterfaceOrientationPortrait);
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	
+	[foldedCornerViewController pushUpdate];
+	[self.view setNeedsDisplay];
 }
 
 - (void)setTitle {
@@ -214,6 +216,38 @@
 			title.text = @"Insane";
 			break;
 	}
+}
+
+#pragma mark - Touch Handling
+
+- (void)foldedCornerTouchStartedWithFoldPoint:(CGPoint)foldPoint foldDimensions:(CGSize)foldDimensions {
+	ZSFoldedPageView *view = (ZSFoldedPageView *)self.view;
+	
+	view.foldDimensions = foldDimensions;
+	
+	[(ZSFoldedPageView *)view createScreenshotFromView];
+	[(ZSFoldedPageView *)view setAllSubViewsHidden:YES except:foldedCornerViewController.view];
+	
+	[view setNeedsDisplay];
+}
+
+- (void)foldedCornerTouchMovedWithFoldPoint:(CGPoint)foldPoint foldDimensions:(CGSize)foldDimensions {
+	ZSFoldedPageView *view = (ZSFoldedPageView *)self.view;
+	
+	view.foldDimensions = foldDimensions;
+	
+	[self.view setNeedsDisplay];
+}
+
+- (void)foldedCornerTouchEndedWithFoldPoint:(CGPoint)foldPoint foldDimensions:(CGSize)foldDimensions {
+	ZSFoldedPageView *view = (ZSFoldedPageView *)self.view;
+	
+	view.foldDimensions = foldDimensions;
+	
+	[(ZSFoldedPageView *)self.view restoreScreenshotFromOriginal];
+	[(ZSFoldedPageView *)self.view setAllSubViewsHidden:NO except:nil];
+	
+	[self.view setNeedsDisplay];
 }
 
 #pragma mark - User Interaction

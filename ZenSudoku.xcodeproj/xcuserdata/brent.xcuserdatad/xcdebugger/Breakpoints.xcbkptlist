@@ -20,13 +20,13 @@
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "ZenSudoku/View Controllers/ZSFoldedPageView.m"
-         timestampString = "360893754.478667"
+         filePath = "ZenSudoku/View Controllers/ZSFoldedCornerViewController.m"
+         timestampString = "361492841.982556"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "66"
-         endingLineNumber = "66"
-         landmarkName = "-drawRect:"
+         startingLineNumber = "116"
+         endingLineNumber = "116"
+         landmarkName = "-recalculateDimensions"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

@@ -10,14 +10,12 @@
 
 @class ZSGameViewController;
 
-@interface ZSFoldedPageView : UIView {
-	ZSGameViewController *foldSizeDelegate;
-}
+@interface ZSFoldedPageView : UIView
 
-@property (nonatomic, strong) ZSGameViewController *foldSizeDelegate;
+@property (nonatomic, assign) CGSize foldDimensions;
 
 - (void)createScreenshotFromView;
 - (void)restoreScreenshotFromOriginal;
-- (void)setAllSubViewsHidden:(BOOL)hidden;
+- (void)setAllSubViewsHidden:(BOOL)hidden except:(UIView *)excludeView;
 
 @end

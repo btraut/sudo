@@ -20,7 +20,7 @@
 
 @implementation ZSFoldedPageView
 
-@synthesize foldSizeDelegate;
+@synthesize foldDimensions = _foldDimensions;
 
 - (id)init {
 	return [self initWithFrame:CGRectMake(0, 0, 314, 460)];
@@ -50,9 +50,11 @@
 	UIGraphicsEndImageContext();
 }
 
-- (void)setAllSubViewsHidden:(BOOL)hidden {
+- (void)setAllSubViewsHidden:(BOOL)hidden except:(UIView *)excludeView {
 	for (UIView *view in self.subviews) {
-		view.hidden = hidden;
+		if (view != excludeView) {
+			view.hidden = hidden;
+		}
 	}
 }
 
@@ -67,8 +69,8 @@
 	CGContextMoveToPoint(context, 0, 0);
 	CGContextAddLineToPoint(context, 0, self.frame.size.height);
 	CGContextAddLineToPoint(context, self.frame.size.width, self.frame.size.height);
-	CGContextAddLineToPoint(context, self.frame.size.width, foldSizeDelegate.foldDimensions.height);
-	CGContextAddLineToPoint(context, self.frame.size.width - foldSizeDelegate.foldDimensions.width, 0);
+	CGContextAddLineToPoint(context, self.frame.size.width, _foldDimensions.height);
+	CGContextAddLineToPoint(context, self.frame.size.width - _foldDimensions.width, 0);
 	CGContextAddLineToPoint(context, 0, 0);
 	CGContextClosePath(context);
 	CGContextClip(context);
