@@ -9,16 +9,18 @@
 #import <GLKit/GLKit.h>
 
 #import "ZSFoldedCornerGLView.h"
+#import "ZSPointAnimation.h"
 
 @protocol ZSFoldedCornerGLViewControllerTouchDelegate <NSObject>
 
 - (void)foldedCornerTouchStartedWithFoldPoint:(CGPoint)foldPoint foldDimensions:(CGSize)foldDimensions;
 - (void)foldedCornerTouchMovedWithFoldPoint:(CGPoint)foldPoint foldDimensions:(CGSize)foldDimensions;
 - (void)foldedCornerTouchEndedWithFoldPoint:(CGPoint)foldPoint foldDimensions:(CGSize)foldDimensions;
+- (void)foldedCornerRestoredToStartPoint;
 
 @end
 
-@interface ZSFoldedCornerViewController : UIViewController <GLKViewDelegate, ZSFoldedCornerGLHitTestDelegate> {
+@interface ZSFoldedCornerViewController : UIViewController <GLKViewDelegate, ZSFoldedCornerGLHitTestDelegate, ZSPointAnimationDelegate> {
 	double H, phi, theta;
 	CGPoint cornerTranslation;
 	CGSize frameDimensions;
@@ -32,5 +34,8 @@
 @property (nonatomic, strong) NSObject<ZSFoldedCornerGLViewControllerTouchDelegate> *touchDelegate;
 
 - (void)pushUpdate;
+
+- (void)animateSendFoldBackToCorner;
+- (void)animateCornerTug;
 
 @end

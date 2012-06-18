@@ -14,8 +14,15 @@
 #define DEFAULT_WIDTH 48
 #define DEFAULT_HEIGHT 51
 
-#define d2r(x) (M_PI * (x) / 180.0)
-#define r2d(x) ((x) * 180.0 / M_PI)
+typedef enum {
+	ZSFoldedCornerViewControllerAnimationStateStopped,
+	ZSFoldedCornerViewControllerAnimationStateUserAnimating,
+	ZSFoldedCornerViewControllerAnimationStateSendFoldBackToCornerStage1,
+	ZSFoldedCornerViewControllerAnimationStateCornerTugStage1,
+	ZSFoldedCornerViewControllerAnimationStateCornerTugStage2,
+	ZSFoldedCornerViewControllerAnimationStateCornerTugStage3,
+	ZSFoldedCornerViewControllerAnimationStateCornerTugStage4
+} ZSFoldedCornerViewControllerAnimationState;
 
 @interface ZSFoldedCornerViewController () {
 	CGPoint _touchStartPoint;
@@ -29,6 +36,10 @@
 	
 	ZSGLShape *_foldGradient;
 	ZSGLShape *_cornerGradient;
+	
+	ZSFoldedCornerViewControllerAnimationState _animationState;
+	
+	ZSPointAnimation *_animationHelper;
 }
 
 @property (strong, nonatomic) EAGLContext *context;
@@ -50,6 +61,12 @@
 		
 		// Calculate dimensions for the first time.
 		[self recalculateDimensions];
+		
+		// Set animation state;
+		_animationState = ZSFoldedCornerViewControllerAnimationStateStopped;
+		
+		_animationHelper = [[ZSPointAnimation alloc] init];
+		_animationHelper.delegate = self;
 	}
 	
 	return self;
@@ -248,11 +265,15 @@
 }
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
-	if (point.x >= self.view.frame.size.width - _foldStartPoint.x && point.y <= _foldStartPoint.y) {
-		return YES;
+	if (_animationState != ZSFoldedCornerViewControllerAnimationStateStopped) {
+		return NO;
 	}
 	
-	return NO;
+	if (point.x < self.view.frame.size.width - _foldStartPoint.x || point.y > _foldStartPoint.y) {
+		return NO;
+	}
+	
+	return YES;
 }
 
 - (void)setEffectiveFoldPointForTouchPoint:(CGPoint)touchPoint {
@@ -280,6 +301,8 @@
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+	_animationState = ZSFoldedCornerViewControllerAnimationStateUserAnimating;
+	
 	UITouch *touch = [touches anyObject];
 	_touchStartPoint = [touch locationInView:self.view];
 	
@@ -302,9 +325,7 @@
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-	_foldPoint = _foldStartPoint;
-	
-	[self redraw];
+	_animationState = ZSFoldedCornerViewControllerAnimationStateStopped;
 	
 	[_touchDelegate foldedCornerTouchEndedWithFoldPoint:_foldPoint foldDimensions:foldDimensions];
 }
@@ -317,6 +338,119 @@
 - (void)pushUpdate {
 	[self redraw];
 	[_touchDelegate foldedCornerTouchMovedWithFoldPoint:_foldPoint foldDimensions:foldDimensions];
+}
+
+- (void)animationAdvanced:(CGPoint)point {
+	_foldPoint = point;
+	[self pushUpdate];
+}
+
+- (void)animationDidFinish {
+	switch (_animationState) {
+		case ZSFoldedCornerViewControllerAnimationStateUserAnimating:
+			_animationState = ZSFoldedCornerViewControllerAnimationStateStopped;
+			break;
+			
+		case ZSFoldedCornerViewControllerAnimationStateSendFoldBackToCornerStage1:
+			_animationState = ZSFoldedCornerViewControllerAnimationStateStopped;
+			[_touchDelegate foldedCornerRestoredToStartPoint];
+			break;
+			
+		case ZSFoldedCornerViewControllerAnimationStateCornerTugStage1:
+			[self _animateCornerTugStage2];
+			break;
+			
+		case ZSFoldedCornerViewControllerAnimationStateCornerTugStage2:
+			[self _animateCornerTugStage3];
+			break;
+			
+		case ZSFoldedCornerViewControllerAnimationStateCornerTugStage3:
+			[self _animateCornerTugStage4];
+			break;
+			
+		case ZSFoldedCornerViewControllerAnimationStateCornerTugStage4:
+			_animationState = ZSFoldedCornerViewControllerAnimationStateStopped;
+			[_touchDelegate foldedCornerRestoredToStartPoint];
+			break;
+						
+		case ZSFoldedCornerViewControllerAnimationStateStopped:
+		default:
+			break;
+	}
+}
+
+- (void)animateSendFoldBackToCorner {
+	// Only start the animation if we're not currently running an animation.
+	if (_animationState != ZSFoldedCornerViewControllerAnimationStateStopped) {
+		return;
+	}
+	
+	_animationState = ZSFoldedCornerViewControllerAnimationStateSendFoldBackToCornerStage1;
+	
+	_animationHelper.duration = 0.4f;
+	_animationHelper.timingFunction = ZSAnimationTimingFunctionEaseInOut;
+	
+	_animationHelper.startPoint = _foldPoint;
+	_animationHelper.endPoint = _foldStartPoint;
+	
+	[_animationHelper start];
+}
+
+- (void)animateCornerTug {
+	// Only start the animation if we're not currently running an animation.
+	if (_animationState != ZSFoldedCornerViewControllerAnimationStateStopped) {
+		return;
+	}
+	
+	[self _animateCornerTugStage1];
+}
+
+- (void)_animateCornerTugStage1 {
+	_animationState = ZSFoldedCornerViewControllerAnimationStateCornerTugStage1;
+	
+	_animationHelper.duration = 0.12f;
+	_animationHelper.timingFunction = ZSAnimationTimingFunctionEaseInOut;
+	
+	_animationHelper.startPoint = _foldPoint;
+	_animationHelper.endPoint = CGPointMake(_foldStartPoint.x + 7, _foldStartPoint.x + 11);
+	
+	[_animationHelper start];
+}
+
+- (void)_animateCornerTugStage2 {
+	_animationState = ZSFoldedCornerViewControllerAnimationStateCornerTugStage2;
+	
+	_animationHelper.duration = 0.12f;
+	_animationHelper.timingFunction = ZSAnimationTimingFunctionEaseInOut;
+	
+	_animationHelper.startPoint = _foldPoint;
+	_animationHelper.endPoint = _foldStartPoint;
+	
+	[_animationHelper start];
+}
+
+- (void)_animateCornerTugStage3 {
+	_animationState = ZSFoldedCornerViewControllerAnimationStateCornerTugStage3;
+	
+	_animationHelper.duration = 0.16f;
+	_animationHelper.timingFunction = ZSAnimationTimingFunctionEaseInOut;
+	
+	_animationHelper.startPoint = _foldPoint;
+	_animationHelper.endPoint = CGPointMake(_foldStartPoint.x + 7, _foldStartPoint.x + 11);
+	
+	[_animationHelper start];
+}
+
+- (void)_animateCornerTugStage4 {
+	_animationState = ZSFoldedCornerViewControllerAnimationStateCornerTugStage4;
+	
+	_animationHelper.duration = 0.16f;
+	_animationHelper.timingFunction = ZSAnimationTimingFunctionEaseInOut;
+	
+	_animationHelper.startPoint = _foldPoint;
+	_animationHelper.endPoint = _foldStartPoint;
+	
+	[_animationHelper start];
 }
 
 @end

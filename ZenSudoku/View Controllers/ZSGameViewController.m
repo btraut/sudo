@@ -21,6 +21,13 @@
 
 #import "TestFlight.h"
 
+@interface ZSGameViewController() {
+	CGPoint _foldStartPoint;
+	BOOL _foldedCornerTouchCrossedTapThreshold;
+}
+
+@end
+
 @implementation ZSGameViewController
 
 @synthesize game;
@@ -42,6 +49,8 @@
 		penciling = NO;
 		
 		allowsInput = YES;
+		
+		_foldedCornerTouchCrossedTapThreshold = NO;
 	}
 	
 	return self;
@@ -229,6 +238,9 @@
 	[(ZSFoldedPageView *)view setAllSubViewsHidden:YES except:foldedCornerViewController.view];
 	
 	[view setNeedsDisplay];
+	
+	_foldStartPoint = foldPoint;
+	_foldedCornerTouchCrossedTapThreshold = NO;
 }
 
 - (void)foldedCornerTouchMovedWithFoldPoint:(CGPoint)foldPoint foldDimensions:(CGSize)foldDimensions {
@@ -237,17 +249,23 @@
 	view.foldDimensions = foldDimensions;
 	
 	[self.view setNeedsDisplay];
+	
+	if (_foldedCornerTouchCrossedTapThreshold || (foldPoint.x - _foldStartPoint.x) * (foldPoint.x - _foldStartPoint.x) + (foldPoint.y - _foldStartPoint.y) * (foldPoint.y - _foldStartPoint.y) > 16) {
+		_foldedCornerTouchCrossedTapThreshold = YES;
+	}
 }
 
 - (void)foldedCornerTouchEndedWithFoldPoint:(CGPoint)foldPoint foldDimensions:(CGSize)foldDimensions {
-	ZSFoldedPageView *view = (ZSFoldedPageView *)self.view;
-	
-	view.foldDimensions = foldDimensions;
-	
+	if (_foldedCornerTouchCrossedTapThreshold) {
+		[foldedCornerViewController animateSendFoldBackToCorner];
+	} else {
+		[foldedCornerViewController animateCornerTug];
+	}
+}
+
+- (void)foldedCornerRestoredToStartPoint {
 	[(ZSFoldedPageView *)self.view restoreScreenshotFromOriginal];
 	[(ZSFoldedPageView *)self.view setAllSubViewsHidden:NO except:nil];
-	
-	[self.view setNeedsDisplay];
 }
 
 #pragma mark - User Interaction

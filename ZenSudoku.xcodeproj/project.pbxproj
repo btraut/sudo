@@ -108,6 +108,8 @@
 		84B0B1E615801A4200A99510 /* ShadowBlob@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B0B1E515801A4200A99510 /* ShadowBlob@2x.png */; };
 		84B11541158B394800983B3A /* ZSGLShape.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B11540158B394800983B3A /* ZSGLShape.m */; };
 		84B11555158DE15C00983B3A /* ShadowBlobTest@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B11554158DE15C00983B3A /* ShadowBlobTest@2x.png */; };
+		84B11559158F274D00983B3A /* ZSAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B11558158F274D00983B3A /* ZSAnimation.m */; };
+		84B1155C158F36B900983B3A /* ZSPointAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B1155B158F36B900983B3A /* ZSPointAnimation.m */; };
 		84B300F4148AF6FF00E568CE /* ZSGameHistoryEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B300F3148AF6FD00E568CE /* ZSGameHistoryEntry.m */; };
 		84C092E31582D38F005799F8 /* PageCurlGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 84C092E11582D38F005799F8 /* PageCurlGradient.png */; };
 		84C092E41582D38F005799F8 /* PageCurlGradient@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84C092E21582D38F005799F8 /* PageCurlGradient@2x.png */; };
@@ -210,8 +212,8 @@
 		843947E31589D30C00463720 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		843947E61589D74C00463720 /* ZSFoldedCornerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSFoldedCornerViewController.h; path = "View Controllers/ZSFoldedCornerViewController.h"; sourceTree = "<group>"; };
 		843947E71589D74C00463720 /* ZSFoldedCornerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSFoldedCornerViewController.m; path = "View Controllers/ZSFoldedCornerViewController.m"; sourceTree = "<group>"; };
-		843947E91589DB8900463720 /* ZSGLSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSGLSprite.h; path = "View Controllers/ZSGLSprite.h"; sourceTree = "<group>"; };
-		843947EA1589DB8900463720 /* ZSGLSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSGLSprite.m; path = "View Controllers/ZSGLSprite.m"; sourceTree = "<group>"; };
+		843947E91589DB8900463720 /* ZSGLSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSGLSprite.h; path = Utilities/ZSGLSprite.h; sourceTree = "<group>"; };
+		843947EA1589DB8900463720 /* ZSGLSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSGLSprite.m; path = Utilities/ZSGLSprite.m; sourceTree = "<group>"; };
 		843BEDEE149DC4E800D1D19B /* ZSIconNew57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ZSIconNew57.png; path = Resources/Images/ZSIconNew57.png; sourceTree = "<group>"; };
 		843BEDF0149DC4F100D1D19B /* ZSIconNew114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ZSIconNew114.png; path = Resources/Images/ZSIconNew114.png; sourceTree = "<group>"; };
 		8449D9551481D77C003F6FB3 /* ZSGameAnswerOptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSGameAnswerOptionsViewController.h; path = "View Controllers/ZSGameAnswerOptionsViewController.h"; sourceTree = "<group>"; };
@@ -276,9 +278,13 @@
 		84B0B1D7157D8AA800A99510 /* ZSFoldedCornerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSFoldedCornerView.h; path = "View Controllers/ZSFoldedCornerView.h"; sourceTree = "<group>"; };
 		84B0B1D8157D8AA800A99510 /* ZSFoldedCornerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSFoldedCornerView.m; path = "View Controllers/ZSFoldedCornerView.m"; sourceTree = "<group>"; };
 		84B0B1E515801A4200A99510 /* ShadowBlob@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ShadowBlob@2x.png"; path = "Resources/Images/ShadowBlob@2x.png"; sourceTree = "<group>"; };
-		84B1153F158B394800983B3A /* ZSGLShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSGLShape.h; path = "View Controllers/ZSGLShape.h"; sourceTree = "<group>"; };
-		84B11540158B394800983B3A /* ZSGLShape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSGLShape.m; path = "View Controllers/ZSGLShape.m"; sourceTree = "<group>"; };
+		84B1153F158B394800983B3A /* ZSGLShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSGLShape.h; path = Utilities/ZSGLShape.h; sourceTree = "<group>"; };
+		84B11540158B394800983B3A /* ZSGLShape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSGLShape.m; path = Utilities/ZSGLShape.m; sourceTree = "<group>"; };
 		84B11554158DE15C00983B3A /* ShadowBlobTest@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ShadowBlobTest@2x.png"; path = "Resources/Images/ShadowBlobTest@2x.png"; sourceTree = "<group>"; };
+		84B11557158F274D00983B3A /* ZSAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSAnimation.h; path = Utilities/ZSAnimation.h; sourceTree = "<group>"; };
+		84B11558158F274D00983B3A /* ZSAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSAnimation.m; path = Utilities/ZSAnimation.m; sourceTree = "<group>"; };
+		84B1155A158F36B900983B3A /* ZSPointAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSPointAnimation.h; path = Utilities/ZSPointAnimation.h; sourceTree = "<group>"; };
+		84B1155B158F36B900983B3A /* ZSPointAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSPointAnimation.m; path = Utilities/ZSPointAnimation.m; sourceTree = "<group>"; };
 		84B300F2148AF6FD00E568CE /* ZSGameHistoryEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSGameHistoryEntry.h; path = Models/ZSGameHistoryEntry.h; sourceTree = "<group>"; };
 		84B300F3148AF6FD00E568CE /* ZSGameHistoryEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSGameHistoryEntry.m; path = Models/ZSGameHistoryEntry.m; sourceTree = "<group>"; };
 		84C092E11582D38F005799F8 /* PageCurlGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PageCurlGradient.png; path = Resources/Images/PageCurlGradient.png; sourceTree = "<group>"; };
@@ -632,6 +638,21 @@
 			name = "UIColor+ColorWithHex";
 			sourceTree = "<group>";
 		};
+		84B11556158F26B900983B3A /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				843947E91589DB8900463720 /* ZSGLSprite.h */,
+				843947EA1589DB8900463720 /* ZSGLSprite.m */,
+				84B1153F158B394800983B3A /* ZSGLShape.h */,
+				84B11540158B394800983B3A /* ZSGLShape.m */,
+				84B11557158F274D00983B3A /* ZSAnimation.h */,
+				84B11558158F274D00983B3A /* ZSAnimation.m */,
+				84B1155A158F36B900983B3A /* ZSPointAnimation.h */,
+				84B1155B158F36B900983B3A /* ZSPointAnimation.m */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
 		84D55004147F1C4A00A7934E = {
 			isa = PBXGroup;
 			children = (
@@ -674,7 +695,8 @@
 			children = (
 				84AC26D71480D52000E966A5 /* Models */,
 				84AC26E11480EB5E00E966A5 /* Model Controllers */,
-				84D55066147F2F1600A7934E /* View Controllers */,
+				84D55066147F2F1600A7934E /* Views and View Controllers */,
+				84B11556158F26B900983B3A /* Utilities */,
 				84D5501A147F1C4A00A7934E /* Supporting Files */,
 				84AC26C21480834B00E966A5 /* Resources */,
 				8449D95B14833649003F6FB3 /* External */,
@@ -695,7 +717,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		84D55066147F2F1600A7934E /* View Controllers */ = {
+		84D55066147F2F1600A7934E /* Views and View Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				84D55059147F227C00A7934E /* ZSMainMenuViewController.h */,
@@ -728,14 +750,10 @@
 				843947E71589D74C00463720 /* ZSFoldedCornerViewController.m */,
 				845ABB161587E50B006D2616 /* ZSFoldedCornerGLView.h */,
 				845ABB171587E50B006D2616 /* ZSFoldedCornerGLView.m */,
-				843947E91589DB8900463720 /* ZSGLSprite.h */,
-				843947EA1589DB8900463720 /* ZSGLSprite.m */,
-				84B1153F158B394800983B3A /* ZSGLShape.h */,
-				84B11540158B394800983B3A /* ZSGLShape.m */,
 				847250951582A3C40073D113 /* ZSFoldedPageView.h */,
 				847250961582A3C50073D113 /* ZSFoldedPageView.m */,
 			);
-			name = "View Controllers";
+			name = "Views and View Controllers";
 			sourceTree = "<group>";
 		};
 		84EE862A1494ADEA004C0A16 /* ZenSudokuLogicTests */ = {
@@ -966,6 +984,8 @@
 				843947E81589D74C00463720 /* ZSFoldedCornerViewController.m in Sources */,
 				843947EB1589DB8900463720 /* ZSGLSprite.m in Sources */,
 				84B11541158B394800983B3A /* ZSGLShape.m in Sources */,
+				84B11559158F274D00983B3A /* ZSAnimation.m in Sources */,
+				84B1155C158F36B900983B3A /* ZSPointAnimation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
