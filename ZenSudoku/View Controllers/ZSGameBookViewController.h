@@ -13,7 +13,7 @@
 
 @class ZSHintViewController;
 
-@interface ZSGameBookViewController : UIViewController <ZSHintDelegate> {
+@interface ZSGameBookViewController : UIViewController <ZSHintDelegate, ZSMajorGameStateDelegate> {
 	ZSGameViewController *currentGameViewController;
 	ZSGameViewController *nextGameViewController;
 	
@@ -30,5 +30,7 @@
 - (void)endHintDeck;
 - (void)showHint;
 - (void)hideHint;
+
+- (void)startNewGame;
 
 @end

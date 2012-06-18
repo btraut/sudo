@@ -12,7 +12,7 @@
 
 @protocol ZSPointAnimationDelegate <NSObject>
 
-- (void)animationAdvanced:(CGPoint)point;
+- (void)animationAdvanced:(CGPoint)point progress:(float)progress;
 - (void)animationDidFinish;
 
 @end
@@ -23,6 +23,8 @@
 
 @property (nonatomic, assign) NSTimeInterval duration;
 @property (nonatomic, assign) ZSAnimationTimingFunction timingFunction;
+
+@property (nonatomic, assign) BOOL passProgressThrough;
 
 @property (nonatomic, assign) CGPoint startPoint;
 @property (nonatomic, assign) CGPoint endPoint;

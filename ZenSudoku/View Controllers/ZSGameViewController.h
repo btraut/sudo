@@ -25,6 +25,12 @@
 
 @end
 
+@protocol ZSMajorGameStateDelegate <NSObject>
+
+- (void)startNewGame;
+
+@end
+
 @interface ZSGameViewController : UIViewController <ZSGameDelegate, ZSFoldedCornerGLViewControllerTouchDelegate> {
 	ZSGame *game;
 	ZSHintGenerator *hintGenerator;
@@ -48,6 +54,7 @@
 	UILabel *title;
 	
 	NSObject<ZSHintDelegate> *hintDelegate;
+	NSObject<ZSMajorGameStateDelegate> *majorGameStateDelegate;
 }
 
 @property (strong) ZSGame *game;
@@ -63,6 +70,7 @@
 @property (assign) BOOL allowsInput;
 
 @property (strong) NSObject<ZSHintDelegate> *hintDelegate;
+@property (strong) NSObject<ZSMajorGameStateDelegate> *majorGameStateDelegate;
 
 - (id)initWithGame:(ZSGame *)game;
 
@@ -94,5 +102,7 @@
 - (void)tilePencilDidChange:(BOOL)isSet forPencilNumber:(NSInteger)pencilNumber forTileAtRow:(NSInteger)row col:(NSInteger)col;
 - (void)timerDidAdvance;
 - (void)gameWasSolved;
+
+- (void)startPageFold;
 
 @end

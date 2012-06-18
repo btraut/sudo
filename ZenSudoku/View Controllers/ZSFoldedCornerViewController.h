@@ -17,6 +17,7 @@
 - (void)foldedCornerTouchMovedWithFoldPoint:(CGPoint)foldPoint foldDimensions:(CGSize)foldDimensions;
 - (void)foldedCornerTouchEndedWithFoldPoint:(CGPoint)foldPoint foldDimensions:(CGSize)foldDimensions;
 - (void)foldedCornerRestoredToStartPoint;
+- (void)pageWasTurned;
 
 @end
 
@@ -36,6 +37,8 @@
 - (void)pushUpdate;
 
 - (void)animateSendFoldBackToCorner;
+- (void)animatePageTurn;
+- (void)animateStartFold;
 - (void)animateCornerTug;
 
 @end

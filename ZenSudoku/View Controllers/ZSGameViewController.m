@@ -35,7 +35,7 @@
 @synthesize foldedCornerViewController;
 @synthesize pencilButton, penciling;
 @synthesize allowsInput;
-@synthesize hintDelegate;
+@synthesize hintDelegate, majorGameStateDelegate;
 
 - (id)initWithGame:(ZSGame *)newGame {
 	self = [self init];
@@ -257,7 +257,11 @@
 
 - (void)foldedCornerTouchEndedWithFoldPoint:(CGPoint)foldPoint foldDimensions:(CGSize)foldDimensions {
 	if (_foldedCornerTouchCrossedTapThreshold) {
-		[foldedCornerViewController animateSendFoldBackToCorner];
+		if (foldPoint.x > foldedCornerViewController.view.frame.size.width / 2) {
+			[foldedCornerViewController animatePageTurn];
+		} else {
+			[foldedCornerViewController animateSendFoldBackToCorner];
+		}
 	} else {
 		[foldedCornerViewController animateCornerTug];
 	}
@@ -266,6 +270,14 @@
 - (void)foldedCornerRestoredToStartPoint {
 	[(ZSFoldedPageView *)self.view restoreScreenshotFromOriginal];
 	[(ZSFoldedPageView *)self.view setAllSubViewsHidden:NO except:nil];
+}
+
+- (void)pageWasTurned {
+	[self.majorGameStateDelegate startNewGame];
+}
+
+- (void)startPageFold {
+	[foldedCornerViewController animateStartFold];
 }
 
 #pragma mark - User Interaction

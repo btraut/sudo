@@ -18,6 +18,8 @@ typedef enum {
 	ZSFoldedCornerViewControllerAnimationStateStopped,
 	ZSFoldedCornerViewControllerAnimationStateUserAnimating,
 	ZSFoldedCornerViewControllerAnimationStateSendFoldBackToCornerStage1,
+	ZSFoldedCornerViewControllerAnimationStatePageTurnStage1,
+	ZSFoldedCornerViewControllerAnimationStateStartFoldStage1,
 	ZSFoldedCornerViewControllerAnimationStateCornerTugStage1,
 	ZSFoldedCornerViewControllerAnimationStateCornerTugStage2,
 	ZSFoldedCornerViewControllerAnimationStateCornerTugStage3,
@@ -340,9 +342,20 @@ typedef enum {
 	[_touchDelegate foldedCornerTouchMovedWithFoldPoint:_foldPoint foldDimensions:foldDimensions];
 }
 
-- (void)animationAdvanced:(CGPoint)point {
-	_foldPoint = point;
-	[self pushUpdate];
+- (void)animationAdvanced:(CGPoint)point progress:(float)progress {
+	BOOL useAnimationFoldPoint = YES;
+	
+	if (_animationState == ZSFoldedCornerViewControllerAnimationStatePageTurnStage1) {
+		[self _pageTurnAnimationAdvancedWithProgress:progress];
+	} else if (_animationState == ZSFoldedCornerViewControllerAnimationStateStartFoldStage1) {
+		[self _startFoldAnimationAdvancedWithProgress:progress];
+		useAnimationFoldPoint = NO;
+	}
+	
+	if (useAnimationFoldPoint) {
+		_foldPoint = point;
+		[self pushUpdate];
+	}
 }
 
 - (void)animationDidFinish {
@@ -352,6 +365,16 @@ typedef enum {
 			break;
 			
 		case ZSFoldedCornerViewControllerAnimationStateSendFoldBackToCornerStage1:
+			_animationState = ZSFoldedCornerViewControllerAnimationStateStopped;
+			[_touchDelegate foldedCornerRestoredToStartPoint];
+			break;
+			
+		case ZSFoldedCornerViewControllerAnimationStatePageTurnStage1:
+			_animationState = ZSFoldedCornerViewControllerAnimationStateStopped;
+			[_touchDelegate pageWasTurned];
+			break;
+			
+		case ZSFoldedCornerViewControllerAnimationStateStartFoldStage1:
 			_animationState = ZSFoldedCornerViewControllerAnimationStateStopped;
 			[_touchDelegate foldedCornerRestoredToStartPoint];
 			break;
@@ -388,12 +411,69 @@ typedef enum {
 	_animationState = ZSFoldedCornerViewControllerAnimationStateSendFoldBackToCornerStage1;
 	
 	_animationHelper.duration = 0.4f;
-	_animationHelper.timingFunction = ZSAnimationTimingFunctionEaseInOut;
+	_animationHelper.timingFunction = ZSAnimationTimingFunctionEaseOut;
 	
 	_animationHelper.startPoint = _foldPoint;
 	_animationHelper.endPoint = _foldStartPoint;
 	
 	[_animationHelper start];
+}
+
+- (void)animatePageTurn {
+	// Only start the animation if we're not currently running an animation.
+	if (_animationState != ZSFoldedCornerViewControllerAnimationStateStopped) {
+		return;
+	}
+	
+	_animationState = ZSFoldedCornerViewControllerAnimationStatePageTurnStage1;
+	
+	_animationHelper.duration = 0.4f;
+	_animationHelper.timingFunction = ZSAnimationTimingFunctionEaseOut;
+	
+	_animationHelper.startPoint = _foldPoint;
+	_animationHelper.endPoint = CGPointMake(628, 0.1f);
+	
+	[_animationHelper start];
+}
+
+- (void)_pageTurnAnimationAdvancedWithProgress:(float)progress {
+	if (progress >= 0.8f) {
+		self.view.alpha = 5 * (1 - progress);
+	}
+}
+
+- (void)animateStartFold {
+	// Only start the animation if we're not currently running an animation.
+	if (_animationState != ZSFoldedCornerViewControllerAnimationStateStopped) {
+		return;
+	}
+	
+	_animationState = ZSFoldedCornerViewControllerAnimationStateStartFoldStage1;
+	
+	_animationHelper.duration = 0.4f;
+	_animationHelper.timingFunction = ZSAnimationTimingFunctionEaseOut;
+	
+	_animationHelper.startPoint = CGPointMake(0.01f, 0.01f);
+	_animationHelper.endPoint = _foldStartPoint;
+	
+	[_animationHelper start];
+}
+
+- (void)_startFoldAnimationAdvancedWithProgress:(float)progress {
+	if (self.view.hidden == YES) {
+		self.view.hidden = NO;
+	}
+	
+	if (progress == 1) {
+		_foldPoint = _foldStartPoint;
+	} else {
+		CGFloat newX = _foldStartPoint.x - cosf(progress * M_PI / 2) * _foldStartPoint.x;
+		CGFloat newY = sinf(progress * M_PI / 2) * _foldStartPoint.y;
+		
+		_foldPoint = CGPointMake(newX, newY);
+	}
+	
+	[self pushUpdate];
 }
 
 - (void)animateCornerTug {
@@ -432,7 +512,7 @@ typedef enum {
 - (void)_animateCornerTugStage3 {
 	_animationState = ZSFoldedCornerViewControllerAnimationStateCornerTugStage3;
 	
-	_animationHelper.duration = 0.16f;
+	_animationHelper.duration = 0.14f;
 	_animationHelper.timingFunction = ZSAnimationTimingFunctionEaseInOut;
 	
 	_animationHelper.startPoint = _foldPoint;
@@ -444,7 +524,7 @@ typedef enum {
 - (void)_animateCornerTugStage4 {
 	_animationState = ZSFoldedCornerViewControllerAnimationStateCornerTugStage4;
 	
-	_animationHelper.duration = 0.16f;
+	_animationHelper.duration = 0.14f;
 	_animationHelper.timingFunction = ZSAnimationTimingFunctionEaseInOut;
 	
 	_animationHelper.startPoint = _foldPoint;

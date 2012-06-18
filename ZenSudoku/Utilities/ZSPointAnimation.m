@@ -22,6 +22,8 @@
 @synthesize duration = _duration;
 @synthesize timingFunction = _timingFunction;
 
+@synthesize passProgressThrough = _passProgressThrough;
+
 @synthesize startPoint = _startPoint;
 @synthesize endPoint = _endPoint;
 
@@ -59,7 +61,7 @@
 }
 
 - (void)animationAdvanced:(float)progress {
-	[_delegate animationAdvanced:CGPointMake(_startPoint.x + (_endPoint.x - _startPoint.x) * progress, _startPoint.y + (_endPoint.y - _startPoint.y) * progress)];
+	[_delegate animationAdvanced:CGPointMake(_startPoint.x + (_endPoint.x - _startPoint.x) * progress, _startPoint.y + (_endPoint.y - _startPoint.y) * progress) progress:progress];
 }
 
 - (void)animationDidFinish {
