@@ -19,8 +19,7 @@
 
 @implementation ZSGLShape
 
-@synthesize transform = _transform;
-@synthesize overlay = _overlay;
+@synthesize transform, overlay;
 
 @synthesize effect = _effect;
 
@@ -29,7 +28,7 @@
 	
     if (self) {  
         _effect = effect;
-		_overlay = NO;
+		overlay = NO;
     }
 	
 	return self;
@@ -40,7 +39,7 @@
 	
 	[self.effect prepareToDraw];
 	
-	if (_overlay) {
+	if (overlay) {
 		glBlendFunc(GL_ZERO, GL_SRC_COLOR);
 	} else {
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

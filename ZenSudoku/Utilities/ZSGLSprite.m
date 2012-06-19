@@ -18,9 +18,7 @@
 
 @implementation ZSGLSprite
 
-@synthesize transform = _transform;
-@synthesize contentSize = _contentSize;
-@synthesize contentSizeNormalized = _contentSizeNormalized;
+@synthesize transform, contentSize, contentSizeNormalized;
 
 @synthesize effect = _effect;
 @synthesize quad = _quad;

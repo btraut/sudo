@@ -13,7 +13,7 @@
 	ZSHintGeneratorTileScope scope;
 }
 
-@property (nonatomic, assign) ZSHintGeneratorTileScope scope;
+@property (assign) ZSHintGeneratorTileScope scope;
 
 - (id)initWithSubgroupSize:(NSInteger)size;
 

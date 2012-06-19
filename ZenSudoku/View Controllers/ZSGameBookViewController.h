@@ -22,8 +22,8 @@
 	BOOL hintsShown;
 }
 
-@property (nonatomic, strong) ZSGameViewController *currentGameViewController;
-@property (nonatomic, strong) ZSGameViewController *nextGameViewController;
+@property (strong) ZSGameViewController *currentGameViewController;
+@property (strong) ZSGameViewController *nextGameViewController;
 
 - (BOOL)getHintsShown;
 - (void)beginHintDeck:(NSArray *)hintDeck forGameViewController:(ZSGameViewController *)gameViewController;

@@ -39,6 +39,15 @@ NSString * const kDictionaryRepresentationGameUndoStackKey = @"kDictionaryRepres
 NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepresentationGameRedoStackKey";
 
 
+@interface ZSGame() {
+	NSMutableArray *_undoStack;
+	NSMutableArray *_redoStack;
+	
+	NSTimer *_countdownTimer;
+}
+
+@end
+
 @implementation ZSGame
 
 @synthesize difficulty, type;
@@ -170,6 +179,8 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 }
 
 - (NSDictionary *)getDictionaryRepresentation {
+	NSLog(@"1in her?");
+	
 	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 	
 	// Set the game properties.
@@ -192,10 +203,12 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 	
 	[dict setValue:tileRowArray forKey:kDictionaryRepresentationGameTilesKey];
 	
+	NSLog(@"2in her?");
+	
 	// Set the game status data.
 	[dict setValue:[NSNumber numberWithInt:timerCount] forKey:kDictionaryRepresentationGameTimerCountKey];
 	[dict setValue:[NSNumber numberWithInt:totalStrikes] forKey:kDictionaryRepresentationGameTotalStrikesKey];
-	
+		
 	// Build game history dictionaries.
 	NSMutableArray *undoStackDictionaries = [NSMutableArray array];
 	NSMutableArray *redoStackDictionaries = [NSMutableArray array];

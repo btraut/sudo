@@ -12,7 +12,7 @@
 
 @interface ZSFoldedPageView : UIView
 
-@property (nonatomic, assign) CGSize foldDimensions;
+@property (assign) CGSize foldDimensions;
 
 - (void)createScreenshotFromView;
 - (void)restoreScreenshotFromOriginal;

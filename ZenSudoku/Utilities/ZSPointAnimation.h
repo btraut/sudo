@@ -19,15 +19,15 @@
 
 @interface ZSPointAnimation : NSObject <ZSAnimationDelegate>
 
-@property (nonatomic, weak) id<ZSPointAnimationDelegate> delegate;
+@property (weak) id<ZSPointAnimationDelegate> delegate;
 
-@property (nonatomic, assign) NSTimeInterval duration;
-@property (nonatomic, assign) ZSAnimationTimingFunction timingFunction;
+@property (assign) NSTimeInterval duration;
+@property (assign) ZSAnimationTimingFunction timingFunction;
 
-@property (nonatomic, assign) BOOL passProgressThrough;
+@property (assign) BOOL passProgressThrough;
 
-@property (nonatomic, assign) CGPoint startPoint;
-@property (nonatomic, assign) CGPoint endPoint;
+@property (assign) CGPoint startPoint;
+@property (assign) CGPoint endPoint;
 
 - (void)start;
 - (void)pause;

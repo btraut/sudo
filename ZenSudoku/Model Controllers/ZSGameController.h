@@ -9,17 +9,12 @@
 #import <Foundation/Foundation.h>
 #import "ZSGame.h"
 
-@interface ZSGameController : NSObject {
-	ZSGame *currentGame;
-}
-
-@property (nonatomic, strong) ZSGame *currentGame;
+@interface ZSGameController : NSObject
 
 + (ZSGameController *)sharedInstance;
 
 // Game Management
 - (ZSGame *)fetchGameWithDifficulty:(ZSGameDifficulty)difficulty;
-- (void)clearCurrentGame;
 
 // Saved Games
 - (BOOL)savedGameInProgress;

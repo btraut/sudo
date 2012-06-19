@@ -10,33 +10,20 @@
 
 #import "ZSGameBoardTileViewController.h"
 
-@interface ZSHintCard : NSObject {
-	NSString *text;
-	
-	NSMutableArray *highlightPencils;
-	NSMutableArray *highlightAnswers;
-	NSMutableArray *highlightTiles;
-	NSMutableArray *removePencils;
-	NSMutableArray *addPencils;
-	NSMutableArray *removeGuess;
-	NSMutableArray *setGuess;
-	BOOL setAutoPencil;
-	
-	BOOL allowsLearn;
-}
+@interface ZSHintCard : NSObject
 
-@property (nonatomic, strong) NSString *text;
+@property (strong) NSString *text;
 
-@property (nonatomic, strong) NSMutableArray *highlightPencils;
-@property (nonatomic, strong) NSMutableArray *highlightAnswers;
-@property (nonatomic, strong) NSMutableArray *highlightTiles;
-@property (nonatomic, strong) NSMutableArray *removePencils;
-@property (nonatomic, strong) NSMutableArray *addPencils;
-@property (nonatomic, strong) NSMutableArray *removeGuess;
-@property (nonatomic, strong) NSMutableArray *setGuess;
-@property (nonatomic, assign) BOOL setAutoPencil;
+@property (strong) NSMutableArray *highlightPencils;
+@property (strong) NSMutableArray *highlightAnswers;
+@property (strong) NSMutableArray *highlightTiles;
+@property (strong) NSMutableArray *removePencils;
+@property (strong) NSMutableArray *addPencils;
+@property (strong) NSMutableArray *removeGuess;
+@property (strong) NSMutableArray *setGuess;
+@property (assign) BOOL setAutoPencil;
 
-@property (nonatomic, assign) BOOL allowsLearn;
+@property (assign) BOOL allowsLearn;
 
 - (void)addInstructionHighlightPencil:(NSInteger)pencil forTileAtRow:(NSInteger)row col:(NSInteger)col highlightType:(ZSGameBoardTilePencilTextHintHighlightType)pencilTextHintHighlightType;
 - (void)addInstructionHighlightAnswerForTileAtRow:(NSInteger)row col:(NSInteger)col highlightType:(ZSGameBoardTileTextHintHighlightType)textHintHighlightType;

@@ -17,9 +17,9 @@
 	NSInteger totalPencilsToEliminate;
 }
 
-@property (nonatomic, assign) BOOL subgroupExistsInSameRow;
-@property (nonatomic, assign) BOOL subgroupExistsInSameCol;
-@property (nonatomic, assign) BOOL subgroupExistsInSameGroup;
+@property (assign) BOOL subgroupExistsInSameRow;
+@property (assign) BOOL subgroupExistsInSameCol;
+@property (assign) BOOL subgroupExistsInSameGroup;
 
 - (id)initWithSubgroupSize:(NSInteger)size;
 

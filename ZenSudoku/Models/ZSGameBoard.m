@@ -23,6 +23,13 @@ NSInteger standard9x9GroupMap[9][9] = {
 	{6, 6, 6, 7, 7, 7, 8, 8, 8},
 };
 
+
+@interface ZSGameBoard() {
+	NSArray *_tiles;
+}
+
+@end
+
 @implementation ZSGameBoard
 
 @synthesize delegate;

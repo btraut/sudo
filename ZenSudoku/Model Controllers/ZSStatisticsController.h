@@ -45,35 +45,35 @@
 }
 
 // Games
-@property (nonatomic, readonly) NSInteger totalStartedGames;
-@property (nonatomic, readonly) NSInteger totalSolvedGames;
+@property (readonly) NSInteger totalStartedGames;
+@property (readonly) NSInteger totalSolvedGames;
 
-@property (nonatomic, readonly) NSInteger gamesSolvedPerEasy;
-@property (nonatomic, readonly) NSInteger gamesSolvedPerModerate;
-@property (nonatomic, readonly) NSInteger gamesSolvedPerChallenging;
-@property (nonatomic, readonly) NSInteger gamesSolvedPerDiabolical;
-@property (nonatomic, readonly) NSInteger gamesSolvedPerInsane;
+@property (readonly) NSInteger gamesSolvedPerEasy;
+@property (readonly) NSInteger gamesSolvedPerModerate;
+@property (readonly) NSInteger gamesSolvedPerChallenging;
+@property (readonly) NSInteger gamesSolvedPerDiabolical;
+@property (readonly) NSInteger gamesSolvedPerInsane;
 
 // Answers
-@property (nonatomic, readonly) NSInteger totalEnteredAnswers;
-@property (nonatomic, readonly) NSInteger totalStrikes;
-@property (nonatomic, readonly) NSInteger totalUndos;
-@property (nonatomic, readonly) NSInteger totalRedos;
+@property (readonly) NSInteger totalEnteredAnswers;
+@property (readonly) NSInteger totalStrikes;
+@property (readonly) NSInteger totalUndos;
+@property (readonly) NSInteger totalRedos;
 
 // Time
-@property (nonatomic, readonly) NSInteger totalTimePlayed;
+@property (readonly) NSInteger totalTimePlayed;
 
-@property (nonatomic, readonly) NSInteger totalTimePlayedPerEasy;
-@property (nonatomic, readonly) NSInteger totalTimePlayedPerModerate;
-@property (nonatomic, readonly) NSInteger totalTimePlayedPerChallenging;
-@property (nonatomic, readonly) NSInteger totalTimePlayedPerDiabolical;
-@property (nonatomic, readonly) NSInteger totalTimePlayedPerInsane;
+@property (readonly) NSInteger totalTimePlayedPerEasy;
+@property (readonly) NSInteger totalTimePlayedPerModerate;
+@property (readonly) NSInteger totalTimePlayedPerChallenging;
+@property (readonly) NSInteger totalTimePlayedPerDiabolical;
+@property (readonly) NSInteger totalTimePlayedPerInsane;
 
-@property (nonatomic, readonly) NSInteger fastestGamePerEasy;
-@property (nonatomic, readonly) NSInteger fastestGamePerModerate;
-@property (nonatomic, readonly) NSInteger fastestGamePerChallenging;
-@property (nonatomic, readonly) NSInteger fastestGamePerDiabolical;
-@property (nonatomic, readonly) NSInteger fastestGamePerInsane;
+@property (readonly) NSInteger fastestGamePerEasy;
+@property (readonly) NSInteger fastestGamePerModerate;
+@property (readonly) NSInteger fastestGamePerChallenging;
+@property (readonly) NSInteger fastestGamePerDiabolical;
+@property (readonly) NSInteger fastestGamePerInsane;
 
 + (id)sharedInstance;
 

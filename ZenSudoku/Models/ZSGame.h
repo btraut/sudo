@@ -63,38 +63,19 @@ typedef enum {
 @class ZSGameBoard;
 @class ZSGameTile;
 
-@interface ZSGame : NSObject <ZSGameBoardDelegate> {
-	ZSGameDifficulty difficulty;
-	ZSGameType type;
-	
-	ZSGameBoard *gameBoard;
-	
-	BOOL recordingHistory;
-	
-	NSInteger timerCount;
-	
-	NSInteger totalStrikes;
-	
-	@private
-	
-	NSMutableArray *_undoStack;
-	NSMutableArray *_redoStack;
-	
-	NSTimer *_countdownTimer;
-}
+@interface ZSGame : NSObject <ZSGameBoardDelegate>
 
-@property (nonatomic, assign) ZSGameDifficulty difficulty;
-@property (nonatomic, assign) ZSGameType type;
+@property (assign) ZSGameDifficulty difficulty;
+@property (assign) ZSGameType type;
 
-@property (nonatomic, strong) ZSGameBoard *gameBoard;
+@property (strong) ZSGameBoard *gameBoard;
 
-@property (nonatomic, assign) BOOL recordingHistory;
+@property (assign) BOOL recordingHistory;
 
-@property (nonatomic, weak) id<ZSGameDelegate> delegate;
+@property (weak) id<ZSGameDelegate> delegate;
 
-@property (nonatomic, readonly) NSInteger timerCount;
-
-@property (nonatomic, readonly) NSInteger totalStrikes;
+@property (readonly) NSInteger timerCount;
+@property (readonly) NSInteger totalStrikes;
 
 // Creation / Initialization
 

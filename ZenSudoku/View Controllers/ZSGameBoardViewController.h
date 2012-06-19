@@ -13,7 +13,6 @@
 @class ZSGameViewController;
 
 @interface ZSGameBoardViewController : UIViewController <ZSGameBoardTileTouchDelegate> {
-	ZSGame *game;
 	NSArray *tileViews;
 	
 	ZSGameBoardTileViewController *selectedTileView;
@@ -21,7 +20,7 @@
 	NSMutableArray *highlightedErrorTileViews;
 }
 
-@property (strong) ZSGame *game;
+@property (weak) ZSGame *game;
 @property (strong, readonly) NSArray *tileViews;
 
 @property (weak) ZSGameViewController *delegate;

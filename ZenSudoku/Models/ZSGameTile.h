@@ -10,31 +10,17 @@
 
 @class ZSGameBoard;
 
-@interface ZSGameTile : NSObject {
-	ZSGameBoard *gameBoard;
-	
-	NSInteger row;
-	NSInteger col;
-	NSInteger groupId;
-	
-	NSInteger guess;
-	NSInteger answer;
-	BOOL locked;
-	
-	@private
-	
-	NSMutableArray *_pencils;
-}
+@interface ZSGameTile : NSObject
 
-@property (strong) ZSGameBoard *gameBoard;
+@property (weak) ZSGameBoard *gameBoard;
 
-@property (nonatomic, assign) NSInteger row;
-@property (nonatomic, assign) NSInteger col;
-@property (nonatomic, assign) NSInteger groupId;
+@property (assign) NSInteger row;
+@property (assign) NSInteger col;
+@property (assign) NSInteger groupId;
 
-@property (nonatomic, assign) NSInteger guess;
-@property (nonatomic, assign) NSInteger answer;
-@property (nonatomic, assign) BOOL locked;
+@property (assign) NSInteger guess;
+@property (assign) NSInteger answer;
+@property (assign) BOOL locked;
 
 - (id)initWithBoard:(ZSGameBoard *)gameBoard;
 

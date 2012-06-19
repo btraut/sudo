@@ -84,7 +84,6 @@
 
 - (void)setErrors;
 
-- (void)closeButtonWasTouched;
 - (void)pencilButtonWasTouched;
 - (void)autoPencilButtonWasTouched;
 - (void)undoButtonWasTouched;

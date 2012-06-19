@@ -14,13 +14,7 @@ typedef enum {
 	ZSGameHistoryEntryTypeGuess
 } ZSGameHistoryEntryType;
 
-@interface ZSGameHistoryEntry : NSObject {
-	ZSGameHistoryEntryType type;
-	NSInteger row;
-	NSInteger col;
-	NSInteger previousValue;
-	NSInteger pencilNumber;
-}
+@interface ZSGameHistoryEntry : NSObject
 
 @property (assign) ZSGameHistoryEntryType type;
 @property (assign) NSInteger row;

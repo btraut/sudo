@@ -27,41 +27,24 @@ typedef struct {
 
 @class ZSGameBoard;
 
-@interface ZSFastGameBoard : NSObject {
-	NSInteger size;
-	
-	ZSGameTileStub **grid;
-	
-	ZSGameTileStub ***rows;
-	ZSGameTileStub ***cols;
-	ZSGameTileStub ***groups;
-	ZSGameTileStub ***allSets;
-	
-	NSInteger **totalTilesInRowWithAnswer;
-	NSInteger **totalTilesInColWithAnswer;
-	NSInteger **totalTilesInGroupWithAnswer;
-	
-	NSInteger **totalTilesInRowWithPencil;
-	NSInteger **totalTilesInColWithPencil;
-	NSInteger **totalTilesInGroupWithPencil;
-}
+@interface ZSFastGameBoard : NSObject
 
-@property (nonatomic, assign) NSInteger size;
+@property (assign) NSInteger size;
 
-@property (nonatomic, assign) ZSGameTileStub **grid;
+@property (assign) ZSGameTileStub **grid;
 
-@property (nonatomic, assign) ZSGameTileStub ***rows;
-@property (nonatomic, assign) ZSGameTileStub ***cols;
-@property (nonatomic, assign) ZSGameTileStub ***groups;
-@property (nonatomic, assign) ZSGameTileStub ***allSets;
+@property (assign) ZSGameTileStub ***rows;
+@property (assign) ZSGameTileStub ***cols;
+@property (assign) ZSGameTileStub ***groups;
+@property (assign) ZSGameTileStub ***allSets;
 
-@property (nonatomic, assign) NSInteger **totalTilesInRowWithAnswer;
-@property (nonatomic, assign) NSInteger **totalTilesInColWithAnswer;
-@property (nonatomic, assign) NSInteger **totalTilesInGroupWithAnswer;
+@property (assign) NSInteger **totalTilesInRowWithAnswer;
+@property (assign) NSInteger **totalTilesInColWithAnswer;
+@property (assign) NSInteger **totalTilesInGroupWithAnswer;
 
-@property (nonatomic, assign) NSInteger **totalTilesInRowWithPencil;
-@property (nonatomic, assign) NSInteger **totalTilesInColWithPencil;
-@property (nonatomic, assign) NSInteger **totalTilesInGroupWithPencil;
+@property (assign) NSInteger **totalTilesInRowWithPencil;
+@property (assign) NSInteger **totalTilesInColWithPencil;
+@property (assign) NSInteger **totalTilesInGroupWithPencil;
 
 // Initialization and Memory Management
 

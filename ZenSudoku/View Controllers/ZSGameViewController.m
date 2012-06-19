@@ -531,27 +531,6 @@
 
 #pragma mark - Button Handler Methods
 
-- (void)closeButtonWasTouched {
-	// If the game was finished, delete it.
-	if ([game isSolved]) {
-		[[ZSGameController sharedInstance] clearCurrentGame];
-	}
-	
-	// Navigate back to the main menu.
-	UINavigationController *gameNavController = self.navigationController;
-	UINavigationController *mainNavController;
-	
-	if ([gameNavController respondsToSelector:@selector(presentingViewController)]) {
-        mainNavController = (UINavigationController *)gameNavController.presentingViewController;
-    } else {
-        mainNavController = (UINavigationController *)gameNavController.parentViewController;
-    }
-	
-	[mainNavController popToRootViewControllerAnimated:NO];
-	
-	[gameNavController dismissModalViewControllerAnimated:YES];
-}
-
 - (void)pencilButtonWasTouched {
 	// if (penciling) {
 	// 	[gameBoardViewController deselectTileView];

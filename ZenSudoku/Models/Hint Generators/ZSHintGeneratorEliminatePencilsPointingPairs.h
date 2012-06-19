@@ -14,8 +14,8 @@
 	NSInteger targetPencil;
 }
 
-@property (nonatomic, assign) ZSHintGeneratorTileScope scope;
-@property (nonatomic, assign) NSInteger targetPencil;
+@property (assign) ZSHintGeneratorTileScope scope;
+@property (assign) NSInteger targetPencil;
 
 - (void)resetTilesAndInstructions;
 

@@ -10,21 +10,23 @@
 
 #import <QuartzCore/QuartzCore.h>
 
-@interface ZSAnimation() {
-	CADisplayLink *_displayLink;
-	
-	BOOL _startTimeSet;
-	NSDate *_startTime;
-}
+@interface ZSAnimation()
+
+@property (strong) CADisplayLink *_displayLink;
+
+@property (assign) BOOL _startTimeSet; 
+@property (strong) NSDate *_startTime; 
 
 @end
 
 @implementation ZSAnimation
 
-@synthesize delegate = _delegate;
-@synthesize duration = _duration;
-@synthesize timingFunction = _timingFunction;
-@synthesize isAnimating = _isAnimating;
+@synthesize delegate;
+@synthesize duration, timingFunction;
+@synthesize isAnimating;
+
+@synthesize _displayLink;
+@synthesize _startTimeSet, _startTime;
 
 - (id)init {
 	self = [super init];
@@ -47,12 +49,12 @@
 		[_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
 	}
 	
-	_isAnimating = YES;
+	isAnimating = YES;
 	_displayLink.paused = NO;
 }
 
 - (void)pause {
-	_isAnimating = NO;
+	isAnimating = NO;
 	_displayLink.paused = YES;
 }
 
@@ -64,12 +66,12 @@
 }
 
 - (void)_animationAdvanced:(CADisplayLink *)sender {
-	if (_isAnimating) {
+	if (self.isAnimating) {
 		NSDate *now = [NSDate date];
 		
 		NSTimeInterval elapsedTime = [now timeIntervalSinceDate:_startTime];
 		
-		float unweightedPercentComplete = (elapsedTime / _duration);
+		float unweightedPercentComplete = (elapsedTime / self.duration);
 		float percentComplete = [self _getPercentCompleteForRatio:unweightedPercentComplete];
 		
 		if (percentComplete > 1 || unweightedPercentComplete > 1) {
@@ -77,17 +79,17 @@
 			percentComplete = 1;
 		}
 		
-		[_delegate animationAdvanced:percentComplete];
+		[self.delegate animationAdvanced:percentComplete];
 		
 		if (unweightedPercentComplete == 1) {
 			[self reset];
-			[_delegate animationDidFinish];
+			[self.delegate animationDidFinish];
 		}
 	}
 }
 
 - (float)_getPercentCompleteForRatio:(float)ratio {
-	switch (_timingFunction) {
+	switch (self.timingFunction) {
 		case ZSAnimationTimingFunctionLinear:
 			return [self _linear:ratio];
 			break;

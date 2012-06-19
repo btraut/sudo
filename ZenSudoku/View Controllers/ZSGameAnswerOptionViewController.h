@@ -20,16 +20,9 @@
 
 @end
 
-@interface ZSGameAnswerOptionViewController : UIViewController {
-	ZSGameAnswerOptionsViewController *gameAnswerOptionsViewController;
-	
-	ZSGameAnswerOption gameAnswerOption;
-	BOOL selected;
-	BOOL enabled;
-	BOOL toggled;
-}
+@interface ZSGameAnswerOptionViewController : UIViewController
 
-@property (nonatomic, strong) ZSGameAnswerOptionsViewController *gameAnswerOptionsViewController;
+@property (weak) ZSGameAnswerOptionsViewController *gameAnswerOptionsViewController;
 
 @property (assign) ZSGameAnswerOption gameAnswerOption;
 

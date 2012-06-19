@@ -18,16 +18,10 @@
 
 @end
 
-@interface ZSGameBoard : NSObject {
-	NSInteger size;
-	
-	@private
-	
-	NSArray *_tiles;
-}
+@interface ZSGameBoard : NSObject
 
-@property (nonatomic, weak) id<ZSGameBoardDelegate> delegate;
-@property (nonatomic, assign) NSInteger size;
+@property (weak) id<ZSGameBoardDelegate> delegate;
+@property (assign) NSInteger size;
 
 // Initialization
 

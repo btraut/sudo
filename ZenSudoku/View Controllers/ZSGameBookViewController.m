@@ -32,7 +32,7 @@
 	// Create the game view.
 	ZSGame *currentGame;
 	
-	if (false && [[ZSGameController sharedInstance] savedGameInProgress]) {
+	if ([[ZSGameController sharedInstance] savedGameInProgress]) {
 		currentGame = [[ZSGameController sharedInstance] loadSavedGame];
 	} else {
 		currentGame = [[ZSGameController sharedInstance] fetchGameWithDifficulty:ZSGameDifficultyDiabolical];
@@ -74,6 +74,8 @@
 	
 	// Promote the "next game" to the current game.
 	currentGameViewController = nextGameViewController;
+	
+	[[ZSGameController sharedInstance] saveGame:currentGameViewController.game];
 	
 	// Create a new "next game".
 	ZSGame *newGame = [[ZSGameController sharedInstance] fetchGameWithDifficulty:ZSGameDifficultyDiabolical];

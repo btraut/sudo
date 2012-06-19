@@ -17,6 +17,6 @@
 
 @interface ZSFoldedCornerGLView : GLKView
 
-@property (nonatomic, weak) id<ZSFoldedCornerGLHitTestDelegate> hitTestDelegate;
+@property (weak) id<ZSFoldedCornerGLHitTestDelegate> hitTestDelegate;
 
 @end

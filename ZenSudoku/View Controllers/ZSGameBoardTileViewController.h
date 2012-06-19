@@ -69,8 +69,6 @@ typedef enum {
 @end
 
 @interface ZSGameBoardTileViewController : UIViewController {
-	ZSGameTile *tile;
-	
     ZSGameBoardTileTextType textType;
     ZSGameBoardTileBackgroundType backgroundType;
     
@@ -89,7 +87,7 @@ typedef enum {
 	UILabel *guessView;
 }
 
-@property (strong) ZSGameTile *tile;
+@property (weak) ZSGameTile *tile;
 @property (weak) id<ZSGameBoardTileTouchDelegate> delegate;
 
 @property (assign) ZSGameBoardTileTextType textType;
