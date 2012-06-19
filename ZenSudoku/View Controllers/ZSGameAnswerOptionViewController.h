@@ -27,8 +27,6 @@
 	BOOL selected;
 	BOOL enabled;
 	BOOL toggled;
-	
-	NSObject *delegate;
 }
 
 @property (nonatomic, strong) ZSGameAnswerOptionsViewController *gameAnswerOptionsViewController;
@@ -39,7 +37,7 @@
 @property (assign) BOOL enabled;
 @property (assign) BOOL toggled;
 
-@property (strong) NSObject *delegate;
+@property (weak) id<ZSGameAnswerOptionTouchDelegate> delegate;
 
 - (id)initWithGameAnswerOption:(ZSGameAnswerOption)gameAnswerOption;
 - (void)setLabel;

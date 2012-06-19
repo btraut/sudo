@@ -24,7 +24,7 @@ typedef enum {
 
 @interface ZSAnimation : NSObject
 
-@property (nonatomic, strong) NSObject<ZSAnimationDelegate> *delegate;
+@property (nonatomic, weak) id<ZSAnimationDelegate> delegate;
 
 @property (nonatomic, assign) NSTimeInterval duration;
 @property (nonatomic, assign) ZSAnimationTimingFunction timingFunction;

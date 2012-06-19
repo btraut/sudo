@@ -10,11 +10,11 @@
 #import "ZSGame.h"
 #import "ZSGameBoardTileViewController.h"
 
+@class ZSGameViewController;
+
 @interface ZSGameBoardViewController : UIViewController <ZSGameBoardTileTouchDelegate> {
 	ZSGame *game;
 	NSArray *tileViews;
-	
-	NSObject *delegate;
 	
 	ZSGameBoardTileViewController *selectedTileView;
 	NSMutableArray *highlightedSimilarTileViews;
@@ -24,7 +24,7 @@
 @property (strong) ZSGame *game;
 @property (strong, readonly) NSArray *tileViews;
 
-@property (strong) NSObject *delegate;
+@property (weak) ZSGameViewController *delegate;
 
 @property (strong, readonly) ZSGameBoardTileViewController *selectedTileView;
 @property (strong, readonly) NSMutableArray *highlightedSimilarTileViews;

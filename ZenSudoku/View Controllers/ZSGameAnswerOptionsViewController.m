@@ -221,15 +221,15 @@
 #pragma mark - Delegate Responsibilities
 
 - (void)gameAnswerOptionTouchEntered:(ZSGameAnswerOptionViewController *)touchedView {
-	[(ZSGameViewController *)delegate gameAnswerOptionTouchEnteredWithGameAnswerOption:touchedView.gameAnswerOption];
+	[delegate gameAnswerOptionTouchEnteredWithGameAnswerOption:touchedView.gameAnswerOption];
 }
 
 - (void)gameAnswerOptionTouchExited:(ZSGameAnswerOptionViewController *)touchedView {
-	[(ZSGameViewController *)delegate gameAnswerOptionTouchExitedWithGameAnswerOption:touchedView.gameAnswerOption];
+	[delegate gameAnswerOptionTouchExitedWithGameAnswerOption:touchedView.gameAnswerOption];
 }
 
 - (void)gameAnswerOptionTapped:(ZSGameAnswerOptionViewController *)touchedView {
-	[(ZSGameViewController *)delegate gameAnswerOptionTappedWithGameAnswerOption:touchedView.gameAnswerOption];
+	[delegate gameAnswerOptionTappedWithGameAnswerOption:touchedView.gameAnswerOption];
 }
 
 @end

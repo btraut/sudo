@@ -287,7 +287,7 @@
 #pragma mark - Delegate Responsibilities
 
 - (void)gameBoardTileWasTouched:(ZSGameBoardTileViewController *)newSelected {
-	[(ZSGameViewController *)delegate gameBoardTileWasTouchedInRow:newSelected.tile.row col:newSelected.tile.col];
+	[delegate gameBoardTileWasTouchedInRow:newSelected.tile.row col:newSelected.tile.col];
 }
 
 @end

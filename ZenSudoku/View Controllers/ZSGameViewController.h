@@ -52,9 +52,6 @@
 	BOOL allowsInput;
 	
 	UILabel *title;
-	
-	NSObject<ZSHintDelegate> *hintDelegate;
-	NSObject<ZSMajorGameStateDelegate> *majorGameStateDelegate;
 }
 
 @property (strong) ZSGame *game;
@@ -69,8 +66,8 @@
 
 @property (assign) BOOL allowsInput;
 
-@property (strong) NSObject<ZSHintDelegate> *hintDelegate;
-@property (strong) NSObject<ZSMajorGameStateDelegate> *majorGameStateDelegate;
+@property (weak) id<ZSHintDelegate> hintDelegate;
+@property (weak) id<ZSMajorGameStateDelegate> majorGameStateDelegate;
 
 - (id)initWithGame:(ZSGame *)game;
 

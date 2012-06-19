@@ -19,8 +19,6 @@
 @end
 
 @interface ZSGameBoard : NSObject {
-	NSObject<ZSGameBoardDelegate> *delegate;
-	
 	NSInteger size;
 	
 	@private
@@ -28,7 +26,7 @@
 	NSArray *_tiles;
 }
 
-@property (nonatomic, strong) NSObject<ZSGameBoardDelegate> *delegate;
+@property (nonatomic, weak) id<ZSGameBoardDelegate> delegate;
 @property (nonatomic, assign) NSInteger size;
 
 // Initialization

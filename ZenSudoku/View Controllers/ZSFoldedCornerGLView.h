@@ -15,10 +15,8 @@
 
 @end
 
-@interface ZSFoldedCornerGLView : GLKView {
-	NSObject<ZSFoldedCornerGLHitTestDelegate> *hitTestDelegate;
-}
+@interface ZSFoldedCornerGLView : GLKView
 
-@property (nonatomic, strong) NSObject<ZSFoldedCornerGLHitTestDelegate> *hitTestDelegate;
+@property (nonatomic, weak) id<ZSFoldedCornerGLHitTestDelegate> hitTestDelegate;
 
 @end

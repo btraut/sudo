@@ -15,8 +15,6 @@
 @interface ZSGameAnswerOptionsViewController : UIViewController <ZSGameAnswerOptionTouchDelegate> {
 	ZSGameViewController *gameViewController;
 	
-	NSObject *delegate;
-	
 	NSArray *gameAnswerOptionViewControllers;
 	UIButton *pencilToggleButton;
 	
@@ -38,7 +36,7 @@
 
 @property (strong) ZSGameViewController *gameViewController;
 
-@property (strong) NSObject *delegate;
+@property (weak) ZSGameViewController *delegate;
 
 @property (strong, readonly) NSArray *gameAnswerOptionViewControllers;
 @property (strong, readonly) UIButton *pencilToggleButton;

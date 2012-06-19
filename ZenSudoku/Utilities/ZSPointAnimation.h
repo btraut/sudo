@@ -19,7 +19,7 @@
 
 @interface ZSPointAnimation : NSObject <ZSAnimationDelegate>
 
-@property (nonatomic, strong) NSObject<ZSPointAnimationDelegate> *delegate;
+@property (nonatomic, weak) id<ZSPointAnimationDelegate> delegate;
 
 @property (nonatomic, assign) NSTimeInterval duration;
 @property (nonatomic, assign) ZSAnimationTimingFunction timingFunction;

@@ -70,7 +70,6 @@ typedef enum {
 
 @interface ZSGameBoardTileViewController : UIViewController {
 	ZSGameTile *tile;
-	NSObject *delegate;
 	
     ZSGameBoardTileTextType textType;
     ZSGameBoardTileBackgroundType backgroundType;
@@ -91,7 +90,7 @@ typedef enum {
 }
 
 @property (strong) ZSGameTile *tile;
-@property (strong) NSObject *delegate;
+@property (weak) id<ZSGameBoardTileTouchDelegate> delegate;
 
 @property (assign) ZSGameBoardTileTextType textType;
 @property (assign) ZSGameBoardTileBackgroundType backgroundType;

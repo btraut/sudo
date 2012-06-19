@@ -104,7 +104,6 @@
 		84B0B1CD15777F1900A99510 /* BlueAnswerOptionSelection@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B0B1CB15777F1900A99510 /* BlueAnswerOptionSelection@2x.png */; };
 		84B0B1D5157D859300A99510 /* BackwardsPage.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B0B1D3157D859300A99510 /* BackwardsPage.png */; };
 		84B0B1D6157D859300A99510 /* BackwardsPage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B0B1D4157D859300A99510 /* BackwardsPage@2x.png */; };
-		84B0B1D9157D8AA900A99510 /* ZSFoldedCornerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B0B1D8157D8AA800A99510 /* ZSFoldedCornerView.m */; };
 		84B0B1E615801A4200A99510 /* ShadowBlob@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B0B1E515801A4200A99510 /* ShadowBlob@2x.png */; };
 		84B11541158B394800983B3A /* ZSGLShape.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B11540158B394800983B3A /* ZSGLShape.m */; };
 		84B11555158DE15C00983B3A /* ShadowBlobTest@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B11554158DE15C00983B3A /* ShadowBlobTest@2x.png */; };
@@ -113,8 +112,6 @@
 		84B300F4148AF6FF00E568CE /* ZSGameHistoryEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B300F3148AF6FD00E568CE /* ZSGameHistoryEntry.m */; };
 		84C092E31582D38F005799F8 /* PageCurlGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 84C092E11582D38F005799F8 /* PageCurlGradient.png */; };
 		84C092E41582D38F005799F8 /* PageCurlGradient@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84C092E21582D38F005799F8 /* PageCurlGradient@2x.png */; };
-		84C6110A14D94414003358FE /* ZSInstructionsRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C6110814D94414003358FE /* ZSInstructionsRootViewController.m */; };
-		84C6110B14D94414003358FE /* ZSInstructionsRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C6110914D94414003358FE /* ZSInstructionsRootViewController.xib */; };
 		84D1CB09156EE5A60027230B /* ZSHintGeneratorEliminatePencilsNakedSubgroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D1CB08156EE5A60027230B /* ZSHintGeneratorEliminatePencilsNakedSubgroup.m */; };
 		84D1CB1115703CB00027230B /* ZSHintGeneratorEliminatePencilsHiddenSubgroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D1CB1015703CB00027230B /* ZSHintGeneratorEliminatePencilsHiddenSubgroup.m */; };
 		84D1CB141571829E0027230B /* ZSHintGeneratorEliminatePencilsPointingPairs.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D1CB131571829E0027230B /* ZSHintGeneratorEliminatePencilsPointingPairs.m */; };
@@ -125,8 +122,6 @@
 		84D5501E147F1C4A00A7934E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84D5501C147F1C4A00A7934E /* InfoPlist.strings */; };
 		84D55020147F1C4A00A7934E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D5501F147F1C4A00A7934E /* main.m */; };
 		84D55024147F1C4A00A7934E /* ZSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D55023147F1C4A00A7934E /* ZSAppDelegate.m */; };
-		84D5505C147F227C00A7934E /* ZSMainMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D5505A147F227C00A7934E /* ZSMainMenuViewController.m */; };
-		84D55065147F2EFA00A7934E /* ZSNewGameOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D55064147F2EFA00A7934E /* ZSNewGameOptionsViewController.m */; };
 		84D55069147F3D7500A7934E /* ZSGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D55068147F3D7400A7934E /* ZSGameViewController.m */; };
 		84EE86271494ADEA004C0A16 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D5503A147F1C4B00A7934E /* SenTestingKit.framework */; };
 		84EE86281494ADEA004C0A16 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D55013147F1C4A00A7934E /* UIKit.framework */; };
@@ -275,8 +270,6 @@
 		84B0B1CB15777F1900A99510 /* BlueAnswerOptionSelection@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BlueAnswerOptionSelection@2x.png"; path = "Resources/Images/BlueAnswerOptionSelection@2x.png"; sourceTree = "<group>"; };
 		84B0B1D3157D859300A99510 /* BackwardsPage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BackwardsPage.png; path = Resources/Images/BackwardsPage.png; sourceTree = "<group>"; };
 		84B0B1D4157D859300A99510 /* BackwardsPage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BackwardsPage@2x.png"; path = "Resources/Images/BackwardsPage@2x.png"; sourceTree = "<group>"; };
-		84B0B1D7157D8AA800A99510 /* ZSFoldedCornerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSFoldedCornerView.h; path = "View Controllers/ZSFoldedCornerView.h"; sourceTree = "<group>"; };
-		84B0B1D8157D8AA800A99510 /* ZSFoldedCornerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSFoldedCornerView.m; path = "View Controllers/ZSFoldedCornerView.m"; sourceTree = "<group>"; };
 		84B0B1E515801A4200A99510 /* ShadowBlob@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ShadowBlob@2x.png"; path = "Resources/Images/ShadowBlob@2x.png"; sourceTree = "<group>"; };
 		84B1153F158B394800983B3A /* ZSGLShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSGLShape.h; path = Utilities/ZSGLShape.h; sourceTree = "<group>"; };
 		84B11540158B394800983B3A /* ZSGLShape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSGLShape.m; path = Utilities/ZSGLShape.m; sourceTree = "<group>"; };
@@ -289,9 +282,6 @@
 		84B300F3148AF6FD00E568CE /* ZSGameHistoryEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSGameHistoryEntry.m; path = Models/ZSGameHistoryEntry.m; sourceTree = "<group>"; };
 		84C092E11582D38F005799F8 /* PageCurlGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PageCurlGradient.png; path = Resources/Images/PageCurlGradient.png; sourceTree = "<group>"; };
 		84C092E21582D38F005799F8 /* PageCurlGradient@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "PageCurlGradient@2x.png"; path = "Resources/Images/PageCurlGradient@2x.png"; sourceTree = "<group>"; };
-		84C6110714D94414003358FE /* ZSInstructionsRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSInstructionsRootViewController.h; path = "View Controllers/ZSInstructionsRootViewController.h"; sourceTree = "<group>"; };
-		84C6110814D94414003358FE /* ZSInstructionsRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSInstructionsRootViewController.m; path = "View Controllers/ZSInstructionsRootViewController.m"; sourceTree = "<group>"; };
-		84C6110914D94414003358FE /* ZSInstructionsRootViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ZSInstructionsRootViewController.xib; path = "View Controllers/ZSInstructionsRootViewController.xib"; sourceTree = "<group>"; };
 		84D1CB07156EE5A60027230B /* ZSHintGeneratorEliminatePencilsNakedSubgroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = ZSHintGeneratorEliminatePencilsNakedSubgroup.h; path = "ZenSudoku/Models/Hint Generators/ZSHintGeneratorEliminatePencilsNakedSubgroup.h"; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		84D1CB08156EE5A60027230B /* ZSHintGeneratorEliminatePencilsNakedSubgroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = ZSHintGeneratorEliminatePencilsNakedSubgroup.m; path = "ZenSudoku/Models/Hint Generators/ZSHintGeneratorEliminatePencilsNakedSubgroup.m"; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		84D1CB0F15703CAF0027230B /* ZSHintGeneratorEliminatePencilsHiddenSubgroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSHintGeneratorEliminatePencilsHiddenSubgroup.h; path = "ZenSudoku/Models/Hint Generators/ZSHintGeneratorEliminatePencilsHiddenSubgroup.h"; sourceTree = SOURCE_ROOT; };
@@ -311,10 +301,6 @@
 		84D55022147F1C4A00A7934E /* ZSAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSAppDelegate.h; sourceTree = "<group>"; };
 		84D55023147F1C4A00A7934E /* ZSAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSAppDelegate.m; sourceTree = "<group>"; };
 		84D5503A147F1C4B00A7934E /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		84D55059147F227C00A7934E /* ZSMainMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSMainMenuViewController.h; path = "View Controllers/ZSMainMenuViewController.h"; sourceTree = "<group>"; };
-		84D5505A147F227C00A7934E /* ZSMainMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSMainMenuViewController.m; path = "View Controllers/ZSMainMenuViewController.m"; sourceTree = "<group>"; };
-		84D55063147F2EFA00A7934E /* ZSNewGameOptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSNewGameOptionsViewController.h; path = "View Controllers/ZSNewGameOptionsViewController.h"; sourceTree = "<group>"; };
-		84D55064147F2EFA00A7934E /* ZSNewGameOptionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSNewGameOptionsViewController.m; path = "View Controllers/ZSNewGameOptionsViewController.m"; sourceTree = "<group>"; };
 		84D55067147F3D7400A7934E /* ZSGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSGameViewController.h; path = "View Controllers/ZSGameViewController.h"; sourceTree = "<group>"; };
 		84D55068147F3D7400A7934E /* ZSGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSGameViewController.m; path = "View Controllers/ZSGameViewController.m"; sourceTree = "<group>"; };
 		84EE86261494ADEA004C0A16 /* ZenSudokuLogicTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZenSudokuLogicTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -720,10 +706,6 @@
 		84D55066147F2F1600A7934E /* Views and View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				84D55059147F227C00A7934E /* ZSMainMenuViewController.h */,
-				84D5505A147F227C00A7934E /* ZSMainMenuViewController.m */,
-				84D55063147F2EFA00A7934E /* ZSNewGameOptionsViewController.h */,
-				84D55064147F2EFA00A7934E /* ZSNewGameOptionsViewController.m */,
 				84A0975D1549DDE40082C9D0 /* ZSGameBookViewController.h */,
 				84A0975E1549DDE40082C9D0 /* ZSGameBookViewController.m */,
 				84D55067147F3D7400A7934E /* ZSGameViewController.h */,
@@ -738,14 +720,9 @@
 				8449D9591481E518003F6FB3 /* ZSGameAnswerOptionViewController.m */,
 				841F854B14C4287600DFFABC /* ZSStatisticsViewController.h */,
 				841F854C14C4287600DFFABC /* ZSStatisticsViewController.m */,
-				84C6110714D94414003358FE /* ZSInstructionsRootViewController.h */,
-				84C6110814D94414003358FE /* ZSInstructionsRootViewController.m */,
-				84C6110914D94414003358FE /* ZSInstructionsRootViewController.xib */,
 				8428AD33154A48F700BA8EE0 /* ZSHintViewController.h */,
 				8428AD34154A48F700BA8EE0 /* ZSHintViewController.m */,
 				8428AD35154A48F700BA8EE0 /* ZSHintViewController.xib */,
-				84B0B1D7157D8AA800A99510 /* ZSFoldedCornerView.h */,
-				84B0B1D8157D8AA800A99510 /* ZSFoldedCornerView.m */,
 				843947E61589D74C00463720 /* ZSFoldedCornerViewController.h */,
 				843947E71589D74C00463720 /* ZSFoldedCornerViewController.m */,
 				845ABB161587E50B006D2616 /* ZSFoldedCornerGLView.h */,
@@ -848,7 +825,6 @@
 				843BEDF1149DC4F100D1D19B /* ZSIconNew114.png in Resources */,
 				841F850214C25F2E00DFFABC /* Settings.bundle in Resources */,
 				8492B78814CEBDC80093B7AC /* Sudoku.db3 in Resources */,
-				84C6110B14D94414003358FE /* ZSInstructionsRootViewController.xib in Resources */,
 				8426A78C14ED1657006DAD1C /* IASKAppSettingsView.xib in Resources */,
 				8426A78D14ED1657006DAD1C /* IASKAppSettingsWebView.xib in Resources */,
 				8426A78E14ED1657006DAD1C /* IASKPSSliderSpecifierViewCell.xib in Resources */,
@@ -929,8 +905,6 @@
 			files = (
 				84D55020147F1C4A00A7934E /* main.m in Sources */,
 				84D55024147F1C4A00A7934E /* ZSAppDelegate.m in Sources */,
-				84D5505C147F227C00A7934E /* ZSMainMenuViewController.m in Sources */,
-				84D55065147F2EFA00A7934E /* ZSNewGameOptionsViewController.m in Sources */,
 				84D55069147F3D7500A7934E /* ZSGameViewController.m in Sources */,
 				84AC26C91480950F00E966A5 /* ZSGameBoardViewController.m in Sources */,
 				84AC26CE1480986900E966A5 /* ZSGameBoardTileViewController.m in Sources */,
@@ -944,7 +918,6 @@
 				841F854A14C40F5600DFFABC /* ZSStatisticsController.m in Sources */,
 				841F854E14C4287700DFFABC /* ZSStatisticsViewController.m in Sources */,
 				8492B77414CD69B10093B7AC /* ZSPuzzleFetcher.m in Sources */,
-				84C6110A14D94414003358FE /* ZSInstructionsRootViewController.m in Sources */,
 				8426A77D14ED1656006DAD1C /* IASKAppSettingsViewController.m in Sources */,
 				8426A77E14ED1656006DAD1C /* IASKAppSettingsWebViewController.m in Sources */,
 				8426A77F14ED1656006DAD1C /* IASKSpecifierValuesViewController.m in Sources */,
@@ -978,7 +951,6 @@
 				84D1CB1115703CB00027230B /* ZSHintGeneratorEliminatePencilsHiddenSubgroup.m in Sources */,
 				84D1CB141571829E0027230B /* ZSHintGeneratorEliminatePencilsPointingPairs.m in Sources */,
 				84D1CB171571A5280027230B /* ZSHintGeneratorEliminatePencilsBoxLineReduction.m in Sources */,
-				84B0B1D9157D8AA900A99510 /* ZSFoldedCornerView.m in Sources */,
 				847250971582A3C50073D113 /* ZSFoldedPageView.m in Sources */,
 				845ABB181587E50B006D2616 /* ZSFoldedCornerGLView.m in Sources */,
 				843947E81589D74C00463720 /* ZSFoldedCornerViewController.m in Sources */,
@@ -1053,7 +1025,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ZenSudoku/ZenSudoku-Prefix.pch";
 				INFOPLIST_FILE = "ZenSudoku/ZenSudoku-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/ZenSudoku/External/TestFlightSDK1.0\"",
@@ -1142,7 +1114,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ZenSudoku/ZenSudoku-Prefix.pch";
 				INFOPLIST_FILE = "ZenSudoku/ZenSudoku-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/ZenSudoku/External/TestFlightSDK1.0\"",
@@ -1166,7 +1138,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ZenSudoku/ZenSudoku-Prefix.pch";
 				INFOPLIST_FILE = "ZenSudoku/ZenSudoku-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/ZenSudoku/External/TestFlightSDK1.0\"",

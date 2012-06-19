@@ -71,8 +71,6 @@ typedef enum {
 	
 	BOOL recordingHistory;
 	
-	NSObject<ZSGameDelegate> *delegate;
-	
 	NSInteger timerCount;
 	
 	NSInteger totalStrikes;
@@ -92,7 +90,7 @@ typedef enum {
 
 @property (nonatomic, assign) BOOL recordingHistory;
 
-@property (nonatomic, strong) NSObject<ZSGameDelegate> *delegate;
+@property (nonatomic, weak) id<ZSGameDelegate> delegate;
 
 @property (nonatomic, readonly) NSInteger timerCount;
 

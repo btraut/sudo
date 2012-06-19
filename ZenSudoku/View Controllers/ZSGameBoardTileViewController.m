@@ -368,7 +368,7 @@ NSString * const kTileColorHighlightHintD = @"#4C2FADD4";
 	NSLog(@"Col: %i", tile.col);
 	NSLog(@"Group: %i", tile.groupId);
 	
-	[(id<ZSGameBoardTileTouchDelegate>)delegate gameBoardTileWasTouched:self];
+	[delegate gameBoardTileWasTouched:self];
 }
 
 @end

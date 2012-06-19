@@ -132,19 +132,19 @@ NSString * const kTextShadowColorAnswerOptionToggledOff = @"77FFFFFF";
 
 - (void)handleTouchEnter {
 	if (enabled) {
-		[(id<ZSGameAnswerOptionTouchDelegate>)delegate gameAnswerOptionTouchEntered:self];
+		[delegate gameAnswerOptionTouchEntered:self];
 	}
 }
 
 - (void)handleTouchExit {
 	if (enabled) {
-		[(id<ZSGameAnswerOptionTouchDelegate>)delegate gameAnswerOptionTouchExited:self];
+		[delegate gameAnswerOptionTouchExited:self];
 	}
 }
 
 - (void)handleTap {
 	if (enabled) {
-		[(id<ZSGameAnswerOptionTouchDelegate>)delegate gameAnswerOptionTapped:self];
+		[delegate gameAnswerOptionTapped:self];
 	}
 }
 

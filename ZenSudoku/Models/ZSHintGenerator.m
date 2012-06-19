@@ -586,6 +586,7 @@
 						ZSHintGeneratorTileInstruction tile;
 						tile.row = subgroupMatches[subgroupMatchIndex]->row;
 						tile.col = subgroupMatches[subgroupMatchIndex]->col;
+						tile.pencil = 0;
 						[generator addSubgroupTile:tile];
 					}
 					
@@ -594,6 +595,7 @@
 						ZSHintGeneratorTileInstruction tile;
 						tile.row = currentSet[innerSetIndex]->row;
 						tile.col = currentSet[innerSetIndex]->col;
+						tile.pencil = 0;
 						[generator addGroupTile:tile];
 					}
 					
@@ -755,6 +757,7 @@
 						ZSHintGeneratorTileInstruction groupTile;
 						groupTile.row = innerCurrentSet[setIndex]->row;
 						groupTile.col = innerCurrentSet[setIndex]->col;
+						groupTile.pencil = 0;
 						[generator addGroupTile:groupTile];
 						
 						BOOL tileIsInNakedSubgroup = NO;
@@ -770,6 +773,7 @@
 							ZSHintGeneratorTileInstruction subGroupTile;
 							subGroupTile.row = innerCurrentSet[setIndex]->row;
 							subGroupTile.col = innerCurrentSet[setIndex]->col;
+							subGroupTile.pencil = 0;
 							[generator addSubgroupTile:subGroupTile];
 							continue;
 						}
@@ -877,12 +881,14 @@
 						ZSHintGeneratorTileInstruction rowTile;
 						rowTile.row = rowSet[i]->row;
 						rowTile.col = rowSet[i]->col;
+						rowTile.pencil = 0;
 						[generator addRowOrColTile:rowTile];
 						
 						// Add all group tiles.
 						ZSHintGeneratorTileInstruction groupTile;
 						groupTile.row = currentGroup[i]->row;
 						groupTile.col = currentGroup[i]->col;
+						groupTile.pencil = 0;
 						[generator addGroupTile:groupTile];
 						
 						// If the row tile also exists within the group, add it.
@@ -890,6 +896,7 @@
 							ZSHintGeneratorTileInstruction pointingPairTile;
 							pointingPairTile.row = rowSet[i]->row;
 							pointingPairTile.col = rowSet[i]->col;
+							pointingPairTile.pencil = 0;
 							[generator addPointingPairTile:pointingPairTile];
 						}
 					}
@@ -922,12 +929,14 @@
 						ZSHintGeneratorTileInstruction colTile;
 						colTile.row = colSet[i]->row;
 						colTile.col = colSet[i]->col;
+						colTile.pencil = 0;
 						[generator addRowOrColTile:colTile];
 						
 						// Add all group tiles.
 						ZSHintGeneratorTileInstruction groupTile;
 						groupTile.row = currentGroup[i]->row;
 						groupTile.col = currentGroup[i]->col;
+						groupTile.pencil = 0;
 						[generator addGroupTile:groupTile];
 						
 						// If the row tile also exists within the group, add it.
@@ -935,6 +944,7 @@
 							ZSHintGeneratorTileInstruction pointingPairTile;
 							pointingPairTile.row = colSet[i]->row;
 							pointingPairTile.col = colSet[i]->col;
+							pointingPairTile.pencil = 0;
 							[generator addPointingPairTile:pointingPairTile];
 						}
 					}
@@ -996,12 +1006,14 @@
 						ZSHintGeneratorTileInstruction rowTile;
 						rowTile.row = _fastGameBoard.rows[row][i]->row;
 						rowTile.col = _fastGameBoard.rows[row][i]->col;
+						rowTile.pencil = 0;
 						[generator addRowOrColTile:rowTile];
 						
 						// Add all group tiles.
 						ZSHintGeneratorTileInstruction groupTile;
 						groupTile.row = _fastGameBoard.groups[group][i]->row;
 						groupTile.col = _fastGameBoard.groups[group][i]->col;
+						groupTile.pencil = 0;
 						[generator addGroupTile:groupTile];
 						
 						// If the row tile also exists within the group, add it.
@@ -1010,6 +1022,7 @@
 								ZSHintGeneratorTileInstruction boxLineReductionTile;
 								boxLineReductionTile.row = _fastGameBoard.groups[group][i]->row;
 								boxLineReductionTile.col = _fastGameBoard.groups[group][i]->col;
+								boxLineReductionTile.pencil = 0;
 								[generator addBoxLineReductionTile:boxLineReductionTile];
 							}
 							
@@ -1064,12 +1077,14 @@
 						ZSHintGeneratorTileInstruction colTile;
 						colTile.row = _fastGameBoard.cols[col][i]->row;
 						colTile.col = _fastGameBoard.cols[col][i]->col;
+						colTile.pencil = 0;
 						[generator addRowOrColTile:colTile];
 						
 						// Add all group tiles.
 						ZSHintGeneratorTileInstruction groupTile;
 						groupTile.row = _fastGameBoard.groups[group][i]->row;
 						groupTile.col = _fastGameBoard.groups[group][i]->col;
+						groupTile.pencil = 0;
 						[generator addGroupTile:groupTile];
 						
 						// If the col tile also exists within the group, add it.
@@ -1078,6 +1093,7 @@
 								ZSHintGeneratorTileInstruction boxLineReductionTile;
 								boxLineReductionTile.row = _fastGameBoard.groups[group][i]->row;
 								boxLineReductionTile.col = _fastGameBoard.groups[group][i]->col;
+								boxLineReductionTile.pencil = 0;
 								[generator addBoxLineReductionTile:boxLineReductionTile];
 							}
 							

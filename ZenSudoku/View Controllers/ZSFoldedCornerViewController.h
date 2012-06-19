@@ -32,7 +32,7 @@
 	CGSize underShadowFoldedPageOffset;
 }
 
-@property (nonatomic, strong) NSObject<ZSFoldedCornerGLViewControllerTouchDelegate> *touchDelegate;
+@property (nonatomic, weak) id<ZSFoldedCornerGLViewControllerTouchDelegate> touchDelegate;
 
 - (void)pushUpdate;
 

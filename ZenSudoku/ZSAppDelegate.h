@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ZSMainMenuViewController.h"
 
 @interface ZSAppDelegate : UIResponder <UIApplicationDelegate, UINavigationControllerDelegate>
 
