@@ -179,8 +179,6 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 }
 
 - (NSDictionary *)getDictionaryRepresentation {
-	NSLog(@"1in her?");
-	
 	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 	
 	// Set the game properties.
@@ -202,8 +200,6 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 	}
 	
 	[dict setValue:tileRowArray forKey:kDictionaryRepresentationGameTilesKey];
-	
-	NSLog(@"2in her?");
 	
 	// Set the game status data.
 	[dict setValue:[NSNumber numberWithInt:timerCount] forKey:kDictionaryRepresentationGameTimerCountKey];
