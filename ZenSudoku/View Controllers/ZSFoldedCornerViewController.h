@@ -18,6 +18,8 @@
 - (void)foldedCornerTouchEndedWithFoldPoint:(CGPoint)foldPoint foldDimensions:(CGSize)foldDimensions;
 - (void)foldedCornerRestoredToStartPoint;
 - (void)pageWasTurned;
+- (void)foldedCornerWasStarted;
+- (void)foldedCornerStartAnimationFinished;
 
 @end
 
@@ -33,6 +35,9 @@
 }
 
 @property (weak) id<ZSFoldedCornerGLViewControllerTouchDelegate> touchDelegate;
+
+- (void)resetToStartPosition;
+- (void)resetToDefaultPosition;
 
 - (void)pushUpdate;
 

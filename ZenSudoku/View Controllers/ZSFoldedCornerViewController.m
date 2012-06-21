@@ -11,9 +11,6 @@
 #import "ZSGLSprite.h"
 #import "ZSGLShape.h"
 
-#define DEFAULT_WIDTH 48
-#define DEFAULT_HEIGHT 51
-
 typedef enum {
 	ZSFoldedCornerViewControllerAnimationStateStopped,
 	ZSFoldedCornerViewControllerAnimationStateUserAnimating,
@@ -28,8 +25,10 @@ typedef enum {
 
 @interface ZSFoldedCornerViewController () {
 	CGPoint _touchStartPoint;
-	CGPoint _foldStartPoint;
+	
 	CGPoint _foldPoint;
+	CGPoint _foldDefaultPoint;
+	CGPoint _foldStartPoint;
 	
 	GLKBaseEffect *_effect;
 	
@@ -58,8 +57,9 @@ typedef enum {
 	
 	if (self) {
 		// Init the fold point defaults.
-		_foldStartPoint = CGPointMake(DEFAULT_WIDTH, DEFAULT_HEIGHT);
-		_foldPoint = CGPointMake(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+		_foldDefaultPoint = CGPointMake(48, 51);
+		_foldPoint = _foldDefaultPoint;
+		_foldStartPoint = CGPointMake(0.01f, 0.01f);
 		
 		// Calculate dimensions for the first time.
 		[self recalculateDimensions];
@@ -128,6 +128,24 @@ typedef enum {
 	[super viewWillAppear:animated];
 	
 	[(ZSFoldedCornerGLView *)self.view display];
+}
+
+- (void)resetToStartPosition {
+	_foldPoint = _foldStartPoint;
+	
+	[self pushUpdate];
+	
+	self.view.hidden = NO;
+	self.view.alpha = 1;
+}
+
+- (void)resetToDefaultPosition {
+	_foldPoint = _foldDefaultPoint;
+	
+	[self pushUpdate];
+	
+	self.view.hidden = NO;
+	self.view.alpha = 1;
 }
 
 - (void)recalculateDimensions {
@@ -271,7 +289,7 @@ typedef enum {
 		return NO;
 	}
 	
-	if (point.x < self.view.frame.size.width - _foldStartPoint.x || point.y > _foldStartPoint.y) {
+	if (point.x < self.view.frame.size.width - _foldDefaultPoint.x || point.y > _foldDefaultPoint.y) {
 		return NO;
 	}
 	
@@ -286,7 +304,7 @@ typedef enum {
 		effectiveTouchPoint.y = 0;
 	}
 	
-	CGPoint paperTipPoint = CGPointMake((width - _foldStartPoint.x) + (effectiveTouchPoint.x - _touchStartPoint.x), _foldStartPoint.y + (effectiveTouchPoint.y - _touchStartPoint.y));
+	CGPoint paperTipPoint = CGPointMake((width - _foldDefaultPoint.x) + (effectiveTouchPoint.x - _touchStartPoint.x), _foldDefaultPoint.y + (effectiveTouchPoint.y - _touchStartPoint.y));
 	
 	double touchLengthSquared = (paperTipPoint.x * paperTipPoint.x) + (paperTipPoint.y * paperTipPoint.y);
 	double maxLengthSquared = width * width;
@@ -360,25 +378,31 @@ typedef enum {
 
 - (void)animationDidFinish {
 	switch (_animationState) {
+		// User is dragging the fold:
 		case ZSFoldedCornerViewControllerAnimationStateUserAnimating:
 			_animationState = ZSFoldedCornerViewControllerAnimationStateStopped;
 			break;
-			
+		
+		// User stopped dragging, fold is moving back to the corner:
 		case ZSFoldedCornerViewControllerAnimationStateSendFoldBackToCornerStage1:
 			_animationState = ZSFoldedCornerViewControllerAnimationStateStopped;
 			[_touchDelegate foldedCornerRestoredToStartPoint];
 			break;
-			
+		
+		// Page is turning:
 		case ZSFoldedCornerViewControllerAnimationStatePageTurnStage1:
 			_animationState = ZSFoldedCornerViewControllerAnimationStateStopped;
 			[_touchDelegate pageWasTurned];
 			break;
 			
+		// After page turns, a new fold is made in the next page:
 		case ZSFoldedCornerViewControllerAnimationStateStartFoldStage1:
 			_animationState = ZSFoldedCornerViewControllerAnimationStateStopped;
-			[_touchDelegate foldedCornerRestoredToStartPoint];
+//			[_touchDelegate foldedCornerWasStarted];
+			[_touchDelegate foldedCornerStartAnimationFinished];
 			break;
 			
+		// User tapped on the + button, so folded corner gets tugged:
 		case ZSFoldedCornerViewControllerAnimationStateCornerTugStage1:
 			[self _animateCornerTugStage2];
 			break;
@@ -395,7 +419,8 @@ typedef enum {
 			_animationState = ZSFoldedCornerViewControllerAnimationStateStopped;
 			[_touchDelegate foldedCornerRestoredToStartPoint];
 			break;
-						
+			
+		// No animation:
 		case ZSFoldedCornerViewControllerAnimationStateStopped:
 		default:
 			break;
@@ -414,7 +439,7 @@ typedef enum {
 	_animationHelper.timingFunction = ZSAnimationTimingFunctionEaseOut;
 	
 	_animationHelper.startPoint = _foldPoint;
-	_animationHelper.endPoint = _foldStartPoint;
+	_animationHelper.endPoint = _foldDefaultPoint;
 	
 	[_animationHelper start];
 }
@@ -453,22 +478,18 @@ typedef enum {
 	_animationHelper.duration = 0.4f;
 	_animationHelper.timingFunction = ZSAnimationTimingFunctionEaseOut;
 	
-	_animationHelper.startPoint = CGPointMake(0.01f, 0.01f);
-	_animationHelper.endPoint = _foldStartPoint;
+	_animationHelper.startPoint = _foldStartPoint;
+	_animationHelper.endPoint = _foldDefaultPoint;
 	
 	[_animationHelper start];
 }
 
 - (void)_startFoldAnimationAdvancedWithProgress:(float)progress {
-	if (self.view.hidden == YES) {
-		self.view.hidden = NO;
-	}
-	
 	if (progress == 1) {
-		_foldPoint = _foldStartPoint;
+		_foldPoint = _foldDefaultPoint;
 	} else {
-		CGFloat newX = _foldStartPoint.x - cosf(progress * M_PI / 2) * _foldStartPoint.x;
-		CGFloat newY = sinf(progress * M_PI / 2) * _foldStartPoint.y;
+		CGFloat newX = _foldDefaultPoint.x - cosf(progress * M_PI / 2) * _foldDefaultPoint.x;
+		CGFloat newY = sinf(progress * M_PI / 2) * _foldDefaultPoint.y;
 		
 		_foldPoint = CGPointMake(newX, newY);
 	}
@@ -492,7 +513,7 @@ typedef enum {
 	_animationHelper.timingFunction = ZSAnimationTimingFunctionEaseInOut;
 	
 	_animationHelper.startPoint = _foldPoint;
-	_animationHelper.endPoint = CGPointMake(_foldStartPoint.x + 7, _foldStartPoint.x + 11);
+	_animationHelper.endPoint = CGPointMake(_foldDefaultPoint.x + 7, _foldDefaultPoint.x + 11);
 	
 	[_animationHelper start];
 }
@@ -504,7 +525,7 @@ typedef enum {
 	_animationHelper.timingFunction = ZSAnimationTimingFunctionEaseInOut;
 	
 	_animationHelper.startPoint = _foldPoint;
-	_animationHelper.endPoint = _foldStartPoint;
+	_animationHelper.endPoint = _foldDefaultPoint;
 	
 	[_animationHelper start];
 }
@@ -516,7 +537,7 @@ typedef enum {
 	_animationHelper.timingFunction = ZSAnimationTimingFunctionEaseInOut;
 	
 	_animationHelper.startPoint = _foldPoint;
-	_animationHelper.endPoint = CGPointMake(_foldStartPoint.x + 7, _foldStartPoint.x + 11);
+	_animationHelper.endPoint = CGPointMake(_foldDefaultPoint.x + 7, _foldDefaultPoint.x + 11);
 	
 	[_animationHelper start];
 }
@@ -528,7 +549,7 @@ typedef enum {
 	_animationHelper.timingFunction = ZSAnimationTimingFunctionEaseInOut;
 	
 	_animationHelper.startPoint = _foldPoint;
-	_animationHelper.endPoint = _foldStartPoint;
+	_animationHelper.endPoint = _foldDefaultPoint;
 	
 	[_animationHelper start];
 }

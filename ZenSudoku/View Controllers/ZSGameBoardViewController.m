@@ -81,18 +81,33 @@
 			xOffset += (col % 3 == 2) ? 34 : 33;
 		}
 		
-		[rows addObject:[NSArray arrayWithArray:rowTiles]];
+		[rows addObject:rowTiles];
 		
 		yOffset += (row % 3 == 2) ? 34 : 33;
 	}
 	
-	tileViews = [NSArray arrayWithArray:rows];
+	tileViews = rows;
 	
 	[self reloadView];
 }
 
 - (void)viewDidUnload {
 	[super viewDidUnload];
+}
+
+- (void)resetWithGame:(ZSGame *)newGame {
+	[self deselectTileView];
+	
+	self.game = newGame;
+	
+	for (NSInteger row = 0; row < game.gameBoard.size; row++) {
+		for (NSInteger col = 0; col < game.gameBoard.size; col++) {
+			ZSGameBoardTileViewController *tileViewController = [[tileViews objectAtIndex:row] objectAtIndex:col];
+			tileViewController.tile = [game getTileAtRow:row col:col];
+		}
+	}
+	
+	[self reloadView];
 }
 
 #pragma mark - Board Changes
@@ -120,6 +135,21 @@
 	// Add highlights for similar tiles.
 	[self addSimilarHighlightsForTileView:selectedTileView];
 	[self addErrorHighlightsForTileView:selectedTileView];
+	
+	[delegate selectedTileChanged];
+}
+
+- (void)reselectTile {
+	if (selectedTileView) {
+		selectedTileView.selected = YES;
+		[selectedTileView reloadView];
+		
+		// Add highlights for similar tiles.
+		[self addSimilarHighlightsForTileView:selectedTileView];
+		[self addErrorHighlightsForTileView:selectedTileView];
+		
+		[delegate selectedTileChanged];
+	}
 }
 
 - (void)deselectTileView {
@@ -133,6 +163,8 @@
 		[selectedTileView reloadView];
 		
 		selectedTileView = nil;
+		
+		[delegate selectedTileChanged];
 	}
 }
 

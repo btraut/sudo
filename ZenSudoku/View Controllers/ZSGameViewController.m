@@ -32,7 +32,7 @@
 
 @synthesize game;
 @synthesize gameBoardViewController, gameAnswerOptionsViewController;
-@synthesize foldedCornerViewController;
+@synthesize foldedCornerVisibleOnLoad, foldedCornerViewController;
 @synthesize pencilButton, penciling;
 @synthesize allowsInput;
 @synthesize hintDelegate, majorGameStateDelegate;
@@ -50,6 +50,7 @@
 		
 		allowsInput = YES;
 		
+		foldedCornerVisibleOnLoad = NO;
 		_foldedCornerTouchCrossedTapThreshold = NO;
 	}
 	
@@ -59,6 +60,7 @@
 #pragma mark - View Lifecycle
 
 - (void)loadView {
+	NSLog(@"loadView");
 	ZSFoldedPageView *newView = [[ZSFoldedPageView alloc] init];
 	newView.foldDimensions = CGSizeMake(45, 49);
 	self.view = newView;
@@ -145,14 +147,16 @@
 	
 	// Build the folded corner.
 	foldedCornerViewController = [[ZSFoldedCornerViewController alloc] init];
-	[self.view addSubview:foldedCornerViewController.view];
+	foldedCornerViewController.view.hidden = !self.foldedCornerVisibleOnLoad;
 	foldedCornerViewController.touchDelegate = self;
+	[self.view addSubview:foldedCornerViewController.view];
 	
 	// Reload errors.
 	[self setErrors];
 	[gameBoardViewController reloadView];
 	
 	// Debug
+	/*
 	if (game.difficulty == ZSGameDifficultyInsane) {
 		NSInteger totalUnsolved = game.gameBoard.size * game.gameBoard.size;
 		
@@ -177,6 +181,7 @@
 			}
 		}
 	}
+	*/
 	
 	// If the game is already solved, shut off input.
 	if ([game isSolved]) {
@@ -202,6 +207,11 @@
 	[self.view setNeedsDisplay];
 }
 
+- (void)viewWasPromotedToFront {
+	[self.foldedCornerViewController resetToStartPosition];
+	[foldedCornerViewController animateStartFold];
+}
+
 - (void)setTitle {
 	switch (game.difficulty) {
 		default:
@@ -225,6 +235,15 @@
 			title.text = @"Insane";
 			break;
 	}
+}
+
+- (void)resetWithGame:(ZSGame *)newGame {
+	self.game = newGame;
+	newGame.delegate = self;
+	
+	[self.gameBoardViewController resetWithGame:newGame];
+	
+	[self foldedCornerRestoredToStartPoint];
 }
 
 #pragma mark - Touch Handling
@@ -276,8 +295,13 @@
 	[self.majorGameStateDelegate startNewGame];
 }
 
-- (void)startPageFold {
-	[foldedCornerViewController animateStartFold];
+- (void)foldedCornerWasStarted {
+	[self foldedCornerRestoredToStartPoint];
+}
+
+- (void)foldedCornerStartAnimationFinished {
+	[self foldedCornerRestoredToStartPoint];
+	[self.majorGameStateDelegate frontViewControllerFinishedDisplaying];
 }
 
 #pragma mark - User Interaction
@@ -298,53 +322,17 @@
 	
 	// Save the selected tile and answer option. One or both may be nil.
 	ZSGameBoardTileViewController *selectedTileView = gameBoardViewController.selectedTileView;
-	ZSGameAnswerOptionViewController *selectedGameAnswerOptionView = gameAnswerOptionsViewController.selectedGameAnswerOptionView;
 	
-	// Is there an answer option selected?
-	if (selectedGameAnswerOptionView) {
-		// Only allow the modification if the tile is user-entered.
-		if ([game getLockedForTileAtRow:row col:col]) {
-			return;
-		}
-		
-		// Is the user penciling a guess?
-		if (penciling) {
-			// Match the selected tile and answer.
-			[self setPencilForGameBoardTile:tileView withAnswerOption:selectedGameAnswerOptionView];
-			
-			// If settings say so, deselect the answer option.
-			if ([[NSUserDefaults standardUserDefaults] boolForKey:kClearAnswerOptionSelectionAfterPickingTileForPencilKey]) {
-				[gameAnswerOptionsViewController deselectGameAnswerOptionView];
-			}
-		} else {
-			// Match the selected tile and answer.
-			[self setAnswerForGameBoardTile:tileView withAnswerOption:selectedGameAnswerOptionView];
-			
-			// Deselect the tile. The answer option should remain selected.
-			[gameBoardViewController deselectTileView];
-			
-			// If settings say so, deselect the answer option.
-			if ([[NSUserDefaults standardUserDefaults] boolForKey:kClearAnswerOptionSelectionAfterPickingTileForAnswerKey]) {
-				[gameAnswerOptionsViewController deselectGameAnswerOptionView];
-			}
-		}
-		
-		[gameAnswerOptionsViewController reloadView];
+	// If there was a previously selected tile, deselect it. Otherwise, select the new one.
+	if (selectedTileView == tileView) {
+		[gameBoardViewController deselectTileView];
 	} else {
-		// If there was a previously selected tile, deselect it. Otherwise, select the new one.
-		if (selectedTileView == tileView) {
-			[gameBoardViewController deselectTileView];
-			[gameAnswerOptionsViewController reloadView];
-		} else {
-			ZSGameTileAnswerOrder gameTileAnswerOrder = [[NSUserDefaults standardUserDefaults] integerForKey:kTileAnswerOrderKey];
-			
-			// Only allow the selection if the tile/guess order settings allow the tile to be selected before the answer option.
-			if (gameTileAnswerOrder == ZSGameTileAnswerOrderHybrid || gameTileAnswerOrder == ZSGameTileAnswerOrderTileFirst) {
-				[gameBoardViewController selectTileView:tileView];
-				[gameAnswerOptionsViewController reloadView];
-			}
-		}
+		[gameBoardViewController selectTileView:tileView];
 	}
+}
+
+- (void)selectedTileChanged {
+	[gameAnswerOptionsViewController reloadView];
 }
 
 - (void)gameAnswerOptionTouchEnteredWithGameAnswerOption:(ZSGameAnswerOption)gameAnswerOption {
@@ -408,7 +396,6 @@
 	
 	// Save the selected tile and answer option. One or both may be nil.
 	ZSGameBoardTileViewController *selectedTileView = gameBoardViewController.selectedTileView;
-	ZSGameAnswerOptionViewController *selectedGameAnswerOptionView = gameAnswerOptionsViewController.selectedGameAnswerOptionView;
 	
 	// Is there a tile selected?
 	if (selectedTileView) {
@@ -422,37 +409,21 @@
 			// Match the selected tile and answer.
 			[self setPencilForGameBoardTile:selectedTileView withAnswerOption:gameAnswerOptionView];
 			
-			// If settings say so, deselect the tile.
+			// Based on settings, either deselect the tile or reselect it to update highlights.
 			if ([[NSUserDefaults standardUserDefaults] boolForKey:kClearTileSelectionAfterPickingAnswerOptionForPencilKey]) {
 				[gameBoardViewController deselectTileView];
+			} else {
+				[gameBoardViewController reselectTile];
 			}
 		} else {
 			// Match the selected tile and answer.
 			[self setAnswerForGameBoardTile:selectedTileView withAnswerOption:gameAnswerOptionView];
 			
-			// Deselect the answer option.
-			[gameAnswerOptionsViewController deselectGameAnswerOptionView];
-			
-			// If settings specify, deselect the tile. Otherwise, make sure the highlights are reset.
+			// Based on settings, either deselect the tile or reselect it to update highlights.
 			if ([[NSUserDefaults standardUserDefaults] boolForKey:kClearTileSelectionAfterPickingAnswerOptionForAnswerKey]) {
 				[gameBoardViewController deselectTileView];
 			} else {
-				[gameBoardViewController resetSimilarHighlights];
-				[gameBoardViewController resetErrorHighlights];
-			}
-		}
-		
-		[gameAnswerOptionsViewController reloadView];
-	} else {
-		// If there was a previously selected answer option, deselect it. Otherwise, select the new one.
-		if (selectedGameAnswerOptionView == gameAnswerOptionView) {
-			[gameAnswerOptionsViewController deselectGameAnswerOptionView];
-		} else {
-			ZSGameTileAnswerOrder gameTileAnswerOrder = [[NSUserDefaults standardUserDefaults] integerForKey:kTileAnswerOrderKey];
-			
-			// Only allow the selection if the tile/guess order settings allow the answer option to be selected before the tile.
-			if (gameTileAnswerOrder == ZSGameTileAnswerOrderHybrid || gameTileAnswerOrder == ZSGameTileAnswerOrderAnswerFirst) {
-				[gameAnswerOptionsViewController selectGameAnswerOptionView:gameAnswerOptionView];
+				[gameBoardViewController reselectTile];
 			}
 		}
 	}
@@ -563,22 +534,18 @@
 	
 	// Update the highlights.
 	if (gameBoardViewController.selectedTileView) {
-		[gameBoardViewController resetSimilarHighlights];
+		[gameBoardViewController reselectTile];
 	}
-	
-	[gameAnswerOptionsViewController reloadView];
 }
 
 - (void)undoButtonWasTouched {
 	[gameBoardViewController deselectTileView];
 	[game undo];
-	[gameAnswerOptionsViewController reloadView];
 }
 
 - (void)redoButtonWasTouched {
 	[gameBoardViewController deselectTileView];
 	[game redo];
-	[gameAnswerOptionsViewController reloadView];
 }
 
 #pragma mark - ZSGameDelegate Methods
@@ -625,7 +592,6 @@
 	
 	// Deselect stuff.
 	[gameBoardViewController deselectTileView];
-	[gameAnswerOptionsViewController deselectGameAnswerOptionView];
 	
 	// Show a congratulatory alert.
 	UIAlertView *completionAlert = [[UIAlertView alloc] initWithTitle:@"Puzzle Complete" message:@"You've successfully completed the puzzle. Great job!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];

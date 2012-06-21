@@ -34,10 +34,13 @@
 
 - (id)initWithGame:(ZSGame *)game;
 
+- (void)resetWithGame:(ZSGame *)newGame;
+
 // Board Changes
 - (void)reloadView;
 
 - (void)selectTileView:(ZSGameBoardTileViewController *)tileView;
+- (void)reselectTile;
 - (void)deselectTileView;
 
 // Handling Highlights

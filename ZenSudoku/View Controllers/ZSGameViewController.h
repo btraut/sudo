@@ -28,6 +28,7 @@
 @protocol ZSMajorGameStateDelegate <NSObject>
 
 - (void)startNewGame;
+- (void)frontViewControllerFinishedDisplaying;
 
 @end
 
@@ -60,6 +61,7 @@
 @property (strong, readonly) ZSGameAnswerOptionsViewController *gameAnswerOptionsViewController;
 
 @property (strong, readonly) ZSFoldedCornerViewController *foldedCornerViewController;
+@property (assign) BOOL foldedCornerVisibleOnLoad;
 
 @property (strong, readonly) UIButton *pencilButton;
 @property (assign) BOOL penciling;
@@ -71,9 +73,14 @@
 
 - (id)initWithGame:(ZSGame *)game;
 
+- (void)viewWasPromotedToFront;
+
 - (void)setTitle;
 
+- (void)resetWithGame:(ZSGame *)newGame;
+
 - (void)gameBoardTileWasTouchedInRow:(NSInteger)row col:(NSInteger)col;
+- (void)selectedTileChanged;
 
 - (void)gameAnswerOptionTouchEnteredWithGameAnswerOption:(ZSGameAnswerOption)gameAnswerOption;
 - (void)gameAnswerOptionTouchExitedWithGameAnswerOption:(ZSGameAnswerOption)gameAnswerOption;
@@ -98,7 +105,5 @@
 - (void)tilePencilDidChange:(BOOL)isSet forPencilNumber:(NSInteger)pencilNumber forTileAtRow:(NSInteger)row col:(NSInteger)col;
 - (void)timerDidAdvance;
 - (void)gameWasSolved;
-
-- (void)startPageFold;
 
 @end

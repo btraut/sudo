@@ -63,6 +63,8 @@
 }
 
 - (void)drawRect:(CGRect)rect {
+	[super drawRect:rect];
+	
 	CGContextRef context = UIGraphicsGetCurrentContext();
 	
 	// Cut the corner off the page.

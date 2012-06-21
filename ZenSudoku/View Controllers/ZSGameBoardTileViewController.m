@@ -364,9 +364,9 @@ NSString * const kTileColorHighlightHintD = @"#4C2FADD4";
 #pragma mark - Touch Events
 
 - (void)handleTap {
-	NSLog(@"Row: %i", tile.row);
-	NSLog(@"Col: %i", tile.col);
-	NSLog(@"Group: %i", tile.groupId);
+	NSLog(@"Tile: (%i, %i), group %i", tile.row, tile.col, tile.groupId);
+	NSLog(@"Guess: %i", tile.guess);
+	NSLog(@"Answer: %i", tile.answer);
 	
 	[delegate gameBoardTileWasTouched:self];
 }

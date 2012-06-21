@@ -18,7 +18,7 @@
 
 @implementation ZSGameBookViewController
 
-@synthesize currentGameViewController, nextGameViewController;
+@synthesize currentGameViewController, nextGameViewController, tempGameViewController;
 
 - (void)loadView {
 	self.view = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"PaperBackground.png"]];
@@ -41,17 +41,12 @@
 	currentGameViewController = [[ZSGameViewController alloc] initWithGame:currentGame];
 	currentGameViewController.hintDelegate = self;
 	currentGameViewController.majorGameStateDelegate = self;
+	currentGameViewController.foldedCornerVisibleOnLoad = YES;
 	[self.view addSubview:currentGameViewController.view];
 	
-	// Create the new game view.
-	ZSGame *newGame = [[ZSGameController sharedInstance] fetchGameWithDifficulty:ZSGameDifficultyDiabolical];
-	nextGameViewController = [[ZSGameViewController alloc] initWithGame:newGame];
-	nextGameViewController.hintDelegate = self;
-	nextGameViewController.majorGameStateDelegate = self;
-	[self.view insertSubview:nextGameViewController.view belowSubview:currentGameViewController.view];
+	// Create the new next game view.
+	[self loadNewNextGame];
 	
-	nextGameViewController.foldedCornerViewController.view.hidden = YES;
-
 	// Create the page curl gradient on the left.
 	UIImageView *pageCurlGradient = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"PageCurlGradient.png"]];
 	pageCurlGradient.frame = CGRectMake(0, 0, 17, 460);
@@ -70,23 +65,36 @@
 
 - (void)startNewGame {
 	// Get the previous game out of the way.
-	[currentGameViewController.view removeFromSuperview];
+	[self.currentGameViewController.view removeFromSuperview];
 	
-	// Promote the "next game" to the current game.
-	currentGameViewController = nextGameViewController;
+	// Swap the next game view controller for the current. We'll recycle the old one so we don't need to reinitialize.
+	self.tempGameViewController = currentGameViewController;
+	self.currentGameViewController = self.nextGameViewController;
 	
-	[[ZSGameController sharedInstance] saveGame:currentGameViewController.game];
-	
-	// Create a new "next game".
+	// Fire up the new game.
+	[currentGameViewController viewWasPromotedToFront];
+}
+
+- (void)frontViewControllerFinishedDisplaying {
+	// Load a new game into the recycled view controller.
+	[self loadNewNextGame];
+}
+
+- (void)loadNewNextGame {
 	ZSGame *newGame = [[ZSGameController sharedInstance] fetchGameWithDifficulty:ZSGameDifficultyDiabolical];
-	nextGameViewController = [[ZSGameViewController alloc] initWithGame:newGame];
-	nextGameViewController.hintDelegate = self;
-	nextGameViewController.majorGameStateDelegate = self;
-	[self.view insertSubview:nextGameViewController.view belowSubview:currentGameViewController.view];
 	
-	nextGameViewController.foldedCornerViewController.view.hidden = YES;
-	
-	[currentGameViewController startPageFold];
+	if (self.tempGameViewController) {
+		self.nextGameViewController = self.tempGameViewController;
+		self.tempGameViewController = nil;
+		
+		[self.nextGameViewController resetWithGame:newGame];
+	} else {
+		self.nextGameViewController = [[ZSGameViewController alloc] initWithGame:newGame];
+		nextGameViewController.hintDelegate = self;
+		nextGameViewController.majorGameStateDelegate = self;
+	}
+
+	[self.view insertSubview:self.nextGameViewController.view belowSubview:self.currentGameViewController.view];
 }
 
 - (BOOL)getHintsShown {

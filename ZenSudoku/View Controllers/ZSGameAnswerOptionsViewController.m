@@ -88,16 +88,20 @@
 - (void)reloadView {
 	ZSGameBoardTileViewController *selectedTile = gameViewController.gameBoardViewController.selectedTileView;
 	
+	[self deselectGameAnswerOptionView];
+	
 	for (ZSGameAnswerOptionViewController *gameAnswerOptionViewController in gameAnswerOptionViewControllers) {
 		// Check if the answer option is at quota.
 		if ([gameViewController.game allowsGuess:((NSInteger)gameAnswerOptionViewController.gameAnswerOption + 1)]) {
 			gameAnswerOptionViewController.enabled = YES;
-			gameAnswerOptionViewController.toggled = [selectedTile.tile getPencilForGuess:((NSInteger)gameAnswerOptionViewController.gameAnswerOption + 1)];
+			gameAnswerOptionViewController.toggled = selectedTile && [selectedTile.tile getPencilForGuess:((NSInteger)gameAnswerOptionViewController.gameAnswerOption + 1)];
 		} else {
 			gameAnswerOptionViewController.enabled = NO;
 		}
 		
-		gameAnswerOptionViewController.selected = selectedTile.tile.guess && selectedTile.tile.guess == ((NSInteger)gameAnswerOptionViewController.gameAnswerOption + 1);
+		if (selectedTile && selectedTile.tile.guess && selectedTile.tile.guess == ((NSInteger)gameAnswerOptionViewController.gameAnswerOption + 1)) {
+			[self selectGameAnswerOptionView:gameAnswerOptionViewController];
+		}
 		
 		// Reload the answer option.
 		[gameAnswerOptionViewController reloadView];
@@ -114,7 +118,7 @@
 	
 	// Make the new selection.
 	selectedGameAnswerOptionView = newSelected;
-	[selectedGameAnswerOptionView setSelected:YES];
+	selectedGameAnswerOptionView.selected = YES;
 }
 
 - (void)deselectGameAnswerOptionView {

@@ -14,9 +14,6 @@
 @class ZSHintViewController;
 
 @interface ZSGameBookViewController : UIViewController <ZSHintDelegate, ZSMajorGameStateDelegate> {
-	ZSGameViewController *currentGameViewController;
-	ZSGameViewController *nextGameViewController;
-	
 	ZSHintViewController *hintViewController;
 	
 	BOOL hintsShown;
@@ -24,6 +21,7 @@
 
 @property (strong) ZSGameViewController *currentGameViewController;
 @property (strong) ZSGameViewController *nextGameViewController;
+@property (strong) ZSGameViewController *tempGameViewController;
 
 - (BOOL)getHintsShown;
 - (void)beginHintDeck:(NSArray *)hintDeck forGameViewController:(ZSGameViewController *)gameViewController;

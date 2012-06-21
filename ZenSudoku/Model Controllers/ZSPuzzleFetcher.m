@@ -52,6 +52,21 @@ NSString * const kDBPuzzleDefinitionGroupMapKey = @"kDBPuzzleDefinitionGroupMapK
 }
 
 - (NSDictionary *)getRandomPuzzleWithType:(ZSGameType)type size:(NSInteger)size difficulty:(ZSGameDifficulty)difficulty {
+	/*
+	NSMutableDictionary *puzzleDefinition = [NSMutableDictionary dictionary];
+	
+	[puzzleDefinition setObject:[NSNumber numberWithInt:123] forKey:kDBPuzzleDefinitionIdKey];
+	[puzzleDefinition setObject:@"1.......2.9.4...5...6...7...5.9.3.......7.......85..4.7.....6...3...9.8...2.....1" forKey:kDBPuzzleDefinitionGuessesKey];
+	[puzzleDefinition setObject:@"174385962293467158586192734451923876928674315367851249719548623635219487842736591" forKey:kDBPuzzleDefinitionAnswersKey];
+	[puzzleDefinition setObject:@"000111222000111222000111222333444555333444555333444555666777888666777888666777888" forKey:kDBPuzzleDefinitionGroupMapKey];
+	
+	[puzzleDefinition setObject:[NSNumber numberWithInt:0] forKey:kDBPuzzleDefinitionTypeKey];
+	[puzzleDefinition setObject:[NSNumber numberWithInt:9] forKey:kDBPuzzleDefinitionSizeKey];
+	[puzzleDefinition setObject:[NSNumber numberWithInt:3] forKey:kDBPuzzleDefinitionDifficultyKey];
+	
+	return puzzleDefinition;
+	*/
+	
 	// Pick a specific puzzle (debug purposes).
 	BOOL forcePuzzleById = NO;
 	
