@@ -250,6 +250,8 @@
 	self.game = newGame;
 	newGame.delegate = self;
 	
+	[self setTitle];
+	
 	[self.gameBoardViewController resetWithGame:newGame];
 	
 	[self foldedCornerRestoredToStartPoint];

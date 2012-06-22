@@ -34,7 +34,8 @@
 	if ([[ZSGameController sharedInstance] savedGameInProgress]) {
 		currentGame = [[ZSGameController sharedInstance] loadSavedGame];
 	} else {
-		currentGame = [[ZSGameController sharedInstance] fetchGameWithDifficulty:ZSGameDifficultyDiabolical];
+		ZSGameDifficulty randomDifficulty = arc4random() % 5;
+		currentGame = [[ZSGameController sharedInstance] fetchGameWithDifficulty:randomDifficulty];
 	}
 	
 	currentGameViewController = [[ZSGameViewController alloc] initWithGame:currentGame];
@@ -80,7 +81,8 @@
 }
 
 - (void)loadNewNextGame {
-	ZSGame *newGame = [[ZSGameController sharedInstance] fetchGameWithDifficulty:ZSGameDifficultyDiabolical];
+	ZSGameDifficulty randomDifficulty = arc4random() % 5;
+	ZSGame *newGame = [[ZSGameController sharedInstance] fetchGameWithDifficulty:randomDifficulty];
 	
 	if (self.tempGameViewController) {
 		self.nextGameViewController = self.tempGameViewController;
