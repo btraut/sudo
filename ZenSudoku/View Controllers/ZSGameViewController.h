@@ -82,6 +82,8 @@
 
 - (void)resetWithGame:(ZSGame *)newGame;
 
+- (void)startPuzzle;
+
 - (UIImage *)getScreenshotImage;
 
 - (void)gameBoardTileWasTouchedInRow:(NSInteger)row col:(NSInteger)col;

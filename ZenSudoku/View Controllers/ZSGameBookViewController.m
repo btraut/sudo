@@ -44,6 +44,8 @@
 	currentGameViewController.foldedCornerVisibleOnLoad = YES;
 	[self.view addSubview:currentGameViewController.view];
 	
+	[currentGameViewController startPuzzle];
+	
 	// Create the new next game view.
 	[self loadNewNextGame];
 	

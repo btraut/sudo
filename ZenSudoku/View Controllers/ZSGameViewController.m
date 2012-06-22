@@ -85,6 +85,12 @@
 	_innerView.frame = self.view.frame;
 	[self.view addSubview:_innerView];
 	
+	// Build the folded corner.
+	foldedCornerViewController = [[ZSFoldedCornerViewController alloc] init];
+	foldedCornerViewController.view.hidden = !self.foldedCornerVisibleOnLoad;
+	foldedCornerViewController.touchDelegate = self;
+	[self.view addSubview:foldedCornerViewController.view];
+	
 	// Build the title.
 	title = [[UILabel alloc] initWithFrame:CGRectMake(70, 12, 180, 32)];
 	title.font = [UIFont fontWithName:@"ReklameScript-Medium" size:30.0f];
@@ -92,13 +98,6 @@
 	title.backgroundColor = [UIColor clearColor];
 	[_innerView addSubview:title];
 	[self setTitle];
-	
-	// Build the toolbar buttons.
-//	undoButton = [[UIBarButtonItem alloc] initWithTitle:@"Undo" style:UIBarButtonItemStyleBordered target:self action:@selector(undoButtonWasTouched)];
-//	redoButton = [[UIBarButtonItem alloc] initWithTitle:@"Redo" style:UIBarButtonItemStyleBordered target:self action:@selector(redoButtonWasTouched)];
-	
-//	self.toolbarItems = [NSArray arrayWithObjects:autoPencilButton, undoButton, redoButton, nil];
-//	[self.navigationController setToolbarHidden:NO animated:NO];
 	
 	// Build the game board.
 	gameBoardViewController = [ZSGameBoardViewController gameBoardViewControllerForGame:game];
@@ -152,31 +151,9 @@
 	
 	[_innerView addSubview:hintButton];
 	
-	// Build the folded corner.
-	foldedCornerViewController = [[ZSFoldedCornerViewController alloc] init];
-	foldedCornerViewController.view.hidden = !self.foldedCornerVisibleOnLoad;
-	foldedCornerViewController.touchDelegate = self;
-	[self.view addSubview:foldedCornerViewController.view];
-	
-	// Reload errors.
-	[self setErrors];
-	[gameBoardViewController reloadView];
-	
-	// Debug
-	if (game.difficulty == ZSGameDifficultyInsane) {
-		[self solveMostOfThePuzzle];
-	}
-	
-	// If the game is already solved, shut off input.
-	if ([game isSolved]) {
-		allowsInput = NO;
-		
-		autoPencilButton.enabled = NO;
-		hintButton.enabled = NO;
-	}
-	
-	// Start the game timer.
-	[game startGameTimer];
+	// Build the toolbar buttons.
+	// undoButton = [[UIBarButtonItem alloc] initWithTitle:@"Undo" style:UIBarButtonItemStyleBordered target:self action:@selector(undoButtonWasTouched)];
+	// redoButton = [[UIBarButtonItem alloc] initWithTitle:@"Redo" style:UIBarButtonItemStyleBordered target:self action:@selector(redoButtonWasTouched)];
 }
 
 - (void)solveMostOfThePuzzle {
@@ -219,6 +196,30 @@
 - (void)viewWasPromotedToFront {
 	[self.foldedCornerViewController resetToStartPosition];
 	[foldedCornerViewController animateStartFold];
+	
+	[self startPuzzle];
+}
+
+- (void)startPuzzle {
+	// Reload errors.
+	[self setErrors];
+	[gameBoardViewController reloadView];
+	
+	// If the game is already solved, shut off input.
+	if ([game isSolved]) {
+		allowsInput = NO;
+		
+		autoPencilButton.enabled = NO;
+		hintButton.enabled = NO;
+	}
+	
+	// Start the game timer.
+	[game startGameTimer];
+	
+	// Debug
+	if (game.difficulty == ZSGameDifficultyEasy) {
+		[self solveMostOfThePuzzle];
+	}
 }
 
 - (void)setTitle {
@@ -250,9 +251,14 @@
 	self.game = newGame;
 	newGame.delegate = self;
 	
+	allowsInput = YES;
+	autoPencilButton.enabled = YES;
+	hintButton.enabled = YES;
+	
 	[self setTitle];
 	
 	[self.gameBoardViewController resetWithGame:newGame];
+	[self.gameAnswerOptionsViewController reloadView];
 	
 	[self foldedCornerRestoredToStartPoint];
 }
@@ -275,10 +281,6 @@
 	_foldedCornerTouchCrossedTapThreshold = NO;
 	
 	[foldedCornerViewController setPageImage:[self getScreenshotImage]];
-	
-//	UIImageView *imageView = [[UIImageView alloc] initWithImage:[self getScreenshotImage]];
-//	imageView.backgroundColor = [UIColor blueColor];
-//	[self.view addSubview:imageView];
 	
 	foldedCornerViewController.drawPage = YES;
 	[foldedCornerViewController pushUpdate];
