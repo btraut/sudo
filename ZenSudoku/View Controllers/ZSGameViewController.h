@@ -16,6 +16,7 @@
 @class ZSGameAnswerOptionsViewController;
 @class ZSGameViewController;
 @class ZSHintGenerator;
+@class ZSFoldedPageViewController;
 
 @protocol ZSHintDelegate <NSObject>
 
@@ -63,6 +64,8 @@
 @property (strong, readonly) ZSFoldedCornerViewController *foldedCornerViewController;
 @property (assign) BOOL foldedCornerVisibleOnLoad;
 
+@property (strong, readonly) ZSFoldedPageViewController *foldedPageViewController;
+
 @property (strong, readonly) UIButton *pencilButton;
 @property (assign) BOOL penciling;
 
@@ -78,6 +81,8 @@
 - (void)setTitle;
 
 - (void)resetWithGame:(ZSGame *)newGame;
+
+- (UIImage *)getScreenshotImage;
 
 - (void)gameBoardTileWasTouchedInRow:(NSInteger)row col:(NSInteger)col;
 - (void)selectedTileChanged;

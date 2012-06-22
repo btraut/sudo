@@ -14,7 +14,6 @@
 #import "ZSGameBoardViewController.h"
 #import "ZSHintViewController.h"
 #import "ZSFoldedCornerViewController.h"
-#import "ZSFoldedPageView.h"
 
 @implementation ZSGameBookViewController
 

@@ -33,7 +33,9 @@ typedef enum {
 	GLKBaseEffect *_effect;
 	
 	ZSGLSprite *_cornerSprite;
+	ZSGLSprite *_shadowBlobOpaqueSprite;
 	ZSGLSprite *_shadowBlobSprite;
+	ZSGLSprite *_screenshotSprite;
 	
 	ZSGLShape *_foldGradient;
 	ZSGLShape *_cornerGradient;
@@ -41,6 +43,8 @@ typedef enum {
 	ZSFoldedCornerViewControllerAnimationState _animationState;
 	
 	ZSPointAnimation *_animationHelper;
+	
+	CGFloat _foldOverflowBottomWidth;
 }
 
 @property (strong, nonatomic) EAGLContext *context;
@@ -51,6 +55,7 @@ typedef enum {
 
 @synthesize touchDelegate = _touchDelegate;
 @synthesize context = _context;
+@synthesize drawPage;
 
 - (id)init {
 	self = [super init];
@@ -84,7 +89,6 @@ typedef enum {
 	// Set other view options.
 	view.opaque = NO;
 	view.alpha = 1.0f;
-	view.hidden = NO;
 	view.backgroundColor = [UIColor clearColor];
 	view.enableSetNeedsDisplay = NO;
 	view.drawableMultisample = GLKViewDrawableMultisample4X;
@@ -111,13 +115,17 @@ typedef enum {
 	_effect.transform.projectionMatrix = projectionMatrix;
 	
 	// Load the images.
-	if ([[UIScreen mainScreen] respondsToSelector:@selector(displayLinkWithTarget:selector:)] && [UIScreen mainScreen].scale == 2.0) {
+	if ([UIScreen mainScreen].scale == 2.0) {
 		_cornerSprite = [[ZSGLSprite alloc] initWithFile:@"BackwardsPage@2x.png" effect:_effect];
-		_shadowBlobSprite = [[ZSGLSprite alloc] initWithFile:@"ShadowBlobTest@2x.png" effect:_effect];
+		_shadowBlobOpaqueSprite = [[ZSGLSprite alloc] initWithFile:@"ShadowBlobStraightOpaque@2x.png" effect:_effect];
+		_shadowBlobSprite = [[ZSGLSprite alloc] initWithFile:@"ShadowBlobStraight@2x.png" effect:_effect];
 	} else {
 		_cornerSprite = [[ZSGLSprite alloc] initWithFile:@"BackwardsPage.png" effect:_effect];
-		_shadowBlobSprite = [[ZSGLSprite alloc] initWithFile:@"ShadowBlob.png" effect:_effect];
+		_shadowBlobOpaqueSprite = [[ZSGLSprite alloc] initWithFile:@"ShadowBlobStraightOpaque.png" effect:_effect];
+		_shadowBlobSprite = [[ZSGLSprite alloc] initWithFile:@"ShadowBlobStraight.png" effect:_effect];
 	}
+	
+	_shadowBlobOpaqueSprite.overlay = YES;
 	
 	// Load the gradients.
 	_foldGradient = [[ZSGLShape alloc] initWithEffect:_effect];
@@ -128,6 +136,10 @@ typedef enum {
 	[super viewWillAppear:animated];
 	
 	[(ZSFoldedCornerGLView *)self.view display];
+}
+
+- (void)setPageImage:(UIImage *)image {
+	_screenshotSprite = [[ZSGLSprite alloc] initWithCGImage:[image CGImage] effect:_effect];
 }
 
 - (void)resetToStartPosition {
@@ -187,15 +199,21 @@ typedef enum {
 		shadowStart.x = H * cosPhi / 2;
 		shadowStart.y = -H * sinPhi / 2;
 	}
-		
+	
+	if (foldDimensions.height > 460) {
+		_foldOverflowBottomWidth = foldDimensions.width - 460 * tanPhi;
+	} else {
+		_foldOverflowBottomWidth = 0;
+	}
+	
 	double crossDimension = sqrt(0.0484 * (foldDimensions.width * foldDimensions.width + foldDimensions.height * foldDimensions.height));
 	double crossAngle = atan(_foldPoint.x / _foldPoint.y);
 	
 	underShadowFoldedPageOffset.width = crossDimension * sin(crossAngle);
 	underShadowFoldedPageOffset.height = crossDimension * cos(crossAngle);
 	
-	underShadowDimensions.width = 1.22 * foldDimensions.width;
-	underShadowDimensions.height = 1.22 * foldDimensions.height;
+	underShadowDimensions.width = foldDimensions.width + H / 6;
+	underShadowDimensions.height = foldDimensions.height + H / 6;
 }
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect {
@@ -204,8 +222,46 @@ typedef enum {
 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
+		
+	// Draw the folded page.
+	if (self.drawPage) {
+		_screenshotSprite.transform = GLKMatrix4Identity;
+		
+		if (_foldOverflowBottomWidth) {
+			TexturedVertex screenshotTriangle[4];
+			
+			screenshotTriangle[0].geometryVertex = CGPointMake(0, _screenshotSprite.contentSizeNormalized.height);
+			screenshotTriangle[1].geometryVertex = CGPointMake(0, 0);
+			screenshotTriangle[2].geometryVertex = CGPointMake(_screenshotSprite.contentSizeNormalized.width - foldDimensions.width, _screenshotSprite.contentSizeNormalized.height);
+			screenshotTriangle[3].geometryVertex = CGPointMake(_screenshotSprite.contentSizeNormalized.width - _foldOverflowBottomWidth, 0);
+			
+			screenshotTriangle[0].textureVertex = CGPointMake(0, 1);
+			screenshotTriangle[1].textureVertex = CGPointMake(0, 0);
+			screenshotTriangle[2].textureVertex = CGPointMake(1 - foldDimensions.width / _screenshotSprite.contentSizeNormalized.width, 1);
+			screenshotTriangle[3].textureVertex = CGPointMake(1 - _foldOverflowBottomWidth / _screenshotSprite.contentSizeNormalized.width, 0);
+			
+			[_screenshotSprite renderTriangleStrip:screenshotTriangle ofSize:4];
+		} else {
+			TexturedVertex screenshotTriangle[5];
+			
+			screenshotTriangle[0].geometryVertex = CGPointMake(0, _screenshotSprite.contentSizeNormalized.height);
+			screenshotTriangle[1].geometryVertex = CGPointMake(0, 0);
+			screenshotTriangle[2].geometryVertex = CGPointMake(_screenshotSprite.contentSizeNormalized.width - foldDimensions.width, _screenshotSprite.contentSizeNormalized.height);
+			screenshotTriangle[3].geometryVertex = CGPointMake(_screenshotSprite.contentSizeNormalized.width, 0);
+			screenshotTriangle[4].geometryVertex = CGPointMake(_screenshotSprite.contentSizeNormalized.width, _screenshotSprite.contentSizeNormalized.height - foldDimensions.height);
+			
+			screenshotTriangle[0].textureVertex = CGPointMake(0, 1);
+			screenshotTriangle[1].textureVertex = CGPointMake(0, 0);
+			screenshotTriangle[2].textureVertex = CGPointMake(1 - foldDimensions.width / _screenshotSprite.contentSizeNormalized.width, 1);
+			screenshotTriangle[3].textureVertex = CGPointMake(1, 0);
+			screenshotTriangle[4].textureVertex = CGPointMake(1, 1 - foldDimensions.height / _screenshotSprite.contentSizeNormalized.height);
+			
+			[_screenshotSprite renderTriangleStrip:screenshotTriangle ofSize:5];
+		}
+	}
 	
-    GLKMatrix4 baseMatrix = GLKMatrix4Identity;
+	// Start the matrix for the other pieces.
+	GLKMatrix4 baseMatrix = GLKMatrix4Identity;
 	baseMatrix = GLKMatrix4Translate(baseMatrix, cornerTranslation.x, cornerTranslation.y, 0);
 	baseMatrix = GLKMatrix4Translate(baseMatrix, -frameDimensions.width, -frameDimensions.height, 0);
 	baseMatrix = GLKMatrix4Translate(baseMatrix, self.view.frame.size.width, self.view.frame.size.height, 0);
@@ -220,28 +276,29 @@ typedef enum {
 	_cornerSprite.transform = foldedCornerMatrix;
 		
     GLKMatrix4 shadowBlobMatrix = baseMatrix;
-	shadowBlobMatrix = GLKMatrix4Translate(shadowBlobMatrix, 0, -_shadowBlobSprite.contentSizeNormalized.height, 0);
+	shadowBlobMatrix = GLKMatrix4Translate(shadowBlobMatrix, 0, -underShadowDimensions.height, 0);
 	shadowBlobMatrix = GLKMatrix4Translate(shadowBlobMatrix, foldDimensions.width - underShadowDimensions.width, underShadowDimensions.height - foldDimensions.height, 0);
+	_shadowBlobOpaqueSprite.transform = shadowBlobMatrix;
 	_shadowBlobSprite.transform = shadowBlobMatrix;
 	
 	// Draw the shadow blob.
 	TexturedVertex shadowBlobTriangle[6];
 	
-	shadowBlobTriangle[0].geometryVertex = CGPointMake(0, _shadowBlobSprite.contentSizeNormalized.height);
-	shadowBlobTriangle[1].geometryVertex = CGPointMake(underShadowDimensions.width, _shadowBlobSprite.contentSizeNormalized.height);
-	shadowBlobTriangle[2].geometryVertex = CGPointMake(underShadowDimensions.width, _shadowBlobSprite.contentSizeNormalized.height - (underShadowDimensions.height - foldDimensions.height));
-	shadowBlobTriangle[3].geometryVertex = CGPointMake(0, _shadowBlobSprite.contentSizeNormalized.height);
-	shadowBlobTriangle[4].geometryVertex = CGPointMake(underShadowDimensions.width - foldDimensions.width, _shadowBlobSprite.contentSizeNormalized.height - underShadowDimensions.height);
-	shadowBlobTriangle[5].geometryVertex = CGPointMake(0, _shadowBlobSprite.contentSizeNormalized.height - underShadowDimensions.height);
+	shadowBlobTriangle[0].geometryVertex = CGPointMake(0, underShadowDimensions.height);
+	shadowBlobTriangle[1].geometryVertex = CGPointMake(underShadowDimensions.width, foldDimensions.height);
+	shadowBlobTriangle[2].geometryVertex = CGPointMake(underShadowDimensions.width - foldDimensions.width, 0);
 	
 	shadowBlobTriangle[0].textureVertex = CGPointMake(0, 1);
 	shadowBlobTriangle[1].textureVertex = CGPointMake(1, 1);
-	shadowBlobTriangle[2].textureVertex = CGPointMake(1, 1 - ((underShadowDimensions.height - foldDimensions.height) / underShadowDimensions.height));
-	shadowBlobTriangle[3].textureVertex = CGPointMake(0, 1);
-	shadowBlobTriangle[4].textureVertex = CGPointMake((underShadowDimensions.width - foldDimensions.width) / underShadowDimensions.width, 0);
-	shadowBlobTriangle[5].textureVertex = CGPointMake(0, 0);
+	shadowBlobTriangle[2].textureVertex = CGPointMake(0, 0);
 	
-	[_shadowBlobSprite renderTriangleStrip:shadowBlobTriangle ofSize:6];
+	if (self.drawPage) {
+		[_shadowBlobOpaqueSprite renderTriangleStrip:shadowBlobTriangle ofSize:3];
+	} else {
+		glDisable(GL_BLEND);
+		[_shadowBlobSprite renderTriangleStrip:shadowBlobTriangle ofSize:3];
+		glEnable(GL_BLEND);
+	}
 	
 	// Draw the folded corner.
 	TexturedVertex foldedCornerTriangle[3];

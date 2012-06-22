@@ -104,7 +104,7 @@ NSInteger standard9x9GroupMap[9][9] = {
 		[tileRows addObject:[NSArray arrayWithArray:tileCols]];
 	}
 	
-	_tiles = [NSArray arrayWithArray:tileRows];
+	_tiles = tileRows;
 }
 
 - (void)applyAnswersString:(NSString *)answers {

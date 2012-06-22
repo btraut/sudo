@@ -36,6 +36,10 @@
 
 @property (weak) id<ZSFoldedCornerGLViewControllerTouchDelegate> touchDelegate;
 
+@property (assign) BOOL drawPage;
+
+- (void)setPageImage:(UIImage *)image;
+
 - (void)resetToStartPosition;
 - (void)resetToDefaultPosition;
 

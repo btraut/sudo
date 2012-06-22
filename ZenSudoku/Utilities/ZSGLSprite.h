@@ -24,6 +24,7 @@ typedef struct {
 @interface ZSGLSprite : NSObject
 
 - (id)initWithFile:(NSString *)fileName effect:(GLKBaseEffect *)effect;
+- (id)initWithCGImage:(CGImageRef)imageRef effect:(GLKBaseEffect *)effect;
 
 - (void)render;
 - (void)renderTriangleStrip:(TexturedVertex *)texturedTriangle ofSize:(NSInteger)size;
@@ -31,5 +32,7 @@ typedef struct {
 @property (assign) GLKMatrix4 transform;
 @property (assign) CGSize contentSize;
 @property (assign) CGSize contentSizeNormalized;
+
+@property (assign) BOOL overlay;
 
 @end

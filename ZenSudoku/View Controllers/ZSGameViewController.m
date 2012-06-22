@@ -6,6 +6,8 @@
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
+
 #import "ZSGameViewController.h"
 #import "ZSGameBoardViewController.h"
 #import "ZSGameAnswerOptionsViewController.h"
@@ -16,7 +18,6 @@
 #import "ZSGameController.h"
 #import "ZSHintGenerator.h"
 #import "ZSHintCard.h"
-#import "ZSFoldedPageView.h"
 #import "ZSFoldedCornerViewController.h"
 
 #import "TestFlight.h"
@@ -24,6 +25,8 @@
 @interface ZSGameViewController() {
 	CGPoint _foldStartPoint;
 	BOOL _foldedCornerTouchCrossedTapThreshold;
+	
+	UIImageView *_innerView;
 }
 
 @end
@@ -33,6 +36,7 @@
 @synthesize game;
 @synthesize gameBoardViewController, gameAnswerOptionsViewController;
 @synthesize foldedCornerVisibleOnLoad, foldedCornerViewController;
+@synthesize foldedPageViewController;
 @synthesize pencilButton, penciling;
 @synthesize allowsInput;
 @synthesize hintDelegate, majorGameStateDelegate;
@@ -60,12 +64,9 @@
 #pragma mark - View Lifecycle
 
 - (void)loadView {
-	NSLog(@"loadView");
-	ZSFoldedPageView *newView = [[ZSFoldedPageView alloc] init];
-	newView.foldDimensions = CGSizeMake(45, 49);
-	self.view = newView;
-	self.view.userInteractionEnabled = YES;
-	self.view.clipsToBounds = YES;
+	[super loadView];
+	
+	self.view.frame = CGRectMake(0, 0, 314, 460);
 }
 
 - (void)viewDidLoad {
@@ -78,12 +79,18 @@
 	[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackOpaque animated:YES];
 	self.navigationController.navigationBarHidden = YES;
 	
+	// Add the inner view.
+	_innerView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ForwardsPage.png"]];
+	_innerView.userInteractionEnabled = YES;
+	_innerView.frame = self.view.frame;
+	[self.view addSubview:_innerView];
+	
 	// Build the title.
 	title = [[UILabel alloc] initWithFrame:CGRectMake(70, 12, 180, 32)];
 	title.font = [UIFont fontWithName:@"ReklameScript-Medium" size:30.0f];
 	title.textAlignment = UITextAlignmentCenter;
 	title.backgroundColor = [UIColor clearColor];
-	[self.view addSubview:title];
+	[_innerView addSubview:title];
 	[self setTitle];
 	
 	// Build the toolbar buttons.
@@ -97,13 +104,13 @@
 	gameBoardViewController = [ZSGameBoardViewController gameBoardViewControllerForGame:game];
 	gameBoardViewController.view.frame = CGRectMake(8, 54, gameBoardViewController.view.frame.size.width, gameBoardViewController.view.frame.size.height);
 	gameBoardViewController.delegate = self;
-	[self.view addSubview:gameBoardViewController.view];
+	[_innerView addSubview:gameBoardViewController.view];
 	
 	// Build the answer options.
 	gameAnswerOptionsViewController = [[ZSGameAnswerOptionsViewController alloc] initWithGameViewController:self];
 	gameAnswerOptionsViewController.view.frame = CGRectMake(6, 371, gameAnswerOptionsViewController.view.frame.size.width, gameAnswerOptionsViewController.view.frame.size.height);
 	gameAnswerOptionsViewController.delegate = self;
-	[self.view addSubview:gameAnswerOptionsViewController.view];
+	[_innerView addSubview:gameAnswerOptionsViewController.view];
 	[gameAnswerOptionsViewController reloadView];
 	
 	// Build pencil button.
@@ -117,7 +124,7 @@
 	[pencilButton setBackgroundImage:pencilImage forState:UIControlStateNormal];
 	[pencilButton setBackgroundImage:pencilSelectedImage forState:UIControlStateSelected];
 	
-	[self.view addSubview:pencilButton];
+	[_innerView addSubview:pencilButton];
 	
 	// Build the autopencil button.
 	autoPencilButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -130,7 +137,7 @@
 	[autoPencilButton setBackgroundImage:autoPencilImage forState:UIControlStateNormal];
 	[autoPencilButton setBackgroundImage:autoPencilHighlightedImage forState:UIControlStateHighlighted];
 	
-	[self.view addSubview:autoPencilButton];
+	[_innerView addSubview:autoPencilButton];
 	
 	// Build the hints button.
 	hintButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -143,7 +150,7 @@
 	[hintButton setBackgroundImage:hintsImage forState:UIControlStateNormal];
 	[hintButton setBackgroundImage:hintsHighlightedImage forState:UIControlStateHighlighted];
 	
-	[self.view addSubview:hintButton];
+	[_innerView addSubview:hintButton];
 	
 	// Build the folded corner.
 	foldedCornerViewController = [[ZSFoldedCornerViewController alloc] init];
@@ -156,32 +163,9 @@
 	[gameBoardViewController reloadView];
 	
 	// Debug
-	/*
 	if (game.difficulty == ZSGameDifficultyInsane) {
-		NSInteger totalUnsolved = game.gameBoard.size * game.gameBoard.size;
-		
-		for (NSInteger row = 0; row < game.gameBoard.size; ++row) {
-			for (NSInteger col = 0; col < game.gameBoard.size; ++col) {
-				ZSGameTile *tile = [game getTileAtRow:row col:col];
-				
-				if (tile.guess) {
-					--totalUnsolved;
-				}
-			}
-		}
-		
-		for (NSInteger row = 0; row < game.gameBoard.size && totalUnsolved > 2; ++row) {
-			for (NSInteger col = 0; col < game.gameBoard.size && totalUnsolved > 2; ++col) {
-				ZSGameTile *tile = [game getTileAtRow:row col:col];
-				
-				if (!tile.guess) {
-					[game setGuess:tile.answer forTileAtRow:row col:col];
-					--totalUnsolved;
-				}
-			}
-		}
+		[self solveMostOfThePuzzle];
 	}
-	*/
 	
 	// If the game is already solved, shut off input.
 	if ([game isSolved]) {
@@ -193,6 +177,31 @@
 	
 	// Start the game timer.
 	[game startGameTimer];
+}
+
+- (void)solveMostOfThePuzzle {
+	NSInteger totalUnsolved = game.gameBoard.size * game.gameBoard.size;
+	
+	for (NSInteger row = 0; row < game.gameBoard.size; ++row) {
+		for (NSInteger col = 0; col < game.gameBoard.size; ++col) {
+			ZSGameTile *tile = [game getTileAtRow:row col:col];
+			
+			if (tile.guess) {
+				--totalUnsolved;
+			}
+		}
+	}
+	
+	for (NSInteger row = 0; row < game.gameBoard.size && totalUnsolved > 2; ++row) {
+		for (NSInteger col = 0; col < game.gameBoard.size && totalUnsolved > 2; ++col) {
+			ZSGameTile *tile = [game getTileAtRow:row col:col];
+			
+			if (!tile.guess) {
+				[game setGuess:tile.answer forTileAtRow:row col:col];
+				--totalUnsolved;
+			}
+		}
+	}
 }
 
 - (void)viewDidUnload {
@@ -246,29 +255,36 @@
 	[self foldedCornerRestoredToStartPoint];
 }
 
+- (UIImage *)getScreenshotImage {
+    UIGraphicsBeginImageContextWithOptions(_innerView.bounds.size, NO, 0.0f);
+	
+	[_innerView.layer renderInContext:UIGraphicsGetCurrentContext()];
+	UIImage *screenshot = UIGraphicsGetImageFromCurrentImageContext();
+	
+	UIGraphicsEndImageContext();
+	
+	return screenshot;
+}
+
 #pragma mark - Touch Handling
 
 - (void)foldedCornerTouchStartedWithFoldPoint:(CGPoint)foldPoint foldDimensions:(CGSize)foldDimensions {
-	ZSFoldedPageView *view = (ZSFoldedPageView *)self.view;
-	
-	view.foldDimensions = foldDimensions;
-	
-	[(ZSFoldedPageView *)view createScreenshotFromView];
-	[(ZSFoldedPageView *)view setAllSubViewsHidden:YES except:foldedCornerViewController.view];
-	
-	[view setNeedsDisplay];
-	
 	_foldStartPoint = foldPoint;
 	_foldedCornerTouchCrossedTapThreshold = NO;
+	
+	[foldedCornerViewController setPageImage:[self getScreenshotImage]];
+	
+//	UIImageView *imageView = [[UIImageView alloc] initWithImage:[self getScreenshotImage]];
+//	imageView.backgroundColor = [UIColor blueColor];
+//	[self.view addSubview:imageView];
+	
+	foldedCornerViewController.drawPage = YES;
+	[foldedCornerViewController pushUpdate];
+	
+	_innerView.hidden = YES;
 }
 
 - (void)foldedCornerTouchMovedWithFoldPoint:(CGPoint)foldPoint foldDimensions:(CGSize)foldDimensions {
-	ZSFoldedPageView *view = (ZSFoldedPageView *)self.view;
-	
-	view.foldDimensions = foldDimensions;
-	
-	[self.view setNeedsDisplay];
-	
 	if (_foldedCornerTouchCrossedTapThreshold || (foldPoint.x - _foldStartPoint.x) * (foldPoint.x - _foldStartPoint.x) + (foldPoint.y - _foldStartPoint.y) * (foldPoint.y - _foldStartPoint.y) > 16) {
 		_foldedCornerTouchCrossedTapThreshold = YES;
 	}
@@ -287,8 +303,10 @@
 }
 
 - (void)foldedCornerRestoredToStartPoint {
-	[(ZSFoldedPageView *)self.view restoreScreenshotFromOriginal];
-	[(ZSFoldedPageView *)self.view setAllSubViewsHidden:NO except:nil];
+	_innerView.hidden = NO;
+	
+	foldedCornerViewController.drawPage = NO;
+	[foldedCornerViewController pushUpdate];
 }
 
 - (void)pageWasTurned {

@@ -39,7 +39,7 @@
 	
 	[self.effect prepareToDraw];
 	
-	if (overlay) {
+	if (self.overlay) {
 		glBlendFunc(GL_ZERO, GL_SRC_COLOR);
 	} else {
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
