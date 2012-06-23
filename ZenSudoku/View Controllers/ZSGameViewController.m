@@ -3,7 +3,7 @@
 //  ZenSudoku
 //
 //  Created by Brent Traut on 11/24/11.
-//  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2011 Ten Four Inc. All rights reserved.
 //
 
 #import <QuartzCore/QuartzCore.h>
@@ -138,7 +138,7 @@
 	autoPencilButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	
 	[autoPencilButton addTarget:self action:@selector(autoPencilButtonWasTouched) forControlEvents:UIControlEventTouchUpInside];
-	autoPencilButton.frame = CGRectMake(115, 412, 34.5f, 34.5f);
+	autoPencilButton.frame = CGRectMake(115, 412, 35, 35);
 	
 	UIImage *autoPencilImage = [UIImage imageNamed:@"AutoPencil"];
 	UIImage *autoPencilHighlightedImage = [UIImage imageNamed:@"AutoPencilHighlighted"];
@@ -151,7 +151,7 @@
 	hintButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	
 	[hintButton addTarget:self action:@selector(hintButtonWasTouched) forControlEvents:UIControlEventTouchUpInside];
-	hintButton.frame = CGRectMake(170.5f, 412, 34.5f, 34.5f);
+	hintButton.frame = CGRectMake(170.5f, 412, 35, 35);
 	
 	UIImage *hintsImage = [UIImage imageNamed:@"Hints"];
 	UIImage *hintsHighlightedImage = [UIImage imageNamed:@"HintsHighlighted"];
