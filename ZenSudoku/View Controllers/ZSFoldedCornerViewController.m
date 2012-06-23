@@ -8,6 +8,8 @@
 
 #import "ZSFoldedCornerViewController.h"
 
+#import "ZSFoldedCornerPlusButtonViewController.h"
+
 #import "ZSGLSprite.h"
 #import "ZSGLShape.h"
 
@@ -53,7 +55,9 @@ typedef enum {
 
 @implementation ZSFoldedCornerViewController
 
-@synthesize touchDelegate = _touchDelegate;
+@synthesize touchDelegate;
+@synthesize plusButtonViewController;
+
 @synthesize context = _context;
 @synthesize drawPage;
 
@@ -341,6 +345,18 @@ typedef enum {
 	[_cornerGradient renderVertices:cornerGradientVertices ofSize:3];
 }
 
+- (void)updatePlusButton {
+	CGFloat foldPointXToLeft = self.view.frame.size.width - _foldPoint.x;
+	
+	if (_animationState == ZSFoldedCornerViewControllerAnimationStateUserAnimating) {
+		if (foldPointXToLeft < self.view.frame.size.width / 2) {
+			[plusButtonViewController setState:ZSFoldedCornerPlusButtonStateBig animated:YES];
+		} else {
+			[plusButtonViewController setState:ZSFoldedCornerPlusButtonStateNormal animated:YES];
+		}
+	}
+}
+
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
 	if (_animationState != ZSFoldedCornerViewControllerAnimationStateStopped) {
 		return NO;
@@ -388,7 +404,7 @@ typedef enum {
 	
 	[self redraw];
 	
-	[_touchDelegate foldedCornerTouchStartedWithFoldPoint:_foldPoint foldDimensions:foldDimensions];
+	[self.touchDelegate foldedCornerTouchStartedWithFoldPoint:_foldPoint foldDimensions:foldDimensions];
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -398,23 +414,24 @@ typedef enum {
 	
 	[self redraw];
 	
-	[_touchDelegate foldedCornerTouchMovedWithFoldPoint:_foldPoint foldDimensions:foldDimensions];
+	[self.touchDelegate foldedCornerTouchMovedWithFoldPoint:_foldPoint foldDimensions:foldDimensions];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
 	_animationState = ZSFoldedCornerViewControllerAnimationStateStopped;
 	
-	[_touchDelegate foldedCornerTouchEndedWithFoldPoint:_foldPoint foldDimensions:foldDimensions];
+	[self.touchDelegate foldedCornerTouchEndedWithFoldPoint:_foldPoint foldDimensions:foldDimensions];
 }
 
 - (void)redraw {
 	[self recalculateDimensions];
 	[(ZSFoldedCornerGLView *)self.view display];
+	[self updatePlusButton];
 }
 
 - (void)pushUpdate {
 	[self redraw];
-	[_touchDelegate foldedCornerTouchMovedWithFoldPoint:_foldPoint foldDimensions:foldDimensions];
+	[self.touchDelegate foldedCornerTouchMovedWithFoldPoint:_foldPoint foldDimensions:foldDimensions];
 }
 
 - (void)animationAdvanced:(CGPoint)point progress:(float)progress {
@@ -443,20 +460,19 @@ typedef enum {
 		// User stopped dragging, fold is moving back to the corner:
 		case ZSFoldedCornerViewControllerAnimationStateSendFoldBackToCornerStage1:
 			_animationState = ZSFoldedCornerViewControllerAnimationStateStopped;
-			[_touchDelegate foldedCornerRestoredToStartPoint];
+			[self.touchDelegate foldedCornerRestoredToStartPoint];
 			break;
 		
 		// Page is turning:
 		case ZSFoldedCornerViewControllerAnimationStatePageTurnStage1:
 			_animationState = ZSFoldedCornerViewControllerAnimationStateStopped;
-			[_touchDelegate pageWasTurned];
+			[self.touchDelegate pageWasTurned];
 			break;
 			
 		// After page turns, a new fold is made in the next page:
 		case ZSFoldedCornerViewControllerAnimationStateStartFoldStage1:
 			_animationState = ZSFoldedCornerViewControllerAnimationStateStopped;
-//			[_touchDelegate foldedCornerWasStarted];
-			[_touchDelegate foldedCornerStartAnimationFinished];
+			[self.touchDelegate foldedCornerStartAnimationFinished];
 			break;
 			
 		// User tapped on the + button, so folded corner gets tugged:
@@ -474,7 +490,7 @@ typedef enum {
 			
 		case ZSFoldedCornerViewControllerAnimationStateCornerTugStage4:
 			_animationState = ZSFoldedCornerViewControllerAnimationStateStopped;
-			[_touchDelegate foldedCornerRestoredToStartPoint];
+			[self.touchDelegate foldedCornerRestoredToStartPoint];
 			break;
 			
 		// No animation:
@@ -516,6 +532,8 @@ typedef enum {
 	_animationHelper.endPoint = CGPointMake(628, 0.1f);
 	
 	[_animationHelper start];
+	
+	[self.plusButtonViewController setState:ZSFoldedCornerPlusButtonStateHidden animated:YES];
 }
 
 - (void)_pageTurnAnimationAdvancedWithProgress:(float)progress {

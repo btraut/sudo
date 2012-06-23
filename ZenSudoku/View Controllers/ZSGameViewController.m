@@ -27,6 +27,8 @@
 	BOOL _foldedCornerTouchCrossedTapThreshold;
 	
 	UIImageView *_innerView;
+	
+	ZSFoldedCornerPlusButtonViewController *_foldedCornerPlusButtonViewController;
 }
 
 @end
@@ -85,10 +87,17 @@
 	_innerView.frame = self.view.frame;
 	[self.view addSubview:_innerView];
 	
+	// Build the plus button.
+	_foldedCornerPlusButtonViewController = [[ZSFoldedCornerPlusButtonViewController alloc] init];
+	_foldedCornerPlusButtonViewController.animationDelegate = self;
+	[self.view addSubview:_foldedCornerPlusButtonViewController.view];
+	[_foldedCornerPlusButtonViewController setState:ZSFoldedCornerPlusButtonStateHidden animated:NO];
+	
 	// Build the folded corner.
 	foldedCornerViewController = [[ZSFoldedCornerViewController alloc] init];
 	foldedCornerViewController.view.hidden = !self.foldedCornerVisibleOnLoad;
 	foldedCornerViewController.touchDelegate = self;
+	foldedCornerViewController.plusButtonViewController = _foldedCornerPlusButtonViewController;
 	[self.view addSubview:foldedCornerViewController.view];
 	
 	// Build the title.
@@ -193,9 +202,17 @@
 	[self.view setNeedsDisplay];
 }
 
-- (void)viewWasPromotedToFront {
-	[self.foldedCornerViewController resetToStartPosition];
-	[foldedCornerViewController animateStartFold];
+- (void)viewWasPromotedToFrontAnimated:(BOOL)animated {
+	if (animated) {
+		[self.foldedCornerViewController resetToStartPosition];
+		[foldedCornerViewController animateStartFold];
+		
+		// Plus button will be animated when animateStartFold finishes.
+	} else {
+		[self.foldedCornerViewController resetToDefaultPosition];
+		
+		[_foldedCornerPlusButtonViewController setState:ZSFoldedCornerPlusButtonStateNormal animated:NO];
+	}
 	
 	[self startPuzzle];
 }
@@ -261,6 +278,8 @@
 	[self.gameAnswerOptionsViewController reloadView];
 	
 	[self foldedCornerRestoredToStartPoint];
+	
+	[_foldedCornerPlusButtonViewController setState:ZSFoldedCornerPlusButtonStateHidden animated:NO];
 }
 
 - (UIImage *)getScreenshotImage {
@@ -323,6 +342,11 @@
 
 - (void)foldedCornerStartAnimationFinished {
 	[self foldedCornerRestoredToStartPoint];
+	
+	[_foldedCornerPlusButtonViewController setState:ZSFoldedCornerPlusButtonStateNormal animated:YES];
+}
+
+- (void)foldedCornerPlusButtonStartAnimationFinished {
 	[self.majorGameStateDelegate frontViewControllerFinishedDisplaying];
 }
 

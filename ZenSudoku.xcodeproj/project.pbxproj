@@ -66,6 +66,9 @@
 		8463D8DC15947F3D00AED0B4 /* ShadowBlobStraightOpaque.png in Resources */ = {isa = PBXBuildFile; fileRef = 8463D8DA15947F3D00AED0B4 /* ShadowBlobStraightOpaque.png */; };
 		8463D8DF15947F9800AED0B4 /* ShadowBlobStraight.png in Resources */ = {isa = PBXBuildFile; fileRef = 8463D8DD15947F9700AED0B4 /* ShadowBlobStraight.png */; };
 		8463D8E015947F9800AED0B4 /* ShadowBlobStraight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8463D8DE15947F9700AED0B4 /* ShadowBlobStraight@2x.png */; };
+		8463D8E61595239200AED0B4 /* ZSFoldedCornerPlusButtonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8463D8E51595239100AED0B4 /* ZSFoldedCornerPlusButtonViewController.m */; };
+		8463D8E81595666A00AED0B4 /* Plus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8463D8E71595666A00AED0B4 /* Plus@2x.png */; };
+		8463D8EA1595815300AED0B4 /* Plus.png in Resources */ = {isa = PBXBuildFile; fileRef = 8463D8E91595815300AED0B4 /* Plus.png */; };
 		8472508D15829D1F0073D113 /* ForwardsPage.png in Resources */ = {isa = PBXBuildFile; fileRef = 8472508B15829D1F0073D113 /* ForwardsPage.png */; };
 		8472508E15829D1F0073D113 /* ForwardsPage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8472508C15829D1F0073D113 /* ForwardsPage@2x.png */; };
 		8472509115829D330073D113 /* PageCurl.png in Resources */ = {isa = PBXBuildFile; fileRef = 8472508F15829D330073D113 /* PageCurl.png */; };
@@ -224,6 +227,10 @@
 		8463D8DA15947F3D00AED0B4 /* ShadowBlobStraightOpaque.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ShadowBlobStraightOpaque.png; path = Resources/Images/ShadowBlobStraightOpaque.png; sourceTree = "<group>"; };
 		8463D8DD15947F9700AED0B4 /* ShadowBlobStraight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ShadowBlobStraight.png; path = Resources/Images/ShadowBlobStraight.png; sourceTree = "<group>"; };
 		8463D8DE15947F9700AED0B4 /* ShadowBlobStraight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ShadowBlobStraight@2x.png"; path = "Resources/Images/ShadowBlobStraight@2x.png"; sourceTree = "<group>"; };
+		8463D8E41595239100AED0B4 /* ZSFoldedCornerPlusButtonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSFoldedCornerPlusButtonViewController.h; path = "View Controllers/ZSFoldedCornerPlusButtonViewController.h"; sourceTree = "<group>"; };
+		8463D8E51595239100AED0B4 /* ZSFoldedCornerPlusButtonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSFoldedCornerPlusButtonViewController.m; path = "View Controllers/ZSFoldedCornerPlusButtonViewController.m"; sourceTree = "<group>"; };
+		8463D8E71595666A00AED0B4 /* Plus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Plus@2x.png"; path = "Resources/Images/Plus@2x.png"; sourceTree = "<group>"; };
+		8463D8E91595815300AED0B4 /* Plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Plus.png; path = Resources/Images/Plus.png; sourceTree = "<group>"; };
 		8472508B15829D1F0073D113 /* ForwardsPage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ForwardsPage.png; path = Resources/Images/ForwardsPage.png; sourceTree = "<group>"; };
 		8472508C15829D1F0073D113 /* ForwardsPage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ForwardsPage@2x.png"; path = "Resources/Images/ForwardsPage@2x.png"; sourceTree = "<group>"; };
 		8472508F15829D330073D113 /* PageCurl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PageCurl.png; path = Resources/Images/PageCurl.png; sourceTree = "<group>"; };
@@ -512,6 +519,8 @@
 				8463D8DE15947F9700AED0B4 /* ShadowBlobStraight@2x.png */,
 				8463D8DA15947F3D00AED0B4 /* ShadowBlobStraightOpaque.png */,
 				8463D8D51593B15F00AED0B4 /* ShadowBlobStraightOpaque@2x.png */,
+				8463D8E71595666A00AED0B4 /* Plus@2x.png */,
+				8463D8E91595815300AED0B4 /* Plus.png */,
 			);
 			name = "Global Page Parts";
 			sourceTree = "<group>";
@@ -730,6 +739,8 @@
 				843947E71589D74C00463720 /* ZSFoldedCornerViewController.m */,
 				845ABB161587E50B006D2616 /* ZSFoldedCornerGLView.h */,
 				845ABB171587E50B006D2616 /* ZSFoldedCornerGLView.m */,
+				8463D8E41595239100AED0B4 /* ZSFoldedCornerPlusButtonViewController.h */,
+				8463D8E51595239100AED0B4 /* ZSFoldedCornerPlusButtonViewController.m */,
 			);
 			name = "Views and View Controllers";
 			sourceTree = "<group>";
@@ -872,6 +883,8 @@
 				8463D8DC15947F3D00AED0B4 /* ShadowBlobStraightOpaque.png in Resources */,
 				8463D8DF15947F9800AED0B4 /* ShadowBlobStraight.png in Resources */,
 				8463D8E015947F9800AED0B4 /* ShadowBlobStraight@2x.png in Resources */,
+				8463D8E81595666A00AED0B4 /* Plus@2x.png in Resources */,
+				8463D8EA1595815300AED0B4 /* Plus.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -960,6 +973,7 @@
 				84B11541158B394800983B3A /* ZSGLShape.m in Sources */,
 				84B11559158F274D00983B3A /* ZSAnimation.m in Sources */,
 				84B1155C158F36B900983B3A /* ZSPointAnimation.m in Sources */,
+				8463D8E61595239200AED0B4 /* ZSFoldedCornerPlusButtonViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

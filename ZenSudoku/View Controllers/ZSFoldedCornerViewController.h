@@ -11,6 +11,8 @@
 #import "ZSFoldedCornerGLView.h"
 #import "ZSPointAnimation.h"
 
+@class ZSFoldedCornerPlusButtonViewController;
+
 @protocol ZSFoldedCornerGLViewControllerTouchDelegate <NSObject>
 
 - (void)foldedCornerTouchStartedWithFoldPoint:(CGPoint)foldPoint foldDimensions:(CGSize)foldDimensions;
@@ -35,6 +37,8 @@
 }
 
 @property (weak) id<ZSFoldedCornerGLViewControllerTouchDelegate> touchDelegate;
+
+@property (weak) ZSFoldedCornerPlusButtonViewController *plusButtonViewController;
 
 @property (assign) BOOL drawPage;
 

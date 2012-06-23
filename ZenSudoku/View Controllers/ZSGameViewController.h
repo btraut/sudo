@@ -11,6 +11,7 @@
 #import "ZSGameBoardTileViewController.h"
 #import "ZSGameAnswerOptionViewController.h"
 #import "ZSFoldedCornerViewController.h"
+#import "ZSFoldedCornerPlusButtonViewController.h"
 
 @class ZSGameBoardViewController;
 @class ZSGameAnswerOptionsViewController;
@@ -33,7 +34,7 @@
 
 @end
 
-@interface ZSGameViewController : UIViewController <ZSGameDelegate, ZSFoldedCornerGLViewControllerTouchDelegate> {
+@interface ZSGameViewController : UIViewController <ZSGameDelegate, ZSFoldedCornerGLViewControllerTouchDelegate, ZSFoldedCornerPlusButtonViewControllerAnimationDelegate> {
 	ZSGame *game;
 	ZSHintGenerator *hintGenerator;
 	
@@ -76,7 +77,7 @@
 
 - (id)initWithGame:(ZSGame *)game;
 
-- (void)viewWasPromotedToFront;
+- (void)viewWasPromotedToFrontAnimated:(BOOL)animated;
 
 - (void)setTitle;
 

@@ -113,8 +113,8 @@ NSString * const kDBPuzzleDefinitionGroupMapKey = @"kDBPuzzleDefinitionGroupMapK
 		[puzzleDefinition setObject:[NSNumber numberWithInt:size] forKey:kDBPuzzleDefinitionSizeKey];
 		[puzzleDefinition setObject:[NSNumber numberWithInt:difficulty] forKey:kDBPuzzleDefinitionDifficultyKey];
 		
-		NSLog(@"Chose puzzle id: %i", [result intForColumn:@"puzzle_id"]);
-		NSLog(@"Puzzle guesses: %@", [result stringForColumn:@"puzzle_guesses"]);
+		// NSLog(@"Chose puzzle id: %i", [result intForColumn:@"puzzle_id"]);
+		// NSLog(@"Puzzle guesses: %@", [result stringForColumn:@"puzzle_guesses"]);
 	}
 	
 	[result close];
