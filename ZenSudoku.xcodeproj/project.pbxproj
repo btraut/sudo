@@ -668,9 +668,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		84D5500E147F1C4A00A7934E /* Sudo */ = {
+		84D5500E147F1C4A00A7934E /* sudo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 84D5504B147F1C4B00A7934E /* Build configuration list for PBXNativeTarget "Sudo" */;
+			buildConfigurationList = 84D5504B147F1C4B00A7934E /* Build configuration list for PBXNativeTarget "sudo" */;
 			buildPhases = (
 				84D5500B147F1C4A00A7934E /* Sources */,
 				84D5500C147F1C4A00A7934E /* Frameworks */,
@@ -680,7 +680,7 @@
 			);
 			dependencies = (
 			);
-			name = Sudo;
+			name = sudo;
 			productName = ZenSudoku;
 			productReference = 84D5500F147F1C4A00A7934E /* ZenSudoku.app */;
 			productType = "com.apple.product-type.application";
@@ -723,7 +723,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				84D5500E147F1C4A00A7934E /* Sudo */,
+				84D5500E147F1C4A00A7934E /* sudo */,
 				84EE86251494ADEA004C0A16 /* ZenSudokuLogicTests */,
 			);
 		};
@@ -1105,7 +1105,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		84D5504B147F1C4B00A7934E /* Build configuration list for PBXNativeTarget "Sudo" */ = {
+		84D5504B147F1C4B00A7934E /* Build configuration list for PBXNativeTarget "sudo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				84D5504C147F1C4B00A7934E /* Debug */,

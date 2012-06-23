@@ -120,14 +120,15 @@
 	
 	hintsShown = YES;
 	
-	[UIView beginAnimations:nil context:nil];
-	[UIView setAnimationDuration:0.3];
-	[UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-	
-	hintViewController.view.frame = CGRectMake(0, 310, hintViewController.view.frame.size.width, hintViewController.view.frame.size.height);
-	currentGameViewController.view.frame = CGRectMake(0, -45, currentGameViewController.view.frame.size.width, currentGameViewController.view.frame.size.height);
-	
-	[UIView commitAnimations];
+	[UIView
+	 animateWithDuration:0.4f
+	 delay:0
+	 options:UIViewAnimationOptionCurveEaseOut
+	 animations:^{
+		 hintViewController.view.frame = CGRectMake(0, 310, hintViewController.view.frame.size.width, hintViewController.view.frame.size.height);
+		 currentGameViewController.view.frame = CGRectMake(0, -45, currentGameViewController.view.frame.size.width, currentGameViewController.view.frame.size.height);
+	 }
+	 completion:NULL];
 }
 
 - (void)hideHint {
@@ -139,14 +140,15 @@
 	
 	[currentGameViewController.gameBoardViewController removeAllHintHighlights];
 	
-	[UIView beginAnimations:nil context:nil];
-	[UIView setAnimationDuration:0.3];
-	[UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-	
-	hintViewController.view.frame = CGRectMake(0, 480, hintViewController.view.frame.size.width, hintViewController.view.frame.size.height);
-	currentGameViewController.view.frame = CGRectMake(0, 0, currentGameViewController.view.frame.size.width, currentGameViewController.view.frame.size.height);
-	
-	[UIView commitAnimations];
+	[UIView
+		animateWithDuration:0.4f
+		delay:0
+		options:UIViewAnimationOptionCurveEaseOut
+		animations:^{
+			hintViewController.view.frame = CGRectMake(0, 480, hintViewController.view.frame.size.width, hintViewController.view.frame.size.height);
+			currentGameViewController.view.frame = CGRectMake(0, 0, currentGameViewController.view.frame.size.width, currentGameViewController.view.frame.size.height);
+		}
+		completion:NULL];
 }
 
 @end
