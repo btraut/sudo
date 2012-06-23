@@ -34,8 +34,6 @@
 		843947E41589D30C00463720 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 843947E31589D30C00463720 /* GLKit.framework */; };
 		843947E81589D74C00463720 /* ZSFoldedCornerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 843947E71589D74C00463720 /* ZSFoldedCornerViewController.m */; };
 		843947EB1589DB8900463720 /* ZSGLSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 843947EA1589DB8900463720 /* ZSGLSprite.m */; };
-		843BEDEF149DC4E800D1D19B /* ZSIconNew57.png in Resources */ = {isa = PBXBuildFile; fileRef = 843BEDEE149DC4E800D1D19B /* ZSIconNew57.png */; };
-		843BEDF1149DC4F100D1D19B /* ZSIconNew114.png in Resources */ = {isa = PBXBuildFile; fileRef = 843BEDF0149DC4F100D1D19B /* ZSIconNew114.png */; };
 		8449D9571481D77D003F6FB3 /* ZSGameAnswerOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8449D9561481D77D003F6FB3 /* ZSGameAnswerOptionsViewController.m */; };
 		8449D95A1481E518003F6FB3 /* ZSGameAnswerOptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8449D9591481E518003F6FB3 /* ZSGameAnswerOptionViewController.m */; };
 		845ABB181587E50B006D2616 /* ZSFoldedCornerGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 845ABB171587E50B006D2616 /* ZSFoldedCornerGLView.m */; };
@@ -166,8 +164,6 @@
 		843947E71589D74C00463720 /* ZSFoldedCornerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSFoldedCornerViewController.m; path = "View Controllers/ZSFoldedCornerViewController.m"; sourceTree = "<group>"; };
 		843947E91589DB8900463720 /* ZSGLSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSGLSprite.h; path = Utilities/ZSGLSprite.h; sourceTree = "<group>"; };
 		843947EA1589DB8900463720 /* ZSGLSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSGLSprite.m; path = Utilities/ZSGLSprite.m; sourceTree = "<group>"; };
-		843BEDEE149DC4E800D1D19B /* ZSIconNew57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ZSIconNew57.png; path = Resources/Images/ZSIconNew57.png; sourceTree = "<group>"; };
-		843BEDF0149DC4F100D1D19B /* ZSIconNew114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ZSIconNew114.png; path = Resources/Images/ZSIconNew114.png; sourceTree = "<group>"; };
 		8449D9551481D77C003F6FB3 /* ZSGameAnswerOptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSGameAnswerOptionsViewController.h; path = "View Controllers/ZSGameAnswerOptionsViewController.h"; sourceTree = "<group>"; };
 		8449D9561481D77D003F6FB3 /* ZSGameAnswerOptionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSGameAnswerOptionsViewController.m; path = "View Controllers/ZSGameAnswerOptionsViewController.m"; sourceTree = "<group>"; };
 		8449D9581481E518003F6FB3 /* ZSGameAnswerOptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSGameAnswerOptionViewController.h; path = "View Controllers/ZSGameAnswerOptionViewController.h"; sourceTree = "<group>"; };
@@ -488,8 +484,6 @@
 				8428AD38154A498200BA8EE0 /* HintPaper@2x.png */,
 				8428AD3A154A52F700BA8EE0 /* Default.png */,
 				8428AD3B154A52F700BA8EE0 /* Default@2x.png */,
-				843BEDF0149DC4F100D1D19B /* ZSIconNew114.png */,
-				843BEDEE149DC4E800D1D19B /* ZSIconNew57.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -735,8 +729,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				84D5501E147F1C4A00A7934E /* InfoPlist.strings in Resources */,
-				843BEDEF149DC4E800D1D19B /* ZSIconNew57.png in Resources */,
-				843BEDF1149DC4F100D1D19B /* ZSIconNew114.png in Resources */,
 				841F850214C25F2E00DFFABC /* Settings.bundle in Resources */,
 				8492B78814CEBDC80093B7AC /* Sudoku.db3 in Resources */,
 				849B69D914F263AB00870F09 /* ReklameScript-Black.ttf in Resources */,

@@ -105,7 +105,7 @@
 }
 
 - (void)beginHintDeck:(NSArray *)hintDeck forGameViewController:(ZSGameViewController *)gameViewController {
-	[hintViewController beginHintDeck:hintDeck forGameViewController:gameViewController];
+//	[hintViewController beginHintDeck:hintDeck forGameViewController:gameViewController];
 	[self showHint];
 }
 
