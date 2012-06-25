@@ -151,7 +151,7 @@ typedef enum {
 	UIGraphicsBeginImageContextWithOptions(CGSizeMake(image.size.width, image.size.height), YES, 0);
 	CGContextRef context = UIGraphicsGetCurrentContext();
 	
-	// Draw the image components.
+	// Draw the paper background.
 	CGContextScaleCTM(context, 1, -1);
 	CGContextTranslateCTM(context, 0, -image.size.height);
 	CGContextDrawImage(context, CGRectMake(0, 0, image.size.width, image.size.height), _backwardsPageImage.CGImage);
@@ -159,9 +159,11 @@ typedef enum {
 	CGContextScaleCTM(context, -1, 1);
 	CGContextTranslateCTM(context, -image.size.width, 0);
 	
+	// Draw the initial (darkest) screenshot.
 	CGContextSetAlpha(context, 0.015f);
 	CGContextDrawImage(context, CGRectMake(0, 0, image.size.width, image.size.height), image.CGImage);
 	
+	// Draw a few more copies of the screenshot to achieve a blur effect.
 	CGContextSetAlpha(context, 0.007f);
 	
 	CGContextTranslateCTM(context, 1, 0);
