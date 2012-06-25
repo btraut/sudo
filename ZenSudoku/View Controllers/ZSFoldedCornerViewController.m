@@ -159,10 +159,10 @@ typedef enum {
 	CGContextScaleCTM(context, -1, 1);
 	CGContextTranslateCTM(context, -image.size.width, 0);
 	
-	CGContextSetAlpha(context, 0.02f);
+	CGContextSetAlpha(context, 0.015f);
 	CGContextDrawImage(context, CGRectMake(0, 0, image.size.width, image.size.height), image.CGImage);
 	
-	CGContextSetAlpha(context, 0.01f);
+	CGContextSetAlpha(context, 0.007f);
 	
 	CGContextTranslateCTM(context, 1, 0);
 	CGContextDrawImage(context, CGRectMake(0, 0, image.size.width, image.size.height), image.CGImage);
