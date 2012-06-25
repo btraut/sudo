@@ -46,11 +46,9 @@
 	UIButton *pencilButton;
 	BOOL penciling;
 	
+	UIButton *undoButton;
 	UIButton *autoPencilButton;
 	UIButton *hintButton;
-	
-	UIBarButtonItem *undoButton;
-	UIBarButtonItem *redoButton;
 	
 	BOOL allowsInput;
 	

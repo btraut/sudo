@@ -56,6 +56,10 @@
 		8463D8FD15959B2400AED0B4 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8463D8F315959B2400AED0B4 /* Icon@2x.png */; };
 		8463D8FE15959B2400AED0B4 /* iTunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = 8463D8F415959B2400AED0B4 /* iTunesArtwork.png */; };
 		8463D8FF15959B2400AED0B4 /* iTunesArtwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8463D8F515959B2400AED0B4 /* iTunesArtwork@2x.png */; };
+		8463D90415986B8C00AED0B4 /* Undo.png in Resources */ = {isa = PBXBuildFile; fileRef = 8463D90015986B8600AED0B4 /* Undo.png */; };
+		8463D90515986B8D00AED0B4 /* Undo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8463D90115986B8900AED0B4 /* Undo@2x.png */; };
+		8463D90615986B8D00AED0B4 /* UndoHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 8463D90215986B8B00AED0B4 /* UndoHighlighted.png */; };
+		8463D90715986B8D00AED0B4 /* UndoHighlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8463D90315986B8C00AED0B4 /* UndoHighlighted@2x.png */; };
 		8472508D15829D1F0073D113 /* ForwardsPage.png in Resources */ = {isa = PBXBuildFile; fileRef = 8472508B15829D1F0073D113 /* ForwardsPage.png */; };
 		8472508E15829D1F0073D113 /* ForwardsPage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8472508C15829D1F0073D113 /* ForwardsPage@2x.png */; };
 		8472509115829D330073D113 /* PageCurl.png in Resources */ = {isa = PBXBuildFile; fileRef = 8472508F15829D330073D113 /* PageCurl.png */; };
@@ -190,6 +194,10 @@
 		8463D8F315959B2400AED0B4 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		8463D8F415959B2400AED0B4 /* iTunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTunesArtwork.png; sourceTree = "<group>"; };
 		8463D8F515959B2400AED0B4 /* iTunesArtwork@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iTunesArtwork@2x.png"; sourceTree = "<group>"; };
+		8463D90015986B8600AED0B4 /* Undo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Undo.png; path = Resources/Images/Undo.png; sourceTree = "<group>"; };
+		8463D90115986B8900AED0B4 /* Undo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Undo@2x.png"; path = "Resources/Images/Undo@2x.png"; sourceTree = "<group>"; };
+		8463D90215986B8B00AED0B4 /* UndoHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = UndoHighlighted.png; path = Resources/Images/UndoHighlighted.png; sourceTree = "<group>"; };
+		8463D90315986B8C00AED0B4 /* UndoHighlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "UndoHighlighted@2x.png"; path = "Resources/Images/UndoHighlighted@2x.png"; sourceTree = "<group>"; };
 		8472508B15829D1F0073D113 /* ForwardsPage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ForwardsPage.png; path = Resources/Images/ForwardsPage.png; sourceTree = "<group>"; };
 		8472508C15829D1F0073D113 /* ForwardsPage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ForwardsPage@2x.png"; path = "Resources/Images/ForwardsPage@2x.png"; sourceTree = "<group>"; };
 		8472508F15829D330073D113 /* PageCurl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PageCurl.png; path = Resources/Images/PageCurl.png; sourceTree = "<group>"; };
@@ -257,7 +265,7 @@
 		84D1CB131571829E0027230B /* ZSHintGeneratorEliminatePencilsPointingPairs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSHintGeneratorEliminatePencilsPointingPairs.m; path = "ZenSudoku/Models/Hint Generators/ZSHintGeneratorEliminatePencilsPointingPairs.m"; sourceTree = SOURCE_ROOT; };
 		84D1CB151571A5270027230B /* ZSHintGeneratorEliminatePencilsBoxLineReduction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSHintGeneratorEliminatePencilsBoxLineReduction.h; path = "ZenSudoku/Models/Hint Generators/ZSHintGeneratorEliminatePencilsBoxLineReduction.h"; sourceTree = SOURCE_ROOT; };
 		84D1CB161571A5280027230B /* ZSHintGeneratorEliminatePencilsBoxLineReduction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSHintGeneratorEliminatePencilsBoxLineReduction.m; path = "ZenSudoku/Models/Hint Generators/ZSHintGeneratorEliminatePencilsBoxLineReduction.m"; sourceTree = SOURCE_ROOT; };
-		84D5500F147F1C4A00A7934E /* ZenSudoku.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZenSudoku.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		84D5500F147F1C4A00A7934E /* sudo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sudo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84D55013147F1C4A00A7934E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		84D55015147F1C4A00A7934E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		84D55017147F1C4A00A7934E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -433,6 +441,10 @@
 				84A0974F1548B22D0082C9D0 /* Hints@2x.png */,
 				84A097501548B22D0082C9D0 /* HintsHighlighted.png */,
 				84A097511548B22D0082C9D0 /* HintsHighlighted@2x.png */,
+				8463D90015986B8600AED0B4 /* Undo.png */,
+				8463D90115986B8900AED0B4 /* Undo@2x.png */,
+				8463D90215986B8B00AED0B4 /* UndoHighlighted.png */,
+				8463D90315986B8C00AED0B4 /* UndoHighlighted@2x.png */,
 				84B0B1CA15777F1900A99510 /* BlueAnswerOptionSelection.png */,
 				84B0B1CB15777F1900A99510 /* BlueAnswerOptionSelection@2x.png */,
 				8494BE6F14FB117100010233 /* Pencil@2x.png */,
@@ -560,7 +572,7 @@
 		84D55010147F1C4A00A7934E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				84D5500F147F1C4A00A7934E /* ZenSudoku.app */,
+				84D5500F147F1C4A00A7934E /* sudo.app */,
 				84EE86261494ADEA004C0A16 /* ZenSudokuLogicTests.octest */,
 			);
 			name = Products;
@@ -676,7 +688,7 @@
 			);
 			name = sudo;
 			productName = ZenSudoku;
-			productReference = 84D5500F147F1C4A00A7934E /* ZenSudoku.app */;
+			productReference = 84D5500F147F1C4A00A7934E /* sudo.app */;
 			productType = "com.apple.product-type.application";
 		};
 		84EE86251494ADEA004C0A16 /* ZenSudokuLogicTests */ = {
@@ -783,6 +795,10 @@
 				8463D8FD15959B2400AED0B4 /* Icon@2x.png in Resources */,
 				8463D8FE15959B2400AED0B4 /* iTunesArtwork.png in Resources */,
 				8463D8FF15959B2400AED0B4 /* iTunesArtwork@2x.png in Resources */,
+				8463D90415986B8C00AED0B4 /* Undo.png in Resources */,
+				8463D90515986B8D00AED0B4 /* Undo@2x.png in Resources */,
+				8463D90615986B8D00AED0B4 /* UndoHighlighted.png in Resources */,
+				8463D90715986B8D00AED0B4 /* UndoHighlighted@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

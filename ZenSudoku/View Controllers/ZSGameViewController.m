@@ -134,11 +134,24 @@
 	
 	[_innerView addSubview:pencilButton];
 	
+	// Build the hints button.
+	undoButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	
+	[undoButton addTarget:self action:@selector(undoButtonWasTouched) forControlEvents:UIControlEventTouchUpInside];
+	undoButton.frame = CGRectMake(79, 412, 35, 35);
+	
+	UIImage *undoImage = [UIImage imageNamed:@"Undo"];
+	UIImage *undoHighlightedImage = [UIImage imageNamed:@"UndoHighlighted"];
+	[undoButton setBackgroundImage:undoImage forState:UIControlStateNormal];
+	[undoButton setBackgroundImage:undoHighlightedImage forState:UIControlStateHighlighted];
+	
+	[_innerView addSubview:undoButton];
+	
 	// Build the autopencil button.
 	autoPencilButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	
 	[autoPencilButton addTarget:self action:@selector(autoPencilButtonWasTouched) forControlEvents:UIControlEventTouchUpInside];
-	autoPencilButton.frame = CGRectMake(115, 412, 35, 35);
+	autoPencilButton.frame = CGRectMake(142, 412, 35, 35);
 	
 	UIImage *autoPencilImage = [UIImage imageNamed:@"AutoPencil"];
 	UIImage *autoPencilHighlightedImage = [UIImage imageNamed:@"AutoPencilHighlighted"];
@@ -151,7 +164,7 @@
 	hintButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	
 	[hintButton addTarget:self action:@selector(hintButtonWasTouched) forControlEvents:UIControlEventTouchUpInside];
-	hintButton.frame = CGRectMake(170.5f, 412, 35, 35);
+	hintButton.frame = CGRectMake(205, 412, 35, 35);
 	
 	UIImage *hintsImage = [UIImage imageNamed:@"Hints"];
 	UIImage *hintsHighlightedImage = [UIImage imageNamed:@"HintsHighlighted"];
@@ -159,10 +172,6 @@
 	[hintButton setBackgroundImage:hintsHighlightedImage forState:UIControlStateHighlighted];
 	
 	[_innerView addSubview:hintButton];
-	
-	// Build the toolbar buttons.
-	// undoButton = [[UIBarButtonItem alloc] initWithTitle:@"Undo" style:UIBarButtonItemStyleBordered target:self action:@selector(undoButtonWasTouched)];
-	// redoButton = [[UIBarButtonItem alloc] initWithTitle:@"Redo" style:UIBarButtonItemStyleBordered target:self action:@selector(redoButtonWasTouched)];
 }
 
 - (void)solveMostOfThePuzzle {
@@ -587,11 +596,13 @@
 - (void)undoButtonWasTouched {
 	[gameBoardViewController deselectTileView];
 	[game undo];
+	[gameBoardViewController reloadView];
 }
 
 - (void)redoButtonWasTouched {
 	[gameBoardViewController deselectTileView];
 	[game redo];
+	[gameBoardViewController reloadView];
 }
 
 #pragma mark - ZSGameDelegate Methods

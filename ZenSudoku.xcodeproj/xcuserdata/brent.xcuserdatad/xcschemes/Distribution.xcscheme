@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "84D5500E147F1C4A00A7934E"
-               BuildableName = "ZenSudoku.app"
+               BuildableName = "sudo.app"
                BlueprintName = "sudo"
                ReferencedContainer = "container:ZenSudoku.xcodeproj">
             </BuildableReference>
@@ -43,7 +43,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "84D5500E147F1C4A00A7934E"
-            BuildableName = "ZenSudoku.app"
+            BuildableName = "sudo.app"
             BlueprintName = "sudo"
             ReferencedContainer = "container:ZenSudoku.xcodeproj">
          </BuildableReference>
@@ -57,13 +57,12 @@
       buildConfiguration = "Ad Hoc"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
-      enablesOpenGLESFrameCapture = "YES"
       allowLocationSimulation = "YES">
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "84D5500E147F1C4A00A7934E"
-            BuildableName = "ZenSudoku.app"
+            BuildableName = "sudo.app"
             BlueprintName = "sudo"
             ReferencedContainer = "container:ZenSudoku.xcodeproj">
          </BuildableReference>
@@ -81,7 +80,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "84D5500E147F1C4A00A7934E"
-            BuildableName = "ZenSudoku.app"
+            BuildableName = "sudo.app"
             BlueprintName = "sudo"
             ReferencedContainer = "container:ZenSudoku.xcodeproj">
          </BuildableReference>
