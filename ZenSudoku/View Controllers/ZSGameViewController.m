@@ -235,6 +235,7 @@
 	if ([game isSolved]) {
 		allowsInput = NO;
 		
+		undoButton.enabled = NO;
 		autoPencilButton.enabled = NO;
 		hintButton.enabled = NO;
 	}
@@ -278,6 +279,8 @@
 	newGame.delegate = self;
 	
 	allowsInput = YES;
+	
+	undoButton.enabled = YES;
 	autoPencilButton.enabled = YES;
 	hintButton.enabled = YES;
 	
