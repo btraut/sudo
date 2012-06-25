@@ -654,7 +654,15 @@
 	[gameBoardViewController deselectTileView];
 	
 	// Show a congratulatory alert.
-	UIAlertView *completionAlert = [[UIAlertView alloc] initWithTitle:@"Puzzle Complete" message:@"You've successfully completed the puzzle. Great job!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+	NSInteger totalMinutes = game.timerCount / 60;
+	NSInteger remainingSeconds = game.timerCount - (totalMinutes * 60);
+	
+	NSString *minutes = totalMinutes == 1 ? @"" : @"s";
+	NSString *seconds = remainingSeconds == 1 ? @"" : @"s";
+	
+	NSString *dialogText = [NSString stringWithFormat:@"You solved the puzzle in %i minute%@ %i second%@. Great job!", totalMinutes, minutes, remainingSeconds, seconds];
+	
+	UIAlertView *completionAlert = [[UIAlertView alloc] initWithTitle:@"Puzzle Complete" message:dialogText delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
 	[completionAlert show];
 }
 
