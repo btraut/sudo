@@ -34,6 +34,8 @@ typedef enum {
 	
 	GLKBaseEffect *_effect;
 	
+	UIImage *_backwardsPageImage;
+	
 	ZSGLSprite *_cornerSprite;
 	ZSGLSprite *_shadowBlobOpaqueSprite;
 	ZSGLSprite *_shadowBlobSprite;
@@ -119,6 +121,8 @@ typedef enum {
 	_effect.transform.projectionMatrix = projectionMatrix;
 	
 	// Load the images.
+	_backwardsPageImage = [UIImage imageNamed:@"BackwardsPage.png"];
+	
 	if ([UIScreen mainScreen].scale == 2.0) {
 		_cornerSprite = [[ZSGLSprite alloc] initWithFile:@"BackwardsPage@2x.png" effect:_effect];
 		_shadowBlobOpaqueSprite = [[ZSGLSprite alloc] initWithFile:@"ShadowBlobStraightOpaque@2x.png" effect:_effect];
@@ -143,7 +147,42 @@ typedef enum {
 }
 
 - (void)setPageImage:(UIImage *)image {
-	_screenshotSprite = [[ZSGLSprite alloc] initWithCGImage:[image CGImage] effect:_effect];
+	// Create a new graphics context so we can draw the reverse of the last page onto this page.
+	UIGraphicsBeginImageContextWithOptions(CGSizeMake(image.size.width, image.size.height), YES, 0);
+	CGContextRef context = UIGraphicsGetCurrentContext();
+	
+	// Draw the image components.
+	CGContextScaleCTM(context, 1, -1);
+	CGContextTranslateCTM(context, 0, -image.size.height);
+	CGContextDrawImage(context, CGRectMake(0, 0, image.size.width, image.size.height), _backwardsPageImage.CGImage);
+
+	CGContextScaleCTM(context, -1, 1);
+	CGContextTranslateCTM(context, -image.size.width, 0);
+	
+	CGContextSetAlpha(context, 0.02f);
+	CGContextDrawImage(context, CGRectMake(0, 0, image.size.width, image.size.height), image.CGImage);
+	
+	CGContextSetAlpha(context, 0.01f);
+	
+	CGContextTranslateCTM(context, 1, 0);
+	CGContextDrawImage(context, CGRectMake(0, 0, image.size.width, image.size.height), image.CGImage);
+
+	CGContextTranslateCTM(context, -2, 0);
+	CGContextDrawImage(context, CGRectMake(0, 0, image.size.width, image.size.height), image.CGImage);
+	
+	CGContextTranslateCTM(context, 1, 1);
+	CGContextDrawImage(context, CGRectMake(0, 0, image.size.width, image.size.height), image.CGImage);
+	
+	CGContextTranslateCTM(context, 0, -2);
+	CGContextDrawImage(context, CGRectMake(0, 0, image.size.width, image.size.height), image.CGImage);
+	
+	// Create a new image from the context.
+	UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+	UIGraphicsEndImageContext();
+	
+	// Load the images into textures.
+	_cornerSprite = [[ZSGLSprite alloc] initWithCGImage:newImage.CGImage effect:_effect];
+	_screenshotSprite = [[ZSGLSprite alloc] initWithCGImage:image.CGImage effect:_effect];
 }
 
 - (void)resetToStartPosition {
