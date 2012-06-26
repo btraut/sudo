@@ -11,7 +11,6 @@
 		840216EB1538EAAD00B16131 /* release_notes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 840216E71538EAAD00B16131 /* release_notes.txt */; };
 		840216ED1538F11400B16131 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 840216E51538EAAD00B16131 /* libTestFlight.a */; };
 		840216EF1538F15B00B16131 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 840216EE1538F15B00B16131 /* libz.dylib */; };
-		841F850214C25F2E00DFFABC /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 841F850114C25F2D00DFFABC /* Settings.bundle */; };
 		841F854714C2651700DFFABC /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 841F854614C2651600DFFABC /* MessageUI.framework */; };
 		841F854A14C40F5600DFFABC /* ZSStatisticsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841F854914C40F5500DFFABC /* ZSStatisticsController.m */; };
 		841F854E14C4287700DFFABC /* ZSStatisticsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841F854C14C4287600DFFABC /* ZSStatisticsViewController.m */; };
@@ -131,7 +130,6 @@
 		840216E71538EAAD00B16131 /* release_notes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes.txt; sourceTree = "<group>"; };
 		840216E81538EAAD00B16131 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		840216EE1538F15B00B16131 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		841F850114C25F2D00DFFABC /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		841F854614C2651600DFFABC /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		841F854814C40F5500DFFABC /* ZSStatisticsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSStatisticsController.h; path = "Model Controllers/ZSStatisticsController.h"; sourceTree = "<group>"; };
 		841F854914C40F5500DFFABC /* ZSStatisticsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSStatisticsController.m; path = "Model Controllers/ZSStatisticsController.m"; sourceTree = "<group>"; };
@@ -330,14 +328,6 @@
 			path = External/TestFlightSDK1.0;
 			sourceTree = "<group>";
 		};
-		841F850314C25F4D00DFFABC /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-				841F850114C25F2D00DFFABC /* Settings.bundle */,
-			);
-			name = Settings;
-			sourceTree = "<group>";
-		};
 		8426A79614ED16A3006DAD1C /* FMDB */ = {
 			isa = PBXGroup;
 			children = (
@@ -478,7 +468,6 @@
 			children = (
 				849B69D414F263AB00870F09 /* Fonts */,
 				8492B78414CEAE7A0093B7AC /* Databases */,
-				841F850314C25F4D00DFFABC /* Settings */,
 				84AC26C31480835600E966A5 /* Images */,
 			);
 			name = Resources;
@@ -741,7 +730,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				84D5501E147F1C4A00A7934E /* InfoPlist.strings in Resources */,
-				841F850214C25F2E00DFFABC /* Settings.bundle in Resources */,
 				8492B78814CEBDC80093B7AC /* Sudoku.db3 in Resources */,
 				849B69D914F263AB00870F09 /* ReklameScript-Black.ttf in Resources */,
 				849B69DA14F263AB00870F09 /* ReklameScript-Bold.ttf in Resources */,
