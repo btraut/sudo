@@ -3,7 +3,7 @@
 //  ZenSudoku
 //
 //  Created by Brent Traut on 11/24/11.
-//  Copyright (c) 2011 Ten Four Inc. All rights reserved.
+//  Copyright (c) 2011 Ten Four Software, LLC. All rights reserved.
 //
 
 #import <QuartzCore/QuartzCore.h>

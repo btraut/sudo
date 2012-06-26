@@ -3,7 +3,7 @@
 //  ZenSudoku
 //
 //  Created by Brent Traut on 12/11/11.
-//  Copyright (c) 2011 Ten Four Inc. All rights reserved.
+//  Copyright (c) 2011 Ten Four Software, LLC. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

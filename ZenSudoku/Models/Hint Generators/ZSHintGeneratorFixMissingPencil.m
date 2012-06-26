@@ -3,7 +3,7 @@
 //  ZenSudoku
 //
 //  Created by Brent Traut on 4/30/12.
-//  Copyright (c) 2012 Ten Four Inc. All rights reserved.
+//  Copyright (c) 2012 Ten Four Software, LLC. All rights reserved.
 //
 
 #import "ZSHintGeneratorFixMissingPencil.h"
