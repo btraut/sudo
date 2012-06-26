@@ -617,10 +617,13 @@
 	[self setErrors];
 	
 	// Reload the tile.
-	[[gameBoardViewController getGameBoardTileViewControllerAtRow:row col:col] reloadView];
+	[[self.gameBoardViewController getGameBoardTileViewControllerAtRow:row col:col] reloadView];
+	
+	// Reselect the tile to update other error highlighting.
+	[self.gameBoardViewController reselectTile];
 	
 	// Reload the answer options to reflect the available options.
-	[gameAnswerOptionsViewController reloadView];
+	[self.gameAnswerOptionsViewController reloadView];
 }
 
 - (void)tilePencilDidChange:(BOOL)isSet forPencilNumber:(NSInteger)pencilNumber forTileAtRow:(NSInteger)row col:(NSInteger)col {
@@ -649,6 +652,8 @@
 	
 	// Prevent future input.
 	allowsInput = NO;
+	
+	undoButton.enabled = NO;
 	autoPencilButton.enabled = NO;
 	hintButton.enabled = NO;
 	

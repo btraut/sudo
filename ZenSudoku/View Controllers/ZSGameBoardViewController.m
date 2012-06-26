@@ -133,8 +133,8 @@
 	[selectedTileView reloadView];
 	
 	// Add highlights for similar tiles.
-	[self addSimilarHighlightsForTileView:selectedTileView];
-	[self addErrorHighlightsForTileView:selectedTileView];
+	[self resetSimilarHighlights];
+	[self resetErrorHighlights];
 	
 	[delegate selectedTileChanged];
 }
@@ -145,8 +145,8 @@
 		[selectedTileView reloadView];
 		
 		// Add highlights for similar tiles.
-		[self addSimilarHighlightsForTileView:selectedTileView];
-		[self addErrorHighlightsForTileView:selectedTileView];
+		[self resetSimilarHighlights];
+		[self resetErrorHighlights];
 		
 		[delegate selectedTileChanged];
 	}
