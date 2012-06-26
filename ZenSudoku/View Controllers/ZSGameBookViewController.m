@@ -83,6 +83,8 @@
 }
 
 - (void)loadNewNextGame {
+	NSLog(@"Loading new game!");
+	
 	ZSGameDifficulty randomDifficulty = arc4random() % 5;
 	ZSGame *newGame = [[ZSGameController sharedInstance] fetchGameWithDifficulty:randomDifficulty];
 	
@@ -105,7 +107,7 @@
 }
 
 - (void)beginHintDeck:(NSArray *)hintDeck forGameViewController:(ZSGameViewController *)gameViewController {
-//	[hintViewController beginHintDeck:hintDeck forGameViewController:gameViewController];
+	[hintViewController beginHintDeck:hintDeck forGameViewController:gameViewController];
 	[self showHint];
 }
 

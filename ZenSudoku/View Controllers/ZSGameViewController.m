@@ -292,6 +292,8 @@
 	[self foldedCornerRestoredToStartPoint];
 	
 	[_foldedCornerPlusButtonViewController setState:ZSFoldedCornerPlusButtonStateHidden animated:NO];
+	
+	NSLog(@"Done being reset!");
 }
 
 - (UIImage *)getScreenshotImage {
