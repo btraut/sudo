@@ -18,10 +18,9 @@
 - (void)foldedCornerTouchStartedWithFoldPoint:(CGPoint)foldPoint foldDimensions:(CGSize)foldDimensions;
 - (void)foldedCornerTouchMovedWithFoldPoint:(CGPoint)foldPoint foldDimensions:(CGSize)foldDimensions;
 - (void)foldedCornerTouchEndedWithFoldPoint:(CGPoint)foldPoint foldDimensions:(CGSize)foldDimensions;
-- (void)foldedCornerRestoredToStartPoint;
-- (void)pageWasTurned;
-- (void)foldedCornerWasStarted;
-- (void)foldedCornerStartAnimationFinished;
+- (void)foldedCornerRestoredToDefaultPoint;
+- (void)pageTurnAnimationDidFinish;
+- (void)startFoldAnimationDidFinish;
 
 @end
 
@@ -41,6 +40,9 @@
 @property (weak) ZSFoldedCornerPlusButtonViewController *plusButtonViewController;
 
 @property (assign) BOOL drawPage;
+@property (assign) BOOL needsScreenshotUpdate;
+
+@property (assign) BOOL useTranslucentPaper;
 
 - (void)setPageImage:(UIImage *)image;
 

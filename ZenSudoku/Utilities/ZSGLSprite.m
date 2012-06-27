@@ -11,7 +11,6 @@
 @interface ZSGLSprite()
 
 @property (strong) GLKBaseEffect *effect;
-@property (assign) TexturedQuad quad;
 @property (strong) GLKTextureInfo *textureInfo;
 
 @end
@@ -21,7 +20,6 @@
 @synthesize transform, contentSize, contentSizeNormalized;
 
 @synthesize effect = _effect;
-@synthesize quad = _quad;
 @synthesize textureInfo = _textureInfo;
 @synthesize overlay;
 
@@ -49,21 +47,6 @@
 		// Save the size of the texture.
 		self.contentSize = CGSizeMake(self.textureInfo.width, self.textureInfo.height);
 		self.contentSizeNormalized = CGSizeMake(self.textureInfo.width / [UIScreen mainScreen].scale, self.textureInfo.height / [UIScreen mainScreen].scale);
-		
-		// Set up the textured quad.
-        TexturedQuad newQuad;
-		
-		newQuad.bl.geometryVertex = CGPointMake(0, 0);
-		newQuad.br.geometryVertex = CGPointMake(self.contentSizeNormalized.width, 0);
-		newQuad.tl.geometryVertex = CGPointMake(0, self.contentSizeNormalized.height);
-		newQuad.tr.geometryVertex = CGPointMake(self.contentSizeNormalized.width, self.contentSizeNormalized.height);
-		
-		newQuad.bl.textureVertex = CGPointMake(0, 0);
-		newQuad.br.textureVertex = CGPointMake(1, 0);
-		newQuad.tl.textureVertex = CGPointMake(0, 1);
-		newQuad.tr.textureVertex = CGPointMake(1, 1);
-		
-		self.quad = newQuad;
     }
 	
 	return self;
@@ -90,21 +73,6 @@
 		// Save the size of the texture.
 		self.contentSize = CGSizeMake(self.textureInfo.width, self.textureInfo.height);
 		self.contentSizeNormalized = CGSizeMake(self.textureInfo.width / [UIScreen mainScreen].scale, self.textureInfo.height / [UIScreen mainScreen].scale);
-		
-		// Set up the textured quad.
-        TexturedQuad newQuad;
-		
-		newQuad.bl.geometryVertex = CGPointMake(0, 0);
-		newQuad.br.geometryVertex = CGPointMake(self.contentSizeNormalized.width, 0);
-		newQuad.tl.geometryVertex = CGPointMake(0, self.contentSizeNormalized.height);
-		newQuad.tr.geometryVertex = CGPointMake(self.contentSizeNormalized.width, self.contentSizeNormalized.height);
-		
-		newQuad.bl.textureVertex = CGPointMake(0, 0);
-		newQuad.br.textureVertex = CGPointMake(1, 0);
-		newQuad.tl.textureVertex = CGPointMake(0, 1);
-		newQuad.tr.textureVertex = CGPointMake(1, 1);
-		
-		self.quad = newQuad;
     }
 	
 	return self;
@@ -128,7 +96,20 @@
 	glEnableVertexAttribArray(GLKVertexAttribPosition);
 	glEnableVertexAttribArray(GLKVertexAttribTexCoord0);
 	
-	long offset = (long)&_quad;        
+	// Set up the textured quad.
+	TexturedQuad newQuad;
+	
+	newQuad.bl.geometryVertex = CGPointMake(0, 0);
+	newQuad.br.geometryVertex = CGPointMake(self.contentSizeNormalized.width, 0);
+	newQuad.tl.geometryVertex = CGPointMake(0, self.contentSizeNormalized.height);
+	newQuad.tr.geometryVertex = CGPointMake(self.contentSizeNormalized.width, self.contentSizeNormalized.height);
+	
+	newQuad.bl.textureVertex = CGPointMake(0, 0);
+	newQuad.br.textureVertex = CGPointMake(1, 0);
+	newQuad.tl.textureVertex = CGPointMake(0, 1);
+	newQuad.tr.textureVertex = CGPointMake(1, 1);
+	
+	long offset = (long)&newQuad;        
 	glVertexAttribPointer(GLKVertexAttribPosition, 2, GL_FLOAT, GL_FALSE, sizeof(TexturedVertex), (void *) (offset + offsetof(TexturedVertex, geometryVertex)));
 	glVertexAttribPointer(GLKVertexAttribTexCoord0, 2, GL_FLOAT, GL_FALSE, sizeof(TexturedVertex), (void *) (offset + offsetof(TexturedVertex, textureVertex)));
 	

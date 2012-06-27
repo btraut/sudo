@@ -12,7 +12,19 @@
 
 @class ZSGameViewController;
 
-@interface ZSGameBoardViewController : UIViewController <ZSGameBoardTileTouchDelegate> {
+@protocol ZSGameBoardViewControllerTouchDelegate <NSObject>
+
+- (void)gameBoardTileWasTouchedInRow:(NSInteger)row col:(NSInteger)col;
+
+@end
+
+@protocol ZSGameBoardViewControllerSelectionChangeDelegate <NSObject>
+
+- (void)selectedTileChanged;
+
+@end
+
+@interface ZSGameBoardViewController : UIViewController <ZSGameBoardTileViewControllerTouchDelegate> {
 	NSArray *tileViews;
 	
 	ZSGameBoardTileViewController *selectedTileView;
@@ -23,22 +35,20 @@
 @property (weak) ZSGame *game;
 @property (strong, readonly) NSArray *tileViews;
 
-@property (weak) ZSGameViewController *delegate;
+@property (weak) id<ZSGameBoardViewControllerTouchDelegate> touchDelegate;
+@property (weak) id<ZSGameBoardViewControllerSelectionChangeDelegate> selectionChangeDelegate;
 
 @property (strong, readonly) ZSGameBoardTileViewController *selectedTileView;
 @property (strong, readonly) NSMutableArray *highlightedSimilarTileViews;
 
-
-// View Lifecycle
-+ (id)gameBoardViewControllerForGame:(ZSGame *)game;
-
+// Construction / Deconstruction
 - (id)initWithGame:(ZSGame *)game;
-
 - (void)resetWithGame:(ZSGame *)newGame;
 
-// Board Changes
+// View Lifecycle
 - (void)reloadView;
 
+// Selection
 - (void)selectTileView:(ZSGameBoardTileViewController *)tileView;
 - (void)reselectTile;
 - (void)deselectTileView;
@@ -54,12 +64,7 @@
 
 - (void)removeAllHintHighlights;
 
-- (NSInteger)_getTotalTilesInSet:(NSArray *)set withGuess:(NSInteger)guess;
-
 // Tile Accessors
 - (ZSGameBoardTileViewController *)getGameBoardTileViewControllerAtRow:(NSInteger)row col:(NSInteger)col;
-
-// Delegate Responsibilities
-- (void)gameBoardTileWasTouched:(ZSGameBoardTileViewController *)tileView;
 
 @end

@@ -17,12 +17,10 @@
 @implementation ZSGameBoardViewController
 
 @synthesize game, tileViews;
-@synthesize delegate;
+@synthesize touchDelegate, selectionChangeDelegate;
 @synthesize selectedTileView, highlightedSimilarTileViews;
 
-+ (id)gameBoardViewControllerForGame:(ZSGame *)game {
-	return [[ZSGameBoardViewController alloc] initWithGame:game];
-}
+#pragma mark - Construction / Deconstruction
 
 - (id)init {
 	self = [super init];
@@ -30,6 +28,7 @@
 	if (self) {
 		selectedTileView = nil;
 		highlightedSimilarTileViews = [NSMutableArray array];
+		highlightedErrorTileViews = [NSMutableArray array];
 	}
 	
 	return self;
@@ -39,15 +38,25 @@
 	self = [self init];
 	
 	if (self) {
-		// Initialize member vars.
 		game = newGame;
-		
-		selectedTileView = nil;
-		highlightedSimilarTileViews = [NSMutableArray array];
-		highlightedErrorTileViews = [NSMutableArray array];
 	}
 	
 	return self;
+}
+
+- (void)resetWithGame:(ZSGame *)newGame {
+	[self deselectTileView];
+	
+	self.game = newGame;
+	
+	for (NSInteger row = 0; row < game.gameBoard.size; row++) {
+		for (NSInteger col = 0; col < game.gameBoard.size; col++) {
+			ZSGameBoardTileViewController *tileViewController = [[tileViews objectAtIndex:row] objectAtIndex:col];
+			tileViewController.tile = [game getTileAtRow:row col:col];
+		}
+	}
+	
+	[self reloadView];
 }
 
 #pragma mark - View Lifecycle
@@ -73,7 +82,7 @@
 		for (NSInteger col = 0; col < game.gameBoard.size; col++) {
 			ZSGameBoardTileViewController *tileViewController = [[ZSGameBoardTileViewController alloc] initWithTile:[game getTileAtRow:row col:col]];
 			tileViewController.view.frame = CGRectMake(xOffset, yOffset, tileViewController.view.frame.size.width, tileViewController.view.frame.size.height);
-			tileViewController.delegate = self;
+			tileViewController.touchDelegate = self;
 			
 			[self.view addSubview:tileViewController.view];
 			[rowTiles addObject:tileViewController];
@@ -95,23 +104,6 @@
 	[super viewDidUnload];
 }
 
-- (void)resetWithGame:(ZSGame *)newGame {
-	[self deselectTileView];
-	
-	self.game = newGame;
-	
-	for (NSInteger row = 0; row < game.gameBoard.size; row++) {
-		for (NSInteger col = 0; col < game.gameBoard.size; col++) {
-			ZSGameBoardTileViewController *tileViewController = [[tileViews objectAtIndex:row] objectAtIndex:col];
-			tileViewController.tile = [game getTileAtRow:row col:col];
-		}
-	}
-	
-	[self reloadView];
-}
-
-#pragma mark - Board Changes
-
 - (void)reloadView {
 	for (NSInteger row = 0; row < game.gameBoard.size; row++) {
 		for (NSInteger col = 0; col < game.gameBoard.size; col++) {
@@ -119,6 +111,8 @@
 		}
 	}
 }
+
+#pragma mark - Selection
 
 - (void)selectTileView:(ZSGameBoardTileViewController *)tileView {
 	// If there was a selection, deselect it.
@@ -136,7 +130,7 @@
 	[self resetSimilarHighlights];
 	[self resetErrorHighlights];
 	
-	[delegate selectedTileChanged];
+	[self.selectionChangeDelegate selectedTileChanged];
 }
 
 - (void)reselectTile {
@@ -148,7 +142,7 @@
 		[self resetSimilarHighlights];
 		[self resetErrorHighlights];
 		
-		[delegate selectedTileChanged];
+		[self.selectionChangeDelegate selectedTileChanged];
 	}
 }
 
@@ -164,7 +158,7 @@
 		
 		selectedTileView = nil;
 		
-		[delegate selectedTileChanged];
+		[self.selectionChangeDelegate selectedTileChanged];
 	}
 }
 
@@ -316,10 +310,10 @@
 	return [[tileViews objectAtIndex:row] objectAtIndex:col];
 }
 
-#pragma mark - Delegate Responsibilities
+#pragma mark - ZSGameBoardTileTouchDelegate Implementation
 
 - (void)gameBoardTileWasTouched:(ZSGameBoardTileViewController *)newSelected {
-	[delegate gameBoardTileWasTouchedInRow:newSelected.tile.row col:newSelected.tile.col];
+	[self.touchDelegate gameBoardTileWasTouchedInRow:newSelected.tile.row col:newSelected.tile.col];
 }
 
 @end

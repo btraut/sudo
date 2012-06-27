@@ -27,7 +27,7 @@
 @implementation ZSGameAnswerOptionsViewController
 
 @synthesize gameViewController;
-@synthesize delegate;
+@synthesize touchDelegate;
 @synthesize gameAnswerOptionViewControllers, pencilToggleButton;
 @synthesize selectedGameAnswerOptionView;
 
@@ -225,15 +225,15 @@
 #pragma mark - Delegate Responsibilities
 
 - (void)gameAnswerOptionTouchEntered:(ZSGameAnswerOptionViewController *)touchedView {
-	[delegate gameAnswerOptionTouchEnteredWithGameAnswerOption:touchedView.gameAnswerOption];
+	[touchDelegate gameAnswerOptionTouchEnteredWithGameAnswerOption:touchedView.gameAnswerOption];
 }
 
 - (void)gameAnswerOptionTouchExited:(ZSGameAnswerOptionViewController *)touchedView {
-	[delegate gameAnswerOptionTouchExitedWithGameAnswerOption:touchedView.gameAnswerOption];
+	[touchDelegate gameAnswerOptionTouchExitedWithGameAnswerOption:touchedView.gameAnswerOption];
 }
 
 - (void)gameAnswerOptionTapped:(ZSGameAnswerOptionViewController *)touchedView {
-	[delegate gameAnswerOptionTappedWithGameAnswerOption:touchedView.gameAnswerOption];
+	[touchDelegate gameAnswerOptionTappedWithGameAnswerOption:touchedView.gameAnswerOption];
 }
 
 @end

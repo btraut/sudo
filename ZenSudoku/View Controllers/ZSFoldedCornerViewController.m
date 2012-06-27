@@ -51,6 +51,11 @@ typedef enum {
 	CGFloat _foldOverflowBottomWidth;
 }
 
+@property (strong) ZSGLSprite *cornerSprite;
+@property (strong) ZSGLSprite *shadowBlobOpaqueSprite;
+@property (strong) ZSGLSprite *shadowBlobSprite;
+@property (strong) ZSGLSprite *screenshotSprite;
+
 @property (strong, nonatomic) EAGLContext *context;
 
 @end
@@ -61,7 +66,16 @@ typedef enum {
 @synthesize plusButtonViewController;
 
 @synthesize context = _context;
+
 @synthesize drawPage;
+@synthesize needsScreenshotUpdate;
+
+@synthesize useTranslucentPaper;
+
+@synthesize cornerSprite = _cornerSprite;
+@synthesize shadowBlobOpaqueSprite = _shadowBlobOpaqueSprite;
+@synthesize shadowBlobSprite = _shadowBlobSprite;
+@synthesize screenshotSprite = _screenshotSprite;
 
 - (id)init {
 	self = [super init];
@@ -75,11 +89,13 @@ typedef enum {
 		// Calculate dimensions for the first time.
 		[self recalculateDimensions];
 		
-		// Set animation state;
+		// Set animation state.
 		_animationState = ZSFoldedCornerViewControllerAnimationStateStopped;
 		
 		_animationHelper = [[ZSPointAnimation alloc] init];
 		_animationHelper.delegate = self;
+		
+		useTranslucentPaper = YES;
 	}
 	
 	return self;
@@ -147,44 +163,56 @@ typedef enum {
 }
 
 - (void)setPageImage:(UIImage *)image {
-	// Create a new graphics context so we can draw the reverse of the last page onto this page.
-	UIGraphicsBeginImageContextWithOptions(CGSizeMake(image.size.width, image.size.height), YES, 0);
-	CGContextRef context = UIGraphicsGetCurrentContext();
+	if (!self.needsScreenshotUpdate) {
+		return;
+	}
 	
-	// Draw the paper background.
-	CGContextScaleCTM(context, 1, -1);
-	CGContextTranslateCTM(context, 0, -image.size.height);
-	CGContextDrawImage(context, CGRectMake(0, 0, image.size.width, image.size.height), _backwardsPageImage.CGImage);
+	self.needsScreenshotUpdate = NO;
+	
+	// Set the context again. Seems like this is needed for threading.
+    [EAGLContext setCurrentContext:self.context];
+	
+	if (self.useTranslucentPaper) {
+		// Create a new graphics context so we can draw the reverse of the last page onto this page.
+		UIGraphicsBeginImageContextWithOptions(CGSizeMake(image.size.width, image.size.height), YES, 0);
+		CGContextRef context = UIGraphicsGetCurrentContext();
+		
+		// Draw the paper background.
+		CGContextScaleCTM(context, 1, -1);
+		CGContextTranslateCTM(context, 0, -image.size.height);
+		CGContextDrawImage(context, CGRectMake(0, 0, image.size.width, image.size.height), _backwardsPageImage.CGImage);
 
-	CGContextScaleCTM(context, -1, 1);
-	CGContextTranslateCTM(context, -image.size.width, 0);
-	
-	// Draw the initial (darkest) screenshot.
-	CGContextSetAlpha(context, 0.015f);
-	CGContextDrawImage(context, CGRectMake(0, 0, image.size.width, image.size.height), image.CGImage);
-	
-	// Draw a few more copies of the screenshot to achieve a blur effect.
-	CGContextSetAlpha(context, 0.007f);
-	
-	CGContextTranslateCTM(context, 1, 0);
-	CGContextDrawImage(context, CGRectMake(0, 0, image.size.width, image.size.height), image.CGImage);
+		CGContextScaleCTM(context, -1, 1);
+		CGContextTranslateCTM(context, -image.size.width, 0);
+		
+		// Draw the initial (darkest) screenshot.
+		CGContextSetAlpha(context, 0.015f);
+		CGContextDrawImage(context, CGRectMake(0, 0, image.size.width, image.size.height), image.CGImage);
+		
+		// Draw a few more copies of the screenshot to achieve a blur effect.
+		CGContextSetAlpha(context, 0.007f);
+		
+		CGContextTranslateCTM(context, 1, 0);
+		CGContextDrawImage(context, CGRectMake(0, 0, image.size.width, image.size.height), image.CGImage);
 
-	CGContextTranslateCTM(context, -2, 0);
-	CGContextDrawImage(context, CGRectMake(0, 0, image.size.width, image.size.height), image.CGImage);
-	
-	CGContextTranslateCTM(context, 1, 1);
-	CGContextDrawImage(context, CGRectMake(0, 0, image.size.width, image.size.height), image.CGImage);
-	
-	CGContextTranslateCTM(context, 0, -2);
-	CGContextDrawImage(context, CGRectMake(0, 0, image.size.width, image.size.height), image.CGImage);
-	
-	// Create a new image from the context.
-	UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-	UIGraphicsEndImageContext();
+		CGContextTranslateCTM(context, -2, 0);
+		CGContextDrawImage(context, CGRectMake(0, 0, image.size.width, image.size.height), image.CGImage);
+		
+		CGContextTranslateCTM(context, 1, 1);
+		CGContextDrawImage(context, CGRectMake(0, 0, image.size.width, image.size.height), image.CGImage);
+		
+		CGContextTranslateCTM(context, 0, -2);
+		CGContextDrawImage(context, CGRectMake(0, 0, image.size.width, image.size.height), image.CGImage);
+		
+		// Create a new image from the context.
+		UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+		UIGraphicsEndImageContext();
+		
+		self.cornerSprite = [[ZSGLSprite alloc] initWithCGImage:newImage.CGImage effect:_effect];
+	}
 	
 	// Load the images into textures.
-	_cornerSprite = [[ZSGLSprite alloc] initWithCGImage:newImage.CGImage effect:_effect];
-	_screenshotSprite = [[ZSGLSprite alloc] initWithCGImage:image.CGImage effect:_effect];
+	self.screenshotSprite = [[ZSGLSprite alloc] initWithCGImage:image.CGImage effect:_effect];
 }
 
 - (void)resetToStartPosition {
@@ -270,38 +298,38 @@ typedef enum {
 		
 	// Draw the folded page.
 	if (self.drawPage) {
-		_screenshotSprite.transform = GLKMatrix4Identity;
+		self.screenshotSprite.transform = GLKMatrix4Identity;
 		
 		if (_foldOverflowBottomWidth) {
 			TexturedVertex screenshotTriangle[4];
 			
-			screenshotTriangle[0].geometryVertex = CGPointMake(0, _screenshotSprite.contentSizeNormalized.height);
+			screenshotTriangle[0].geometryVertex = CGPointMake(0, self.screenshotSprite.contentSizeNormalized.height);
 			screenshotTriangle[1].geometryVertex = CGPointMake(0, 0);
-			screenshotTriangle[2].geometryVertex = CGPointMake(_screenshotSprite.contentSizeNormalized.width - foldDimensions.width, _screenshotSprite.contentSizeNormalized.height);
-			screenshotTriangle[3].geometryVertex = CGPointMake(_screenshotSprite.contentSizeNormalized.width - _foldOverflowBottomWidth, 0);
+			screenshotTriangle[2].geometryVertex = CGPointMake(self.screenshotSprite.contentSizeNormalized.width - foldDimensions.width, self.screenshotSprite.contentSizeNormalized.height);
+			screenshotTriangle[3].geometryVertex = CGPointMake(self.screenshotSprite.contentSizeNormalized.width - _foldOverflowBottomWidth, 0);
 			
 			screenshotTriangle[0].textureVertex = CGPointMake(0, 1);
 			screenshotTriangle[1].textureVertex = CGPointMake(0, 0);
-			screenshotTriangle[2].textureVertex = CGPointMake(1 - foldDimensions.width / _screenshotSprite.contentSizeNormalized.width, 1);
-			screenshotTriangle[3].textureVertex = CGPointMake(1 - _foldOverflowBottomWidth / _screenshotSprite.contentSizeNormalized.width, 0);
+			screenshotTriangle[2].textureVertex = CGPointMake(1 - foldDimensions.width / self.screenshotSprite.contentSizeNormalized.width, 1);
+			screenshotTriangle[3].textureVertex = CGPointMake(1 - _foldOverflowBottomWidth / self.screenshotSprite.contentSizeNormalized.width, 0);
 			
-			[_screenshotSprite renderTriangleStrip:screenshotTriangle ofSize:4];
+			[self.screenshotSprite renderTriangleStrip:screenshotTriangle ofSize:4];
 		} else {
 			TexturedVertex screenshotTriangle[5];
 			
-			screenshotTriangle[0].geometryVertex = CGPointMake(0, _screenshotSprite.contentSizeNormalized.height);
+			screenshotTriangle[0].geometryVertex = CGPointMake(0, self.screenshotSprite.contentSizeNormalized.height);
 			screenshotTriangle[1].geometryVertex = CGPointMake(0, 0);
-			screenshotTriangle[2].geometryVertex = CGPointMake(_screenshotSprite.contentSizeNormalized.width - foldDimensions.width, _screenshotSprite.contentSizeNormalized.height);
-			screenshotTriangle[3].geometryVertex = CGPointMake(_screenshotSprite.contentSizeNormalized.width, 0);
-			screenshotTriangle[4].geometryVertex = CGPointMake(_screenshotSprite.contentSizeNormalized.width, _screenshotSprite.contentSizeNormalized.height - foldDimensions.height);
+			screenshotTriangle[2].geometryVertex = CGPointMake(self.screenshotSprite.contentSizeNormalized.width - foldDimensions.width, self.screenshotSprite.contentSizeNormalized.height);
+			screenshotTriangle[3].geometryVertex = CGPointMake(self.screenshotSprite.contentSizeNormalized.width, 0);
+			screenshotTriangle[4].geometryVertex = CGPointMake(self.screenshotSprite.contentSizeNormalized.width, self.screenshotSprite.contentSizeNormalized.height - foldDimensions.height);
 			
 			screenshotTriangle[0].textureVertex = CGPointMake(0, 1);
 			screenshotTriangle[1].textureVertex = CGPointMake(0, 0);
-			screenshotTriangle[2].textureVertex = CGPointMake(1 - foldDimensions.width / _screenshotSprite.contentSizeNormalized.width, 1);
+			screenshotTriangle[2].textureVertex = CGPointMake(1 - foldDimensions.width / self.screenshotSprite.contentSizeNormalized.width, 1);
 			screenshotTriangle[3].textureVertex = CGPointMake(1, 0);
-			screenshotTriangle[4].textureVertex = CGPointMake(1, 1 - foldDimensions.height / _screenshotSprite.contentSizeNormalized.height);
+			screenshotTriangle[4].textureVertex = CGPointMake(1, 1 - foldDimensions.height / self.screenshotSprite.contentSizeNormalized.height);
 			
-			[_screenshotSprite renderTriangleStrip:screenshotTriangle ofSize:5];
+			[self.screenshotSprite renderTriangleStrip:screenshotTriangle ofSize:5];
 		}
 	}
 	
@@ -317,8 +345,8 @@ typedef enum {
 	_cornerGradient.transform = GLKMatrix4Identity;
 	
 	GLKMatrix4 foldedCornerMatrix = baseMatrix;
-	foldedCornerMatrix = GLKMatrix4Translate(foldedCornerMatrix, 0, -_cornerSprite.contentSizeNormalized.height, 0);
-	_cornerSprite.transform = foldedCornerMatrix;
+	foldedCornerMatrix = GLKMatrix4Translate(foldedCornerMatrix, 0, -self.cornerSprite.contentSizeNormalized.height, 0);
+	self.cornerSprite.transform = foldedCornerMatrix;
 		
     GLKMatrix4 shadowBlobMatrix = baseMatrix;
 	shadowBlobMatrix = GLKMatrix4Translate(shadowBlobMatrix, 0, -underShadowDimensions.height, 0);
@@ -348,15 +376,15 @@ typedef enum {
 	// Draw the folded corner.
 	TexturedVertex foldedCornerTriangle[3];
 	
-	foldedCornerTriangle[0].geometryVertex = CGPointMake(0, _cornerSprite.contentSizeNormalized.height);
-	foldedCornerTriangle[1].geometryVertex = CGPointMake(foldDimensions.width, _cornerSprite.contentSizeNormalized.height);
-	foldedCornerTriangle[2].geometryVertex = CGPointMake(0, _cornerSprite.contentSizeNormalized.height - foldDimensions.height);
+	foldedCornerTriangle[0].geometryVertex = CGPointMake(0, self.cornerSprite.contentSizeNormalized.height);
+	foldedCornerTriangle[1].geometryVertex = CGPointMake(foldDimensions.width, self.cornerSprite.contentSizeNormalized.height);
+	foldedCornerTriangle[2].geometryVertex = CGPointMake(0, self.cornerSprite.contentSizeNormalized.height - foldDimensions.height);
 	
 	foldedCornerTriangle[0].textureVertex = CGPointMake(0, 1);
-	foldedCornerTriangle[1].textureVertex = CGPointMake((foldDimensions.width / _cornerSprite.contentSizeNormalized.width), 1);
-	foldedCornerTriangle[2].textureVertex = CGPointMake(0, 1 - (foldDimensions.height / _cornerSprite.contentSizeNormalized.height));
+	foldedCornerTriangle[1].textureVertex = CGPointMake((foldDimensions.width / self.cornerSprite.contentSizeNormalized.width), 1);
+	foldedCornerTriangle[2].textureVertex = CGPointMake(0, 1 - (foldDimensions.height / self.cornerSprite.contentSizeNormalized.height));
 	
-	[_cornerSprite renderTriangleStrip:foldedCornerTriangle ofSize:3];
+	[self.cornerSprite renderTriangleStrip:foldedCornerTriangle ofSize:3];
 	
 	// Draw the fold gradient.
 	ColoredVertex foldGradientVertices[3];
@@ -501,19 +529,19 @@ typedef enum {
 		// User stopped dragging, fold is moving back to the corner:
 		case ZSFoldedCornerViewControllerAnimationStateSendFoldBackToCornerStage1:
 			_animationState = ZSFoldedCornerViewControllerAnimationStateStopped;
-			[self.touchDelegate foldedCornerRestoredToStartPoint];
+			[self.touchDelegate foldedCornerRestoredToDefaultPoint];
 			break;
 		
 		// Page is turning:
 		case ZSFoldedCornerViewControllerAnimationStatePageTurnStage1:
 			_animationState = ZSFoldedCornerViewControllerAnimationStateStopped;
-			[self.touchDelegate pageWasTurned];
+			[self.touchDelegate pageTurnAnimationDidFinish];
 			break;
 			
 		// After page turns, a new fold is made in the next page:
 		case ZSFoldedCornerViewControllerAnimationStateStartFoldStage1:
 			_animationState = ZSFoldedCornerViewControllerAnimationStateStopped;
-			[self.touchDelegate foldedCornerStartAnimationFinished];
+			[self.touchDelegate startFoldAnimationDidFinish];
 			break;
 			
 		// User tapped on the + button, so folded corner gets tugged:
@@ -531,7 +559,7 @@ typedef enum {
 			
 		case ZSFoldedCornerViewControllerAnimationStateCornerTugStage4:
 			_animationState = ZSFoldedCornerViewControllerAnimationStateStopped;
-			[self.touchDelegate foldedCornerRestoredToStartPoint];
+			[self.touchDelegate foldedCornerRestoredToDefaultPoint];
 			break;
 			
 		// No animation:

@@ -48,7 +48,7 @@ typedef enum {
 } ZSShowErrorsOption;
 
 
-@protocol ZSGameDelegate <NSObject>
+@protocol ZSGameStateChangeDelegate <NSObject>
 
 - (void)tileGuessDidChange:(NSInteger)guess forTileAtRow:(NSInteger)row col:(NSInteger)col;
 - (void)tilePencilDidChange:(BOOL)isSet forPencilNumber:(NSInteger)pencilNumber forTileAtRow:(NSInteger)row col:(NSInteger)col;
@@ -72,7 +72,7 @@ typedef enum {
 
 @property (assign) BOOL recordingHistory;
 
-@property (weak) id<ZSGameDelegate> delegate;
+@property (weak) id<ZSGameStateChangeDelegate> stateChangeDelegate;
 
 @property (readonly) NSInteger timerCount;
 @property (readonly) NSInteger totalStrikes;

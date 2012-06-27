@@ -44,7 +44,7 @@ NSString * const kTileColorHighlightHintD = @"#4C2FADD4";
 
 @implementation ZSGameBoardTileViewController
 
-@synthesize tile, delegate;
+@synthesize tile, touchDelegate;
 @synthesize textType, backgroundType;
 @synthesize ghosted, ghostedValue, selected, highlightedSimilar, highlightedError, error;
 @synthesize highlightedHintType, highlightGuessHint, highlightPencilHints;
@@ -364,11 +364,11 @@ NSString * const kTileColorHighlightHintD = @"#4C2FADD4";
 #pragma mark - Touch Events
 
 - (void)handleTap {
-	NSLog(@"Tile: (%i, %i), group %i", tile.row, tile.col, tile.groupId);
-	NSLog(@"Guess: %i", tile.guess);
-	NSLog(@"Answer: %i", tile.answer);
+	// NSLog(@"Tile: (%i, %i), group %i", tile.row, tile.col, tile.groupId);
+	// NSLog(@"Guess: %i", tile.guess);
+	// NSLog(@"Answer: %i", tile.answer);
 	
-	[delegate gameBoardTileWasTouched:self];
+	[touchDelegate gameBoardTileWasTouched:self];
 }
 
 @end

@@ -53,7 +53,7 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 @synthesize difficulty, type;
 @synthesize gameBoard;
 @synthesize recordingHistory;
-@synthesize delegate;
+@synthesize stateChangeDelegate;
 @synthesize timerCount;
 @synthesize totalStrikes;
 
@@ -121,7 +121,7 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 - (void)advanceGameTimer:(NSTimer *)timer {
 	++timerCount;
 	
-	[delegate timerDidAdvance];
+	[self.stateChangeDelegate timerDidAdvance];
 	
 	// Notify statistics. We could mod the time and only call this function every so often, but there's little gain in doing so.
 	[[ZSStatisticsController sharedInstance] timeElapsed:1 inGameWithDifficulty:difficulty];
@@ -260,7 +260,7 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 			}
 			
 			// Create a notification.
-			[delegate guess:guess isErrorForTileAtRow:row col:col];
+			[self.stateChangeDelegate guess:guess isErrorForTileAtRow:row col:col];
 			
 			// Notify statistics.
 			[[ZSStatisticsController sharedInstance] strikeEntered];
@@ -289,12 +289,12 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 	[self addHistoryDescription:[ZSGameHistoryEntry undoDescriptionWithType:ZSGameHistoryEntryTypeGuess tile:tile previousValue:previousGuess]];
 	
 	// Notify the delegate that things changed.
-	[delegate tileGuessDidChange:tile.guess forTileAtRow:tile.row col:tile.col];
+	[self.stateChangeDelegate tileGuessDidChange:tile.guess forTileAtRow:tile.row col:tile.col];
 	
 	// If the game is over, notify the delegate of that as well.
 	if ([self isSolved]) {
 		// Notify the delegate.
-		[delegate gameWasSolved];
+		[self.stateChangeDelegate gameWasSolved];
 		
 		// Notify statistics.
 		[[ZSStatisticsController sharedInstance] gameSolvedWithDifficulty:difficulty totalTime:timerCount];
@@ -308,7 +308,7 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 	[self addHistoryDescription:undoDescription];
 	
 	// Notify the delegate that things changed.
-	[delegate tilePencilDidChange:[tile getPencilForGuess:pencilNumber] forPencilNumber:pencilNumber forTileAtRow:tile.row col:tile.col];
+	[self.stateChangeDelegate tilePencilDidChange:[tile getPencilForGuess:pencilNumber] forPencilNumber:pencilNumber forTileAtRow:tile.row col:tile.col];
 }
 
 - (void)clearGuessForTileAtRow:(NSInteger)row col:(NSInteger)col {

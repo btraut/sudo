@@ -62,7 +62,7 @@ typedef enum {
 	ZSGameBoardTilePencilTextHintHighlightTypeB
 } ZSGameBoardTilePencilTextHintHighlightType;
 
-@protocol ZSGameBoardTileTouchDelegate <NSObject>
+@protocol ZSGameBoardTileViewControllerTouchDelegate <NSObject>
 
 - (void)gameBoardTileWasTouched:(ZSGameBoardTileViewController *)tileView;
 
@@ -88,7 +88,7 @@ typedef enum {
 }
 
 @property (weak) ZSGameTile *tile;
-@property (weak) id<ZSGameBoardTileTouchDelegate> delegate;
+@property (weak) id<ZSGameBoardTileViewControllerTouchDelegate> touchDelegate;
 
 @property (assign) ZSGameBoardTileTextType textType;
 @property (assign) ZSGameBoardTileBackgroundType backgroundType;
