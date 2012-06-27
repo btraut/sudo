@@ -1,5 +1,5 @@
 //
-//  ZSGameBoardViewController.h
+//  ZSBoardViewController.h
 //  ZenSudoku
 //
 //  Created by Brent Traut on 11/25/11.
@@ -8,26 +8,26 @@
 
 #import <UIKit/UIKit.h>
 #import "ZSGame.h"
-#import "ZSGameBoardTileViewController.h"
+#import "ZSTileViewController.h"
 
 @class ZSGameViewController;
 
-@protocol ZSGameBoardViewControllerTouchDelegate <NSObject>
+@protocol ZSBoardViewControllerTouchDelegate <NSObject>
 
 - (void)gameBoardTileWasTouchedInRow:(NSInteger)row col:(NSInteger)col;
 
 @end
 
-@protocol ZSGameBoardViewControllerSelectionChangeDelegate <NSObject>
+@protocol ZSBoardViewControllerSelectionChangeDelegate <NSObject>
 
 - (void)selectedTileChanged;
 
 @end
 
-@interface ZSGameBoardViewController : UIViewController <ZSGameBoardTileViewControllerTouchDelegate> {
+@interface ZSBoardViewController : UIViewController <ZSTileViewControllerTouchDelegate> {
 	NSArray *tileViews;
 	
-	ZSGameBoardTileViewController *selectedTileView;
+	ZSTileViewController *selectedTileView;
 	NSMutableArray *highlightedSimilarTileViews;
 	NSMutableArray *highlightedErrorTileViews;
 }
@@ -35,10 +35,10 @@
 @property (weak) ZSGame *game;
 @property (strong, readonly) NSArray *tileViews;
 
-@property (weak) id<ZSGameBoardViewControllerTouchDelegate> touchDelegate;
-@property (weak) id<ZSGameBoardViewControllerSelectionChangeDelegate> selectionChangeDelegate;
+@property (weak) id<ZSBoardViewControllerTouchDelegate> touchDelegate;
+@property (weak) id<ZSBoardViewControllerSelectionChangeDelegate> selectionChangeDelegate;
 
-@property (strong, readonly) ZSGameBoardTileViewController *selectedTileView;
+@property (strong, readonly) ZSTileViewController *selectedTileView;
 @property (strong, readonly) NSMutableArray *highlightedSimilarTileViews;
 
 // Construction / Deconstruction
@@ -49,22 +49,22 @@
 - (void)reloadView;
 
 // Selection
-- (void)selectTileView:(ZSGameBoardTileViewController *)tileView;
+- (void)selectTileView:(ZSTileViewController *)tileView;
 - (void)reselectTile;
 - (void)deselectTileView;
 
 // Handling Highlights
 - (void)removeAllSimilarHighlights;
-- (void)addSimilarHighlightsForTileView:(ZSGameBoardTileViewController *)tileView;
+- (void)addSimilarHighlightsForTileView:(ZSTileViewController *)tileView;
 - (void)resetSimilarHighlights;
 
 - (void)removeAllErrorHighlights;
-- (void)addErrorHighlightsForTileView:(ZSGameBoardTileViewController *)tileView;
+- (void)addErrorHighlightsForTileView:(ZSTileViewController *)tileView;
 - (void)resetErrorHighlights;
 
 - (void)removeAllHintHighlights;
 
 // Tile Accessors
-- (ZSGameBoardTileViewController *)getGameBoardTileViewControllerAtRow:(NSInteger)row col:(NSInteger)col;
+- (ZSTileViewController *)getGameBoardTileViewControllerAtRow:(NSInteger)row col:(NSInteger)col;
 
 @end

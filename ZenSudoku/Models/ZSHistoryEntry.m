@@ -1,12 +1,12 @@
 //
-//  ZSGameHistoryEntry.m
+//  ZSHistoryEntry.m
 //  ZenSudoku
 //
 //  Created by Brent Traut on 12/3/11.
 //  Copyright (c) 2011 Ten Four Software, LLC. All rights reserved.
 //
 
-#import "ZSGameHistoryEntry.h"
+#import "ZSHistoryEntry.h"
 
 NSString * const kDictionaryRepresentationGameHistoryEntryTypeKey = @"kDictionaryRepresentationGameHistoryEntryTypeKey";
 NSString * const kDictionaryRepresentationGameHistoryEntryTileRowKey = @"kDictionaryRepresentationGameHistoryEntryTileRowKey";
@@ -14,27 +14,27 @@ NSString * const kDictionaryRepresentationGameHistoryEntryTileColKey = @"kDictio
 NSString * const kDictionaryRepresentationGameHistoryEntryPreviousValueKey = @"kDictionaryRepresentationGameHistoryEntryPreviousValueKey";
 NSString * const kDictionaryRepresentationGameHistoryEntryPencilNumberKey = @"kDictionaryRepresentationGameHistoryEntryPencilNumberKey";
 
-@implementation ZSGameHistoryEntry
+@implementation ZSHistoryEntry
 
 @synthesize type, row, col, previousValue, pencilNumber;
 
 + (id)undoStop {
-	return [[self alloc] initWithType:ZSGameHistoryEntryTypeGuess tile:nil previousValue:0];
+	return [[self alloc] initWithType:ZSHistoryEntryTypeGuess tile:nil previousValue:0];
 }
 
-+ (id)undoDescriptionWithType:(ZSGameHistoryEntryType)newType tile:(ZSGameTile *)newTile previousValue:(NSInteger)newPreviousValue {
++ (id)undoDescriptionWithType:(ZSHistoryEntryType)newType tile:(ZSTile *)newTile previousValue:(NSInteger)newPreviousValue {
 	return [[self alloc] initWithType:newType tile:newTile previousValue:newPreviousValue];
 }
 
 - (id)init {
-	return [self initWithType:ZSGameHistoryEntryTypeGuess tile:nil previousValue:0];
+	return [self initWithType:ZSHistoryEntryTypeGuess tile:nil previousValue:0];
 }
 
-- (id)initWithType:(ZSGameHistoryEntryType)newType tile:(ZSGameTile *)newTile previousValue:(NSInteger)newPreviousValue {
+- (id)initWithType:(ZSHistoryEntryType)newType tile:(ZSTile *)newTile previousValue:(NSInteger)newPreviousValue {
 	return [self initWithType:newType row:newTile.row col:newTile.col previousValue:newPreviousValue];
 }
 
-- (id)initWithType:(ZSGameHistoryEntryType)newType row:(NSInteger)newRow col:(NSInteger)newCol previousValue:(NSInteger)newPreviousValue {
+- (id)initWithType:(ZSHistoryEntryType)newType row:(NSInteger)newRow col:(NSInteger)newCol previousValue:(NSInteger)newPreviousValue {
 	self = [super init];
 	
 	if (self) {
@@ -50,7 +50,7 @@ NSString * const kDictionaryRepresentationGameHistoryEntryPencilNumberKey = @"kD
 
 
 - (id)initWithDictionaryRepresentation:(NSDictionary *)dict {
-	ZSGameHistoryEntry *newEntry = [self initWithType:[[dict objectForKey:kDictionaryRepresentationGameHistoryEntryTypeKey] intValue]
+	ZSHistoryEntry *newEntry = [self initWithType:[[dict objectForKey:kDictionaryRepresentationGameHistoryEntryTypeKey] intValue]
 												  row:[[dict objectForKey:kDictionaryRepresentationGameHistoryEntryTileRowKey] intValue]
 												  col:[[dict objectForKey:kDictionaryRepresentationGameHistoryEntryTileColKey] intValue]
 										previousValue:[[dict objectForKey:kDictionaryRepresentationGameHistoryEntryPreviousValueKey] intValue]];

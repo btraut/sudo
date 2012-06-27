@@ -55,13 +55,13 @@
 - (NSArray *)eliminatePencilsFinnedXWingRowsOfSize:(NSInteger)size;
 - (NSArray *)eliminatePencilsFinnedXWingColsOfSize:(NSInteger)size;
 - (NSArray *)eliminatePencilsYWingUseChains:(BOOL)useChains;
-- (NSArray *)eliminatePencilsYWingWithTile1:(ZSGameTileStub *)tile1 tile2:(ZSGameTileStub *)tile2;
+- (NSArray *)eliminatePencilsYWingWithTile1:(ZSTileStub *)tile1 tile2:(ZSTileStub *)tile2;
 - (NSArray *)eliminatePencilsRemotePairs;
 - (NSArray *)eliminatePencilsAvoidableRectangles;
 */
 
 // Logic Technique Helpers
-- (NSInteger)initPencilMap:(NSInteger *)pencilMap forTileSet:(ZSGameTileStub **)set;
+- (NSInteger)initPencilMap:(NSInteger *)pencilMap forTileSet:(ZSTileStub **)set;
 - (void)setFirstCombinationInArray:(NSInteger *)comboArray ofLength:(NSInteger)arrayLength totalItems:(NSInteger)itemCount;
 - (BOOL)setNextCombinationInArray:(NSInteger *)comboArray ofLength:(NSInteger)arrayLength totalItems:(NSInteger)itemCount;
 
@@ -77,8 +77,8 @@
 - (void)initChainMap;
 - (void)deallocChainMap;
 - (void)clearChainMap;
-- (void)updateChainMapForTile:(ZSGameTileStub *)tile;
-- (void)updateChainMapForTile:(ZSGameTileStub *)tile totalPencils:(NSInteger)totalPencils currentLinkOn:(BOOL)currentLinkOn;
+- (void)updateChainMapForTile:(ZSTileStub *)tile;
+- (void)updateChainMapForTile:(ZSTileStub *)tile totalPencils:(NSInteger)totalPencils currentLinkOn:(BOOL)currentLinkOn;
 
 @end
 
@@ -115,7 +115,7 @@
 	[self deallocChainMap];
 }
 
-- (void)copyGameStateFromGameBoard:(ZSGameBoard *)gameBoard {
+- (void)copyGameStateFromGameBoard:(ZSBoard *)gameBoard {
 	[_fastGameBoard copyGroupMapFromGameBoard:gameBoard];
 	[_fastGameBoard copyGuessesFromGameBoard:gameBoard];
 	[_fastGameBoard copyAnswersFromGameBoard:gameBoard];
@@ -488,12 +488,12 @@
 	// allocation is expensive and all iterations of the loop need roughly the same size arrays.
 	NSInteger *pencilMap = malloc(_fastGameBoard.size * sizeof(NSInteger));
 	NSInteger *combinationMap = malloc(subgroupSize * sizeof(NSInteger));
-	ZSGameTileStub **subgroupMatches = malloc(_fastGameBoard.size * sizeof(ZSGameTileStub *));
+	ZSTileStub **subgroupMatches = malloc(_fastGameBoard.size * sizeof(ZSTileStub *));
 	
 	// Iterate over each tile set.
 	for (NSInteger setIndex = 0, totalSets = 3 * _fastGameBoard.size; setIndex < totalSets; ++setIndex) {
 		// Cache the current set.
-		ZSGameTileStub **currentSet = _fastGameBoard.allSets[setIndex];
+		ZSTileStub **currentSet = _fastGameBoard.allSets[setIndex];
 		
 		// Initialize the pencil map. The compinations generated later will be indexes on this array.
 		NSInteger totalPencilsInSet = [self initPencilMap:pencilMap forTileSet:currentSet];
@@ -624,12 +624,12 @@
 	// allocation is expensive and all iterations of the loop need roughly the same size arrays.
 	NSInteger *pencilMap = malloc(_fastGameBoard.size * sizeof(NSInteger));
 	NSInteger *combinationMap = malloc(subgroupSize * sizeof(NSInteger));
-	ZSGameTileStub **subgroupMatches = malloc(_fastGameBoard.size * sizeof(ZSGameTileStub *));
+	ZSTileStub **subgroupMatches = malloc(_fastGameBoard.size * sizeof(ZSTileStub *));
 	
 	// Iterate over each tile set.
 	for (NSInteger setIndex = 0, totalSets = 3 * _fastGameBoard.size; setIndex < totalSets; ++setIndex) {
 		// Cache the current set.
-		ZSGameTileStub **currentSet = _fastGameBoard.allSets[setIndex];
+		ZSTileStub **currentSet = _fastGameBoard.allSets[setIndex];
 		
 		// Initialize the pencil map. The compinations generated later will be indexes on this array.
 		NSInteger totalPencilsInSet = [self initPencilMap:pencilMap forTileSet:currentSet];
@@ -730,7 +730,7 @@
 				BOOL pencilsToBeEliminated = NO;
 				
 				// Make a list of sets to check for similar possibilities.
-				ZSGameTileStub **innerSets[3];
+				ZSTileStub **innerSets[3];
 				NSInteger totalInnerSets = 0;
 				
 				if (tilesAreInSameRow) {
@@ -749,7 +749,7 @@
 				
 				// Loop through all the tiles in all the sets (row, column, and/or group) and look for pencils to eliminate.
 				for (NSInteger innerSetIndex = 0; innerSetIndex < totalInnerSets; ++innerSetIndex) {
-					ZSGameTileStub **innerCurrentSet = innerSets[innerSetIndex];
+					ZSTileStub **innerCurrentSet = innerSets[innerSetIndex];
 					
 					// Make another pass over the same group, this time keeping track of the group tiles and pencils to eliminate.
 					for (NSInteger setIndex = 0; setIndex < _fastGameBoard.size; ++setIndex) {
@@ -824,7 +824,7 @@
 	// Loop over all groups.
 	for (NSInteger groupIndex = 0; groupIndex < _fastGameBoard.size; ++groupIndex) {
 		// Cache the current group.
-		ZSGameTileStub **currentGroup = _fastGameBoard.groups[groupIndex];
+		ZSTileStub **currentGroup = _fastGameBoard.groups[groupIndex];
 		NSInteger currentGroupId = _fastGameBoard.groups[groupIndex][0]->groupId;
 		
 		// Loop over all guesses.
@@ -870,7 +870,7 @@
 			if (foundPencils) {
 				// If all the pencils found were in the same row, eliminate all possibilities in the rest of that row.
 				if (rowIsAligned && foundPencils != _fastGameBoard.totalTilesInRowWithPencil[alignedRow][guess]) {
-					ZSGameTileStub **rowSet = _fastGameBoard.rows[alignedRow];
+					ZSTileStub **rowSet = _fastGameBoard.rows[alignedRow];
 					
 					ZSHintGeneratorEliminatePencilsPointingPairs *generator = [[ZSHintGeneratorEliminatePencilsPointingPairs alloc] init];
 					generator.scope = ZSHintGeneratorTileScopeRow;
@@ -918,7 +918,7 @@
 				
 				// If all the pencils found were in the same col, eliminate all possibilities in the rest of that col.
 				if (colIsAligned && foundPencils != _fastGameBoard.totalTilesInColWithPencil[alignedCol][guess]) {
-					ZSGameTileStub **colSet = _fastGameBoard.cols[alignedCol];
+					ZSTileStub **colSet = _fastGameBoard.cols[alignedCol];
 					
 					ZSHintGeneratorEliminatePencilsPointingPairs *generator = [[ZSHintGeneratorEliminatePencilsPointingPairs alloc] init];
 					generator.scope = ZSHintGeneratorTileScopeCol;
@@ -1775,9 +1775,9 @@
 - (NSArray *)eliminatePencilsYWingUseChains:(BOOL)useChains {
 	NSInteger totalPencilsEliminated = 0;
 	
-	ZSGameTileList tileList;
+	ZSTileList tileList;
 
-	tileList.tiles = malloc(_fastGameBoard.size * _fastGameBoard.size * sizeof(ZSGameTileStub *));
+	tileList.tiles = malloc(_fastGameBoard.size * _fastGameBoard.size * sizeof(ZSTileStub *));
 	tileList.totalTiles = 0;
 	
 	// Make a list of all the tiles that have 2 pencils.
@@ -1803,9 +1803,9 @@
 	
 	// Loop over all the possible combinations of 2-pencil tiles.
 	do {
-		ZSGameTileStub *tile1 = tileList.tiles[yWingGroupIndexes[0]];
-		ZSGameTileStub *tile2 = tileList.tiles[yWingGroupIndexes[1]];
-		ZSGameTileStub *tile3 = tileList.tiles[yWingGroupIndexes[2]];
+		ZSTileStub *tile1 = tileList.tiles[yWingGroupIndexes[0]];
+		ZSTileStub *tile2 = tileList.tiles[yWingGroupIndexes[1]];
+		ZSTileStub *tile3 = tileList.tiles[yWingGroupIndexes[2]];
 		
 		// It's possible that we've eliminated pencils by the time we've gotten here. Make sure all 3 candidates still have 2 pencils each.
 		if (tile1->totalPencils != 2 || tile2->totalPencils != 2 || tile3->totalPencils != 2) {
@@ -1929,7 +1929,7 @@
 	return totalPencilsEliminated;
 }
 
-- (NSArray *)eliminatePencilsYWingWithTile1:(ZSGameTileStub *)tile1 tile2:(ZSGameTileStub *)tile2 {
+- (NSArray *)eliminatePencilsYWingWithTile1:(ZSTileStub *)tile1 tile2:(ZSTileStub *)tile2 {
 	NSInteger totalPencilsEliminated = 0;
 	
 	// It's possible that we've eliminated pencils by the time we've gotten here. Make sure all 3 candidates still have 2 pencils each.
@@ -1948,7 +1948,7 @@
 	}
 	
 	// Loop over all of the tiles influenced by both and search for instances of those pencils.
-	ZSGameTileList tileList = [_fastGameBoard getAllInfluencedTilesForTile:tile1 andOtherTile:tile2];
+	ZSTileList tileList = [_fastGameBoard getAllInfluencedTilesForTile:tile1 andOtherTile:tile2];
 	
 	for (NSInteger i = 0; i < tileList.totalTiles; ++i) {
 		if (tileList.tiles[i] == tile1 || tileList.tiles[i] == tile2) {
@@ -1982,7 +1982,7 @@
 	// Find all the cols that contain 2 tiles with the current pencil mark and put them in a slot match object.
 	for (NSInteger row = 0; row < _fastGameBoard.size; ++row) {
 		for (NSInteger col = 0; col < _fastGameBoard.size; ++col) {
-			ZSGameTileStub *currentTile = &_fastGameBoard.grid[row][col];
+			ZSTileStub *currentTile = &_fastGameBoard.grid[row][col];
 			
 			if (investigatedTiles[row][col]) {
 				continue;
@@ -2011,7 +2011,7 @@
 				
 				for (NSInteger chainMapRow = 0; chainMapRow < _fastGameBoard.size; ++chainMapRow) {
 					for (NSInteger chainMapCol = 0; chainMapCol < _fastGameBoard.size; ++chainMapCol) {
-						ZSGameTileStub *targetTile = &_fastGameBoard.grid[chainMapRow][chainMapCol];
+						ZSTileStub *targetTile = &_fastGameBoard.grid[chainMapRow][chainMapCol];
 						
 						switch (_chainMap[chainMapRow][chainMapCol]) {
 							case ZSChainMapResultRelatedConflicted:
@@ -2056,7 +2056,7 @@
 	
 	for (NSInteger row = 0; row < _fastGameBoard.size; ++row) {
 		for (NSInteger col = 0; col < _fastGameBoard.size; ++col) {
-			ZSGameTileStub *currentTile = &_fastGameBoard.grid[row][col];
+			ZSTileStub *currentTile = &_fastGameBoard.grid[row][col];
 			
 			if (currentTile->guess && !_clueIsProvidedInPuzzle[row][col]) {
 				for (NSInteger guess = 0; guess < _fastGameBoard.size; ++guess) {
@@ -2120,7 +2120,7 @@
 #pragma mark - Logic Technique Helpers
 
 // Populate the pencilMap array with a list of pencils that exist in the given tile set. Return the total number of pencils found.
-- (NSInteger)initPencilMap:(NSInteger *)pencilMap forTileSet:(ZSGameTileStub **)set {
+- (NSInteger)initPencilMap:(NSInteger *)pencilMap forTileSet:(ZSTileStub **)set {
 	NSInteger totalPencils = 0;
 	
 	for (NSInteger guess = 0; guess < _fastGameBoard.size; ++guess) {
@@ -2280,7 +2280,7 @@
 	_chainMapIsClear = YES;
 }
 
-- (void)updateChainMapForTile:(ZSGameTileStub *)tile {
+- (void)updateChainMapForTile:(ZSTileStub *)tile {
 	if (!_chainMapIsClear) {
 		[self clearChainMap];
 	}
@@ -2301,9 +2301,9 @@
 	_chainMapIsClear = NO;
 }
 
-- (void)updateChainMapForTile:(ZSGameTileStub *)tile totalPencils:(NSInteger)totalPencils currentLinkOn:(BOOL)currentLinkOn {
+- (void)updateChainMapForTile:(ZSTileStub *)tile totalPencils:(NSInteger)totalPencils currentLinkOn:(BOOL)currentLinkOn {
 	for (NSInteger i = 0; i < _fastGameBoard.size; ++i) {
-		ZSGameTileStub *currentTile = _fastGameBoard.rows[tile->row][i];
+		ZSTileStub *currentTile = _fastGameBoard.rows[tile->row][i];
 		
 		if (currentTile == tile) {
 			continue;
@@ -2349,7 +2349,7 @@
 	}
 	
 	for (NSInteger i = 0; i < _fastGameBoard.size; ++i) {
-		ZSGameTileStub *currentTile = _fastGameBoard.cols[tile->col][i];
+		ZSTileStub *currentTile = _fastGameBoard.cols[tile->col][i];
 		
 		if (currentTile->guess) {
 			continue;
@@ -2387,7 +2387,7 @@
 	NSInteger groupId = _fastGameBoard.grid[tile->row][tile->col].groupId;
 	
 	for (NSInteger i = 0; i < _fastGameBoard.size; ++i) {
-		ZSGameTileStub *currentTile = _fastGameBoard.groups[groupId][i];
+		ZSTileStub *currentTile = _fastGameBoard.groups[groupId][i];
 		
 		if (currentTile->guess) {
 			continue;

@@ -8,13 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "ZSGame.h"
-#import "ZSGameBoardViewController.h"
+#import "ZSBoardViewController.h"
 #import "ZSGameAnswerOptionViewController.h"
 #import "ZSFoldedCornerViewController.h"
 #import "ZSFoldedCornerPlusButtonViewController.h"
 #import "ZSGameAnswerOptionsViewController.h"
 
-@class ZSGameBoardTileViewController;
+@class ZSTileViewController;
 @class ZSGameViewController;
 @class ZSHintGenerator;
 @class ZSFoldedPageViewController;
@@ -36,16 +36,16 @@
 
 @interface ZSGameViewController : UIViewController <
 	ZSGameStateChangeDelegate,
-	ZSFoldedCornerGLViewControllerTouchDelegate,
+	ZSFoldedCornerViewControllerTouchDelegate,
 	ZSFoldedCornerPlusButtonViewControllerAnimationDelegate,
 	ZSGameAnswerOptionsViewControllerTouchDelegate,
-	ZSGameBoardViewControllerTouchDelegate,
-	ZSGameBoardViewControllerSelectionChangeDelegate
+	ZSBoardViewControllerTouchDelegate,
+	ZSBoardViewControllerSelectionChangeDelegate
 > {
 	ZSGame *game;
 	ZSHintGenerator *hintGenerator;
 	
-	ZSGameBoardViewController *gameBoardViewController;
+	ZSBoardViewController *gameBoardViewController;
 	ZSGameAnswerOptionsViewController *gameAnswerOptionsViewController;
 	
 	ZSFoldedCornerViewController *foldedCornerViewController;
@@ -64,7 +64,7 @@
 
 @property (strong) ZSGame *game;
 
-@property (strong, readonly) ZSGameBoardViewController *gameBoardViewController;
+@property (strong, readonly) ZSBoardViewController *gameBoardViewController;
 @property (strong, readonly) ZSGameAnswerOptionsViewController *gameAnswerOptionsViewController;
 
 @property (strong, readonly) ZSFoldedCornerViewController *foldedCornerViewController;

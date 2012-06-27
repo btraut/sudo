@@ -103,7 +103,7 @@ typedef enum {
 
 - (void)loadView {
 	// Create the GLKView.
-	ZSFoldedCornerGLView *view = [[ZSFoldedCornerGLView alloc] initWithFrame:CGRectMake(0, 0, 314, 460)];
+	ZSFoldedCornerView *view = [[ZSFoldedCornerView alloc] initWithFrame:CGRectMake(0, 0, 314, 460)];
 	view.delegate = self;
 	view.hitTestDelegate = self;
 	self.view = view;
@@ -127,7 +127,7 @@ typedef enum {
         NSLog(@"Failed to create ES context");
     }
 	
-    ZSFoldedCornerGLView *view = (ZSFoldedCornerGLView *)self.view;
+    ZSFoldedCornerView *view = (ZSFoldedCornerView *)self.view;
     view.context = self.context;
     [EAGLContext setCurrentContext:self.context];
 		
@@ -159,7 +159,7 @@ typedef enum {
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	
-	[(ZSFoldedCornerGLView *)self.view display];
+	[(ZSFoldedCornerView *)self.view display];
 }
 
 - (void)setPageImage:(UIImage *)image {
@@ -494,7 +494,7 @@ typedef enum {
 
 - (void)redraw {
 	[self recalculateDimensions];
-	[(ZSFoldedCornerGLView *)self.view display];
+	[(ZSFoldedCornerView *)self.view display];
 	[self updatePlusButton];
 }
 

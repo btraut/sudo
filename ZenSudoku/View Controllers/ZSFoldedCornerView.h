@@ -1,5 +1,5 @@
 //
-//  ZSFoldedCornerGLView.h
+//  ZSFoldedCornerView.h
 //  ZenSudoku
 //
 //  Created by Brent Traut on 6/4/12.
@@ -9,14 +9,14 @@
 #import <UIKit/UIKit.h>
 #import <GLKit/GLKit.h>
 
-@protocol ZSFoldedCornerGLHitTestDelegate <NSObject>
+@protocol ZSFoldedCornerViewHitTestDelegate <NSObject>
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event;
 
 @end
 
-@interface ZSFoldedCornerGLView : GLKView
+@interface ZSFoldedCornerView : GLKView
 
-@property (weak) id<ZSFoldedCornerGLHitTestDelegate> hitTestDelegate;
+@property (weak) id<ZSFoldedCornerViewHitTestDelegate> hitTestDelegate;
 
 @end

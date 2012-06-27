@@ -1,16 +1,16 @@
 //
-//  ZSGameTile.m
+//  ZSTile.m
 //  ZenSudoku
 //
 //  Created by Brent Traut on 11/26/11.
 //  Copyright (c) 2011 Ten Four Software, LLC. All rights reserved.
 //
 
-#import "ZSGameTile.h"
-#import "ZSGameBoard.h"
+#import "ZSTile.h"
+#import "ZSBoard.h"
 #import "ZSGame.h"
-#import "ZSGameBoard.h"
-#import "ZSGameHistoryEntry.h"
+#import "ZSBoard.h"
+#import "ZSHistoryEntry.h"
 
 NSString * const kDictionaryRepresentationGameTileGuessKey = @"kDictionaryRepresentationGameTileGuessKey";
 NSString * const kDictionaryRepresentationGameTileAnswerKey = @"kDictionaryRepresentationGameTileAnswerKey";
@@ -18,13 +18,13 @@ NSString * const kDictionaryRepresentationGameTileLockedKey = @"kDictionaryRepre
 NSString * const kDictionaryRepresentationGameTileGroupIdKey = @"kDictionaryRepresentationGameTileGroupIdKey";
 NSString * const kDictionaryRepresentationGameTilePencilsKey = @"kDictionaryRepresentationGameTilePencilsKey";
 
-@interface ZSGameTile() {
+@interface ZSTile() {
 	BOOL *_pencils;
 }
 
 @end
 
-@implementation ZSGameTile
+@implementation ZSTile
 
 @synthesize gameBoard;
 @synthesize row, col, groupId;
@@ -37,7 +37,7 @@ NSString * const kDictionaryRepresentationGameTilePencilsKey = @"kDictionaryRepr
 	return nil;
 }
 
-- (id)initWithBoard:(ZSGameBoard *)newGameBoard {
+- (id)initWithBoard:(ZSBoard *)newGameBoard {
 	self = [super init];
 	
 	if (self) {

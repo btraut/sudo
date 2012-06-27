@@ -11,7 +11,7 @@
 #import "ZSGameController.h"
 #import "ZSGame.h"
 #import "ZSGameViewController.h"
-#import "ZSGameBoardViewController.h"
+#import "ZSBoardViewController.h"
 #import "ZSHintViewController.h"
 #import "ZSFoldedCornerViewController.h"
 

@@ -106,7 +106,7 @@ NSString * const kRemoveTileAfterErrorKey = @"kRemoveTileAfterErrorKey";
 								 [NSNumber numberWithBool:NO], kClearAnswerOptionSelectionAfterPickingTileForPencilKey,
 								 [NSNumber numberWithBool:NO], kClearTileSelectionAfterPickingAnswerOptionForPencilKey,
 								 
-								 [NSNumber numberWithInt:ZSGameTileAnswerOrderTileFirst], kTileAnswerOrderKey,
+								 [NSNumber numberWithInt:ZSTileAnswerOrderTileFirst], kTileAnswerOrderKey,
 								 
 								 [NSNumber numberWithBool:YES], kClearPencilsAfterGuessingKey,
 								 

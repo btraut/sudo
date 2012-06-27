@@ -18,25 +18,25 @@ typedef struct {
 	
 	NSInteger totalPencils;
     BOOL *pencils;
-} ZSGameTileStub;
+} ZSTileStub;
 
 typedef struct {
-	ZSGameTileStub **tiles;
+	ZSTileStub **tiles;
 	NSInteger totalTiles;
-} ZSGameTileList;
+} ZSTileList;
 
-@class ZSGameBoard;
+@class ZSBoard;
 
 @interface ZSFastGameBoard : NSObject
 
 @property (assign) NSInteger size;
 
-@property (assign) ZSGameTileStub **grid;
+@property (assign) ZSTileStub **grid;
 
-@property (assign) ZSGameTileStub ***rows;
-@property (assign) ZSGameTileStub ***cols;
-@property (assign) ZSGameTileStub ***groups;
-@property (assign) ZSGameTileStub ***allSets;
+@property (assign) ZSTileStub ***rows;
+@property (assign) ZSTileStub ***cols;
+@property (assign) ZSTileStub ***groups;
+@property (assign) ZSTileStub ***allSets;
 
 @property (assign) NSInteger **totalTilesInRowWithAnswer;
 @property (assign) NSInteger **totalTilesInColWithAnswer;
@@ -63,10 +63,10 @@ typedef struct {
 
 // Data Migration
 
-- (void)copyGroupMapFromGameBoard:(ZSGameBoard *)gameBoard;
-- (void)copyGuessesFromGameBoard:(ZSGameBoard *)gameBoard;
-- (void)copyAnswersFromGameBoard:(ZSGameBoard *)gameBoard;
-- (void)copyPencilsFromGameBoard:(ZSGameBoard *)gameBoard;
+- (void)copyGroupMapFromGameBoard:(ZSBoard *)gameBoard;
+- (void)copyGuessesFromGameBoard:(ZSBoard *)gameBoard;
+- (void)copyAnswersFromGameBoard:(ZSBoard *)gameBoard;
+- (void)copyPencilsFromGameBoard:(ZSBoard *)gameBoard;
 
 - (void)copyGroupMapFromFastGameBoard:(ZSFastGameBoard *)gameBoard;
 - (void)copyGuessesFromFastGameBoard:(ZSFastGameBoard *)gameBoard;
@@ -91,9 +91,9 @@ typedef struct {
 
 // Information Gathering
 
-- (BOOL)tile:(ZSGameTileStub *)tile1 influencesTile:(ZSGameTileStub *)tile2;
-- (ZSGameTileList)getAllInfluencedTilesForTile:(ZSGameTileStub *)tile1 includeSelf:(BOOL)includeSelf;
-- (ZSGameTileList)getAllInfluencedTilesForTile:(ZSGameTileStub *)tile1 andOtherTile:(ZSGameTileStub *)tile2;
+- (BOOL)tile:(ZSTileStub *)tile1 influencesTile:(ZSTileStub *)tile2;
+- (ZSTileList)getAllInfluencedTilesForTile:(ZSTileStub *)tile1 includeSelf:(BOOL)includeSelf;
+- (ZSTileList)getAllInfluencedTilesForTile:(ZSTileStub *)tile1 andOtherTile:(ZSTileStub *)tile2;
 
 // Validitiy Checks
 

@@ -10,11 +10,11 @@
 
 #import "ZSHintGenerator.h"
 
-@class ZSGameBoard;
+@class ZSBoard;
 
 @interface ZSHintGeneratorNoHint : NSObject <ZSHintGeneratorUtility>
 
-- (void)setGameBoard:(ZSGameBoard *)gameBoard;
+- (void)setGameBoard:(ZSBoard *)gameBoard;
 
 - (NSArray *)generateHint;
 

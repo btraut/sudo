@@ -1,5 +1,5 @@
 //
-//  ZSGameTile.h
+//  ZSTile.h
 //  ZenSudoku
 //
 //  Created by Brent Traut on 11/26/11.
@@ -8,11 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@class ZSGameBoard;
+@class ZSBoard;
 
-@interface ZSGameTile : NSObject
+@interface ZSTile : NSObject
 
-@property (weak) ZSGameBoard *gameBoard;
+@property (weak) ZSBoard *gameBoard;
 
 @property (assign) NSInteger row;
 @property (assign) NSInteger col;
@@ -22,7 +22,7 @@
 @property (assign) NSInteger answer;
 @property (assign) BOOL locked;
 
-- (id)initWithBoard:(ZSGameBoard *)gameBoard;
+- (id)initWithBoard:(ZSBoard *)gameBoard;
 
 - (void)setValuesForDictionaryRepresentation:(NSDictionary *)dict;
 - (NSDictionary *)getDictionaryRepresentation;

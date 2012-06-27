@@ -50,7 +50,7 @@ typedef struct {
 @end
 
 @class ZSFastGameBoard;
-@class ZSGameBoard;
+@class ZSBoard;
 
 @interface ZSHintGenerator : NSObject
 
@@ -58,7 +58,7 @@ typedef struct {
 - (id)initWithSize:(NSInteger)size;
 - (void)dealloc;
 
-- (void)copyGameStateFromGameBoard:(ZSGameBoard *)gameBoard;
+- (void)copyGameStateFromGameBoard:(ZSBoard *)gameBoard;
 
 - (NSArray *)generateHint;
 

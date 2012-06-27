@@ -1,14 +1,14 @@
 //
-//  ZSGameBoard.m
+//  ZSBoard.m
 //  ZenSudoku
 //
 //  Created by Brent Traut on 12/11/11.
 //  Copyright (c) 2011 Ten Four Software, LLC. All rights reserved.
 //
 
-#import "ZSGameBoard.h"
+#import "ZSBoard.h"
 #import "ZSGame.h"
-#import "ZSGameTile.h"
+#import "ZSTile.h"
 #import "ZSGameController.h"
 
 NSInteger standard9x9GroupMap[9][9] = {
@@ -24,13 +24,13 @@ NSInteger standard9x9GroupMap[9][9] = {
 };
 
 
-@interface ZSGameBoard() {
+@interface ZSBoard() {
 	NSArray *_tiles;
 }
 
 @end
 
-@implementation ZSGameBoard
+@implementation ZSBoard
 
 @synthesize delegate;
 @synthesize size;
@@ -48,7 +48,7 @@ NSInteger standard9x9GroupMap[9][9] = {
 		}
 	}
 	
-	ZSGameBoard *newBoard = [[ZSGameBoard alloc] initWithSize:9 answers:newAnswers groupMap:newGroupMap];
+	ZSBoard *newBoard = [[ZSBoard alloc] initWithSize:9 answers:newAnswers groupMap:newGroupMap];
 	
 	[ZSGameController free2DIntGrid:newAnswers withSize:9];
 	[ZSGameController free2DIntGrid:newGroupMap withSize:9];
@@ -93,7 +93,7 @@ NSInteger standard9x9GroupMap[9][9] = {
 		NSMutableArray *tileCols = [NSMutableArray array];
 		
 		for (NSInteger col = 0; col < size; col++) {
-			ZSGameTile *gameTile = [[ZSGameTile alloc] initWithBoard:self];
+			ZSTile *gameTile = [[ZSTile alloc] initWithBoard:self];
 			
 			gameTile.row = row;
 			gameTile.col = col;
@@ -172,7 +172,7 @@ NSInteger standard9x9GroupMap[9][9] = {
 	}
 }
 
-- (void)copyGroupMapFromGameBoard:(ZSGameBoard *)gameBoard {
+- (void)copyGroupMapFromGameBoard:(ZSBoard *)gameBoard {
 	for (NSInteger row = 0; row < size; ++row) {
 		for (NSInteger col = 0; col < size; ++col) {
 			[self getTileAtRow:row col:col].groupId = [gameBoard getTileAtRow:row col:col].groupId;
@@ -180,7 +180,7 @@ NSInteger standard9x9GroupMap[9][9] = {
 	}
 }
 
-- (void)copyAnswersFromGameBoard:(ZSGameBoard *)gameBoard {
+- (void)copyAnswersFromGameBoard:(ZSBoard *)gameBoard {
 	for (NSInteger row = 0; row < size; ++row) {
 		for (NSInteger col = 0; col < size; ++col) {
 			[self getTileAtRow:row col:col].answer = [gameBoard getTileAtRow:row col:col].answer;
@@ -188,7 +188,7 @@ NSInteger standard9x9GroupMap[9][9] = {
 	}
 }
 
-- (void)copyGuessesFromGameBoard:(ZSGameBoard *)gameBoard {
+- (void)copyGuessesFromGameBoard:(ZSBoard *)gameBoard {
 	for (NSInteger row = 0; row < size; ++row) {
 		for (NSInteger col = 0; col < size; ++col) {
 			[self getTileAtRow:row col:col].guess = [gameBoard getTileAtRow:row col:col].guess;
@@ -324,7 +324,7 @@ NSInteger standard9x9GroupMap[9][9] = {
 - (void)lockAnswers {
 	for (NSInteger row = 0; row < size; ++row) {
 		for (NSInteger col = 0; col < size; ++col) {
-			ZSGameTile *tile = [self getTileAtRow:row col:col];
+			ZSTile *tile = [self getTileAtRow:row col:col];
 			
 			tile.guess = tile.answer;
 			tile.locked = (BOOL)tile.answer;
@@ -334,12 +334,12 @@ NSInteger standard9x9GroupMap[9][9] = {
 
 #pragma mark - Getters
 
-- (ZSGameTile *)getTileAtRow:(NSInteger)row col:(NSInteger)col {
+- (ZSTile *)getTileAtRow:(NSInteger)row col:(NSInteger)col {
 	return [[_tiles objectAtIndex:row] objectAtIndex:col];
 }
 
 - (NSArray *)getAllInfluencedTilesForTileAtRow:(NSInteger)targetRow col:(NSInteger)targetCol includeSelf:(BOOL)includeSelf {
-	ZSGameTile *targetTile = [self getTileAtRow:targetRow col:targetCol];
+	ZSTile *targetTile = [self getTileAtRow:targetRow col:targetCol];
 	
 	NSMutableArray *influencedTiles = [NSMutableArray array];
 	
@@ -348,7 +348,7 @@ NSInteger standard9x9GroupMap[9][9] = {
 	
 	// Add the col tiles. Skip the ones in the same group (including self).
 	for (NSInteger row = 0; row < size; ++row) {
-		ZSGameTile *possibleInfluencedTile = [self getTileAtRow:row col:targetCol];
+		ZSTile *possibleInfluencedTile = [self getTileAtRow:row col:targetCol];
 		
 		if (possibleInfluencedTile.groupId != targetTile.groupId) {
 			[influencedTiles addObject:possibleInfluencedTile];
@@ -357,7 +357,7 @@ NSInteger standard9x9GroupMap[9][9] = {
 	
 	// Add the row tiles. Skip the ones in the same group (including self).
 	for (NSInteger col = 0; col < size; ++col) {
-		ZSGameTile *possibleInfluencedTile = [self getTileAtRow:targetRow col:col];
+		ZSTile *possibleInfluencedTile = [self getTileAtRow:targetRow col:col];
 		
 		if (possibleInfluencedTile.groupId != targetTile.groupId) {
 			[influencedTiles addObject:possibleInfluencedTile];
@@ -398,7 +398,7 @@ NSInteger standard9x9GroupMap[9][9] = {
 	
 	for (NSInteger row = 0; row < size; ++row) {
 		for (NSInteger col = 0; col < size; ++col) {
-			ZSGameTile *gameTile = [self getTileAtRow:row col:col];
+			ZSTile *gameTile = [self getTileAtRow:row col:col];
 			
 			if (gameTile.groupId == targetGroupId && (includeSelf || !(row == targetRow && col == targetCol))) {
 				[set addObject:gameTile];
@@ -444,7 +444,7 @@ NSInteger standard9x9GroupMap[9][9] = {
 	
 	for (NSInteger row = 0; row < size; ++row) {
 		for (NSInteger col = 0; col < size; ++col) {
-			ZSGameTile *gameTile = [self getTileAtRow:row col:col];
+			ZSTile *gameTile = [self getTileAtRow:row col:col];
 			
 			if (gameTile.groupId == groupId) {
 				[set addObject:gameTile];
@@ -462,7 +462,7 @@ NSInteger standard9x9GroupMap[9][9] = {
 }
 
 - (void)setAnswer:(NSInteger)answer forTileAtRow:(NSInteger)row col:(NSInteger)col locked:(BOOL)locked {
-	ZSGameTile *tile = [self getTileAtRow:row col:col];
+	ZSTile *tile = [self getTileAtRow:row col:col];
 	
 	if (tile.answer != answer) {
 		// Clear all the pencil marks (except the actual answer) from the tile.
@@ -479,7 +479,7 @@ NSInteger standard9x9GroupMap[9][9] = {
 }
 
 - (void)clearAnswerForTileAtRow:(NSInteger)row col:(NSInteger)col {
-	ZSGameTile *tile = [self getTileAtRow:row col:col];
+	ZSTile *tile = [self getTileAtRow:row col:col];
 	NSInteger previousAnswer = tile.answer;
 	
 	if (previousAnswer) {
@@ -494,7 +494,7 @@ NSInteger standard9x9GroupMap[9][9] = {
 }
 	
 - (void)setGuess:(NSInteger)guess forTileAtRow:(NSInteger)row col:(NSInteger)col {
-	ZSGameTile *tile = [self getTileAtRow:row col:col];
+	ZSTile *tile = [self getTileAtRow:row col:col];
 	NSInteger previousGuess = tile.guess;
 	
 	if (tile.guess != guess) {
@@ -514,7 +514,7 @@ NSInteger standard9x9GroupMap[9][9] = {
 }
 
 - (void)setPencil:(BOOL)isSet forPencilNumber:(NSInteger)pencilNumber forTileAtRow:(NSInteger)row col:(NSInteger)col {
-	ZSGameTile *tile = [self getTileAtRow:row col:col];
+	ZSTile *tile = [self getTileAtRow:row col:col];
 	BOOL previousValue = [tile getPencilForGuess:pencilNumber];
 	
 	if (isSet != previousValue) {
@@ -533,13 +533,13 @@ NSInteger standard9x9GroupMap[9][9] = {
 }
 
 - (void)clearInfluencedPencilsForTileAtRow:(NSInteger)row col:(NSInteger)col {
-	ZSGameTile *tile = [self getTileAtRow:row col:col];
+	ZSTile *tile = [self getTileAtRow:row col:col];
 	
 	// Only clear the pencils if there's no guess present.
 	if (tile.guess) {
 		NSArray *influencedTiles = [self getAllInfluencedTilesForTileAtRow:row col:col includeSelf:NO];
 		
-		for (ZSGameTile *influencedTile in influencedTiles) {
+		for (ZSTile *influencedTile in influencedTiles) {
 			if (!influencedTile.guess) {
 				[self setPencil:NO forPencilNumber:tile.guess forTileAtRow:influencedTile.row col:influencedTile.col];
 			}
@@ -551,7 +551,7 @@ NSInteger standard9x9GroupMap[9][9] = {
 	// For the first pass, enable all pencil marks.
 	for (NSInteger row = 0; row < size; row++) {
 		for (NSInteger col = 0; col < size; col++) {
-			ZSGameTile *tile = [self getTileAtRow:row col:col];
+			ZSTile *tile = [self getTileAtRow:row col:col];
 			
 			if (!tile.guess) {
 				for (NSInteger i = 1; i <= size; ++i) {
@@ -580,7 +580,7 @@ NSInteger standard9x9GroupMap[9][9] = {
 }
 
 - (void)lockTileAtRow:(NSInteger)row col:(NSInteger)col {
-	ZSGameTile *tile = [self getTileAtRow:row col:col];
+	ZSTile *tile = [self getTileAtRow:row col:col];
 	
 	tile.guess = tile.answer;
 	tile.locked = YES;
@@ -595,7 +595,7 @@ NSInteger standard9x9GroupMap[9][9] = {
 	// Loop over the entire puzzle to find tiles in the same group.
 	for (NSInteger row = 0; row < size; ++row) {
 		for (NSInteger col = 0; col < size; ++col) {
-			ZSGameTile *iteratedTile = [self getTileAtRow:row col:col];
+			ZSTile *iteratedTile = [self getTileAtRow:row col:col];
 			
 			// Find all the tiles in the same row, col, or group as the target tile.
 			if (row == x || col == y || iteratedTile.groupId == targetGroup) {
@@ -638,7 +638,7 @@ NSInteger standard9x9GroupMap[9][9] = {
 	// Loop over the entire puzzle to find tiles in the same group.
 	for (NSInteger row = 0; row < size; ++row) {
 		for (NSInteger col = 0; col < size; ++col) {
-			ZSGameTile *iteratedTile = [self getTileAtRow:row col:col];
+			ZSTile *iteratedTile = [self getTileAtRow:row col:col];
 			
 			// Find all the tiles in the same group (excluding the target tile itself).
 			if (iteratedTile.groupId == targetGroup && !(row == x && col == y)) {
@@ -659,7 +659,7 @@ NSInteger standard9x9GroupMap[9][9] = {
 	// Loop over the entire puzzle to find tiles in the same group.
 	for (NSInteger row = 0; row < size; ++row) {
 		for (NSInteger col = 0; col < size; ++col) {
-			ZSGameTile *iteratedTile = [self getTileAtRow:row col:col];
+			ZSTile *iteratedTile = [self getTileAtRow:row col:col];
 			
 			// Find all the tiles in the same row, col, or group as the target tile.
 			if (row == x || col == y || iteratedTile.groupId == targetGroup) {
@@ -702,7 +702,7 @@ NSInteger standard9x9GroupMap[9][9] = {
 	// Loop over the entire puzzle to find tiles in the same group.
 	for (NSInteger row = 0; row < size; ++row) {
 		for (NSInteger col = 0; col < size; ++col) {
-			ZSGameTile *iteratedTile = [self getTileAtRow:row col:col];
+			ZSTile *iteratedTile = [self getTileAtRow:row col:col];
 			
 			// Find all the tiles in the same group (excluding the target tile itself).
 			if (iteratedTile.groupId == targetGroup && !(row == x && col == y)) {

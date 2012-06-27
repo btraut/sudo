@@ -8,7 +8,7 @@
 
 #import "ZSHintViewController.h"
 #import "ZSGameViewController.h"
-#import "ZSGameBoardViewController.h"
+#import "ZSBoardViewController.h"
 #import "ZSHintCard.h"
 
 @interface ZSHintViewController () {
@@ -125,9 +125,9 @@
 		NSInteger row = [[dict objectForKey:kDictionaryKeyTileRow] intValue];
 		NSInteger col = [[dict objectForKey:kDictionaryKeyTileCol] intValue];
 		NSInteger pencil = [[dict objectForKey:kDictionaryKeyTileValue] intValue];
-		ZSGameBoardTilePencilTextHintHighlightType pencilTextHintHighlightType = [[dict objectForKey:kDictionaryKeyHighlightType] intValue];
+		ZSTilePencilTextHintHighlightType pencilTextHintHighlightType = [[dict objectForKey:kDictionaryKeyHighlightType] intValue];
 		
-		ZSGameBoardTileViewController *tile = [_gameViewController.gameBoardViewController getGameBoardTileViewControllerAtRow:row col:col];
+		ZSTileViewController *tile = [_gameViewController.gameBoardViewController getGameBoardTileViewControllerAtRow:row col:col];
 		
 		tile.highlightPencilHints[pencil - 1] = pencilTextHintHighlightType;
 	}
@@ -135,9 +135,9 @@
 	for (NSDictionary *dict in currentCard.highlightAnswers) {
 		NSInteger row = [[dict objectForKey:kDictionaryKeyTileRow] intValue];
 		NSInteger col = [[dict objectForKey:kDictionaryKeyTileCol] intValue];
-		ZSGameBoardTileTextHintHighlightType textHintHighlightType = [[dict objectForKey:kDictionaryKeyHighlightType] intValue];
+		ZSTileTextHintHighlightType textHintHighlightType = [[dict objectForKey:kDictionaryKeyHighlightType] intValue];
 		
-		ZSGameBoardTileViewController *tile = [_gameViewController.gameBoardViewController getGameBoardTileViewControllerAtRow:row col:col];
+		ZSTileViewController *tile = [_gameViewController.gameBoardViewController getGameBoardTileViewControllerAtRow:row col:col];
 		
 		tile.highlightGuessHint = textHintHighlightType;
 	}
@@ -145,9 +145,9 @@
 	for (NSDictionary *dict in currentCard.highlightTiles) {
 		NSInteger row = [[dict objectForKey:kDictionaryKeyTileRow] intValue];
 		NSInteger col = [[dict objectForKey:kDictionaryKeyTileCol] intValue];
-		ZSGameBoardTileHintHighlightType hintHighlightType = [[dict objectForKey:kDictionaryKeyHighlightType] intValue];
+		ZSTileHintHighlightType hintHighlightType = [[dict objectForKey:kDictionaryKeyHighlightType] intValue];
 		
-		ZSGameBoardTileViewController *tile = [_gameViewController.gameBoardViewController getGameBoardTileViewControllerAtRow:row col:col];
+		ZSTileViewController *tile = [_gameViewController.gameBoardViewController getGameBoardTileViewControllerAtRow:row col:col];
 		
 		tile.highlightedHintType = hintHighlightType;
 	}

@@ -8,8 +8,8 @@
 
 #import "ZSFastGameBoard.h"
 
-#import "ZSGameBoard.h"
-#import "ZSGameTile.h"
+#import "ZSBoard.h"
+#import "ZSTile.h"
 
 @implementation ZSFastGameBoard
 
@@ -93,10 +93,10 @@
 }
 
 - (void)allocGrid {
-	grid = malloc(size * sizeof(ZSGameTileStub *));
+	grid = malloc(size * sizeof(ZSTileStub *));
 	
 	for (NSInteger i = 0; i < size; ++i) {
-		grid[i] = malloc(size * sizeof(ZSGameTileStub));
+		grid[i] = malloc(size * sizeof(ZSTileStub));
 		
 		for (NSInteger j = 0; j < size; ++j) {
 			grid[i][j].row = i;
@@ -128,10 +128,10 @@
 }
 
 - (void)allocSetCaches {
-	rows = malloc(size * sizeof(ZSGameTileStub **));
-	cols = malloc(size * sizeof(ZSGameTileStub **));
-	groups = malloc(size * sizeof(ZSGameTileStub **));
-	allSets = malloc(3 * size * sizeof(ZSGameTileStub **));
+	rows = malloc(size * sizeof(ZSTileStub **));
+	cols = malloc(size * sizeof(ZSTileStub **));
+	groups = malloc(size * sizeof(ZSTileStub **));
+	allSets = malloc(3 * size * sizeof(ZSTileStub **));
 	
 	totalTilesInRowWithAnswer = malloc(size * sizeof(NSInteger *));
 	totalTilesInColWithAnswer = malloc(size * sizeof(NSInteger *));
@@ -142,9 +142,9 @@
 	totalTilesInGroupWithPencil = malloc(size * sizeof(NSInteger *));
 	
 	for (NSInteger i = 0; i < size; ++i) {
-		rows[i] = malloc(size * sizeof(ZSGameTileStub *));
-		cols[i] = malloc(size * sizeof(ZSGameTileStub *));
-		groups[i] = malloc(size * sizeof(ZSGameTileStub *));
+		rows[i] = malloc(size * sizeof(ZSTileStub *));
+		cols[i] = malloc(size * sizeof(ZSTileStub *));
+		groups[i] = malloc(size * sizeof(ZSTileStub *));
 		
 		totalTilesInRowWithAnswer[i] = malloc(size * sizeof(NSInteger));
 		totalTilesInColWithAnswer[i] = malloc(size * sizeof(NSInteger));
@@ -197,10 +197,10 @@
 
 #pragma mark - Data Migration
 
-- (void)copyGroupMapFromGameBoard:(ZSGameBoard *)gameBoard {
+- (void)copyGroupMapFromGameBoard:(ZSBoard *)gameBoard {
 	for (NSInteger row = 0; row < size; ++row) {
 		for (NSInteger col = 0; col < size; ++col) {
-			ZSGameTile *tile = [gameBoard getTileAtRow:row col:col];
+			ZSTile *tile = [gameBoard getTileAtRow:row col:col];
 			grid[row][col].groupId = tile.groupId;
 		}
 	}
@@ -208,30 +208,30 @@
 	[self rebuildGroupCache];
 }
 
-- (void)copyGuessesFromGameBoard:(ZSGameBoard *)gameBoard {
+- (void)copyGuessesFromGameBoard:(ZSBoard *)gameBoard {
 	for (NSInteger row = 0; row < size; ++row) {
 		for (NSInteger col = 0; col < size; ++col) {
-			ZSGameTile *tile = [gameBoard getTileAtRow:row col:col];
+			ZSTile *tile = [gameBoard getTileAtRow:row col:col];
 			grid[row][col].answer = tile.answer;
 		}
 	}
 }
 
-- (void)copyAnswersFromGameBoard:(ZSGameBoard *)gameBoard {
+- (void)copyAnswersFromGameBoard:(ZSBoard *)gameBoard {
 	for (NSInteger row = 0; row < size; ++row) {
 		for (NSInteger col = 0; col < size; ++col) {
-			ZSGameTile *tile = [gameBoard getTileAtRow:row col:col];
+			ZSTile *tile = [gameBoard getTileAtRow:row col:col];
 			[self setGuess:tile.guess forTileAtRow:row col:col];
 		}
 	}
 }
 
-- (void)copyPencilsFromGameBoard:(ZSGameBoard *)gameBoard {
+- (void)copyPencilsFromGameBoard:(ZSBoard *)gameBoard {
 	[self setAllPencils:NO];
 	
 	for (NSInteger row = 0; row < size; ++row) {
 		for (NSInteger col = 0; col < size; ++col) {
-			ZSGameTile *tile = [gameBoard getTileAtRow:row col:col];
+			ZSTile *tile = [gameBoard getTileAtRow:row col:col];
 			
 			if (tile.guess) {
 				continue;
@@ -436,7 +436,7 @@
 - (void)clearInfluencedPencilsForTileAtRow:(NSInteger)row col:(NSInteger)col {
 	NSInteger guess = grid[row][col].guess;
 	
-	ZSGameTileStub *tile = &grid[row][col];
+	ZSTileStub *tile = &grid[row][col];
 	
 	for (NSInteger i = 0; i < size; ++i) {
 		[self setPencil:NO forPencilNumber:guess forTileAtRow:tile->row col:i];
@@ -473,14 +473,14 @@
 
 #pragma mark - Information Gathering
 
-- (BOOL)tile:(ZSGameTileStub *)tile1 influencesTile:(ZSGameTileStub *)tile2 {
+- (BOOL)tile:(ZSTileStub *)tile1 influencesTile:(ZSTileStub *)tile2 {
 	return (tile1->row == tile2->row || tile1->col == tile2->col || tile1->groupId == tile2->groupId);
 }
 
-- (ZSGameTileList)getAllInfluencedTilesForTile:(ZSGameTileStub *)tile1 includeSelf:(BOOL)includeSelf {
-	ZSGameTileList tileList;
+- (ZSTileList)getAllInfluencedTilesForTile:(ZSTileStub *)tile1 includeSelf:(BOOL)includeSelf {
+	ZSTileList tileList;
 	
-	tileList.tiles = malloc(size * size * sizeof(ZSGameTileStub *));
+	tileList.tiles = malloc(size * size * sizeof(ZSTileStub *));
 	tileList.totalTiles = 0;
 	
 	for (NSInteger i = 0; i < size; ++i) {
@@ -512,16 +512,16 @@
 	return tileList;
 }
 
-- (ZSGameTileList)getAllInfluencedTilesForTile:(ZSGameTileStub *)tile1 andOtherTile:(ZSGameTileStub *)tile2 {
-	ZSGameTileList tileList;
+- (ZSTileList)getAllInfluencedTilesForTile:(ZSTileStub *)tile1 andOtherTile:(ZSTileStub *)tile2 {
+	ZSTileList tileList;
 	
-	tileList.tiles = malloc(size * size * sizeof(ZSGameTileStub *));
+	tileList.tiles = malloc(size * size * sizeof(ZSTileStub *));
 	tileList.totalTiles = 0;
 	
-	ZSGameTileList tile1InflucedTiles = [self getAllInfluencedTilesForTile:tile1 includeSelf:YES];
+	ZSTileList tile1InflucedTiles = [self getAllInfluencedTilesForTile:tile1 includeSelf:YES];
 	
 	for (NSInteger i = 0; i < tile1InflucedTiles.totalTiles; ++i) {
-		ZSGameTileStub *currentTile = tile1InflucedTiles.tiles[i];
+		ZSTileStub *currentTile = tile1InflucedTiles.tiles[i];
 		
 		if ([self tile:currentTile influencesTile:tile2]) {
 			tileList.tiles[tileList.totalTiles] = currentTile;

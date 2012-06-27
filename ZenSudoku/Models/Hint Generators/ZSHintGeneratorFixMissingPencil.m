@@ -86,8 +86,8 @@
 			
 			for (NSInteger i = 0; i < _totalAddPencilsTiles; ++i) {
 				ZSHintGeneratorFixMissingPencilInstruction *instruction = &_addPencilsTiles[i];
-				[card2a addInstructionHighlightTileAtRow:instruction->row col:instruction->col highlightType:ZSGameBoardTileHintHighlightTypeA];
-				[card2b addInstructionHighlightTileAtRow:instruction->row col:instruction->col highlightType:ZSGameBoardTileHintHighlightTypeB];
+				[card2a addInstructionHighlightTileAtRow:instruction->row col:instruction->col highlightType:ZSTileHintHighlightTypeA];
+				[card2b addInstructionHighlightTileAtRow:instruction->row col:instruction->col highlightType:ZSTileHintHighlightTypeB];
 				[card2b addInstructionAddPencil:instruction->pencil forTileAtRow:instruction->row col:instruction->col];
 			}
 			
@@ -107,8 +107,8 @@
 			
 			for (NSInteger i = 0; i < _totalMissingPencilTiles; ++i) {
 				ZSHintGeneratorFixMissingPencilInstruction *instruction = &_missingPencilTiles[i];
-				[card2a addInstructionHighlightTileAtRow:instruction->row col:instruction->col highlightType:ZSGameBoardTileHintHighlightTypeA];
-				[card2b addInstructionHighlightTileAtRow:instruction->row col:instruction->col highlightType:ZSGameBoardTileHintHighlightTypeB];
+				[card2a addInstructionHighlightTileAtRow:instruction->row col:instruction->col highlightType:ZSTileHintHighlightTypeA];
+				[card2b addInstructionHighlightTileAtRow:instruction->row col:instruction->col highlightType:ZSTileHintHighlightTypeB];
 				[card2b addInstructionAddPencil:instruction->pencil forTileAtRow:instruction->row col:instruction->col];
 			}
 			

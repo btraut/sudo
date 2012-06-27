@@ -9,10 +9,10 @@
 #import "ZSGameAnswerOptionsViewController.h"
 #import "ZSGameAnswerOptionViewController.h"
 #import "ZSGameViewController.h"
-#import "ZSGameBoardViewController.h"
-#import "ZSGameTile.h"
+#import "ZSBoardViewController.h"
+#import "ZSTile.h"
 #import "ZSGame.h"
-#import "ZSGameBoard.h"
+#import "ZSBoard.h"
 
 #define DEFAULT_FRAME_HEIGHT 300
 #define DEFAULT_FRAME_WIDTH 31
@@ -86,7 +86,7 @@
 }
 
 - (void)reloadView {
-	ZSGameBoardTileViewController *selectedTile = gameViewController.gameBoardViewController.selectedTileView;
+	ZSTileViewController *selectedTile = gameViewController.gameBoardViewController.selectedTileView;
 	
 	[self deselectGameAnswerOptionView];
 	

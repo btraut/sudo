@@ -1,5 +1,5 @@
 //
-//  ZSGameHistoryEntry.h
+//  ZSHistoryEntry.h
 //  ZenSudoku
 //
 //  Created by Brent Traut on 12/3/11.
@@ -7,25 +7,25 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ZSGameTile.h"
+#import "ZSTile.h"
 
 typedef enum {
-	ZSGameHistoryEntryTypePencil,
-	ZSGameHistoryEntryTypeGuess
-} ZSGameHistoryEntryType;
+	ZSHistoryEntryTypePencil,
+	ZSHistoryEntryTypeGuess
+} ZSHistoryEntryType;
 
-@interface ZSGameHistoryEntry : NSObject
+@interface ZSHistoryEntry : NSObject
 
-@property (assign) ZSGameHistoryEntryType type;
+@property (assign) ZSHistoryEntryType type;
 @property (assign) NSInteger row;
 @property (assign) NSInteger col;
 @property (assign) NSInteger previousValue;
 @property (assign) NSInteger pencilNumber;
 
 + (id)undoStop;
-+ (id)undoDescriptionWithType:(ZSGameHistoryEntryType)newType tile:(ZSGameTile *)newTile previousValue:(NSInteger)newPreviousValue;
-- (id)initWithType:(ZSGameHistoryEntryType)newType tile:(ZSGameTile *)newTile previousValue:(NSInteger)newPreviousValue;
-- (id)initWithType:(ZSGameHistoryEntryType)newType row:(NSInteger)row col:(NSInteger)col previousValue:(NSInteger)newPreviousValue;
++ (id)undoDescriptionWithType:(ZSHistoryEntryType)newType tile:(ZSTile *)newTile previousValue:(NSInteger)newPreviousValue;
+- (id)initWithType:(ZSHistoryEntryType)newType tile:(ZSTile *)newTile previousValue:(NSInteger)newPreviousValue;
+- (id)initWithType:(ZSHistoryEntryType)newType row:(NSInteger)row col:(NSInteger)col previousValue:(NSInteger)newPreviousValue;
 
 - (id)initWithDictionaryRepresentation:(NSDictionary *)dict;
 - (NSDictionary *)getDictionaryRepresentation;

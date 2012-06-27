@@ -103,7 +103,7 @@
 	
 	for (NSInteger i = 0; i < _totalBoxLineReductionTiles; ++i) {
 		ZSHintGeneratorTileInstruction *instruction = &_boxLineReductionTiles[i];
-		[card1 addInstructionHighlightTileAtRow:instruction->row col:instruction->col highlightType:ZSGameBoardTileHintHighlightTypeA];
+		[card1 addInstructionHighlightTileAtRow:instruction->row col:instruction->col highlightType:ZSTileHintHighlightTypeA];
 	}
 	
 	[hintCards addObject:card1];
@@ -114,17 +114,17 @@
 	
 	for (NSInteger i = 0; i < _totalGroupTiles; ++i) {
 		ZSHintGeneratorTileInstruction *instruction = &_groupTiles[i];
-		[card2 addInstructionHighlightTileAtRow:instruction->row col:instruction->col highlightType:ZSGameBoardTileHintHighlightTypeC];
+		[card2 addInstructionHighlightTileAtRow:instruction->row col:instruction->col highlightType:ZSTileHintHighlightTypeC];
 	}
 	
 	for (NSInteger i = 0; i < _totalRowOrColTiles; ++i) {
 		ZSHintGeneratorTileInstruction *instruction = &_rowOrColTiles[i];
-		[card2 addInstructionHighlightTileAtRow:instruction->row col:instruction->col highlightType:ZSGameBoardTileHintHighlightTypeB];
+		[card2 addInstructionHighlightTileAtRow:instruction->row col:instruction->col highlightType:ZSTileHintHighlightTypeB];
 	}
 	
 	for (NSInteger i = 0; i < _totalBoxLineReductionTiles; ++i) {
 		ZSHintGeneratorTileInstruction *instruction = &_boxLineReductionTiles[i];
-		[card2 addInstructionHighlightTileAtRow:instruction->row col:instruction->col highlightType:ZSGameBoardTileHintHighlightTypeA];
+		[card2 addInstructionHighlightTileAtRow:instruction->row col:instruction->col highlightType:ZSTileHintHighlightTypeA];
 	}
 	
 	[hintCards addObject:card2];
@@ -136,22 +136,22 @@
 	
 	for (NSInteger i = 0; i < _totalGroupTiles; ++i) {
 		ZSHintGeneratorTileInstruction *instruction = &_groupTiles[i];
-		[card3 addInstructionHighlightTileAtRow:instruction->row col:instruction->col highlightType:ZSGameBoardTileHintHighlightTypeC];
+		[card3 addInstructionHighlightTileAtRow:instruction->row col:instruction->col highlightType:ZSTileHintHighlightTypeC];
 	}
 	
 	for (NSInteger i = 0; i < _totalRowOrColTiles; ++i) {
 		ZSHintGeneratorTileInstruction *instruction = &_rowOrColTiles[i];
-		[card3 addInstructionHighlightTileAtRow:instruction->row col:instruction->col highlightType:ZSGameBoardTileHintHighlightTypeB];
+		[card3 addInstructionHighlightTileAtRow:instruction->row col:instruction->col highlightType:ZSTileHintHighlightTypeB];
 	}
 	
 	for (NSInteger i = 0; i < _totalBoxLineReductionTiles; ++i) {
 		ZSHintGeneratorTileInstruction *instruction = &_boxLineReductionTiles[i];
-		[card3 addInstructionHighlightTileAtRow:instruction->row col:instruction->col highlightType:ZSGameBoardTileHintHighlightTypeA];
+		[card3 addInstructionHighlightTileAtRow:instruction->row col:instruction->col highlightType:ZSTileHintHighlightTypeA];
 	}
 	
 	for (NSInteger i = 0; i < _totalPencilsToEliminate; ++i) {
 		ZSHintGeneratorTileInstruction *instruction = &_pencilsToEliminate[i];
-		[card3 addInstructionHighlightPencil:instruction->pencil forTileAtRow:instruction->row col:instruction->col highlightType:ZSGameBoardTilePencilTextHintHighlightTypeA];
+		[card3 addInstructionHighlightPencil:instruction->pencil forTileAtRow:instruction->row col:instruction->col highlightType:ZSTilePencilTextHintHighlightTypeA];
 	}
 	
 	[hintCards addObject:card3];
@@ -163,17 +163,17 @@
 	
 	for (NSInteger i = 0; i < _totalGroupTiles; ++i) {
 		ZSHintGeneratorTileInstruction *instruction = &_groupTiles[i];
-		[card4 addInstructionHighlightTileAtRow:instruction->row col:instruction->col highlightType:ZSGameBoardTileHintHighlightTypeC];
+		[card4 addInstructionHighlightTileAtRow:instruction->row col:instruction->col highlightType:ZSTileHintHighlightTypeC];
 	}
 	
 	for (NSInteger i = 0; i < _totalRowOrColTiles; ++i) {
 		ZSHintGeneratorTileInstruction *instruction = &_rowOrColTiles[i];
-		[card4 addInstructionHighlightTileAtRow:instruction->row col:instruction->col highlightType:ZSGameBoardTileHintHighlightTypeB];
+		[card4 addInstructionHighlightTileAtRow:instruction->row col:instruction->col highlightType:ZSTileHintHighlightTypeB];
 	}
 	
 	for (NSInteger i = 0; i < _totalBoxLineReductionTiles; ++i) {
 		ZSHintGeneratorTileInstruction *instruction = &_boxLineReductionTiles[i];
-		[card4 addInstructionHighlightTileAtRow:instruction->row col:instruction->col highlightType:ZSGameBoardTileHintHighlightTypeA];
+		[card4 addInstructionHighlightTileAtRow:instruction->row col:instruction->col highlightType:ZSTileHintHighlightTypeA];
 	}
 	
 	for (NSInteger i = 0; i < _totalPencilsToEliminate; ++i) {

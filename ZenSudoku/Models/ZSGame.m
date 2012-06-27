@@ -9,8 +9,8 @@
 #import "ZSGame.h"
 #import "ZSAppDelegate.h"
 #import "ZSGameController.h"
-#import "ZSGameHistoryEntry.h"
-#import "ZSGameBoard.h"
+#import "ZSHistoryEntry.h"
+#import "ZSBoard.h"
 #import "ZSStatisticsController.h"
 
 // Game Difficulty Names
@@ -62,7 +62,7 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 + (id)emptyStandard9x9Game {
 	ZSGame *newGame = [[ZSGame alloc] initWithSize:9];
 	
-	newGame.gameBoard = [ZSGameBoard emptyStandard9x9Game];
+	newGame.gameBoard = [ZSBoard emptyStandard9x9Game];
 	newGame.gameBoard.delegate = newGame;
 	
 	return newGame;
@@ -80,7 +80,7 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 		difficulty = ZSGameDifficultyEasy;
 		
 		// Create the board.
-		gameBoard = [[ZSGameBoard alloc] initWithSize:newSize];
+		gameBoard = [[ZSBoard alloc] initWithSize:newSize];
 		gameBoard.delegate = self;
 		
 		// Initialize undo/redo.
@@ -141,7 +141,7 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 		// Unpack the tiles.
 		for (NSInteger row = 0; row < gameBoard.size; row++) {
 			for (NSInteger col = 0; col < gameBoard.size; col++) {
-				ZSGameTile *tile = [gameBoard getTileAtRow:row col:col];
+				ZSTile *tile = [gameBoard getTileAtRow:row col:col];
 				[tile setValuesForDictionaryRepresentation:[[[dict objectForKey:kDictionaryRepresentationGameTilesKey] objectAtIndex:row] objectAtIndex:col]];
 			}
 		}
@@ -158,7 +158,7 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 			NSMutableArray *stackEntry = [NSMutableArray array];
 			
 			for (NSDictionary *historyEntry in stackEntries) {
-				[stackEntry addObject:[[ZSGameHistoryEntry alloc] initWithDictionaryRepresentation:historyEntry]];
+				[stackEntry addObject:[[ZSHistoryEntry alloc] initWithDictionaryRepresentation:historyEntry]];
 			}
 			
 			[_undoStack addObject:stackEntry];
@@ -168,7 +168,7 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 			NSMutableArray *stackEntry = [NSMutableArray array];
 			
 			for (NSDictionary *historyEntry in stackEntries) {
-				[stackEntry addObject:[[ZSGameHistoryEntry alloc] initWithDictionaryRepresentation:historyEntry]];
+				[stackEntry addObject:[[ZSHistoryEntry alloc] initWithDictionaryRepresentation:historyEntry]];
 			}
 			
 			[_redoStack addObject:stackEntry];
@@ -212,7 +212,7 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 	for (NSArray *stackEntries in _undoStack) {
 		NSMutableArray *stackEntry = [NSMutableArray array];
 		
-		for (ZSGameHistoryEntry *historyEntry in stackEntries) {
+		for (ZSHistoryEntry *historyEntry in stackEntries) {
 			[stackEntry addObject:[historyEntry getDictionaryRepresentation]];
 		}
 		
@@ -222,7 +222,7 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 	for (NSArray *stackEntries in _redoStack) {
 		NSMutableArray *stackEntry = [NSMutableArray array];
 		
-		for (ZSGameHistoryEntry *historyEntry in stackEntries) {
+		for (ZSHistoryEntry *historyEntry in stackEntries) {
 			[stackEntry addObject:[historyEntry getDictionaryRepresentation]];
 		}
 		
@@ -243,7 +243,7 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 }
 
 - (void)setGuess:(NSInteger)guess forTileAtRow:(NSInteger)row col:(NSInteger)col {
-	ZSGameTile *tile = [self getTileAtRow:row col:col];
+	ZSTile *tile = [self getTileAtRow:row col:col];
 	
 	if (tile.guess != guess) {
 		BOOL enterGuess = NO;
@@ -284,9 +284,9 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 	}
 }
 
-- (void)guessDidChangeForTile:(ZSGameTile *)tile previousGuess:(NSInteger)previousGuess {
+- (void)guessDidChangeForTile:(ZSTile *)tile previousGuess:(NSInteger)previousGuess {
 	// Add the history description for the guess change.
-	[self addHistoryDescription:[ZSGameHistoryEntry undoDescriptionWithType:ZSGameHistoryEntryTypeGuess tile:tile previousValue:previousGuess]];
+	[self addHistoryDescription:[ZSHistoryEntry undoDescriptionWithType:ZSHistoryEntryTypeGuess tile:tile previousValue:previousGuess]];
 	
 	// Notify the delegate that things changed.
 	[self.stateChangeDelegate tileGuessDidChange:tile.guess forTileAtRow:tile.row col:tile.col];
@@ -301,9 +301,9 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 	}
 }
 
-- (void)pencilDidChangeForTile:(ZSGameTile *)tile pencilNumber:(NSInteger)pencilNumber previousSet:(NSInteger)previousSet {
+- (void)pencilDidChangeForTile:(ZSTile *)tile pencilNumber:(NSInteger)pencilNumber previousSet:(NSInteger)previousSet {
 	// Add the history description for the pencil change.
-	ZSGameHistoryEntry *undoDescription = [ZSGameHistoryEntry undoDescriptionWithType:ZSGameHistoryEntryTypePencil tile:tile previousValue:previousSet];
+	ZSHistoryEntry *undoDescription = [ZSHistoryEntry undoDescriptionWithType:ZSHistoryEntryTypePencil tile:tile previousValue:previousSet];
 	undoDescription.pencilNumber = pencilNumber;
 	[self addHistoryDescription:undoDescription];
 	
@@ -324,7 +324,7 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 }
 
 - (BOOL)getPencilForPencilNumber:(NSInteger)pencilNumber forTileAtRow:(NSInteger)row col:(NSInteger)col {
-	ZSGameTile *tile = [self getTileAtRow:row col:col];
+	ZSTile *tile = [self getTileAtRow:row col:col];
 	return [tile getPencilForGuess:pencilNumber];
 }
 
@@ -347,12 +347,12 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 
 #pragma mark - Tile Methods (Private)
 
-- (ZSGameTile *)getTileAtRow:(NSInteger)row col:(NSInteger)col {
+- (ZSTile *)getTileAtRow:(NSInteger)row col:(NSInteger)col {
 	return [gameBoard getTileAtRow:row col:col];
 }
 
 - (NSArray *)getAllInfluencedTilesForTileAtRow:(NSInteger)targetRow col:(NSInteger)targetCol includeSelf:(BOOL)includeSelf {
-	ZSGameTile *targetTile = [self getTileAtRow:targetRow col:targetCol];
+	ZSTile *targetTile = [self getTileAtRow:targetRow col:targetCol];
 	
 	NSMutableArray *influencedTiles = [NSMutableArray array];
 	
@@ -361,7 +361,7 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 	
 	// Add the col tiles. Skip the ones in the same group (including self).
 	for (NSInteger row = 0; row < gameBoard.size; ++row) {
-		ZSGameTile *possibleInfluencedTile = [self getTileAtRow:row col:targetCol];
+		ZSTile *possibleInfluencedTile = [self getTileAtRow:row col:targetCol];
 		
 		if (possibleInfluencedTile.groupId != targetTile.groupId) {
 			[influencedTiles addObject:possibleInfluencedTile];
@@ -370,7 +370,7 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 	
 	// Add the row tiles. Skip the ones in the same group (including self).
 	for (NSInteger col = 0; col < gameBoard.size; ++col) {
-		ZSGameTile *possibleInfluencedTile = [self getTileAtRow:targetRow col:col];
+		ZSTile *possibleInfluencedTile = [self getTileAtRow:targetRow col:col];
 		
 		if (possibleInfluencedTile.groupId != targetTile.groupId) {
 			[influencedTiles addObject:possibleInfluencedTile];
@@ -411,7 +411,7 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 	
 	for (NSInteger row = 0; row < gameBoard.size; ++row) {
 		for (NSInteger col = 0; col < gameBoard.size; ++col) {
-			ZSGameTile *gameTile = [self getTileAtRow:row col:col];
+			ZSTile *gameTile = [self getTileAtRow:row col:col];
 			
 			if (gameTile.groupId == targetGroupId && (includeSelf || !(row == targetRow && col == targetCol))) {
 				[set addObject:gameTile];
@@ -429,7 +429,7 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 	
 	for (NSInteger row = 0; row < gameBoard.size; row++) {
 		for (NSInteger col = 0; col < gameBoard.size; col++) {
-			ZSGameTile *tile = [self getTileAtRow:row col:col];
+			ZSTile *tile = [self getTileAtRow:row col:col];
 			
 			if (tile.guess == guess) {
 				totalOfGuess++;
@@ -447,7 +447,7 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 - (BOOL)isSolved {
 	for (NSInteger row = 0; row < gameBoard.size; row++) {
 		for (NSInteger col = 0; col < gameBoard.size; col++) {
-			ZSGameTile *gameTile = [self getTileAtRow:row col:col];
+			ZSTile *gameTile = [self getTileAtRow:row col:col];
 			
 			if (!gameTile.guess || gameTile.guess != gameTile.answer) {
 				return NO;
@@ -502,20 +502,20 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 	
 	// Walk the history state backwards and restore each action.
 	for (NSInteger i = [historyState count]; i; --i) {
-		ZSGameHistoryEntry *undoDescription = [historyState objectAtIndex:(i - 1)];
+		ZSHistoryEntry *undoDescription = [historyState objectAtIndex:(i - 1)];
 		
 		NSInteger tempPreviousValue;
-		ZSGameTile *undoTile;
+		ZSTile *undoTile;
 		
 		switch (undoDescription.type) {
-			case ZSGameHistoryEntryTypeGuess:
+			case ZSHistoryEntryTypeGuess:
 				undoTile = [gameBoard getTileAtRow:undoDescription.row col:undoDescription.col];
 				tempPreviousValue = undoTile.guess;
 				[gameBoard setGuess:undoDescription.previousValue forTileAtRow:undoDescription.row col:undoDescription.col];
 				undoDescription.previousValue = tempPreviousValue;
 				break;
 				
-			case ZSGameHistoryEntryTypePencil:
+			case ZSHistoryEntryTypePencil:
 				undoTile = [gameBoard getTileAtRow:undoDescription.row col:undoDescription.col];
 				tempPreviousValue = [undoTile getPencilForGuess:undoDescription.pencilNumber];
 				[gameBoard setPencil:undoDescription.previousValue forPencilNumber:undoDescription.pencilNumber forTileAtRow:undoDescription.row col:undoDescription.col];
@@ -557,19 +557,19 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 	recordingHistory = NO;
 	
 	// Walk the history state backwards and restore each action.
-	for (ZSGameHistoryEntry *undoDescription in historyState) {
+	for (ZSHistoryEntry *undoDescription in historyState) {
 		NSInteger tempPreviousValue;
-		ZSGameTile *redoTile;
+		ZSTile *redoTile;
 		
 		switch (undoDescription.type) {
-			case ZSGameHistoryEntryTypeGuess:
+			case ZSHistoryEntryTypeGuess:
 				redoTile = [gameBoard getTileAtRow:undoDescription.row col:undoDescription.col];
 				tempPreviousValue = redoTile.guess;
 				[gameBoard setGuess:undoDescription.previousValue forTileAtRow:undoDescription.row col:undoDescription.col];
 				undoDescription.previousValue = tempPreviousValue;
 				break;
 				
-			case ZSGameHistoryEntryTypePencil:
+			case ZSHistoryEntryTypePencil:
 				redoTile = [gameBoard getTileAtRow:undoDescription.row col:undoDescription.col];
 				tempPreviousValue = [redoTile getPencilForGuess:undoDescription.pencilNumber];
 				[gameBoard setPencil:undoDescription.previousValue forPencilNumber:undoDescription.pencilNumber forTileAtRow:undoDescription.row col:undoDescription.col];
@@ -588,7 +588,7 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 	[[ZSStatisticsController sharedInstance] userUsedRedo];
 }
 
-- (void)addHistoryDescription:(ZSGameHistoryEntry *)undoDescription {
+- (void)addHistoryDescription:(ZSHistoryEntry *)undoDescription {
 	if (recordingHistory) {
 		// Clear the redo stack.
 		[_redoStack removeAllObjects];

@@ -1,18 +1,18 @@
 //
-//  ZSFoldedCornerGLView.m
+//  ZSFoldedCornerView.m
 //  ZenSudoku
 //
 //  Created by Brent Traut on 6/4/12.
 //  Copyright (c) 2012 Ten Four Software, LLC. All rights reserved.
 //
 
-#import "ZSFoldedCornerGLView.h"
+#import "ZSFoldedCornerView.h"
 
-@interface ZSFoldedCornerGLView ()
+@interface ZSFoldedCornerView ()
 
 @end
 
-@implementation ZSFoldedCornerGLView
+@implementation ZSFoldedCornerView
 
 @synthesize hitTestDelegate;
 

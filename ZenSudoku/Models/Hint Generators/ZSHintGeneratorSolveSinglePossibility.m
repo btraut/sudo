@@ -41,13 +41,13 @@
 		card3.text = [NSString stringWithFormat:@"The tile at [%i, %i] is the only tile in this row that can be a %i.", (_row + 1), (_col + 1), _guess];
 		
 		for (NSInteger i = 0; i < 9; ++i) {
-			[card1 addInstructionHighlightTileAtRow:_row col:i highlightType:ZSGameBoardTileHintHighlightTypeB];
-			[card2 addInstructionHighlightTileAtRow:_row col:i highlightType:ZSGameBoardTileHintHighlightTypeB];
+			[card1 addInstructionHighlightTileAtRow:_row col:i highlightType:ZSTileHintHighlightTypeB];
+			[card2 addInstructionHighlightTileAtRow:_row col:i highlightType:ZSTileHintHighlightTypeB];
 			
 			if (i == _col) {
-				[card3 addInstructionHighlightTileAtRow:_row col:i highlightType:ZSGameBoardTileHintHighlightTypeA];
+				[card3 addInstructionHighlightTileAtRow:_row col:i highlightType:ZSTileHintHighlightTypeA];
 			} else {
-				[card3 addInstructionHighlightTileAtRow:_row col:i highlightType:ZSGameBoardTileHintHighlightTypeB];
+				[card3 addInstructionHighlightTileAtRow:_row col:i highlightType:ZSTileHintHighlightTypeB];
 			}
 		}
 	} else if (_scope == ZSHintGeneratorTileScopeCol) {
@@ -56,13 +56,13 @@
 		card3.text = [NSString stringWithFormat:@"The tile at [%i, %i] is the only tile in this column that can be a %i.", (_row + 1), (_col + 1), _guess];
 		
 		for (NSInteger i = 0; i < 9; ++i) {
-			[card1 addInstructionHighlightTileAtRow:i col:_col highlightType:ZSGameBoardTileHintHighlightTypeB];
-			[card2 addInstructionHighlightTileAtRow:i col:_col highlightType:ZSGameBoardTileHintHighlightTypeB];
+			[card1 addInstructionHighlightTileAtRow:i col:_col highlightType:ZSTileHintHighlightTypeB];
+			[card2 addInstructionHighlightTileAtRow:i col:_col highlightType:ZSTileHintHighlightTypeB];
 			
 			if (i == _row) {
-				[card3 addInstructionHighlightTileAtRow:i col:_col highlightType:ZSGameBoardTileHintHighlightTypeA];
+				[card3 addInstructionHighlightTileAtRow:i col:_col highlightType:ZSTileHintHighlightTypeA];
 			} else {
-				[card3 addInstructionHighlightTileAtRow:i col:_col highlightType:ZSGameBoardTileHintHighlightTypeB];
+				[card3 addInstructionHighlightTileAtRow:i col:_col highlightType:ZSTileHintHighlightTypeB];
 			}
 		}
 	} else {
@@ -78,13 +78,13 @@
 				NSInteger currentRow = groupTopRow + i;
 				NSInteger currentCol = groupLeftCol + j;
 				
-				[card1 addInstructionHighlightTileAtRow:currentRow col:currentCol highlightType:ZSGameBoardTileHintHighlightTypeB];
-				[card2 addInstructionHighlightTileAtRow:currentRow col:currentCol highlightType:ZSGameBoardTileHintHighlightTypeB];
+				[card1 addInstructionHighlightTileAtRow:currentRow col:currentCol highlightType:ZSTileHintHighlightTypeB];
+				[card2 addInstructionHighlightTileAtRow:currentRow col:currentCol highlightType:ZSTileHintHighlightTypeB];
 				
 				if (currentRow == _row && currentCol == _col) {
-					[card3 addInstructionHighlightTileAtRow:currentRow col:currentCol highlightType:ZSGameBoardTileHintHighlightTypeA];
+					[card3 addInstructionHighlightTileAtRow:currentRow col:currentCol highlightType:ZSTileHintHighlightTypeA];
 				} else {
-					[card3 addInstructionHighlightTileAtRow:currentRow col:currentCol highlightType:ZSGameBoardTileHintHighlightTypeB];
+					[card3 addInstructionHighlightTileAtRow:currentRow col:currentCol highlightType:ZSTileHintHighlightTypeB];
 				}
 			}
 		}
@@ -97,7 +97,7 @@
 	ZSHintCard *card4 = [[ZSHintCard alloc] init];
 	card4.text = [NSString stringWithFormat:@"%i has been set at [%i, %i].", _guess, (_row + 1), (_col + 1)];
 	[card4 addInstructionSetGuess:_guess forTileAtRow:_row col:_col];
-	[card4 addInstructionHighlightTileAtRow:_row col:_col highlightType:ZSGameBoardTileHintHighlightTypeA];
+	[card4 addInstructionHighlightTileAtRow:_row col:_col highlightType:ZSTileHintHighlightTypeA];
 	[hintCards addObject:card4];
 	
 	return hintCards;

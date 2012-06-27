@@ -1,5 +1,5 @@
 //
-//  ZSGameBoard.h
+//  ZSBoard.h
 //  ZenSudoku
 //
 //  Created by Brent Traut on 12/11/11.
@@ -8,19 +8,19 @@
 
 #import <Foundation/Foundation.h>
 
-@class ZSGameTile;
+@class ZSTile;
 @class ZSGame;
 
-@protocol ZSGameBoardDelegate <NSObject>
+@protocol ZSBoardDelegate <NSObject>
 
-- (void)guessDidChangeForTile:(ZSGameTile *)tile previousGuess:(NSInteger)previousGuess;
-- (void)pencilDidChangeForTile:(ZSGameTile *)tile pencilNumber:(NSInteger)pencilNumber previousSet:(NSInteger)previousSet;
+- (void)guessDidChangeForTile:(ZSTile *)tile previousGuess:(NSInteger)previousGuess;
+- (void)pencilDidChangeForTile:(ZSTile *)tile pencilNumber:(NSInteger)pencilNumber previousSet:(NSInteger)previousSet;
 
 @end
 
-@interface ZSGameBoard : NSObject
+@interface ZSBoard : NSObject
 
-@property (weak) id<ZSGameBoardDelegate> delegate;
+@property (weak) id<ZSBoardDelegate> delegate;
 @property (assign) NSInteger size;
 
 // Initialization
@@ -35,9 +35,9 @@
 - (void)applyAnswersArray:(NSInteger **)answersArray;
 - (void)applyGroupMapArray:(NSInteger **)groupMapArray;
 
-- (void)copyGroupMapFromGameBoard:(ZSGameBoard *)gameBoard;
-- (void)copyAnswersFromGameBoard:(ZSGameBoard *)gameBoard;
-- (void)copyGuessesFromGameBoard:(ZSGameBoard *)gameBoard;
+- (void)copyGroupMapFromGameBoard:(ZSBoard *)gameBoard;
+- (void)copyAnswersFromGameBoard:(ZSBoard *)gameBoard;
+- (void)copyGuessesFromGameBoard:(ZSBoard *)gameBoard;
 
 - (void)copyGroupMapFromString:(NSString *)guessesString;
 - (void)copyAnswersFromString:(NSString *)guessesString;
@@ -45,7 +45,7 @@
 
 // Getters
 
-- (ZSGameTile *)getTileAtRow:(NSInteger)row col:(NSInteger)col;
+- (ZSTile *)getTileAtRow:(NSInteger)row col:(NSInteger)col;
 
 - (NSArray *)getAllInfluencedTilesForTileAtRow:(NSInteger)row col:(NSInteger)col includeSelf:(BOOL)includeSelf;
 

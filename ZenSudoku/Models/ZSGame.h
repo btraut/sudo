@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ZSGameBoard.h"
+#import "ZSBoard.h"
 
 typedef enum {
 	ZSGameDifficultyEasy,
@@ -36,10 +36,10 @@ typedef enum {
 } ZSGameAnswerOption;
 
 typedef enum {
-	ZSGameTileAnswerOrderHybrid,
-	ZSGameTileAnswerOrderAnswerFirst,
-	ZSGameTileAnswerOrderTileFirst
-} ZSGameTileAnswerOrder;
+	ZSTileAnswerOrderHybrid,
+	ZSTileAnswerOrderAnswerFirst,
+	ZSTileAnswerOrderTileFirst
+} ZSTileAnswerOrder;
 
 typedef enum {
 	ZSShowErrorsOptionNever,
@@ -59,16 +59,16 @@ typedef enum {
 @end
 
 
-@class ZSGameHistoryEntry;
-@class ZSGameBoard;
-@class ZSGameTile;
+@class ZSHistoryEntry;
+@class ZSBoard;
+@class ZSTile;
 
-@interface ZSGame : NSObject <ZSGameBoardDelegate>
+@interface ZSGame : NSObject <ZSBoardDelegate>
 
 @property (assign) ZSGameDifficulty difficulty;
 @property (assign) ZSGameType type;
 
-@property (strong) ZSGameBoard *gameBoard;
+@property (strong) ZSBoard *gameBoard;
 
 @property (assign) BOOL recordingHistory;
 
@@ -104,12 +104,12 @@ typedef enum {
 - (void)setPencil:(BOOL)isSet forPencilNumber:(NSInteger)pencilNumber forTileAtRow:(NSInteger)row col:(NSInteger)col;
 - (void)togglePencilForPencilNumber:(NSInteger)pencilNumber forTileAtRow:(NSInteger)row col:(NSInteger)col;
 
-- (void)guessDidChangeForTile:(ZSGameTile *)tile previousGuess:(NSInteger)previousGuess;
-- (void)pencilDidChangeForTile:(ZSGameTile *)tile pencilNumber:(NSInteger)pencilNumber previousSet:(NSInteger)previousSet;
+- (void)guessDidChangeForTile:(ZSTile *)tile previousGuess:(NSInteger)previousGuess;
+- (void)pencilDidChangeForTile:(ZSTile *)tile pencilNumber:(NSInteger)pencilNumber previousSet:(NSInteger)previousSet;
 
 - (NSInteger)getGroupIdForTileAtRow:(NSInteger)row col:(NSInteger)col;
 
-- (ZSGameTile *)getTileAtRow:(NSInteger)row col:(NSInteger)col;
+- (ZSTile *)getTileAtRow:(NSInteger)row col:(NSInteger)col;
 - (NSArray *)getAllInfluencedTilesForTileAtRow:(NSInteger)row col:(NSInteger)col includeSelf:(BOOL)includeSelf;
 - (NSArray *)getRowSetForTileAtRow:(NSInteger)row col:(NSInteger)col includeSelf:(BOOL)includeSelf;
 - (NSArray *)getColSetForTileAtRow:(NSInteger)row col:(NSInteger)col includeSelf:(BOOL)includeSelf;
@@ -134,7 +134,7 @@ typedef enum {
 
 - (void)undo;
 - (void)redo;
-- (void)addHistoryDescription:(ZSGameHistoryEntry *)undoDescription;
+- (void)addHistoryDescription:(ZSHistoryEntry *)undoDescription;
 - (void)addUndoStop;
 
 @end

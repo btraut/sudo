@@ -31,12 +31,12 @@
 	
 	ZSHintCard *card1 = [[ZSHintCard alloc] init];
 	card1.text = [NSString stringWithFormat:@"Examine the tile at [%i, %i].", (_row + 1), (_col + 1)];
-	[card1 addInstructionHighlightTileAtRow:_row col:_col highlightType:ZSGameBoardTileHintHighlightTypeB];
+	[card1 addInstructionHighlightTileAtRow:_row col:_col highlightType:ZSTileHintHighlightTypeB];
 	[hintCards addObject:card1];
 	
 	ZSHintCard *card2 = [[ZSHintCard alloc] init];
 	card2.text = @"Think about which possibilities remain for this tile.";
-	[card2 addInstructionHighlightTileAtRow:_row col:_col highlightType:ZSGameBoardTileHintHighlightTypeB];
+	[card2 addInstructionHighlightTileAtRow:_row col:_col highlightType:ZSTileHintHighlightTypeB];
 	[hintCards addObject:card2];
 	
 	ZSHintCard *card3 = [[ZSHintCard alloc] init];

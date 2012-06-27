@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "ZSGameBoardTileViewController.h"
+#import "ZSTileViewController.h"
 
 @interface ZSHintCard : NSObject
 
@@ -25,9 +25,9 @@
 
 @property (assign) BOOL allowsLearn;
 
-- (void)addInstructionHighlightPencil:(NSInteger)pencil forTileAtRow:(NSInteger)row col:(NSInteger)col highlightType:(ZSGameBoardTilePencilTextHintHighlightType)pencilTextHintHighlightType;
-- (void)addInstructionHighlightAnswerForTileAtRow:(NSInteger)row col:(NSInteger)col highlightType:(ZSGameBoardTileTextHintHighlightType)textHintHighlightType;
-- (void)addInstructionHighlightTileAtRow:(NSInteger)row col:(NSInteger)col highlightType:(ZSGameBoardTileHintHighlightType)hintHighlightType;
+- (void)addInstructionHighlightPencil:(NSInteger)pencil forTileAtRow:(NSInteger)row col:(NSInteger)col highlightType:(ZSTilePencilTextHintHighlightType)pencilTextHintHighlightType;
+- (void)addInstructionHighlightAnswerForTileAtRow:(NSInteger)row col:(NSInteger)col highlightType:(ZSTileTextHintHighlightType)textHintHighlightType;
+- (void)addInstructionHighlightTileAtRow:(NSInteger)row col:(NSInteger)col highlightType:(ZSTileHintHighlightType)hintHighlightType;
 - (void)addInstructionRemovePencil:(NSInteger)pencil forTileAtRow:(NSInteger)row col:(NSInteger)col;
 - (void)addInstructionAddPencil:(NSInteger)pencil forTileAtRow:(NSInteger)row col:(NSInteger)col;
 - (void)addInstructionRemoveGuessForTileAtRow:(NSInteger)row col:(NSInteger)col;
