@@ -17,7 +17,7 @@
 @implementation ZSBoardViewController
 
 @synthesize game, tileViews;
-@synthesize touchDelegate, selectionChangeDelegate;
+@synthesize touchDelegate;
 @synthesize selectedTileView, highlightedSimilarTileViews;
 
 #pragma mark - Construction / Deconstruction
@@ -45,6 +45,8 @@
 }
 
 - (void)resetWithGame:(ZSGame *)newGame {
+	[self deselectTileView];
+	
 	self.game = newGame;
 	
 	for (NSInteger row = 0; row < game.gameBoard.size; row++) {
@@ -127,9 +129,6 @@
 	// Add highlights for similar tiles.
 	[self resetSimilarHighlights];
 	[self resetErrorHighlights];
-	
-	// Notify delegate.
-	[self.selectionChangeDelegate selectedTileChanged];
 }
 
 - (void)reselectTileView {
@@ -141,9 +140,6 @@
 		// Add highlights for similar tiles.
 		[self resetSimilarHighlights];
 		[self resetErrorHighlights];
-		
-		// Notify delegate.
-		[self.selectionChangeDelegate selectedTileChanged];
 	}
 }
 
@@ -158,9 +154,6 @@
 		// Remove all highlights.
 		[self removeAllSimilarHighlights];
 		[self removeAllErrorHighlights];
-
-		// Notify delegate.
-		[self.selectionChangeDelegate selectedTileChanged];
 	}
 }
 

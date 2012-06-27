@@ -39,8 +39,7 @@
 	ZSFoldedCornerViewControllerTouchDelegate,
 	ZSFoldedCornerPlusButtonViewControllerAnimationDelegate,
 	ZSAnswerOptionsViewControllerTouchDelegate,
-	ZSBoardViewControllerTouchDelegate,
-	ZSBoardViewControllerSelectionChangeDelegate
+	ZSBoardViewControllerTouchDelegate
 > {
 	ZSGame *game;
 	ZSHintGenerator *hintGenerator;
@@ -94,6 +93,7 @@
 // Game Functions
 - (void)deselectTileView;
 - (void)setAutoPencils;
+- (void)solveMostOfThePuzzle;
 
 // Button Handlers
 - (void)pencilButtonWasTouched;

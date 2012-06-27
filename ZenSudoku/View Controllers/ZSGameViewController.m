@@ -80,14 +80,18 @@
 	autoPencilButton.enabled = YES;
 	hintButton.enabled = YES;
 	
+	penciling = NO;
+	pencilButton.selected = NO;
+	
 	[self setTitle];
 	
 	[self.boardViewController resetWithGame:newGame];
-	[self.boardViewController deselectTileView];
-	
-	[self foldedCornerRestoredToDefaultPoint];
+	[self.gameAnswerOptionsViewController reloadView];
 	
 	[_foldedCornerPlusButtonViewController setState:ZSFoldedCornerPlusButtonStateHidden animated:NO];
+	
+	[self _updateScreenshot];
+	[self _setScreenshotVisible:NO];
 }
 
 - (void)dealloc {
@@ -143,7 +147,6 @@
 	boardViewController = [[ZSBoardViewController alloc] initWithGame:game];
 	boardViewController.view.frame = CGRectMake(8, 54, boardViewController.view.frame.size.width, boardViewController.view.frame.size.height);
 	boardViewController.touchDelegate = self;
-	boardViewController.selectionChangeDelegate = self;
 	[_innerView addSubview:boardViewController.view];
 	
 	// Build the answer options.
@@ -303,6 +306,10 @@
 
 - (void)deselectTileView {
 	[self.boardViewController deselectTileView];
+	
+	[self.gameAnswerOptionsViewController reloadView];
+	
+	[self _updateScreenshot];
 }
 
 - (void)setAutoPencils {
@@ -313,6 +320,9 @@
 	if (boardViewController.selectedTileView) {
 		[boardViewController reselectTileView];
 	}
+	
+	// Update screenshot.
+	[self _updateScreenshot];
 }
 
 - (void)solveMostOfThePuzzle {
@@ -354,15 +364,23 @@
 }
 
 - (void)undoButtonWasTouched {
-	[boardViewController deselectTileView];
-	[game undo];
-	[boardViewController reloadView];
+	[self.game undo];
+	[self.boardViewController reloadView];
+	
+	[self.boardViewController deselectTileView];
+	[self.gameAnswerOptionsViewController reloadView];
+	
+	[self _updateScreenshot];
 }
 
 - (void)redoButtonWasTouched {
-	[boardViewController deselectTileView];
-	[game redo];
-	[boardViewController reloadView];
+	[self.game redo];
+	[self.boardViewController reloadView];
+	
+	[self.boardViewController deselectTileView];
+	[self.gameAnswerOptionsViewController reloadView];
+	
+	[self _updateScreenshot];
 }
 
 - (void)hintButtonWasTouched {
@@ -428,6 +446,9 @@
 	
 	// Deselect stuff.
 	[boardViewController deselectTileView];
+	[self.gameAnswerOptionsViewController reloadView];
+	
+	[self _updateScreenshot];
 	
 	// Show a congratulatory alert.
 	NSInteger totalMinutes = game.timerCount / 60;
@@ -588,6 +609,7 @@
 			// Based on settings, either deselect the tile or reselect it to update highlights.
 			if ([[NSUserDefaults standardUserDefaults] boolForKey:kClearTileSelectionAfterPickingAnswerOptionForPencilKey]) {
 				[boardViewController deselectTileView];
+				[self.gameAnswerOptionsViewController reloadView];
 			} else {
 				[boardViewController reselectTileView];
 			}
@@ -598,10 +620,14 @@
 			// Based on settings, either deselect the tile or reselect it to update highlights.
 			if ([[NSUserDefaults standardUserDefaults] boolForKey:kClearTileSelectionAfterPickingAnswerOptionForAnswerKey]) {
 				[boardViewController deselectTileView];
+				[self.gameAnswerOptionsViewController reloadView];
 			} else {
 				[boardViewController reselectTileView];
 			}
 		}
+		
+		// Update the screenshot.
+		[self _updateScreenshot];
 	}
 }
 
@@ -630,11 +656,7 @@
 	} else {
 		[boardViewController selectTileView:tileView];
 	}
-}
-
-#pragma mark - ZSBoardViewControllerSelectionChangeDelegate Implementation
-
-- (void)selectedTileChanged {
+	
 	[self.gameAnswerOptionsViewController reloadView];
 	
 	[self _updateScreenshot];

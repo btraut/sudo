@@ -18,12 +18,6 @@
 
 @end
 
-@protocol ZSBoardViewControllerSelectionChangeDelegate <NSObject>
-
-- (void)selectedTileChanged;
-
-@end
-
 @interface ZSBoardViewController : UIViewController <ZSTileViewControllerTouchDelegate> {
 	NSArray *tileViews;
 	
@@ -36,7 +30,6 @@
 @property (strong, readonly) NSArray *tileViews;
 
 @property (weak) id<ZSBoardViewControllerTouchDelegate> touchDelegate;
-@property (weak) id<ZSBoardViewControllerSelectionChangeDelegate> selectionChangeDelegate;
 
 @property (strong, readonly) ZSTileViewController *selectedTileView;
 @property (strong, readonly) NSMutableArray *highlightedSimilarTileViews;
