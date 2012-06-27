@@ -50,7 +50,7 @@
 
 // Selection
 - (void)selectTileView:(ZSTileViewController *)tileView;
-- (void)reselectTile;
+- (void)reselectTileView;
 - (void)deselectTileView;
 
 // Handling Highlights

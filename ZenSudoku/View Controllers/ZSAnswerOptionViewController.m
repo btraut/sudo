@@ -1,13 +1,13 @@
 //
-//  ZSGameAnswerOptionViewController.m
+//  ZSAnswerOptionViewController.m
 //  ZenSudoku
 //
 //  Created by Brent Traut on 11/26/11.
 //  Copyright (c) 2011 Ten Four Software, LLC. All rights reserved.
 //
 
-#import "ZSGameAnswerOptionViewController.h"
-#import "ZSGameAnswerOptionsViewController.h"
+#import "ZSAnswerOptionViewController.h"
+#import "ZSAnswerOptionsViewController.h"
 #import "ZSGameViewController.h"
 #import "UIColor+ColorWithHex.h"
 
@@ -22,7 +22,7 @@ NSString * const kTextShadowColorAnswerOptionDisabled = @"22FFFFFF";
 NSString * const kTextShadowColorAnswerOptionToggledOn = @"FFFFFFFF";
 NSString * const kTextShadowColorAnswerOptionToggledOff = @"77FFFFFF";
 
-@interface ZSGameAnswerOptionViewController () {
+@interface ZSAnswerOptionViewController () {
 	UILabel *_labelView;
 	UIImageView *_selectionView;
 	
@@ -31,7 +31,7 @@ NSString * const kTextShadowColorAnswerOptionToggledOff = @"77FFFFFF";
 
 @end
 
-@implementation ZSGameAnswerOptionViewController
+@implementation ZSAnswerOptionViewController
 
 @synthesize gameAnswerOptionsViewController;
 @synthesize gameAnswerOption;
@@ -42,7 +42,7 @@ NSString * const kTextShadowColorAnswerOptionToggledOff = @"77FFFFFF";
 	self = [super init];
 	
 	if (self) {
-		gameAnswerOption = ZSGameAnswerOption1;
+		gameAnswerOption = ZSAnswerOption1;
 		selected = NO;
 		enabled = YES;
 	}
@@ -50,7 +50,7 @@ NSString * const kTextShadowColorAnswerOptionToggledOff = @"77FFFFFF";
 	return self;
 }
 
-- (id)initWithGameAnswerOption:(ZSGameAnswerOption)newGameAnswerOption {
+- (id)initWithGameAnswerOption:(ZSAnswerOption)newGameAnswerOption {
 	self = [self init];
 	
 	if (self) {
@@ -89,15 +89,15 @@ NSString * const kTextShadowColorAnswerOptionToggledOff = @"77FFFFFF";
 
 - (void)setLabel {
 	switch (gameAnswerOption) {
-		case ZSGameAnswerOption1:
-		case ZSGameAnswerOption2:
-		case ZSGameAnswerOption3:
-		case ZSGameAnswerOption4:
-		case ZSGameAnswerOption5:
-		case ZSGameAnswerOption6:
-		case ZSGameAnswerOption7:
-		case ZSGameAnswerOption8:
-		case ZSGameAnswerOption9:
+		case ZSAnswerOption1:
+		case ZSAnswerOption2:
+		case ZSAnswerOption3:
+		case ZSAnswerOption4:
+		case ZSAnswerOption5:
+		case ZSAnswerOption6:
+		case ZSAnswerOption7:
+		case ZSAnswerOption8:
+		case ZSAnswerOption9:
 			_labelView.text = [NSString stringWithFormat:@"%i", ((NSInteger)gameAnswerOption + 1)];
 			break;
 		

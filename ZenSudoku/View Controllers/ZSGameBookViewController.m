@@ -140,7 +140,7 @@
 	
 	hintsShown = NO;
 	
-	[currentGameViewController.gameBoardViewController removeAllHintHighlights];
+	[currentGameViewController.boardViewController removeAllHintHighlights];
 	
 	[UIView
 		animateWithDuration:0.4f

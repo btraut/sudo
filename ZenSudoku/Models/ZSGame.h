@@ -24,16 +24,16 @@ typedef enum {
 } ZSGameType;
 
 typedef enum {
-	ZSGameAnswerOption1,
-	ZSGameAnswerOption2,
-	ZSGameAnswerOption3,
-	ZSGameAnswerOption4,
-	ZSGameAnswerOption5,
-	ZSGameAnswerOption6,
-	ZSGameAnswerOption7,
-	ZSGameAnswerOption8,
-	ZSGameAnswerOption9
-} ZSGameAnswerOption;
+	ZSAnswerOption1,
+	ZSAnswerOption2,
+	ZSAnswerOption3,
+	ZSAnswerOption4,
+	ZSAnswerOption5,
+	ZSAnswerOption6,
+	ZSAnswerOption7,
+	ZSAnswerOption8,
+	ZSAnswerOption9
+} ZSAnswerOption;
 
 typedef enum {
 	ZSTileAnswerOrderHybrid,

@@ -89,7 +89,7 @@
 	_hintDeck = hintDeck;
 	_gameViewController = gameViewController;
 	
-	[gameViewController.gameBoardViewController deselectTileView];
+	[gameViewController deselectTileView];
 	
 	_currentCard = 0;
 	[self loadHintCard];
@@ -119,7 +119,7 @@
 	_textView.frame = CGRectMake(28, 22, 264, 78);
 	[_textView sizeToFit];
 	
-	[_gameViewController.gameBoardViewController removeAllHintHighlights];
+	[_gameViewController.boardViewController removeAllHintHighlights];
 	
 	for (NSDictionary *dict in currentCard.highlightPencils) {
 		NSInteger row = [[dict objectForKey:kDictionaryKeyTileRow] intValue];
@@ -127,7 +127,7 @@
 		NSInteger pencil = [[dict objectForKey:kDictionaryKeyTileValue] intValue];
 		ZSTilePencilTextHintHighlightType pencilTextHintHighlightType = [[dict objectForKey:kDictionaryKeyHighlightType] intValue];
 		
-		ZSTileViewController *tile = [_gameViewController.gameBoardViewController getGameBoardTileViewControllerAtRow:row col:col];
+		ZSTileViewController *tile = [_gameViewController.boardViewController getGameBoardTileViewControllerAtRow:row col:col];
 		
 		tile.highlightPencilHints[pencil - 1] = pencilTextHintHighlightType;
 	}
@@ -137,7 +137,7 @@
 		NSInteger col = [[dict objectForKey:kDictionaryKeyTileCol] intValue];
 		ZSTileTextHintHighlightType textHintHighlightType = [[dict objectForKey:kDictionaryKeyHighlightType] intValue];
 		
-		ZSTileViewController *tile = [_gameViewController.gameBoardViewController getGameBoardTileViewControllerAtRow:row col:col];
+		ZSTileViewController *tile = [_gameViewController.boardViewController getGameBoardTileViewControllerAtRow:row col:col];
 		
 		tile.highlightGuessHint = textHintHighlightType;
 	}
@@ -147,7 +147,7 @@
 		NSInteger col = [[dict objectForKey:kDictionaryKeyTileCol] intValue];
 		ZSTileHintHighlightType hintHighlightType = [[dict objectForKey:kDictionaryKeyHighlightType] intValue];
 		
-		ZSTileViewController *tile = [_gameViewController.gameBoardViewController getGameBoardTileViewControllerAtRow:row col:col];
+		ZSTileViewController *tile = [_gameViewController.boardViewController getGameBoardTileViewControllerAtRow:row col:col];
 		
 		tile.highlightedHintType = hintHighlightType;
 	}
@@ -187,7 +187,7 @@
 		[_gameViewController setAutoPencils];
 	}
 	
-	[_gameViewController.gameBoardViewController reloadView];
+	[_gameViewController.boardViewController reloadView];
 }
 
 @end

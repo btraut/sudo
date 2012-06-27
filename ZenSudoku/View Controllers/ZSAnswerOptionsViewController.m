@@ -1,13 +1,13 @@
 //
-//  ZSGameAnswerOptionsViewController.m
+//  ZSAnswerOptionsViewController.m
 //  ZenSudoku
 //
 //  Created by Brent Traut on 11/26/11.
 //  Copyright (c) 2011 Ten Four Software, LLC. All rights reserved.
 //
 
-#import "ZSGameAnswerOptionsViewController.h"
-#import "ZSGameAnswerOptionViewController.h"
+#import "ZSAnswerOptionsViewController.h"
+#import "ZSAnswerOptionViewController.h"
 #import "ZSGameViewController.h"
 #import "ZSBoardViewController.h"
 #import "ZSTile.h"
@@ -17,14 +17,14 @@
 #define DEFAULT_FRAME_HEIGHT 300
 #define DEFAULT_FRAME_WIDTH 31
 
-@interface ZSGameAnswerOptionsViewController () {
+@interface ZSAnswerOptionsViewController () {
 	BOOL _answerOptionIsBeingTouched;
-	ZSGameAnswerOption _previousTouchedAnswerOption;
+	ZSAnswerOption _previousTouchedAnswerOption;
 }
 
 @end
 
-@implementation ZSGameAnswerOptionsViewController
+@implementation ZSAnswerOptionsViewController
 
 @synthesize gameViewController;
 @synthesize touchDelegate;
@@ -41,7 +41,7 @@
 	return self;
 }
 
-- (ZSGameAnswerOptionViewController *)getGameAnswerOptionViewControllerForGameAnswerOption:(ZSGameAnswerOption)gameAnswerOption {
+- (ZSAnswerOptionViewController *)getGameAnswerOptionViewControllerForGameAnswerOption:(ZSAnswerOption)gameAnswerOption {
 	return [gameAnswerOptionViewControllers objectAtIndex:(NSInteger)gameAnswerOption];
 }
 
@@ -57,12 +57,12 @@
 	
 	// Build numbers.
 	NSMutableArray *buttons = [NSMutableArray array];
-	ZSGameAnswerOptionViewController *gameAnswerOptionViewController;
+	ZSAnswerOptionViewController *gameAnswerOptionViewController;
 	
 	NSInteger xOffset = 0;
 	
 	for (NSInteger i = 0; i < gameViewController.game.gameBoard.size; i++) {
-		gameAnswerOptionViewController = [[ZSGameAnswerOptionViewController alloc] initWithGameAnswerOption:(ZSGameAnswerOption)i];
+		gameAnswerOptionViewController = [[ZSAnswerOptionViewController alloc] initWithGameAnswerOption:(ZSAnswerOption)i];
 		gameAnswerOptionViewController.view.frame = CGRectMake(xOffset, 0, gameAnswerOptionViewController.view.frame.size.width, gameAnswerOptionViewController.view.frame.size.height);
 		gameAnswerOptionViewController.delegate = self;
 		gameAnswerOptionViewController.gameAnswerOptionsViewController = self;
@@ -86,11 +86,11 @@
 }
 
 - (void)reloadView {
-	ZSTileViewController *selectedTile = gameViewController.gameBoardViewController.selectedTileView;
+	ZSTileViewController *selectedTile = gameViewController.boardViewController.selectedTileView;
 	
 	[self deselectGameAnswerOptionView];
 	
-	for (ZSGameAnswerOptionViewController *gameAnswerOptionViewController in gameAnswerOptionViewControllers) {
+	for (ZSAnswerOptionViewController *gameAnswerOptionViewController in gameAnswerOptionViewControllers) {
 		// Check if the answer option is at quota.
 		if ([gameViewController.game allowsGuess:((NSInteger)gameAnswerOptionViewController.gameAnswerOption + 1)]) {
 			gameAnswerOptionViewController.enabled = YES;
@@ -110,7 +110,7 @@
 
 #pragma mark - Answer Option Changes
 
-- (void)selectGameAnswerOptionView:(ZSGameAnswerOptionViewController *)newSelected {
+- (void)selectGameAnswerOptionView:(ZSAnswerOptionViewController *)newSelected {
 	// If there was a selection, deselect it.
 	if (selectedGameAnswerOptionView) {
 		[self deselectGameAnswerOptionView];
@@ -133,13 +133,13 @@
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
 	// Figure out which (if any) option is being touched.
 	UITouch *touch = [touches anyObject];
-	ZSGameAnswerOptionViewController *touchedViewController;
+	ZSAnswerOptionViewController *touchedViewController;
 	
 	CGPoint touchPoint = [touch locationInView:self.view];
 	BOOL touchIsInBounds = touchPoint.x >= 0 && touchPoint.y >= 0 && touchPoint.x < self.view.frame.size.width && touchPoint.y < self.view.frame.size.height;
 	
 	if (touchIsInBounds) {
-		for (ZSGameAnswerOptionViewController *viewController in gameAnswerOptionViewControllers) {
+		for (ZSAnswerOptionViewController *viewController in gameAnswerOptionViewControllers) {
 			if (touchPoint.x >= viewController.view.frame.origin.x && touchPoint.x < viewController.view.frame.origin.x + viewController.view.frame.size.width) {
 				touchedViewController = viewController;
 				break;
@@ -160,13 +160,13 @@
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
 	// Figure out which (if any) option is being touched.
 	UITouch *touch = [touches anyObject];
-	ZSGameAnswerOptionViewController *touchedViewController;
+	ZSAnswerOptionViewController *touchedViewController;
 	
 	CGPoint touchPoint = [touch locationInView:self.view];
 	BOOL touchIsInBounds = touchPoint.x >= 0 && touchPoint.y >= 0 && touchPoint.x < self.view.frame.size.width && touchPoint.y < self.view.frame.size.height;
 	
 	if (touchIsInBounds) {
-		for (ZSGameAnswerOptionViewController *viewController in gameAnswerOptionViewControllers) {
+		for (ZSAnswerOptionViewController *viewController in gameAnswerOptionViewControllers) {
 			if (touchPoint.x >= viewController.view.frame.origin.x && touchPoint.x < viewController.view.frame.origin.x + viewController.view.frame.size.width) {
 				touchedViewController = viewController;
 				break;
@@ -199,13 +199,13 @@
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
 	// Figure out which (if any) option is being touched.
 	UITouch *touch = [touches anyObject];
-	ZSGameAnswerOptionViewController *touchedViewController;
+	ZSAnswerOptionViewController *touchedViewController;
 	
 	CGPoint touchPoint = [touch locationInView:self.view];
 	BOOL touchIsInBounds = touchPoint.x >= 0 && touchPoint.y >= 0 && touchPoint.x < self.view.frame.size.width && touchPoint.y < self.view.frame.size.height;
 	
 	if (touchIsInBounds) {
-		for (ZSGameAnswerOptionViewController *viewController in gameAnswerOptionViewControllers) {
+		for (ZSAnswerOptionViewController *viewController in gameAnswerOptionViewControllers) {
 			if (touchPoint.x >= viewController.view.frame.origin.x && touchPoint.x < viewController.view.frame.origin.x + viewController.view.frame.size.width) {
 				touchedViewController = viewController;
 				break;
@@ -224,15 +224,15 @@
 
 #pragma mark - Delegate Responsibilities
 
-- (void)gameAnswerOptionTouchEntered:(ZSGameAnswerOptionViewController *)touchedView {
+- (void)gameAnswerOptionTouchEntered:(ZSAnswerOptionViewController *)touchedView {
 	[touchDelegate gameAnswerOptionTouchEnteredWithGameAnswerOption:touchedView.gameAnswerOption];
 }
 
-- (void)gameAnswerOptionTouchExited:(ZSGameAnswerOptionViewController *)touchedView {
+- (void)gameAnswerOptionTouchExited:(ZSAnswerOptionViewController *)touchedView {
 	[touchDelegate gameAnswerOptionTouchExitedWithGameAnswerOption:touchedView.gameAnswerOption];
 }
 
-- (void)gameAnswerOptionTapped:(ZSGameAnswerOptionViewController *)touchedView {
+- (void)gameAnswerOptionTapped:(ZSAnswerOptionViewController *)touchedView {
 	[touchDelegate gameAnswerOptionTappedWithGameAnswerOption:touchedView.gameAnswerOption];
 }
 

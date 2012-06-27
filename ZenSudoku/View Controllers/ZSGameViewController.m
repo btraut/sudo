@@ -39,7 +39,7 @@
 @implementation ZSGameViewController
 
 @synthesize game;
-@synthesize gameBoardViewController, gameAnswerOptionsViewController;
+@synthesize boardViewController, gameAnswerOptionsViewController;
 @synthesize foldedCornerVisibleOnLoad, foldedCornerViewController;
 @synthesize foldedPageViewController;
 @synthesize pencilButton, penciling;
@@ -82,8 +82,8 @@
 	
 	[self setTitle];
 	
-	[self.gameBoardViewController resetWithGame:newGame];
-	[self.gameAnswerOptionsViewController reloadView];
+	[self.boardViewController resetWithGame:newGame];
+	[self.boardViewController deselectTileView];
 	
 	[self foldedCornerRestoredToDefaultPoint];
 	
@@ -140,14 +140,14 @@
 	[self setTitle];
 	
 	// Build the game board.
-	gameBoardViewController = [[ZSBoardViewController alloc] initWithGame:game];
-	gameBoardViewController.view.frame = CGRectMake(8, 54, gameBoardViewController.view.frame.size.width, gameBoardViewController.view.frame.size.height);
-	gameBoardViewController.touchDelegate = self;
-	gameBoardViewController.selectionChangeDelegate = self;
-	[_innerView addSubview:gameBoardViewController.view];
+	boardViewController = [[ZSBoardViewController alloc] initWithGame:game];
+	boardViewController.view.frame = CGRectMake(8, 54, boardViewController.view.frame.size.width, boardViewController.view.frame.size.height);
+	boardViewController.touchDelegate = self;
+	boardViewController.selectionChangeDelegate = self;
+	[_innerView addSubview:boardViewController.view];
 	
 	// Build the answer options.
-	gameAnswerOptionsViewController = [[ZSGameAnswerOptionsViewController alloc] initWithGameViewController:self];
+	gameAnswerOptionsViewController = [[ZSAnswerOptionsViewController alloc] initWithGameViewController:self];
 	gameAnswerOptionsViewController.view.frame = CGRectMake(6, 371, gameAnswerOptionsViewController.view.frame.size.width, gameAnswerOptionsViewController.view.frame.size.height);
 	gameAnswerOptionsViewController.touchDelegate = self;
 	[_innerView addSubview:gameAnswerOptionsViewController.view];
@@ -213,6 +213,12 @@
 	[self.view setNeedsDisplay];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+	[super viewDidAppear:animated];
+	
+	[self _updateScreenshot];
+}
+
 - (void)viewWasPromotedToFrontAnimated:(BOOL)animated {
 	// Debug
 	if (game.difficulty == ZSGameDifficultyEasy) {
@@ -221,7 +227,7 @@
 	
 	// Reload errors.
 	[self _setErrors];
-	[gameBoardViewController reloadView];
+	[boardViewController reloadView];
 	
 	// If the game is already solved, shut off input.
 	if ([game isSolved]) {
@@ -295,13 +301,17 @@
 
 #pragma mark - Game Functions
 
+- (void)deselectTileView {
+	[self.boardViewController deselectTileView];
+}
+
 - (void)setAutoPencils {
 	// Add the pencils.
 	[game addAutoPencils];
 	
 	// Update the highlights.
-	if (gameBoardViewController.selectedTileView) {
-		[gameBoardViewController reselectTile];
+	if (boardViewController.selectedTileView) {
+		[boardViewController reselectTileView];
 	}
 }
 
@@ -344,15 +354,15 @@
 }
 
 - (void)undoButtonWasTouched {
-	[gameBoardViewController deselectTileView];
+	[boardViewController deselectTileView];
 	[game undo];
-	[gameBoardViewController reloadView];
+	[boardViewController reloadView];
 }
 
 - (void)redoButtonWasTouched {
-	[gameBoardViewController deselectTileView];
+	[boardViewController deselectTileView];
 	[game redo];
-	[gameBoardViewController reloadView];
+	[boardViewController reloadView];
 }
 
 - (void)hintButtonWasTouched {
@@ -373,10 +383,10 @@
 	[self _setErrors];
 	
 	// Reload the tile.
-	[[self.gameBoardViewController getGameBoardTileViewControllerAtRow:row col:col] reloadView];
+	[[self.boardViewController getGameBoardTileViewControllerAtRow:row col:col] reloadView];
 	
 	// Reselect the tile to update other error highlighting.
-	[self.gameBoardViewController reselectTile];
+	[self.boardViewController reselectTileView];
 	
 	// Reload the answer options to reflect the available options.
 	[self.gameAnswerOptionsViewController reloadView];
@@ -387,7 +397,7 @@
 
 - (void)tilePencilDidChange:(BOOL)isSet forPencilNumber:(NSInteger)pencilNumber forTileAtRow:(NSInteger)row col:(NSInteger)col {
 	// Reload the tile.
-	[[self.gameBoardViewController getGameBoardTileViewControllerAtRow:row col:col] reloadView];
+	[[self.boardViewController getGameBoardTileViewControllerAtRow:row col:col] reloadView];
 }
 
 - (void)guess:(NSInteger)guess isErrorForTileAtRow:(NSInteger)row col:(NSInteger)col {
@@ -417,7 +427,7 @@
 	hintButton.enabled = NO;
 	
 	// Deselect stuff.
-	[gameBoardViewController deselectTileView];
+	[boardViewController deselectTileView];
 	
 	// Show a congratulatory alert.
 	NSInteger totalMinutes = game.timerCount / 60;
@@ -499,16 +509,16 @@
 	[self.majorGameStateDelegate frontViewControllerFinishedDisplaying];
 }
 
-#pragma mark - ZSGameAnswerOptionsViewControllerTouchDelegate Implementation
+#pragma mark - ZSAnswerOptionsViewControllerTouchDelegate Implementation
 
-- (void)gameAnswerOptionTouchEnteredWithGameAnswerOption:(ZSGameAnswerOption)gameAnswerOption {
+- (void)gameAnswerOptionTouchEnteredWithGameAnswerOption:(ZSAnswerOption)gameAnswerOption {
 	// If we aren't allowing input, end here.
 	if (!allowsInput) {
 		return;
 	}
 	
 	// Save the selected tile and answer option. One or both may be nil.
-	ZSTileViewController *selectedTileView = gameBoardViewController.selectedTileView;
+	ZSTileViewController *selectedTileView = boardViewController.selectedTileView;
 	
 	// Only show a preview if a tile is selected.
 	if (selectedTileView) {
@@ -526,14 +536,14 @@
 	}
 }
 
-- (void)gameAnswerOptionTouchExitedWithGameAnswerOption:(ZSGameAnswerOption)gameAnswerOption {
+- (void)gameAnswerOptionTouchExitedWithGameAnswerOption:(ZSAnswerOption)gameAnswerOption {
 	// If we aren't allowing input, end here.
 	if (!allowsInput) {
 		return;
 	}
 	
 	// Save the selected tile and answer option. One or both may be nil.
-	ZSTileViewController *selectedTileView = gameBoardViewController.selectedTileView;
+	ZSTileViewController *selectedTileView = boardViewController.selectedTileView;
 	
 	// Only show a preview if a tile is selected.
 	if (selectedTileView) {
@@ -551,9 +561,9 @@
 	}
 }
 
-- (void)gameAnswerOptionTappedWithGameAnswerOption:(ZSGameAnswerOption)gameAnswerOption {
+- (void)gameAnswerOptionTappedWithGameAnswerOption:(ZSAnswerOption)gameAnswerOption {
 	// Fetch the touched game answer option view controller.
-	ZSGameAnswerOptionViewController *gameAnswerOptionView = [gameAnswerOptionsViewController.gameAnswerOptionViewControllers objectAtIndex:gameAnswerOption];
+	ZSAnswerOptionViewController *gameAnswerOptionView = [gameAnswerOptionsViewController.gameAnswerOptionViewControllers objectAtIndex:gameAnswerOption];
 	
 	// If we aren't allowing input, end here.
 	if (!allowsInput) {
@@ -561,7 +571,7 @@
 	}
 	
 	// Save the selected tile and answer option. One or both may be nil.
-	ZSTileViewController *selectedTileView = gameBoardViewController.selectedTileView;
+	ZSTileViewController *selectedTileView = boardViewController.selectedTileView;
 	
 	// Is there a tile selected?
 	if (selectedTileView) {
@@ -577,9 +587,9 @@
 			
 			// Based on settings, either deselect the tile or reselect it to update highlights.
 			if ([[NSUserDefaults standardUserDefaults] boolForKey:kClearTileSelectionAfterPickingAnswerOptionForPencilKey]) {
-				[gameBoardViewController deselectTileView];
+				[boardViewController deselectTileView];
 			} else {
-				[gameBoardViewController reselectTile];
+				[boardViewController reselectTileView];
 			}
 		} else {
 			// Match the selected tile and answer.
@@ -587,9 +597,9 @@
 			
 			// Based on settings, either deselect the tile or reselect it to update highlights.
 			if ([[NSUserDefaults standardUserDefaults] boolForKey:kClearTileSelectionAfterPickingAnswerOptionForAnswerKey]) {
-				[gameBoardViewController deselectTileView];
+				[boardViewController deselectTileView];
 			} else {
-				[gameBoardViewController reselectTile];
+				[boardViewController reselectTileView];
 			}
 		}
 	}
@@ -609,16 +619,16 @@
 	}
 	
 	// Fetch the touched game tile view controller.
-	ZSTileViewController *tileView = [[gameBoardViewController.tileViews objectAtIndex:row] objectAtIndex:col];
+	ZSTileViewController *tileView = [[boardViewController.tileViews objectAtIndex:row] objectAtIndex:col];
 	
 	// Save the selected tile and answer option. One or both may be nil.
-	ZSTileViewController *selectedTileView = gameBoardViewController.selectedTileView;
+	ZSTileViewController *selectedTileView = boardViewController.selectedTileView;
 	
 	// If there was a previously selected tile, deselect it. Otherwise, select the new one.
 	if (selectedTileView == tileView) {
-		[gameBoardViewController deselectTileView];
+		[boardViewController deselectTileView];
 	} else {
-		[gameBoardViewController selectTileView:tileView];
+		[boardViewController selectTileView:tileView];
 	}
 }
 
@@ -632,7 +642,7 @@
 
 #pragma mark - State Changes
 
-- (void)_setPencilForGameBoardTile:(ZSTileViewController *)tileView withAnswerOption:(ZSGameAnswerOptionViewController *)answerOptionView {
+- (void)_setPencilForGameBoardTile:(ZSTileViewController *)tileView withAnswerOption:(ZSAnswerOptionViewController *)answerOptionView {
 	// Only honor the pencil mark if there is no guess in the tile.
 	if (tileView.tile.guess) {
 		return;
@@ -642,7 +652,7 @@
 	[game togglePencilForPencilNumber:((NSInteger)answerOptionView.gameAnswerOption + 1) forTileAtRow:tileView.tile.row col:tileView.tile.col];
 }
 
-- (void)_setAnswerForGameBoardTile:(ZSTileViewController *)tileView withAnswerOption:(ZSGameAnswerOptionViewController *)answerOptionView {
+- (void)_setAnswerForGameBoardTile:(ZSTileViewController *)tileView withAnswerOption:(ZSAnswerOptionViewController *)answerOptionView {
 	NSInteger guess = ((NSInteger)answerOptionView.gameAnswerOption + 1);
 	
 	tileView.ghosted = NO;
@@ -664,7 +674,7 @@
 	// Loop over all tiles and check errors on the users' guesses.
 	for (NSInteger row = 0; row < game.gameBoard.size; row++) {
 		for (NSInteger col = 0; col < game.gameBoard.size; col++) {
-			ZSTileViewController *tileView = [gameBoardViewController getGameBoardTileViewControllerAtRow:row col:col];
+			ZSTileViewController *tileView = [boardViewController getGameBoardTileViewControllerAtRow:row col:col];
 			
 			// Start by assuming no error.
 			tileView.error = NO;
@@ -688,7 +698,7 @@
 					// Loop over all influenced tiles and check if any others have the same guess as this one. If so, mark it as incorrect.
 					for (ZSTile *influencedTile in influencedTiles) {
 						if (tileView.tile.guess == influencedTile.guess) {
-							[gameBoardViewController getGameBoardTileViewControllerAtRow:row col:col].error = YES;
+							[boardViewController getGameBoardTileViewControllerAtRow:row col:col].error = YES;
 							foundError = YES;
 						}
 					}

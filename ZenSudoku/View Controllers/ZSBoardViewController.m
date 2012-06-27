@@ -45,8 +45,6 @@
 }
 
 - (void)resetWithGame:(ZSGame *)newGame {
-	[self deselectTileView];
-	
 	self.game = newGame;
 	
 	for (NSInteger row = 0; row < game.gameBoard.size; row++) {
@@ -130,11 +128,13 @@
 	[self resetSimilarHighlights];
 	[self resetErrorHighlights];
 	
+	// Notify delegate.
 	[self.selectionChangeDelegate selectedTileChanged];
 }
 
-- (void)reselectTile {
+- (void)reselectTileView {
 	if (selectedTileView) {
+		// Set selection.
 		selectedTileView.selected = YES;
 		[selectedTileView reloadView];
 		
@@ -142,22 +142,24 @@
 		[self resetSimilarHighlights];
 		[self resetErrorHighlights];
 		
+		// Notify delegate.
 		[self.selectionChangeDelegate selectedTileChanged];
 	}
 }
 
 - (void)deselectTileView {
 	if (selectedTileView) {
-		// Remove all highlights.
-		[self removeAllSimilarHighlights];
-		[self removeAllErrorHighlights];
-
 		// Remove selection.
 		selectedTileView.selected = NO;
 		[selectedTileView reloadView];
 		
 		selectedTileView = nil;
 		
+		// Remove all highlights.
+		[self removeAllSimilarHighlights];
+		[self removeAllErrorHighlights];
+
+		// Notify delegate.
 		[self.selectionChangeDelegate selectedTileChanged];
 	}
 }

@@ -9,10 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "ZSGame.h"
 #import "ZSBoardViewController.h"
-#import "ZSGameAnswerOptionViewController.h"
+#import "ZSAnswerOptionViewController.h"
 #import "ZSFoldedCornerViewController.h"
 #import "ZSFoldedCornerPlusButtonViewController.h"
-#import "ZSGameAnswerOptionsViewController.h"
+#import "ZSAnswerOptionsViewController.h"
 
 @class ZSTileViewController;
 @class ZSGameViewController;
@@ -38,15 +38,15 @@
 	ZSGameStateChangeDelegate,
 	ZSFoldedCornerViewControllerTouchDelegate,
 	ZSFoldedCornerPlusButtonViewControllerAnimationDelegate,
-	ZSGameAnswerOptionsViewControllerTouchDelegate,
+	ZSAnswerOptionsViewControllerTouchDelegate,
 	ZSBoardViewControllerTouchDelegate,
 	ZSBoardViewControllerSelectionChangeDelegate
 > {
 	ZSGame *game;
 	ZSHintGenerator *hintGenerator;
 	
-	ZSBoardViewController *gameBoardViewController;
-	ZSGameAnswerOptionsViewController *gameAnswerOptionsViewController;
+	ZSBoardViewController *boardViewController;
+	ZSAnswerOptionsViewController *gameAnswerOptionsViewController;
 	
 	ZSFoldedCornerViewController *foldedCornerViewController;
 	
@@ -64,8 +64,8 @@
 
 @property (strong) ZSGame *game;
 
-@property (strong, readonly) ZSBoardViewController *gameBoardViewController;
-@property (strong, readonly) ZSGameAnswerOptionsViewController *gameAnswerOptionsViewController;
+@property (strong, readonly) ZSBoardViewController *boardViewController;
+@property (strong, readonly) ZSAnswerOptionsViewController *gameAnswerOptionsViewController;
 
 @property (strong, readonly) ZSFoldedCornerViewController *foldedCornerViewController;
 @property (assign) BOOL foldedCornerVisibleOnLoad;
@@ -92,6 +92,7 @@
 - (UIImage *)getScreenshotImage;
 
 // Game Functions
+- (void)deselectTileView;
 - (void)setAutoPencils;
 
 // Button Handlers
