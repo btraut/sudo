@@ -14,7 +14,7 @@
 
 @protocol ZSBoardViewControllerTouchDelegate <NSObject>
 
-- (void)gameBoardTileWasTouchedInRow:(NSInteger)row col:(NSInteger)col;
+- (void)tileWasTouchedInRow:(NSInteger)row col:(NSInteger)col;
 
 @end
 
@@ -58,6 +58,6 @@
 - (void)removeAllHintHighlights;
 
 // Tile Accessors
-- (ZSTileViewController *)getGameBoardTileViewControllerAtRow:(NSInteger)row col:(NSInteger)col;
+- (ZSTileViewController *)getTileViewControllerAtRow:(NSInteger)row col:(NSInteger)col;
 
 @end

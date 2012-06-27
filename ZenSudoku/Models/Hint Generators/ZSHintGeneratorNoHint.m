@@ -12,7 +12,7 @@
 #import "ZSBoard.h"
 
 @interface ZSHintGeneratorNoHint () {
-	ZSBoard *_gameBoard;
+	ZSBoard *_board;
 }
 
 - (void)_sendGameBoardToDevelopers;
@@ -21,8 +21,8 @@
 
 @implementation ZSHintGeneratorNoHint
 
-- (void)setGameBoard:(ZSBoard *)gameBoard {
-	_gameBoard = gameBoard;
+- (void)setGameBoard:(ZSBoard *)board {
+	_board = board;
 }
 
 - (void)_sendGameBoardToDevelopers {

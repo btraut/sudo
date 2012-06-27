@@ -172,26 +172,26 @@ NSInteger standard9x9GroupMap[9][9] = {
 	}
 }
 
-- (void)copyGroupMapFromGameBoard:(ZSBoard *)gameBoard {
+- (void)copyGroupMapFromGameBoard:(ZSBoard *)board {
 	for (NSInteger row = 0; row < size; ++row) {
 		for (NSInteger col = 0; col < size; ++col) {
-			[self getTileAtRow:row col:col].groupId = [gameBoard getTileAtRow:row col:col].groupId;
+			[self getTileAtRow:row col:col].groupId = [board getTileAtRow:row col:col].groupId;
 		}
 	}
 }
 
-- (void)copyAnswersFromGameBoard:(ZSBoard *)gameBoard {
+- (void)copyAnswersFromGameBoard:(ZSBoard *)board {
 	for (NSInteger row = 0; row < size; ++row) {
 		for (NSInteger col = 0; col < size; ++col) {
-			[self getTileAtRow:row col:col].answer = [gameBoard getTileAtRow:row col:col].answer;
+			[self getTileAtRow:row col:col].answer = [board getTileAtRow:row col:col].answer;
 		}
 	}
 }
 
-- (void)copyGuessesFromGameBoard:(ZSBoard *)gameBoard {
+- (void)copyGuessesFromGameBoard:(ZSBoard *)board {
 	for (NSInteger row = 0; row < size; ++row) {
 		for (NSInteger col = 0; col < size; ++col) {
-			[self getTileAtRow:row col:col].guess = [gameBoard getTileAtRow:row col:col].guess;
+			[self getTileAtRow:row col:col].guess = [board getTileAtRow:row col:col].guess;
 		}
 	}
 }

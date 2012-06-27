@@ -26,7 +26,7 @@ NSString * const kDictionaryRepresentationGameTilePencilsKey = @"kDictionaryRepr
 
 @implementation ZSTile
 
-@synthesize gameBoard;
+@synthesize board;
 @synthesize row, col, groupId;
 @synthesize guess, answer, locked;
 
@@ -41,11 +41,11 @@ NSString * const kDictionaryRepresentationGameTilePencilsKey = @"kDictionaryRepr
 	self = [super init];
 	
 	if (self) {
-		gameBoard = newGameBoard;
+		board = newGameBoard;
 		
-		_pencils = malloc(gameBoard.size * sizeof(BOOL));
+		_pencils = malloc(board.size * sizeof(BOOL));
 		
-		for (NSInteger i = 0; i < gameBoard.size; ++i) {
+		for (NSInteger i = 0; i < board.size; ++i) {
 			_pencils[i] = NO;
 		}
 	}
@@ -66,7 +66,7 @@ NSString * const kDictionaryRepresentationGameTilePencilsKey = @"kDictionaryRepr
 	
 	groupId = [[dict objectForKey:kDictionaryRepresentationGameTileGroupIdKey] intValue];
 	
-	for (NSInteger i = 0; i < gameBoard.size; ++i) {
+	for (NSInteger i = 0; i < board.size; ++i) {
 		NSNumber *pencilNumber = [[dict objectForKey:kDictionaryRepresentationGameTilePencilsKey] objectAtIndex:i];
 		[self setPencil:[pencilNumber boolValue] forGuess:(i + 1)];
 	}
@@ -83,7 +83,7 @@ NSString * const kDictionaryRepresentationGameTilePencilsKey = @"kDictionaryRepr
 	
 	NSMutableArray *pencilsArray = [NSMutableArray array];
 	
-	for (NSInteger i = 0; i < gameBoard.size; ++i) {
+	for (NSInteger i = 0; i < board.size; ++i) {
 		[pencilsArray addObject:[NSNumber numberWithBool:_pencils[i]]];
 	}
 	
@@ -103,7 +103,7 @@ NSString * const kDictionaryRepresentationGameTilePencilsKey = @"kDictionaryRepr
 }
 
 - (void)setAllPencils:(BOOL)isset {
-	for (NSInteger i = 1; i <= gameBoard.size; ++i) {
+	for (NSInteger i = 1; i <= board.size; ++i) {
 		[self setPencil:isset forGuess:i];
 	}
 }

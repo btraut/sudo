@@ -63,13 +63,13 @@ typedef struct {
 
 // Data Migration
 
-- (void)copyGroupMapFromGameBoard:(ZSBoard *)gameBoard;
-- (void)copyGuessesFromGameBoard:(ZSBoard *)gameBoard;
-- (void)copyAnswersFromGameBoard:(ZSBoard *)gameBoard;
-- (void)copyPencilsFromGameBoard:(ZSBoard *)gameBoard;
+- (void)copyGroupMapFromGameBoard:(ZSBoard *)board;
+- (void)copyGuessesFromGameBoard:(ZSBoard *)board;
+- (void)copyAnswersFromGameBoard:(ZSBoard *)board;
+- (void)copyPencilsFromGameBoard:(ZSBoard *)board;
 
-- (void)copyGroupMapFromFastGameBoard:(ZSFastGameBoard *)gameBoard;
-- (void)copyGuessesFromFastGameBoard:(ZSFastGameBoard *)gameBoard;
+- (void)copyGroupMapFromFastGameBoard:(ZSFastGameBoard *)board;
+- (void)copyGuessesFromFastGameBoard:(ZSFastGameBoard *)board;
 - (void)copyGuessesFromString:(NSString *)guessesString;
 - (void)copyGroupMapFromString:(NSString *)groupMapString;
 

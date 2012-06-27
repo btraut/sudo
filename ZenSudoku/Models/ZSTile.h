@@ -12,7 +12,7 @@
 
 @interface ZSTile : NSObject
 
-@property (weak) ZSBoard *gameBoard;
+@property (weak) ZSBoard *board;
 
 @property (assign) NSInteger row;
 @property (assign) NSInteger col;
@@ -22,7 +22,7 @@
 @property (assign) NSInteger answer;
 @property (assign) BOOL locked;
 
-- (id)initWithBoard:(ZSBoard *)gameBoard;
+- (id)initWithBoard:(ZSBoard *)board;
 
 - (void)setValuesForDictionaryRepresentation:(NSDictionary *)dict;
 - (NSDictionary *)getDictionaryRepresentation;

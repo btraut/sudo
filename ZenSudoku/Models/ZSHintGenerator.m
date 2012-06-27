@@ -115,15 +115,15 @@
 	[self deallocChainMap];
 }
 
-- (void)copyGameStateFromGameBoard:(ZSBoard *)gameBoard {
-	[_fastGameBoard copyGroupMapFromGameBoard:gameBoard];
-	[_fastGameBoard copyGuessesFromGameBoard:gameBoard];
-	[_fastGameBoard copyAnswersFromGameBoard:gameBoard];
-	[_fastGameBoard copyPencilsFromGameBoard:gameBoard];
+- (void)copyGameStateFromGameBoard:(ZSBoard *)board {
+	[_fastGameBoard copyGroupMapFromGameBoard:board];
+	[_fastGameBoard copyGuessesFromGameBoard:board];
+	[_fastGameBoard copyAnswersFromGameBoard:board];
+	[_fastGameBoard copyPencilsFromGameBoard:board];
 	
-	[_scratchBoard copyGroupMapFromGameBoard:gameBoard];
-	[_scratchBoard copyGuessesFromGameBoard:gameBoard];
-	[_scratchBoard copyAnswersFromGameBoard:gameBoard];
+	[_scratchBoard copyGroupMapFromGameBoard:board];
+	[_scratchBoard copyGuessesFromGameBoard:board];
+	[_scratchBoard copyAnswersFromGameBoard:board];
 	[_scratchBoard addAutoPencils];
 }
 

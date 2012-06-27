@@ -35,9 +35,9 @@
 - (void)applyAnswersArray:(NSInteger **)answersArray;
 - (void)applyGroupMapArray:(NSInteger **)groupMapArray;
 
-- (void)copyGroupMapFromGameBoard:(ZSBoard *)gameBoard;
-- (void)copyAnswersFromGameBoard:(ZSBoard *)gameBoard;
-- (void)copyGuessesFromGameBoard:(ZSBoard *)gameBoard;
+- (void)copyGroupMapFromGameBoard:(ZSBoard *)board;
+- (void)copyAnswersFromGameBoard:(ZSBoard *)board;
+- (void)copyGuessesFromGameBoard:(ZSBoard *)board;
 
 - (void)copyGroupMapFromString:(NSString *)guessesString;
 - (void)copyAnswersFromString:(NSString *)guessesString;

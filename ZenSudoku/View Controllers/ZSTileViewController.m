@@ -344,7 +344,7 @@ NSString * const kTileColorHighlightHintD = @"#4C2FADD4";
 	guessView.hidden = NO;
 	
 	// Set visibility on all the pencil views.
-	for (NSInteger i = 0; i < tile.gameBoard.size; ++i) {
+	for (NSInteger i = 0; i < tile.board.size; ++i) {
 		UILabel *pencilLabel = [pencilViews objectAtIndex:i];
 		pencilLabel.hidden = YES;
 	}		
@@ -355,7 +355,7 @@ NSString * const kTileColorHighlightHintD = @"#4C2FADD4";
 	guessView.hidden = YES;
 	
 	// Set visibility on all the pencil views.
-	for (NSInteger i = 0; i < tile.gameBoard.size; ++i) {
+	for (NSInteger i = 0; i < tile.board.size; ++i) {
 		UILabel *pencilLabel = [pencilViews objectAtIndex:i];
 		pencilLabel.hidden = ![tile getPencilForGuess:(i + 1)];
 	}
@@ -368,7 +368,7 @@ NSString * const kTileColorHighlightHintD = @"#4C2FADD4";
 	// NSLog(@"Guess: %i", tile.guess);
 	// NSLog(@"Answer: %i", tile.answer);
 	
-	[touchDelegate gameBoardTileWasTouched:self];
+	[touchDelegate tileWasTouched:self];
 }
 
 @end

@@ -58,7 +58,7 @@ typedef struct {
 - (id)initWithSize:(NSInteger)size;
 - (void)dealloc;
 
-- (void)copyGameStateFromGameBoard:(ZSBoard *)gameBoard;
+- (void)copyGameStateFromGameBoard:(ZSBoard *)board;
 
 - (NSArray *)generateHint;
 

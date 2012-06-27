@@ -133,11 +133,11 @@ NSString * const kDBPuzzleDefinitionGroupMapKey = @"kDBPuzzleDefinitionGroupMapK
 	game.type = [[dict objectForKey:kDBPuzzleDefinitionTypeKey] intValue];
 	
 	// Prepare the game board.
-	[game.gameBoard copyGuessesFromString:[dict objectForKey:kDBPuzzleDefinitionGuessesKey]];
-	[game.gameBoard copyAnswersFromString:[dict objectForKey:kDBPuzzleDefinitionAnswersKey]];
-	[game.gameBoard copyGroupMapFromString:[dict objectForKey:kDBPuzzleDefinitionGroupMapKey]];
+	[game.board copyGuessesFromString:[dict objectForKey:kDBPuzzleDefinitionGuessesKey]];
+	[game.board copyAnswersFromString:[dict objectForKey:kDBPuzzleDefinitionAnswersKey]];
+	[game.board copyGroupMapFromString:[dict objectForKey:kDBPuzzleDefinitionGroupMapKey]];
 	
-	[game.gameBoard lockGuesses];
+	[game.board lockGuesses];
 	
 	// Return the game.
 	return game;

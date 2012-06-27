@@ -61,7 +61,7 @@
 	
 	NSInteger xOffset = 0;
 	
-	for (NSInteger i = 0; i < gameViewController.game.gameBoard.size; i++) {
+	for (NSInteger i = 0; i < gameViewController.game.board.size; i++) {
 		gameAnswerOptionViewController = [[ZSAnswerOptionViewController alloc] initWithGameAnswerOption:(ZSAnswerOption)i];
 		gameAnswerOptionViewController.view.frame = CGRectMake(xOffset, 0, gameAnswerOptionViewController.view.frame.size.width, gameAnswerOptionViewController.view.frame.size.height);
 		gameAnswerOptionViewController.delegate = self;

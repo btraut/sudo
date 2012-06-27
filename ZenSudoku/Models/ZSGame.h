@@ -68,7 +68,7 @@ typedef enum {
 @property (assign) ZSGameDifficulty difficulty;
 @property (assign) ZSGameType type;
 
-@property (strong) ZSBoard *gameBoard;
+@property (strong) ZSBoard *board;
 
 @property (assign) BOOL recordingHistory;
 

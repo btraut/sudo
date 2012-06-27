@@ -49,8 +49,8 @@
 	
 	self.game = newGame;
 	
-	for (NSInteger row = 0; row < game.gameBoard.size; row++) {
-		for (NSInteger col = 0; col < game.gameBoard.size; col++) {
+	for (NSInteger row = 0; row < game.board.size; row++) {
+		for (NSInteger col = 0; col < game.board.size; col++) {
 			ZSTileViewController *tileViewController = [[tileViews objectAtIndex:row] objectAtIndex:col];
 			tileViewController.tile = [game getTileAtRow:row col:col];
 		}
@@ -74,12 +74,12 @@
 	NSMutableArray *rows = [NSMutableArray array];
 	NSInteger yOffset = 3;
 	
-	for (NSInteger row = 0; row < game.gameBoard.size; row++) {
+	for (NSInteger row = 0; row < game.board.size; row++) {
 		NSInteger xOffset = 3;
 		
 		NSMutableArray *rowTiles = [NSMutableArray array];
 		
-		for (NSInteger col = 0; col < game.gameBoard.size; col++) {
+		for (NSInteger col = 0; col < game.board.size; col++) {
 			ZSTileViewController *tileViewController = [[ZSTileViewController alloc] initWithTile:[game getTileAtRow:row col:col]];
 			tileViewController.view.frame = CGRectMake(xOffset, yOffset, tileViewController.view.frame.size.width, tileViewController.view.frame.size.height);
 			tileViewController.touchDelegate = self;
@@ -105,9 +105,9 @@
 }
 
 - (void)reloadView {
-	for (NSInteger row = 0; row < game.gameBoard.size; row++) {
-		for (NSInteger col = 0; col < game.gameBoard.size; col++) {
-			[[self getGameBoardTileViewControllerAtRow:row col:col] reloadView];
+	for (NSInteger row = 0; row < game.board.size; row++) {
+		for (NSInteger col = 0; col < game.board.size; col++) {
+			[[self getTileViewControllerAtRow:row col:col] reloadView];
 		}
 	}
 }
@@ -170,9 +170,9 @@
 
 - (void)addSimilarHighlightsForTileView:(ZSTileViewController *)tileView {
 	if (tileView.tile.guess) {
-		for (NSInteger row = 0; row < game.gameBoard.size; row++) {
-			for (NSInteger col = 0; col < game.gameBoard.size; col++) {
-				ZSTileViewController *iteratedTileView = [self getGameBoardTileViewControllerAtRow:row col:col];
+		for (NSInteger row = 0; row < game.board.size; row++) {
+			for (NSInteger col = 0; col < game.board.size; col++) {
+				ZSTileViewController *iteratedTileView = [self getTileViewControllerAtRow:row col:col];
 				
 				if (iteratedTileView.tile.guess == selectedTileView.tile.guess || [iteratedTileView.tile getPencilForGuess:tileView.tile.guess]) {
 					iteratedTileView.highlightedSimilar = YES;
@@ -220,7 +220,7 @@
 			selectedTileContainsErrors = YES;
 			
 			for (ZSTile *tile in rowSet) {
-				ZSTileViewController *iteratedTileView = [self getGameBoardTileViewControllerAtRow:tile.row col:tile.col];
+				ZSTileViewController *iteratedTileView = [self getTileViewControllerAtRow:tile.row col:tile.col];
 				iteratedTileView.highlightedError = YES;
 				[iteratedTileView reloadView];
 				
@@ -233,7 +233,7 @@
 			selectedTileContainsErrors = YES;
 			
 			for (ZSTile *tile in colSet) {
-				ZSTileViewController *iteratedTileView = [self getGameBoardTileViewControllerAtRow:tile.row col:tile.col];
+				ZSTileViewController *iteratedTileView = [self getTileViewControllerAtRow:tile.row col:tile.col];
 				iteratedTileView.highlightedError = YES;
 				[iteratedTileView reloadView];
 				
@@ -246,7 +246,7 @@
 			selectedTileContainsErrors = YES;
 			
 			for (ZSTile *tile in familySet) {
-				ZSTileViewController *iteratedTileView = [self getGameBoardTileViewControllerAtRow:tile.row col:tile.col];
+				ZSTileViewController *iteratedTileView = [self getTileViewControllerAtRow:tile.row col:tile.col];
 				iteratedTileView.highlightedError = YES;
 				[iteratedTileView reloadView];
 				
@@ -283,14 +283,14 @@
 }
 
 - (void)removeAllHintHighlights {
-	for (NSInteger row = 0; row < game.gameBoard.size; ++row) {
-		for (NSInteger col = 0; col < game.gameBoard.size; ++col) {
-			ZSTileViewController *tileViewController = [self getGameBoardTileViewControllerAtRow:row col:col];
+	for (NSInteger row = 0; row < game.board.size; ++row) {
+		for (NSInteger col = 0; col < game.board.size; ++col) {
+			ZSTileViewController *tileViewController = [self getTileViewControllerAtRow:row col:col];
 			
 			tileViewController.highlightedHintType = ZSTileHintHighlightTypeNone;
 			tileViewController.highlightGuessHint = NO;
 			
-			for (NSInteger i = 0; i < game.gameBoard.size; ++i) {
+			for (NSInteger i = 0; i < game.board.size; ++i) {
 				tileViewController.highlightPencilHints[i] = ZSTilePencilTextTypeNormal;
 			}
 		}
@@ -301,14 +301,14 @@
 
 #pragma mark - Tile Accessors
 
-- (ZSTileViewController *)getGameBoardTileViewControllerAtRow:(NSInteger)row col:(NSInteger)col {
+- (ZSTileViewController *)getTileViewControllerAtRow:(NSInteger)row col:(NSInteger)col {
 	return [[tileViews objectAtIndex:row] objectAtIndex:col];
 }
 
 #pragma mark - ZSTileTouchDelegate Implementation
 
-- (void)gameBoardTileWasTouched:(ZSTileViewController *)newSelected {
-	[self.touchDelegate gameBoardTileWasTouchedInRow:newSelected.tile.row col:newSelected.tile.col];
+- (void)tileWasTouched:(ZSTileViewController *)newSelected {
+	[self.touchDelegate tileWasTouchedInRow:newSelected.tile.row col:newSelected.tile.col];
 }
 
 @end

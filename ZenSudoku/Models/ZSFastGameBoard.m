@@ -197,10 +197,10 @@
 
 #pragma mark - Data Migration
 
-- (void)copyGroupMapFromGameBoard:(ZSBoard *)gameBoard {
+- (void)copyGroupMapFromGameBoard:(ZSBoard *)board {
 	for (NSInteger row = 0; row < size; ++row) {
 		for (NSInteger col = 0; col < size; ++col) {
-			ZSTile *tile = [gameBoard getTileAtRow:row col:col];
+			ZSTile *tile = [board getTileAtRow:row col:col];
 			grid[row][col].groupId = tile.groupId;
 		}
 	}
@@ -208,30 +208,30 @@
 	[self rebuildGroupCache];
 }
 
-- (void)copyGuessesFromGameBoard:(ZSBoard *)gameBoard {
+- (void)copyGuessesFromGameBoard:(ZSBoard *)board {
 	for (NSInteger row = 0; row < size; ++row) {
 		for (NSInteger col = 0; col < size; ++col) {
-			ZSTile *tile = [gameBoard getTileAtRow:row col:col];
+			ZSTile *tile = [board getTileAtRow:row col:col];
 			grid[row][col].answer = tile.answer;
 		}
 	}
 }
 
-- (void)copyAnswersFromGameBoard:(ZSBoard *)gameBoard {
+- (void)copyAnswersFromGameBoard:(ZSBoard *)board {
 	for (NSInteger row = 0; row < size; ++row) {
 		for (NSInteger col = 0; col < size; ++col) {
-			ZSTile *tile = [gameBoard getTileAtRow:row col:col];
+			ZSTile *tile = [board getTileAtRow:row col:col];
 			[self setGuess:tile.guess forTileAtRow:row col:col];
 		}
 	}
 }
 
-- (void)copyPencilsFromGameBoard:(ZSBoard *)gameBoard {
+- (void)copyPencilsFromGameBoard:(ZSBoard *)board {
 	[self setAllPencils:NO];
 	
 	for (NSInteger row = 0; row < size; ++row) {
 		for (NSInteger col = 0; col < size; ++col) {
-			ZSTile *tile = [gameBoard getTileAtRow:row col:col];
+			ZSTile *tile = [board getTileAtRow:row col:col];
 			
 			if (tile.guess) {
 				continue;
@@ -246,20 +246,20 @@
 	}
 }
 
-- (void)copyGroupMapFromFastGameBoard:(ZSFastGameBoard *)gameBoard {
+- (void)copyGroupMapFromFastGameBoard:(ZSFastGameBoard *)board {
 	for (NSInteger row = 0; row < size; ++row) {
 		for (NSInteger col = 0; col < size; ++col) {
-			grid[row][col].groupId = gameBoard.grid[row][col].groupId;
+			grid[row][col].groupId = board.grid[row][col].groupId;
 		}
 	}
 	
 	[self rebuildGroupCache];
 }
 
-- (void)copyGuessesFromFastGameBoard:(ZSFastGameBoard *)gameBoard {
+- (void)copyGuessesFromFastGameBoard:(ZSFastGameBoard *)board {
 	for (NSInteger row = 0; row < size; ++row) {
 		for (NSInteger col = 0; col < size; ++col) {
-			[self setGuess:gameBoard.grid[row][col].guess forTileAtRow:row col:col];
+			[self setGuess:board.grid[row][col].guess forTileAtRow:row col:col];
 		}
 	}
 }
