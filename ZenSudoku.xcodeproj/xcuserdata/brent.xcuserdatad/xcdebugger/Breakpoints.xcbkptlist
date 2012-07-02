@@ -7,19 +7,6 @@
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "ZenSudoku/View Controllers/ZSFoldedCornerViewController.m"
-         timestampString = "362909408.087015"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "411"
-         endingLineNumber = "411"
-         landmarkName = "-updatePlusButton"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
          filePath = "ZenSudoku/View Controllers/ZSGameBoardViewController.m"
          timestampString = "362480297.990717"
          startingColumnNumber = "9223372036854775807"

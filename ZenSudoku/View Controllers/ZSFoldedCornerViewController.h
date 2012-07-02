@@ -41,8 +41,6 @@
 
 @property (assign) BOOL drawPage;
 
-@property (assign) BOOL useTranslucentPaper;
-
 - (void)setPageImage:(UIImage *)image;
 
 - (void)resetToStartPosition;

@@ -46,18 +46,19 @@ NSString * const kRemoveTileAfterErrorKey = @"kRemoveTileAfterErrorKey";
 	// Set user defaults.
 	[self setUserDefaults];
 	
+	// If the user has upgraded the game since last launch, the game may need to do stuff.
+	NSString *currentVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+	if (![[[NSUserDefaults standardUserDefaults] stringForKey:kLastUsedVersionKey] isEqualToString:currentVersion]) {
+		[self userDidUpgradeVersion];
+	}
+	
+	// Build the window.
     _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
 	ZSGameBookViewController *gameBookViewController = [[ZSGameBookViewController alloc] init];
 	
 	_window.rootViewController = gameBookViewController;
 	[_window makeKeyAndVisible];
-	
-	// If the user has upgraded the game since last launch, the game may need to do stuff.
-	NSString *currentVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-	if (![[[NSUserDefaults standardUserDefaults] stringForKey:kLastUsedVersionKey] isEqualToString:currentVersion]) {
-		[self userDidUpgradeVersion];
-	}
 	
 	return YES;
 }
@@ -96,6 +97,9 @@ NSString * const kRemoveTileAfterErrorKey = @"kRemoveTileAfterErrorKey";
 	// Debug - clear stats and re-save.
 	[[ZSStatisticsController sharedInstance] resetStats];
 	[[ZSStatisticsController sharedInstance] saveStats];
+	
+	// Debug - clear saved puzzle.
+	[[ZSGameController sharedInstance] clearSavedGame];
 }
 
 - (void)setUserDefaults {

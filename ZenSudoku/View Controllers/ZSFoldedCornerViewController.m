@@ -44,9 +44,15 @@ typedef enum {
 	ZSPointAnimation *_animationHelper;
 	
 	CGFloat _foldOverflowBottomWidth;
+	
+	dispatch_queue_t _translucentPageRenderDispatchQueue;
 }
 
+@property (assign) BOOL useTranslucentPage;
+@property (strong) UIImage *screenshotImage;
+
 @property (strong) ZSGLSprite *backwardsPageSprite;
+@property (strong) ZSGLSprite *backwardsTranslucentPageSprite;
 @property (strong) ZSGLSprite *shadowBlobOpaqueSprite;
 @property (strong) ZSGLSprite *shadowBlobSprite;
 @property (strong) ZSGLSprite *screenshotSprite;
@@ -64,9 +70,11 @@ typedef enum {
 
 @synthesize drawPage;
 
-@synthesize useTranslucentPaper;
+@synthesize useTranslucentPage = _useTranslucentPage;
+@synthesize screenshotImage = _screenshotImage;
 
 @synthesize backwardsPageSprite = _backwardsPageSprite;
+@synthesize backwardsTranslucentPageSprite = _backwardsTranslucentPageSprite;
 @synthesize shadowBlobOpaqueSprite = _shadowBlobOpaqueSprite;
 @synthesize shadowBlobSprite = _shadowBlobSprite;
 @synthesize screenshotSprite = _screenshotSprite;
@@ -89,10 +97,17 @@ typedef enum {
 		_animationHelper = [[ZSPointAnimation alloc] init];
 		_animationHelper.delegate = self;
 		
-		useTranslucentPaper = YES;
+		_useTranslucentPage = YES;
+		
+		// Init the dispatch queue.
+		_translucentPageRenderDispatchQueue = dispatch_queue_create("com.tenfoursoftware.screenshotRenderQueue", NULL);
 	}
 	
 	return self;
+}
+
+- (void)dealloc {
+	dispatch_release(_translucentPageRenderDispatchQueue);
 }
 
 - (void)loadView {
@@ -134,11 +149,13 @@ typedef enum {
 	_backwardsPageImage = [UIImage imageNamed:@"BackwardsPage.png"];
 	
 	if ([UIScreen mainScreen].scale == 2.0) {
-		_backwardsPageSprite = [[ZSGLSprite alloc] initWithFile:@"BackwardsPage@2x.png" effect:_effect];
+		_backwardsPageSprite = [[ZSGLSprite alloc] initWithFile:@"BackwardsTranslucentPage@2x.png" effect:_effect];
+		_backwardsTranslucentPageSprite = [[ZSGLSprite alloc] initWithFile:@"BackwardsTranslucentPage@2x.png" effect:_effect];
 		_shadowBlobOpaqueSprite = [[ZSGLSprite alloc] initWithFile:@"ShadowBlobStraightOpaque@2x.png" effect:_effect];
 		_shadowBlobSprite = [[ZSGLSprite alloc] initWithFile:@"ShadowBlobStraight@2x.png" effect:_effect];
 	} else {
-		_backwardsPageSprite = [[ZSGLSprite alloc] initWithFile:@"BackwardsPage.png" effect:_effect];
+		_backwardsPageSprite = [[ZSGLSprite alloc] initWithFile:@"BackwardsTranslucentPage.png" effect:_effect];
+		_backwardsTranslucentPageSprite = [[ZSGLSprite alloc] initWithFile:@"BackwardsTranslucentPage.png" effect:_effect];
 		_shadowBlobOpaqueSprite = [[ZSGLSprite alloc] initWithFile:@"ShadowBlobStraightOpaque.png" effect:_effect];
 		_shadowBlobSprite = [[ZSGLSprite alloc] initWithFile:@"ShadowBlobStraight.png" effect:_effect];
 	}
@@ -157,54 +174,76 @@ typedef enum {
 }
 
 - (void)setPageImage:(UIImage *)image {
+	// Save the screenshot image for user in the render methods.
+	self.screenshotImage = image;
+	
+	// Syncrounously render the screenshot sprite.
+	[self loadNewScreenshotSprite];
+	
+	// Asynchronously render the translucent page sprite.
+	self.useTranslucentPage = YES;
+	
+	dispatch_async(_translucentPageRenderDispatchQueue, ^{
+		[self loadNewTranslucentPageSprite];
+		self.useTranslucentPage = NO;
+	});
+}
+
+- (void)loadNewScreenshotSprite {
 	// Set the context again. Seems like this is needed for threading.
     [EAGLContext setCurrentContext:self.context];
 	
-	if (self.useTranslucentPaper) {
-		// Create a new graphics context so we can draw the reverse of the last page onto this page.
-		UIGraphicsBeginImageContextWithOptions(CGSizeMake(image.size.width, image.size.height), NO, 0);
-		CGContextRef context = UIGraphicsGetCurrentContext();
-		
-		// Draw the paper background.
-		CGContextScaleCTM(context, 1, -1);
-		CGContextTranslateCTM(context, 0, -image.size.height);
-		CGContextDrawImage(context, CGRectMake(0, 0, image.size.width, image.size.height), _backwardsPageImage.CGImage);
-		
-		CGContextScaleCTM(context, -1, 1);
-		CGContextTranslateCTM(context, -image.size.width, 0);
-		
-		// Clip the screenshot.
-		NSInteger clippingPadding = 2;
-		CGContextClipToRect(context, CGRectMake(clippingPadding, clippingPadding, image.size.width - clippingPadding * 2, image.size.height - clippingPadding * 2));
-		
-		// Draw the initial (darkest) screenshot.
-		CGContextSetAlpha(context, 0.015f);
-		CGContextDrawImage(context, CGRectMake(0, 0, image.size.width, image.size.height), image.CGImage);
-		
-		// Draw a few more copies of the screenshot to achieve a blur effect.
-		CGContextSetAlpha(context, 0.007f);
-		
-		CGContextTranslateCTM(context, 1, 0);
-		CGContextDrawImage(context, CGRectMake(0, 0, image.size.width, image.size.height), image.CGImage);
-
-		CGContextTranslateCTM(context, -2, 0);
-		CGContextDrawImage(context, CGRectMake(0, 0, image.size.width, image.size.height), image.CGImage);
-		
-		CGContextTranslateCTM(context, 1, 1);
-		CGContextDrawImage(context, CGRectMake(0, 0, image.size.width, image.size.height), image.CGImage);
-		
-		CGContextTranslateCTM(context, 0, -2);
-		CGContextDrawImage(context, CGRectMake(0, 0, image.size.width, image.size.height), image.CGImage);
-		
-		// Create a new image from the context.
-		UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-		UIGraphicsEndImageContext();
-		
-		self.backwardsPageSprite = [[ZSGLSprite alloc] initWithCGImage:newImage.CGImage effect:_effect];
-	}
-	
 	// Load the images into textures.
-	self.screenshotSprite = [[ZSGLSprite alloc] initWithCGImage:image.CGImage effect:_effect];
+	self.screenshotSprite = [[ZSGLSprite alloc] initWithCGImage:self.screenshotImage.CGImage effect:_effect];
+}
+
+- (void)loadNewTranslucentPageSprite {
+	// Set the context again. Seems like this is needed for threading.
+    [EAGLContext setCurrentContext:self.context];
+	
+	// Cache the screenshot image in this function so if it gets changed while rendering, it doesn't break the render.
+	UIImage *image = self.screenshotImage;
+	
+	// Create a new graphics context so we can draw the reverse of the last page onto this page.
+	UIGraphicsBeginImageContextWithOptions(CGSizeMake(image.size.width, image.size.height), NO, 0);
+	CGContextRef context = UIGraphicsGetCurrentContext();
+	
+	// Draw the paper background.
+	CGContextScaleCTM(context, 1, -1);
+	CGContextTranslateCTM(context, 0, -image.size.height);
+	CGContextDrawImage(context, CGRectMake(0, 0, image.size.width, image.size.height), _backwardsPageImage.CGImage);
+	
+	CGContextScaleCTM(context, -1, 1);
+	CGContextTranslateCTM(context, -image.size.width, 0);
+	
+	// Clip the screenshot.
+	NSInteger clippingPadding = 2;
+	CGContextClipToRect(context, CGRectMake(clippingPadding, clippingPadding, image.size.width - clippingPadding * 2, image.size.height - clippingPadding * 2));
+	
+	// Draw the initial (darkest) screenshot.
+	CGContextSetAlpha(context, 0.015f);
+	CGContextDrawImage(context, CGRectMake(0, 0, image.size.width, image.size.height), image.CGImage);
+	
+	// Draw a few more copies of the screenshot to achieve a blur effect.
+	CGContextSetAlpha(context, 0.007f);
+	
+	CGContextTranslateCTM(context, 1, 0);
+	CGContextDrawImage(context, CGRectMake(0, 0, image.size.width, image.size.height), image.CGImage);
+	
+	CGContextTranslateCTM(context, -2, 0);
+	CGContextDrawImage(context, CGRectMake(0, 0, image.size.width, image.size.height), image.CGImage);
+	
+	CGContextTranslateCTM(context, 1, 1);
+	CGContextDrawImage(context, CGRectMake(0, 0, image.size.width, image.size.height), image.CGImage);
+	
+	CGContextTranslateCTM(context, 0, -2);
+	CGContextDrawImage(context, CGRectMake(0, 0, image.size.width, image.size.height), image.CGImage);
+	
+	// Create a new image from the context.
+	UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+	UIGraphicsEndImageContext();
+	
+	self.backwardsPageSprite = [[ZSGLSprite alloc] initWithCGImage:newImage.CGImage effect:_effect];
 }
 
 - (void)resetToStartPosition {
@@ -339,6 +378,7 @@ typedef enum {
 	GLKMatrix4 foldedCornerMatrix = baseMatrix;
 	foldedCornerMatrix = GLKMatrix4Translate(foldedCornerMatrix, 0, -self.backwardsPageSprite.contentSizeNormalized.height, 0);
 	self.backwardsPageSprite.transform = foldedCornerMatrix;
+	self.backwardsTranslucentPageSprite.transform = foldedCornerMatrix;
 		
     GLKMatrix4 shadowBlobMatrix = baseMatrix;
 	shadowBlobMatrix = GLKMatrix4Translate(shadowBlobMatrix, 0, -underShadowDimensions.height, 0);
@@ -376,7 +416,11 @@ typedef enum {
 	foldedCornerTriangle[1].textureVertex = CGPointMake((foldDimensions.width / self.backwardsPageSprite.contentSizeNormalized.width), 1);
 	foldedCornerTriangle[2].textureVertex = CGPointMake(0, 1 - (foldDimensions.height / self.backwardsPageSprite.contentSizeNormalized.height));
 	
-	[self.backwardsPageSprite renderTriangleStrip:foldedCornerTriangle ofSize:3];
+	if (self.useTranslucentPage) {
+		[self.backwardsTranslucentPageSprite renderTriangleStrip:foldedCornerTriangle ofSize:3];
+	} else {
+		[self.backwardsPageSprite renderTriangleStrip:foldedCornerTriangle ofSize:3];
+	}
 	
 	// Draw the fold gradient.
 	ColoredVertex foldGradientVertices[3];

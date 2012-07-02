@@ -41,6 +41,9 @@ typedef struct {
 	dispatch_queue_t _screenshotRenderDispatchQueue;
 	dispatch_queue_t _hintGenerationDispatchQueue;
 	
+	dispatch_group_t _screenshotRenderDispatchGroup;
+	dispatch_group_t _hintGenerationDispatchGroup;
+	
 	BOOL _guessInSameTileWasJustMade;
 	ZSTileViewController *_lastTileToReceiveGuess;
 	NSInteger _totalPencilChangesSinceLastGuess;
@@ -93,6 +96,9 @@ typedef struct {
 		_screenshotRenderDispatchQueue = dispatch_queue_create("com.tenfoursoftware.screenshotRenderQueue", NULL);
 		_hintGenerationDispatchQueue = dispatch_queue_create("com.tenfoursoftware.hintGenerationQueue", NULL);
 		
+		_screenshotRenderDispatchGroup = dispatch_group_create();
+		_hintGenerationDispatchGroup = dispatch_group_create();
+		
 		_guessInSameTileWasJustMade = NO;
 		_lastTileToReceiveGuess = nil;
 		_totalPencilChangesSinceLastGuess = 0;
@@ -132,6 +138,9 @@ typedef struct {
 
 - (void)dealloc {
 	free(_pencilChangesSinceLastGuess);
+	
+	dispatch_release(_screenshotRenderDispatchGroup);
+	dispatch_release(_hintGenerationDispatchGroup);
 	
 	dispatch_release(_screenshotRenderDispatchQueue);
 	dispatch_release(_hintGenerationDispatchQueue);
@@ -346,7 +355,7 @@ typedef struct {
 }
 
 - (void)_updateScreenshot {
-	dispatch_async(_screenshotRenderDispatchQueue, ^{
+	dispatch_group_async(_screenshotRenderDispatchGroup, _screenshotRenderDispatchQueue, ^{
 		if (self.needsScreenshotUpdate) {
 			self.needsScreenshotUpdate = NO;
 			
@@ -507,10 +516,7 @@ typedef struct {
 - (void)hintButtonWasTouched {
 	// Force an update immediately if one is needed.
 	[self _updateHintDeck];
-	
-	dispatch_sync(_hintGenerationDispatchQueue, ^{
-//		NSLog(@"Forcing sync of hints generation queue.");
-	});
+	dispatch_group_wait(_hintGenerationDispatchGroup, DISPATCH_TIME_FOREVER);
 	
 	[hintDelegate beginHintDeck:self.hintDeck forGameViewController:self];
 	
@@ -524,7 +530,7 @@ typedef struct {
 }
 
 - (void)_updateHintDeck {
-	dispatch_async(_hintGenerationDispatchQueue, ^{
+	dispatch_group_async(_hintGenerationDispatchGroup, _hintGenerationDispatchQueue, ^{
 		if (self.needsHintDeckUpdate) {
 			self.needsHintDeckUpdate = NO;
 			
@@ -622,12 +628,9 @@ typedef struct {
 	_foldStartPoint = foldPoint;
 	_foldedCornerTouchCrossedTapThreshold = NO;
 	
-	// Debug
+	// Force a screenshot update if one is needed.
 	[self _updateScreenshot];
-	
-	dispatch_sync(_screenshotRenderDispatchQueue, ^{
-//		NSLog(@"Forcing sync of screenshot render queue.");
-	});
+	dispatch_group_wait(_screenshotRenderDispatchGroup, DISPATCH_TIME_FOREVER);
 	
 	[self _setScreenshotVisible:YES];
 }

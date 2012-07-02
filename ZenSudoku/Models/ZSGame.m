@@ -165,8 +165,10 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 }
 
 - (void)encodeWithCoder:(NSCoder *)encoder {
-	// Encode game properties.
+	// Encode puzzle size.
 	[encoder encodeInt:board.size forKey:kDictionaryRepresentationGameSizeKey];
+	
+	// Encode game properties.
 	[encoder encodeInt:difficulty forKey:kDictionaryRepresentationGameDifficultyKey];
 	[encoder encodeInt:type forKey:kDictionaryRepresentationGameTypeKey];
 	

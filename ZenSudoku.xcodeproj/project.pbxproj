@@ -89,6 +89,8 @@
 		84A097581548B22D0082C9D0 /* HintsHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A097501548B22D0082C9D0 /* HintsHighlighted.png */; };
 		84A097591548B22D0082C9D0 /* HintsHighlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A097511548B22D0082C9D0 /* HintsHighlighted@2x.png */; };
 		84A0975F1549DDE40082C9D0 /* ZSGameBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A0975E1549DDE40082C9D0 /* ZSGameBookViewController.m */; };
+		84A509F615A21D99002C9C70 /* BackwardsTranslucentPage.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A509F415A21D99002C9C70 /* BackwardsTranslucentPage.png */; };
+		84A509F715A21D99002C9C70 /* BackwardsTranslucentPage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A509F515A21D99002C9C70 /* BackwardsTranslucentPage@2x.png */; };
 		84AC26C91480950F00E966A5 /* ZSBoardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC26C71480950F00E966A5 /* ZSBoardViewController.m */; };
 		84AC26CE1480986900E966A5 /* ZSTileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC26CC1480986900E966A5 /* ZSTileViewController.m */; };
 		84AC26DD1480D9C700E966A5 /* ZSGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC26DC1480D9C700E966A5 /* ZSGame.m */; };
@@ -227,6 +229,8 @@
 		84A097511548B22D0082C9D0 /* HintsHighlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "HintsHighlighted@2x.png"; path = "Resources/Images/HintsHighlighted@2x.png"; sourceTree = "<group>"; };
 		84A0975D1549DDE40082C9D0 /* ZSGameBookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSGameBookViewController.h; path = "View Controllers/ZSGameBookViewController.h"; sourceTree = "<group>"; };
 		84A0975E1549DDE40082C9D0 /* ZSGameBookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSGameBookViewController.m; path = "View Controllers/ZSGameBookViewController.m"; sourceTree = "<group>"; };
+		84A509F415A21D99002C9C70 /* BackwardsTranslucentPage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BackwardsTranslucentPage.png; path = Resources/Images/BackwardsTranslucentPage.png; sourceTree = "<group>"; };
+		84A509F515A21D99002C9C70 /* BackwardsTranslucentPage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BackwardsTranslucentPage@2x.png"; path = "Resources/Images/BackwardsTranslucentPage@2x.png"; sourceTree = "<group>"; };
 		84AC26C61480950F00E966A5 /* ZSBoardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSBoardViewController.h; path = "View Controllers/ZSBoardViewController.h"; sourceTree = "<group>"; };
 		84AC26C71480950F00E966A5 /* ZSBoardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSBoardViewController.m; path = "View Controllers/ZSBoardViewController.m"; sourceTree = "<group>"; };
 		84AC26CB1480986900E966A5 /* ZSTileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSTileViewController.h; path = "View Controllers/ZSTileViewController.h"; sourceTree = "<group>"; };
@@ -405,6 +409,8 @@
 				849B69EF14F2666400870F09 /* PaperBackground@2x.png */,
 				84B0B1D3157D859300A99510 /* BackwardsPage.png */,
 				84B0B1D4157D859300A99510 /* BackwardsPage@2x.png */,
+				84A509F415A21D99002C9C70 /* BackwardsTranslucentPage.png */,
+				84A509F515A21D99002C9C70 /* BackwardsTranslucentPage@2x.png */,
 				8472508B15829D1F0073D113 /* ForwardsPage.png */,
 				8472508C15829D1F0073D113 /* ForwardsPage@2x.png */,
 				8463D8DD15947F9700AED0B4 /* ShadowBlobStraight.png */,
@@ -585,6 +591,8 @@
 		84D55019147F1C4A00A7934E /* ZenSudoku */ = {
 			isa = PBXGroup;
 			children = (
+				84D55022147F1C4A00A7934E /* ZSAppDelegate.h */,
+				84D55023147F1C4A00A7934E /* ZSAppDelegate.m */,
 				84AC26D71480D52000E966A5 /* Models */,
 				84AC26E11480EB5E00E966A5 /* Model Controllers */,
 				84D55066147F2F1600A7934E /* Views and View Controllers */,
@@ -592,8 +600,6 @@
 				84D5501A147F1C4A00A7934E /* Supporting Files */,
 				84AC26C21480834B00E966A5 /* Resources */,
 				8449D95B14833649003F6FB3 /* External */,
-				84D55022147F1C4A00A7934E /* ZSAppDelegate.h */,
-				84D55023147F1C4A00A7934E /* ZSAppDelegate.m */,
 			);
 			path = ZenSudoku;
 			sourceTree = "<group>";
@@ -783,6 +789,8 @@
 				8463D90515986B8D00AED0B4 /* Undo@2x.png in Resources */,
 				8463D90615986B8D00AED0B4 /* UndoHighlighted.png in Resources */,
 				8463D90715986B8D00AED0B4 /* UndoHighlighted@2x.png in Resources */,
+				84A509F615A21D99002C9C70 /* BackwardsTranslucentPage.png in Resources */,
+				84A509F715A21D99002C9C70 /* BackwardsTranslucentPage@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
