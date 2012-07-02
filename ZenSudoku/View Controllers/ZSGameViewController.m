@@ -358,7 +358,7 @@ typedef struct {
 - (void)_backgroundProcessTimerDidAdvance:(NSTimer *)timer {
 	++_backgroundProcessTimerCount;
 	
-	if (_backgroundProcessTimerCount % 5 == 0) {
+	if (_backgroundProcessTimerCount % 1 == 0) {
 //		NSLog(@"Updating screenshot.");
 		[self _updateScreenshot];
 	}

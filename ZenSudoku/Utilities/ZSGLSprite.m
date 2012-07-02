@@ -52,6 +52,11 @@
 	return self;
 }
 
+- (void)dealloc {
+	GLuint textureName = self.textureInfo.name;
+	glDeleteTextures(1, &textureName);
+}
+
 - (id)initWithCGImage:(CGImageRef)imageRef effect:(GLKBaseEffect *)effect {
 	self = [super init];
 	
