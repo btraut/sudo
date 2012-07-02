@@ -69,20 +69,6 @@ typedef enum {
 @end
 
 @interface ZSTileViewController : UIViewController {
-    ZSTileTextType textType;
-    ZSTileBackgroundType backgroundType;
-    
-	BOOL ghosted;
-	NSInteger ghostedValue;
-	BOOL selected;
-	BOOL error;
-	BOOL highlightedSimilar;
-	BOOL highlightedError;
-	
-	ZSTileHintHighlightType highlightedHintType;
-	ZSTileTextHintHighlightType highlightGuessHint;
-	ZSTilePencilTextType *highlightPencilHints;
-	
 	NSArray *pencilViews;
 	UILabel *guessView;
 }
@@ -90,8 +76,7 @@ typedef enum {
 @property (weak) ZSTile *tile;
 @property (weak) id<ZSTileViewControllerTouchDelegate> touchDelegate;
 
-@property (assign) ZSTileTextType textType;
-@property (assign) ZSTileBackgroundType backgroundType;
+@property (assign) BOOL needsReload;
 
 @property (assign) BOOL ghosted;
 @property (assign) NSInteger ghostedValue;
@@ -123,6 +108,12 @@ extern NSString * const kTextColorGuessSelected;
 extern NSString * const kTextColorGuessFingerDown;
 extern NSString * const kTextColorError;
 extern NSString * const kTextColorErrorSelected;
+extern NSString * const kTextColorHighlightHintA;
+extern NSString * const kTextColorHighlightHintB;
+
+extern NSString * const kTextColorPencil;
+extern NSString * const kTextColorPencilHighlightHintA;
+extern NSString * const kTextColorPencilHighlightHintB;
 
 extern NSString * const kTextShadowColorGuess;
 extern NSString * const kTextShadowColorGuessSelected;
@@ -131,7 +122,14 @@ extern NSString * const kTextShadowColorGuessFingerDown;
 extern NSString * const kTileColorDefault;
 extern NSString * const kTileColorSelected;
 extern NSString * const kTileColorHighlightSimilarAnswer;
+extern NSString * const kTileColorDarkHighlightSimilarAnswer;
 extern NSString * const kTileColorHighlightSimilarPencil;
+extern NSString * const kTileColorDarkHighlightSimilarPencil;
 extern NSString * const kTileColorSimilarError;
 extern NSString * const kTileColorSimilarErrorGroup;
 extern NSString * const kTileColorOtherError;
+extern NSString * const kTileColorHighlightHintA;
+extern NSString * const kTileColorHighlightHintB;
+extern NSString * const kTileColorHighlightHintC;
+extern NSString * const kTileColorHighlightHintD;
+

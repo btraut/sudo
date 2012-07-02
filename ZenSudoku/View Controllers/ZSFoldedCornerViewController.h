@@ -40,7 +40,6 @@
 @property (weak) ZSFoldedCornerPlusButtonViewController *plusButtonViewController;
 
 @property (assign) BOOL drawPage;
-@property (assign) BOOL needsScreenshotUpdate;
 
 @property (assign) BOOL useTranslucentPaper;
 

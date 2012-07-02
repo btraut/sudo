@@ -85,6 +85,7 @@
 
 // View Lifecycle
 - (void)viewWasPromotedToFrontAnimated:(BOOL)animated;
+- (void)viewWasPushedToBack;
 
 - (void)setTitle;
 
@@ -94,6 +95,7 @@
 - (void)deselectTileView;
 - (void)setAutoPencils;
 - (void)solveMostOfThePuzzle;
+- (void)completeCoreGameOperation;
 
 // Button Handlers
 - (void)pencilButtonWasTouched;

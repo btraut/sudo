@@ -135,6 +135,8 @@ typedef enum {
 - (void)undo;
 - (void)redo;
 - (void)addHistoryDescription:(ZSHistoryEntry *)undoDescription;
+- (void)startGenericUndoStop;
+- (void)stopGenericUndoStop;
 - (void)addUndoStop;
 
 @end

@@ -142,6 +142,8 @@
 	
 	[currentGameViewController.boardViewController removeAllHintHighlights];
 	
+	[currentGameViewController completeCoreGameOperation];
+	
 	[UIView
 		animateWithDuration:0.4f
 		delay:0

@@ -184,9 +184,11 @@
 	}
 	
 	if (currentCard.setAutoPencil) {
-		[_gameViewController setAutoPencils];
+		[_gameViewController.game addAutoPencils];
 	}
 	
+	// We can get away with just reloading the board here because we're gauranteed to have no selection
+	// and a new screenshot will be generated when the hints are dismissed.
 	[_gameViewController.boardViewController reloadView];
 }
 

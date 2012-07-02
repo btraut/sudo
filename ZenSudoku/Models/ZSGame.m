@@ -40,6 +40,8 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 
 
 @interface ZSGame() {
+	BOOL _onGenericUndoStop;
+	
 	NSMutableArray *_undoStack;
 	NSMutableArray *_redoStack;
 	
@@ -598,8 +600,20 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 	}
 }
 
-- (void)addUndoStop {
+- (void)startGenericUndoStop {
+	_onGenericUndoStop = YES;
+	
 	[_undoStack addObject:[NSMutableArray array]];
+}
+
+- (void)stopGenericUndoStop {
+	_onGenericUndoStop = NO;
+}
+
+- (void)addUndoStop {
+	if (!_onGenericUndoStop) {
+		[_undoStack addObject:[NSMutableArray array]];
+	}
 }
 
 @end

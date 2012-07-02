@@ -53,6 +53,7 @@
 		for (NSInteger col = 0; col < game.board.size; col++) {
 			ZSTileViewController *tileViewController = [[tileViews objectAtIndex:row] objectAtIndex:col];
 			tileViewController.tile = [game getTileAtRow:row col:col];
+			tileViewController.needsReload = YES;
 		}
 	}
 	
@@ -107,7 +108,11 @@
 - (void)reloadView {
 	for (NSInteger row = 0; row < game.board.size; row++) {
 		for (NSInteger col = 0; col < game.board.size; col++) {
-			[[self getTileViewControllerAtRow:row col:col] reloadView];
+			ZSTileViewController *tileViewController = [self getTileViewControllerAtRow:row col:col];
+			
+			if (tileViewController.needsReload) {
+				[tileViewController reloadView];
+			}
 		}
 	}
 }
@@ -124,6 +129,7 @@
 	selectedTileView = tileView;
 	
 	selectedTileView.selected = YES;
+	selectedTileView.needsReload = YES;
 	[selectedTileView reloadView];
 	
 	// Add highlights for similar tiles.
@@ -135,6 +141,7 @@
 	if (selectedTileView) {
 		// Set selection.
 		selectedTileView.selected = YES;
+		selectedTileView.needsReload = YES;
 		[selectedTileView reloadView];
 		
 		// Add highlights for similar tiles.
@@ -147,6 +154,7 @@
 	if (selectedTileView) {
 		// Remove selection.
 		selectedTileView.selected = NO;
+		selectedTileView.needsReload = YES;
 		[selectedTileView reloadView];
 		
 		selectedTileView = nil;
@@ -162,7 +170,7 @@
 - (void)removeAllSimilarHighlights {
 	for (ZSTileViewController *highlightedSimilarTileView in highlightedSimilarTileViews) {
 		highlightedSimilarTileView.highlightedSimilar = NO;
-		[highlightedSimilarTileView reloadView];
+		highlightedSimilarTileView.needsReload = YES;
 	}
 	
 	[highlightedSimilarTileViews removeAllObjects];
@@ -176,7 +184,7 @@
 				
 				if (iteratedTileView.tile.guess == selectedTileView.tile.guess || [iteratedTileView.tile getPencilForGuess:tileView.tile.guess]) {
 					iteratedTileView.highlightedSimilar = YES;
-					[iteratedTileView reloadView];
+					iteratedTileView.needsReload = YES;
 					
 					[highlightedSimilarTileViews addObject:iteratedTileView];
 				}
@@ -196,7 +204,7 @@
 - (void)removeAllErrorHighlights {
 	for (ZSTileViewController *highlightedErrorTileView in highlightedErrorTileViews) {
 		highlightedErrorTileView.highlightedError = NO;
-		[highlightedErrorTileView reloadView];
+		highlightedErrorTileView.needsReload = YES;
 	}
 	
 	[highlightedErrorTileViews removeAllObjects];
@@ -222,7 +230,7 @@
 			for (ZSTile *tile in rowSet) {
 				ZSTileViewController *iteratedTileView = [self getTileViewControllerAtRow:tile.row col:tile.col];
 				iteratedTileView.highlightedError = YES;
-				[iteratedTileView reloadView];
+				iteratedTileView.needsReload = YES;
 				
 				[highlightedErrorTileViews addObject:iteratedTileView];
 			}
@@ -235,7 +243,7 @@
 			for (ZSTile *tile in colSet) {
 				ZSTileViewController *iteratedTileView = [self getTileViewControllerAtRow:tile.row col:tile.col];
 				iteratedTileView.highlightedError = YES;
-				[iteratedTileView reloadView];
+				iteratedTileView.needsReload = YES;
 				
 				[highlightedErrorTileViews addObject:iteratedTileView];
 			}
@@ -248,7 +256,7 @@
 			for (ZSTile *tile in familySet) {
 				ZSTileViewController *iteratedTileView = [self getTileViewControllerAtRow:tile.row col:tile.col];
 				iteratedTileView.highlightedError = YES;
-				[iteratedTileView reloadView];
+				iteratedTileView.needsReload = YES;
 				
 				[highlightedErrorTileViews addObject:iteratedTileView];
 			}
@@ -256,6 +264,7 @@
 		
 		if (selectedTileContainsErrors) {
 			tileView.highlightedError = YES;
+			tileView.needsReload = YES;
 			
 			[highlightedErrorTileViews addObject:tileView];
 		}
@@ -293,10 +302,10 @@
 			for (NSInteger i = 0; i < game.board.size; ++i) {
 				tileViewController.highlightPencilHints[i] = ZSTilePencilTextTypeNormal;
 			}
+			
+			tileViewController.needsReload = YES;
 		}
 	}
-	
-	[self reloadView];
 }
 
 #pragma mark - Tile Accessors

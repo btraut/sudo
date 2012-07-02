@@ -21,6 +21,13 @@
 
 #import "TestFlight.h"
 
+typedef struct {
+	NSInteger row;
+	NSInteger col;
+	NSInteger pencilNumber;
+	BOOL isSet;
+} ZSGameViewControllerPencilChangeDescription;
+
 @interface ZSGameViewController() {
 	CGPoint _foldStartPoint;
 	BOOL _foldedCornerTouchCrossedTapThreshold;
@@ -29,10 +36,24 @@
 	
 	ZSFoldedCornerPlusButtonViewController *_foldedCornerPlusButtonViewController;
 	
-	UIImage *_screenshot;
+	NSArray *_hintDeck;
 	
 	dispatch_queue_t _screenshotRenderDispatchQueue;
+	dispatch_queue_t _hintGenerationDispatchQueue;
+	
+	BOOL _guessInSameTileWasJustMade;
+	ZSTileViewController *_lastTileToReceiveGuess;
+	NSInteger _totalPencilChangesSinceLastGuess;
+	ZSGameViewControllerPencilChangeDescription *_pencilChangesSinceLastGuess;
+	
+	NSTimer *_backgroundProcessTimer;
+	NSInteger _backgroundProcessTimerCount;
 }
+
+@property (assign) BOOL needsScreenshotUpdate;
+
+@property (assign) BOOL needsHintDeckUpdate;
+@property (strong) NSArray *hintDeck;
 
 @end
 
@@ -45,6 +66,11 @@
 @synthesize pencilButton, penciling;
 @synthesize allowsInput;
 @synthesize hintDelegate, majorGameStateDelegate;
+
+@synthesize needsScreenshotUpdate = _needsScreenshotUpdate;
+
+@synthesize hintDeck = _hintDeck;
+@synthesize needsHintDeckUpdate = _needsHintDeckUpdate;
 
 #pragma mark - Construction / Deconstruction
 
@@ -64,7 +90,13 @@
 		foldedCornerVisibleOnLoad = NO;
 		_foldedCornerTouchCrossedTapThreshold = NO;
 		
-		_screenshotRenderDispatchQueue = dispatch_queue_create("com.example.MyQueue", NULL);
+		_screenshotRenderDispatchQueue = dispatch_queue_create("com.tenfoursoftware.screenshotRenderQueue", NULL);
+		_hintGenerationDispatchQueue = dispatch_queue_create("com.tenfoursoftware.hintGenerationQueue", NULL);
+		
+		_guessInSameTileWasJustMade = NO;
+		_lastTileToReceiveGuess = nil;
+		_totalPencilChangesSinceLastGuess = 0;
+		_pencilChangesSinceLastGuess = malloc(sizeof(ZSGameViewControllerPencilChangeDescription) * 81 * 9 * 3);
 	}
 	
 	return self;
@@ -83,19 +115,26 @@
 	penciling = NO;
 	pencilButton.selected = NO;
 	
+	_guessInSameTileWasJustMade = NO;
+	_lastTileToReceiveGuess = nil;
+	_totalPencilChangesSinceLastGuess = 0;
+	
 	[self setTitle];
 	
 	[self.boardViewController resetWithGame:newGame];
 	[self.gameAnswerOptionsViewController reloadView];
 	
 	[_foldedCornerPlusButtonViewController setState:ZSFoldedCornerPlusButtonStateHidden animated:NO];
-	
-	[self _updateScreenshot];
+		
+	self.needsScreenshotUpdate = YES;
 	[self _setScreenshotVisible:NO];
 }
 
 - (void)dealloc {
+	free(_pencilChangesSinceLastGuess);
+	
 	dispatch_release(_screenshotRenderDispatchQueue);
+	dispatch_release(_hintGenerationDispatchQueue);
 }
 
 #pragma mark - View Lifecycle
@@ -219,7 +258,7 @@
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
 	
-	[self _updateScreenshot];
+	self.needsScreenshotUpdate = YES;
 }
 
 - (void)viewWasPromotedToFrontAnimated:(BOOL)animated {
@@ -242,7 +281,7 @@
 	}
 	
 	// Update the folded corner image.
-	[self _updateScreenshot];
+	self.needsScreenshotUpdate = YES;
 	
 	if (animated) {
 		[self.foldedCornerViewController resetToStartPosition];
@@ -255,8 +294,19 @@
 		[_foldedCornerPlusButtonViewController setState:ZSFoldedCornerPlusButtonStateNormal animated:NO];
 	}
 	
+	// Update the hint deck.
+	self.needsHintDeckUpdate = YES;
+	
 	// Start the game timer.
 	[game startGameTimer];
+	
+	// Start the background process timer.
+	_backgroundProcessTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(_backgroundProcessTimerDidAdvance:) userInfo:nil repeats:YES];
+	_backgroundProcessTimerCount = 0;
+}
+
+- (void)viewWasPushedToBack {
+	[_backgroundProcessTimer invalidate];
 }
 
 - (void)setTitle {
@@ -296,10 +346,32 @@
 }
 
 - (void)_updateScreenshot {
-	self.foldedCornerViewController.needsScreenshotUpdate = YES;
 	dispatch_async(_screenshotRenderDispatchQueue, ^{
-		[self.foldedCornerViewController setPageImage:[self getScreenshotImage]];
+		if (self.needsScreenshotUpdate) {
+			self.needsScreenshotUpdate = NO;
+			
+			[self.foldedCornerViewController setPageImage:[self getScreenshotImage]];
+		}
 	});
+}
+
+- (void)_backgroundProcessTimerDidAdvance:(NSTimer *)timer {
+	++_backgroundProcessTimerCount;
+	
+	if (_backgroundProcessTimerCount % 5 == 0) {
+//		NSLog(@"Updating screenshot.");
+		[self _updateScreenshot];
+	}
+	
+	if (_backgroundProcessTimerCount % 10 == 0) {
+//		NSLog(@"Updating hint deck.");
+		[self _updateHintDeck];
+	}
+	
+	if (_backgroundProcessTimerCount % 60 == 0) {
+//		NSLog(@"Saving game.");
+		[[ZSGameController sharedInstance] saveGame:self.game];
+	}
 }
 
 #pragma mark - Game Functions
@@ -309,10 +381,13 @@
 	
 	[self.gameAnswerOptionsViewController reloadView];
 	
-	[self _updateScreenshot];
+	self.needsScreenshotUpdate = YES;
 }
 
 - (void)setAutoPencils {
+	// Reset pencil changes.
+	_totalPencilChangesSinceLastGuess = 0;
+	
 	// Add the pencils.
 	[game addAutoPencils];
 	
@@ -321,8 +396,15 @@
 		[boardViewController reselectTileView];
 	}
 	
+	// Reload views.
+	[self.boardViewController reloadView];
+	[self.gameAnswerOptionsViewController reloadView];
+	
 	// Update screenshot.
-	[self _updateScreenshot];
+	self.needsScreenshotUpdate = YES;
+
+	// Update hint deck.
+	self.needsHintDeckUpdate = YES;
 }
 
 - (void)solveMostOfThePuzzle {
@@ -338,6 +420,8 @@
 		}
 	}
 	
+	[game startGenericUndoStop];
+	
 	for (NSInteger row = 0; row < game.board.size && totalUnsolved > 2; ++row) {
 		for (NSInteger col = 0; col < game.board.size && totalUnsolved > 2; ++col) {
 			ZSTile *tile = [game getTileAtRow:row col:col];
@@ -348,6 +432,23 @@
 			}
 		}
 	}
+	
+	[game stopGenericUndoStop];
+	
+	_guessInSameTileWasJustMade = NO;
+}
+
+- (void)completeCoreGameOperation {
+	_guessInSameTileWasJustMade = NO;
+	
+	[self.boardViewController reselectTileView];
+	
+	[self.boardViewController reloadView];
+	[self.gameAnswerOptionsViewController reloadView];
+	
+	self.needsScreenshotUpdate = YES;
+	
+	self.needsHintDeckUpdate = YES;
 }
 
 #pragma mark - Button Handlers
@@ -361,37 +462,76 @@
 
 - (void)autoPencilButtonWasTouched {
 	[self setAutoPencils];
+	
+	_guessInSameTileWasJustMade = NO;
 }
 
 - (void)undoButtonWasTouched {
+	// Reset pencil changes.
+	_totalPencilChangesSinceLastGuess = 0;
+	
 	[self.game undo];
+	
+	// Here, we could reload just the changed tiles, but it's easier to reload all.
 	[self.boardViewController reloadView];
 	
 	[self.boardViewController deselectTileView];
 	[self.gameAnswerOptionsViewController reloadView];
 	
-	[self _updateScreenshot];
+	self.needsScreenshotUpdate = YES;
+	
+	self.needsHintDeckUpdate = YES;
+	
+	_guessInSameTileWasJustMade = NO;
 }
 
 - (void)redoButtonWasTouched {
+	// Reset pencil changes.
+	_totalPencilChangesSinceLastGuess = 0;
+	
 	[self.game redo];
+	
+	// Here, we could reload just the changed tiles, but it's easier to reload all.
 	[self.boardViewController reloadView];
 	
 	[self.boardViewController deselectTileView];
 	[self.gameAnswerOptionsViewController reloadView];
 	
-	[self _updateScreenshot];
+	self.needsScreenshotUpdate = YES;
+	
+	self.needsHintDeckUpdate = YES;
+	
+	_guessInSameTileWasJustMade = NO;
 }
 
 - (void)hintButtonWasTouched {
-	[hintGenerator copyGameStateFromGameBoard:game.board];
-	NSArray *hintDeck = [hintGenerator generateHint];
+	// Force an update immediately if one is needed.
+	[self _updateHintDeck];
 	
-	[hintDelegate beginHintDeck:hintDeck forGameViewController:self];
+	dispatch_sync(_hintGenerationDispatchQueue, ^{
+//		NSLog(@"Forcing sync of hints generation queue.");
+	});
+	
+	[hintDelegate beginHintDeck:self.hintDeck forGameViewController:self];
+	
+	_guessInSameTileWasJustMade = NO;
 }
 
 - (void)closeHintButtonWasTouched {
 	[hintDelegate endHintDeck];
+	
+	_guessInSameTileWasJustMade = NO;
+}
+
+- (void)_updateHintDeck {
+	dispatch_async(_hintGenerationDispatchQueue, ^{
+		if (self.needsHintDeckUpdate) {
+			self.needsHintDeckUpdate = NO;
+			
+			[hintGenerator copyGameStateFromGameBoard:game.board];
+			self.hintDeck = [hintGenerator generateHint];
+		}
+	});
 }
 
 #pragma mark - ZSGameStateChangeDelegate Implementation
@@ -401,7 +541,7 @@
 	[self _setErrors];
 	
 	// Reload the tile.
-	[[self.boardViewController getTileViewControllerAtRow:row col:col] reloadView];
+	[self.boardViewController getTileViewControllerAtRow:row col:col].needsReload = YES;
 	
 	// Reselect the tile to update other error highlighting.
 	[self.boardViewController reselectTileView];
@@ -410,12 +550,25 @@
 	[self.gameAnswerOptionsViewController reloadView];
 	
 	// Update the folded corner image.
-	[self _updateScreenshot];
+	self.needsScreenshotUpdate = YES;
+	
+	// Update hint deck.
+	self.needsHintDeckUpdate = YES;
 }
 
 - (void)tilePencilDidChange:(BOOL)isSet forPencilNumber:(NSInteger)pencilNumber forTileAtRow:(NSInteger)row col:(NSInteger)col {
-	// Reload the tile.
-	[[self.boardViewController getTileViewControllerAtRow:row col:col] reloadView];
+	// The tile needs a reload.
+	[self.boardViewController getTileViewControllerAtRow:row col:col].needsReload = YES;
+	
+	// Keep track of all the pencil changes made.
+	ZSGameViewControllerPencilChangeDescription *pencilChange = &_pencilChangesSinceLastGuess[_totalPencilChangesSinceLastGuess];
+	
+	pencilChange->row = row;
+	pencilChange->col = col;
+	pencilChange->pencilNumber = pencilNumber;
+	pencilChange->isSet = isSet;
+	
+	++_totalPencilChangesSinceLastGuess;
 }
 
 - (void)guess:(NSInteger)guess isErrorForTileAtRow:(NSInteger)row col:(NSInteger)col {
@@ -448,7 +601,7 @@
 	[boardViewController deselectTileView];
 	[self.gameAnswerOptionsViewController reloadView];
 	
-	[self _updateScreenshot];
+	self.needsScreenshotUpdate = YES;
 	
 	// Show a congratulatory alert.
 	NSInteger totalMinutes = game.timerCount / 60;
@@ -469,10 +622,11 @@
 	_foldStartPoint = foldPoint;
 	_foldedCornerTouchCrossedTapThreshold = NO;
 	
-	// [foldedCornerViewController setPageImage:[self getScreenshotImage]];
+	// Debug
+	[self _updateScreenshot];
 	
 	dispatch_sync(_screenshotRenderDispatchQueue, ^{
-		NSLog(@"Forcing sync of queue.");
+//		NSLog(@"Forcing sync of screenshot render queue.");
 	});
 	
 	[self _setScreenshotVisible:YES];
@@ -502,6 +656,8 @@
 
 - (void)pageTurnAnimationDidFinish {
 	[self.majorGameStateDelegate startNewGame];
+	
+	[self viewWasPushedToBack];
 }
 
 - (void)startFoldAnimationDidFinish {
@@ -528,6 +684,10 @@
 
 - (void)foldedCornerPlusButtonStartAnimationFinished {
 	[self.majorGameStateDelegate frontViewControllerFinishedDisplaying];
+	
+	// Force an immediate update of the screenshot.
+	self.needsScreenshotUpdate = YES;
+	[self _updateScreenshot];
 }
 
 #pragma mark - ZSAnswerOptionsViewControllerTouchDelegate Implementation
@@ -609,25 +769,33 @@
 			// Based on settings, either deselect the tile or reselect it to update highlights.
 			if ([[NSUserDefaults standardUserDefaults] boolForKey:kClearTileSelectionAfterPickingAnswerOptionForPencilKey]) {
 				[boardViewController deselectTileView];
-				[self.gameAnswerOptionsViewController reloadView];
 			} else {
 				[boardViewController reselectTileView];
 			}
+			
+			[selectedTileView reloadView];
 		} else {
 			// Match the selected tile and answer.
-			[self _setAnswerForTile:selectedTileView withAnswerOption:gameAnswerOptionView];
+			[self _setGuessForTile:selectedTileView withAnswerOption:gameAnswerOptionView];
 			
 			// Based on settings, either deselect the tile or reselect it to update highlights.
 			if ([[NSUserDefaults standardUserDefaults] boolForKey:kClearTileSelectionAfterPickingAnswerOptionForAnswerKey]) {
 				[boardViewController deselectTileView];
-				[self.gameAnswerOptionsViewController reloadView];
 			} else {
 				[boardViewController reselectTileView];
 			}
+			
+			[self.boardViewController reloadView];
 		}
 		
+		// Reload views.
+		[self.gameAnswerOptionsViewController reloadView];
+		
 		// Update the screenshot.
-		[self _updateScreenshot];
+		self.needsScreenshotUpdate = YES;
+		
+		// Update hint deck.
+		self.needsHintDeckUpdate = YES;
 	}
 }
 
@@ -657,9 +825,11 @@
 		[boardViewController selectTileView:tileView];
 	}
 	
+	// Reload views.
+	[self.boardViewController reloadView];
 	[self.gameAnswerOptionsViewController reloadView];
 	
-	[self _updateScreenshot];
+	self.needsScreenshotUpdate = YES;
 }
 
 #pragma mark - State Changes
@@ -674,19 +844,40 @@
 	[game togglePencilForPencilNumber:((NSInteger)answerOptionView.gameAnswerOption + 1) forTileAtRow:tileView.tile.row col:tileView.tile.col];
 }
 
-- (void)_setAnswerForTile:(ZSTileViewController *)tileView withAnswerOption:(ZSAnswerOptionViewController *)answerOptionView {
+- (void)_setGuessForTile:(ZSTileViewController *)tileView withAnswerOption:(ZSAnswerOptionViewController *)answerOptionView {
 	NSInteger guess = ((NSInteger)answerOptionView.gameAnswerOption + 1);
 	
 	tileView.ghosted = NO;
 	tileView.ghostedValue = 0;
 	
-	if (tileView.tile.guess == guess) {
-		// The user is picking the same guess that already exists in the tile. Clear the guess.
-		[game clearGuessForTileAtRow:tileView.tile.row col:tileView.tile.col];
-	} else {
+	// Start a generic undo stop. We're going to be tying multiple actions together.
+	[game startGenericUndoStop];
+	
+	// Start by clearing the previous value in the tile. It's possible that it was empty.
+	[game clearGuessForTileAtRow:tileView.tile.row col:tileView.tile.col];
+	
+	// If the user is choosing another guess immediately prior to a previous guess, we should revert all pencil marks removed from the last one.
+	if (tileView == _lastTileToReceiveGuess && _guessInSameTileWasJustMade) {
+		for (NSInteger i = _totalPencilChangesSinceLastGuess - 1; i >= 0; --i) {
+			// Reverse the pencil change.
+			ZSGameViewControllerPencilChangeDescription *pencil = &_pencilChangesSinceLastGuess[i];
+			[game setPencil:!pencil->isSet forPencilNumber:pencil->pencilNumber forTileAtRow:pencil->row col:pencil->col];
+		}
+	}
+	
+	// Reset the pencil changes bookkeeping.
+	_lastTileToReceiveGuess = tileView;
+	_guessInSameTileWasJustMade = YES;
+	_totalPencilChangesSinceLastGuess = 0;
+	
+	// If the guess we're setting isn't empty (0), set the new value for it. 
+	if (guess) {
 		// Set the new guess to the selected guess option value.
 		[game setGuess:guess forTileAtRow:tileView.tile.row col:tileView.tile.col];
 	}
+	
+	// We're done tying actions together. End the undo stop.
+	[game stopGenericUndoStop];
 }
 
 - (void)_setErrors {

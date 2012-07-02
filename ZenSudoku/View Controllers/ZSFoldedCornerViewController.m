@@ -36,11 +36,6 @@ typedef enum {
 	
 	UIImage *_backwardsPageImage;
 	
-	ZSGLSprite *_cornerSprite;
-	ZSGLSprite *_shadowBlobOpaqueSprite;
-	ZSGLSprite *_shadowBlobSprite;
-	ZSGLSprite *_screenshotSprite;
-	
 	ZSGLShape *_foldGradient;
 	ZSGLShape *_cornerGradient;
 	
@@ -51,7 +46,7 @@ typedef enum {
 	CGFloat _foldOverflowBottomWidth;
 }
 
-@property (strong) ZSGLSprite *cornerSprite;
+@property (strong) ZSGLSprite *backwardsPageSprite;
 @property (strong) ZSGLSprite *shadowBlobOpaqueSprite;
 @property (strong) ZSGLSprite *shadowBlobSprite;
 @property (strong) ZSGLSprite *screenshotSprite;
@@ -68,11 +63,10 @@ typedef enum {
 @synthesize context = _context;
 
 @synthesize drawPage;
-@synthesize needsScreenshotUpdate;
 
 @synthesize useTranslucentPaper;
 
-@synthesize cornerSprite = _cornerSprite;
+@synthesize backwardsPageSprite = _backwardsPageSprite;
 @synthesize shadowBlobOpaqueSprite = _shadowBlobOpaqueSprite;
 @synthesize shadowBlobSprite = _shadowBlobSprite;
 @synthesize screenshotSprite = _screenshotSprite;
@@ -140,11 +134,11 @@ typedef enum {
 	_backwardsPageImage = [UIImage imageNamed:@"BackwardsPage.png"];
 	
 	if ([UIScreen mainScreen].scale == 2.0) {
-		_cornerSprite = [[ZSGLSprite alloc] initWithFile:@"BackwardsPage@2x.png" effect:_effect];
+		_backwardsPageSprite = [[ZSGLSprite alloc] initWithFile:@"BackwardsPage@2x.png" effect:_effect];
 		_shadowBlobOpaqueSprite = [[ZSGLSprite alloc] initWithFile:@"ShadowBlobStraightOpaque@2x.png" effect:_effect];
 		_shadowBlobSprite = [[ZSGLSprite alloc] initWithFile:@"ShadowBlobStraight@2x.png" effect:_effect];
 	} else {
-		_cornerSprite = [[ZSGLSprite alloc] initWithFile:@"BackwardsPage.png" effect:_effect];
+		_backwardsPageSprite = [[ZSGLSprite alloc] initWithFile:@"BackwardsPage.png" effect:_effect];
 		_shadowBlobOpaqueSprite = [[ZSGLSprite alloc] initWithFile:@"ShadowBlobStraightOpaque.png" effect:_effect];
 		_shadowBlobSprite = [[ZSGLSprite alloc] initWithFile:@"ShadowBlobStraight.png" effect:_effect];
 	}
@@ -163,27 +157,25 @@ typedef enum {
 }
 
 - (void)setPageImage:(UIImage *)image {
-	if (!self.needsScreenshotUpdate) {
-		return;
-	}
-	
-	self.needsScreenshotUpdate = NO;
-	
 	// Set the context again. Seems like this is needed for threading.
     [EAGLContext setCurrentContext:self.context];
 	
 	if (self.useTranslucentPaper) {
 		// Create a new graphics context so we can draw the reverse of the last page onto this page.
-		UIGraphicsBeginImageContextWithOptions(CGSizeMake(image.size.width, image.size.height), YES, 0);
+		UIGraphicsBeginImageContextWithOptions(CGSizeMake(image.size.width, image.size.height), NO, 0);
 		CGContextRef context = UIGraphicsGetCurrentContext();
 		
 		// Draw the paper background.
 		CGContextScaleCTM(context, 1, -1);
 		CGContextTranslateCTM(context, 0, -image.size.height);
 		CGContextDrawImage(context, CGRectMake(0, 0, image.size.width, image.size.height), _backwardsPageImage.CGImage);
-
+		
 		CGContextScaleCTM(context, -1, 1);
 		CGContextTranslateCTM(context, -image.size.width, 0);
+		
+		// Clip the screenshot.
+		NSInteger clippingPadding = 2;
+		CGContextClipToRect(context, CGRectMake(clippingPadding, clippingPadding, image.size.width - clippingPadding * 2, image.size.height - clippingPadding * 2));
 		
 		// Draw the initial (darkest) screenshot.
 		CGContextSetAlpha(context, 0.015f);
@@ -208,7 +200,7 @@ typedef enum {
 		UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
 		UIGraphicsEndImageContext();
 		
-		self.cornerSprite = [[ZSGLSprite alloc] initWithCGImage:newImage.CGImage effect:_effect];
+		self.backwardsPageSprite = [[ZSGLSprite alloc] initWithCGImage:newImage.CGImage effect:_effect];
 	}
 	
 	// Load the images into textures.
@@ -345,8 +337,8 @@ typedef enum {
 	_cornerGradient.transform = GLKMatrix4Identity;
 	
 	GLKMatrix4 foldedCornerMatrix = baseMatrix;
-	foldedCornerMatrix = GLKMatrix4Translate(foldedCornerMatrix, 0, -self.cornerSprite.contentSizeNormalized.height, 0);
-	self.cornerSprite.transform = foldedCornerMatrix;
+	foldedCornerMatrix = GLKMatrix4Translate(foldedCornerMatrix, 0, -self.backwardsPageSprite.contentSizeNormalized.height, 0);
+	self.backwardsPageSprite.transform = foldedCornerMatrix;
 		
     GLKMatrix4 shadowBlobMatrix = baseMatrix;
 	shadowBlobMatrix = GLKMatrix4Translate(shadowBlobMatrix, 0, -underShadowDimensions.height, 0);
@@ -376,15 +368,15 @@ typedef enum {
 	// Draw the folded corner.
 	TexturedVertex foldedCornerTriangle[3];
 	
-	foldedCornerTriangle[0].geometryVertex = CGPointMake(0, self.cornerSprite.contentSizeNormalized.height);
-	foldedCornerTriangle[1].geometryVertex = CGPointMake(foldDimensions.width, self.cornerSprite.contentSizeNormalized.height);
-	foldedCornerTriangle[2].geometryVertex = CGPointMake(0, self.cornerSprite.contentSizeNormalized.height - foldDimensions.height);
+	foldedCornerTriangle[0].geometryVertex = CGPointMake(0, self.backwardsPageSprite.contentSizeNormalized.height);
+	foldedCornerTriangle[1].geometryVertex = CGPointMake(foldDimensions.width, self.backwardsPageSprite.contentSizeNormalized.height);
+	foldedCornerTriangle[2].geometryVertex = CGPointMake(0, self.backwardsPageSprite.contentSizeNormalized.height - foldDimensions.height);
 	
 	foldedCornerTriangle[0].textureVertex = CGPointMake(0, 1);
-	foldedCornerTriangle[1].textureVertex = CGPointMake((foldDimensions.width / self.cornerSprite.contentSizeNormalized.width), 1);
-	foldedCornerTriangle[2].textureVertex = CGPointMake(0, 1 - (foldDimensions.height / self.cornerSprite.contentSizeNormalized.height));
+	foldedCornerTriangle[1].textureVertex = CGPointMake((foldDimensions.width / self.backwardsPageSprite.contentSizeNormalized.width), 1);
+	foldedCornerTriangle[2].textureVertex = CGPointMake(0, 1 - (foldDimensions.height / self.backwardsPageSprite.contentSizeNormalized.height));
 	
-	[self.cornerSprite renderTriangleStrip:foldedCornerTriangle ofSize:3];
+	[self.backwardsPageSprite renderTriangleStrip:foldedCornerTriangle ofSize:3];
 	
 	// Draw the fold gradient.
 	ColoredVertex foldGradientVertices[3];

@@ -33,7 +33,9 @@ NSString * const kTextShadowColorGuessFingerDown = @"66FFFFFF";
 NSString * const kTileColorDefault = @"#00FFFFFF";
 NSString * const kTileColorSelected = @"#CC2F83D4";
 NSString * const kTileColorHighlightSimilarAnswer = @"#4C2F83D4";
+NSString * const kTileColorDarkHighlightSimilarAnswer = @"#4C3695f0";
 NSString * const kTileColorHighlightSimilarPencil = @"#202F83D4";
+NSString * const kTileColorDarkHighlightSimilarPencil = @"#207dbffe";
 NSString * const kTileColorSimilarError = @"#66A70404";
 NSString * const kTileColorSimilarErrorGroup = @"#19A70404";
 NSString * const kTileColorOtherError = @"#19A70404";
@@ -42,10 +44,24 @@ NSString * const kTileColorHighlightHintB = @"#4C632FD4";
 NSString * const kTileColorHighlightHintC = @"#4CD42F4A";
 NSString * const kTileColorHighlightHintD = @"#4C2FADD4";
 
+@interface ZSTileViewController () {
+	BOOL _isDarkTile;
+	
+	ZSTileTextType _textType;
+	ZSTileTextType _previousTextType;
+	ZSTileBackgroundType _backgroundType;
+	ZSTileBackgroundType _previousBackgroundType;
+	
+	NSInteger _previousGhostedValue;
+	NSInteger _previousGuess;
+}
+
+@end
+
 @implementation ZSTileViewController
 
+@synthesize needsReload;
 @synthesize tile, touchDelegate;
-@synthesize textType, backgroundType;
 @synthesize ghosted, ghostedValue, selected, highlightedSimilar, highlightedError, error;
 @synthesize highlightedHintType, highlightGuessHint, highlightPencilHints;
 
@@ -53,11 +69,19 @@ NSString * const kTileColorHighlightHintD = @"#4C2FADD4";
 	self = [super init];
 	
 	if (self) {
+		needsReload = YES;
+		
 		ghosted = NO;
 		selected = NO;
 		highlightedSimilar = NO;
 		highlightedError = NO;
 		error = NO;
+		
+		// Make sure the "previous" settings are different than the current ones.
+		_previousTextType = -1;
+		_previousBackgroundType = -1;
+		_previousGhostedValue = -1;
+		_previousGuess = -1;
 	}
 	
 	return self;
@@ -134,6 +158,21 @@ NSString * const kTileColorHighlightHintD = @"#4C2FADD4";
 	
 	self.selected = NO;
 	
+	// Determine if the tile is light or dark.
+	switch (tile.groupId) {
+		case 0:
+		case 2:
+		case 4:
+		case 6:
+		case 8:
+			_isDarkTile = YES;
+			break;
+			
+		default:
+			_isDarkTile = NO;
+			break;
+	}
+	
 	[self.view addSubview:guessView];
 }
 
@@ -148,10 +187,20 @@ NSString * const kTileColorHighlightHintD = @"#4C2FADD4";
 - (void)reloadView {
 	// Choose whether to show the guess or pencil marks.
 	if (ghosted) {
-		guessView.text = [NSString stringWithFormat:@"%i", ghostedValue];
+		if (ghostedValue != _previousGhostedValue) {
+			_previousGhostedValue = ghostedValue;
+			
+			guessView.text = [NSString stringWithFormat:@"%i", ghostedValue];
+		}
+		
 		[self showGuess];		
 	} else if (tile.guess) {
-		guessView.text = [NSString stringWithFormat:@"%i", tile.guess];
+		if (tile.guess != _previousGuess) {
+			_previousGuess = tile.guess;
+			
+			guessView.text = [NSString stringWithFormat:@"%i", tile.guess];
+		}
+		
 		[self showGuess];		
 	} else {
 		[self hideGuess];
@@ -161,125 +210,135 @@ NSString * const kTileColorHighlightHintD = @"#4C2FADD4";
 	[self reloadTextAndBackgroundType];
 	
 	// Set the text color based on text type.
-	switch (textType) {
-		case ZSTileTextTypeAnswer:
-			guessView.textColor = [UIColor colorWithAlphaHexString:kTextColorAnswer];
-			guessView.shadowColor = [UIColor colorWithAlphaHexString:kTextShadowColorGuess];
-			break;
+	if (_textType != _previousTextType) {
+		_previousTextType = _textType;
 		
-		case ZSTileTextTypeGuess:
-			guessView.textColor = [UIColor colorWithAlphaHexString:kTextColorGuess];
-			guessView.shadowColor = [UIColor colorWithAlphaHexString:kTextShadowColorGuess];
-			break;
+		switch (_textType) {
+			case ZSTileTextTypeAnswer:
+				guessView.textColor = [ZSTileViewController getTextColorAnswer];
+				guessView.shadowColor = [ZSTileViewController getTextShadowColorGuess];
+				break;
 			
-		case ZSTileTextTypeGuessSelected:
-			guessView.textColor = [UIColor colorWithAlphaHexString:kTextColorGuessSelected];
-			guessView.shadowColor = [UIColor colorWithAlphaHexString:kTextShadowColorGuessFingerDown];
-			break;
-			
-		case ZSTileTextTypeGuessFingerDown:
-			guessView.textColor = [UIColor colorWithAlphaHexString:kTextColorGuessFingerDown];
-			guessView.shadowColor = [UIColor colorWithAlphaHexString:kTextShadowColorGuess];
-			break;
-			
-		case ZSTileTextTypeGuessError:
-			guessView.textColor = [UIColor colorWithAlphaHexString:kTextColorError];
-			guessView.shadowColor = [UIColor colorWithAlphaHexString:kTextShadowColorGuess];
-			break;
-			
-		case ZSTileTextTypeGuessErrorSelected:
-			guessView.textColor = [UIColor colorWithAlphaHexString:kTextColorErrorSelected];
-			guessView.shadowColor = [UIColor colorWithAlphaHexString:kTextShadowColorGuess];
-			break;
-			
-		case ZSTileTextTypeHighlightHintA:
-			guessView.textColor = [UIColor colorWithAlphaHexString:kTextColorHighlightHintA];
-			guessView.shadowColor = [UIColor colorWithAlphaHexString:kTextShadowColorGuess];
-			break;
-			
-		case ZSTileTextTypeHighlightHintB:
-			guessView.textColor = [UIColor colorWithAlphaHexString:kTextColorHighlightHintB];
-			guessView.shadowColor = [UIColor colorWithAlphaHexString:kTextShadowColorGuess];
-			break;
+			case ZSTileTextTypeGuess:
+				guessView.textColor = [ZSTileViewController getTextColorGuess];
+				guessView.shadowColor = [ZSTileViewController getTextShadowColorGuess];
+				break;
+				
+			case ZSTileTextTypeGuessSelected:
+				guessView.textColor = [ZSTileViewController getTextColorGuessSelected];
+				guessView.shadowColor = [ZSTileViewController getTextShadowColorGuessFingerDown];
+				break;
+				
+			case ZSTileTextTypeGuessFingerDown:
+				guessView.textColor = [ZSTileViewController getTextColorGuessFingerDown];
+				guessView.shadowColor = [ZSTileViewController getTextShadowColorGuess];
+				break;
+				
+			case ZSTileTextTypeGuessError:
+				guessView.textColor = [ZSTileViewController getTextColorError];
+				guessView.shadowColor = [ZSTileViewController getTextShadowColorGuess];
+				break;
+				
+			case ZSTileTextTypeGuessErrorSelected:
+				guessView.textColor = [ZSTileViewController getTextColorErrorSelected];
+				guessView.shadowColor = [ZSTileViewController getTextShadowColorGuess];
+				break;
+				
+			case ZSTileTextTypeHighlightHintA:
+				guessView.textColor = [ZSTileViewController getTextColorHighlightHintA];
+				guessView.shadowColor = [ZSTileViewController getTextShadowColorGuess];
+				break;
+				
+			case ZSTileTextTypeHighlightHintB:
+				guessView.textColor = [ZSTileViewController getTextColorHighlightHintB];
+				guessView.shadowColor = [ZSTileViewController getTextShadowColorGuess];
+				break;
+		}
 	}
-	
+
 	// Set the background color based on text type.
-	switch (backgroundType) {
-		case ZSTileBackgroundTypeDefault:
-			self.view.backgroundColor = [UIColor colorWithAlphaHexString:kTileColorDefault];
-			break;
-			
-		case ZSTileBackgroundTypeSelected:
-			self.view.backgroundColor = [UIColor colorWithAlphaHexString:kTileColorSelected];
-			break;
-			
-		case ZSTileBackgroundTypeSimilarPencil:
-			self.view.backgroundColor = [UIColor colorWithAlphaHexString:kTileColorHighlightSimilarPencil];
-			break;
-			
-		case ZSTileBackgroundTypeSimilarAnswer:
-			self.view.backgroundColor = [UIColor colorWithAlphaHexString:kTileColorHighlightSimilarAnswer];
-			break;
-			
-		case ZSTileBackgroundTypeSimilarError:
-			self.view.backgroundColor = [UIColor colorWithAlphaHexString:kTileColorSimilarError];
-			break;
-			
-		case ZSTileBackgroundTypeSimilarErrorGroup:
-			self.view.backgroundColor = [UIColor colorWithAlphaHexString:kTileColorSimilarErrorGroup];
-			break;
-			
-		case ZSTileBackgroundTypeOtherError:
-			self.view.backgroundColor = [UIColor colorWithAlphaHexString:kTileColorOtherError];
-			break;
-			
-		case ZSTileBackgroundTypeHighlightHintA:
-			self.view.backgroundColor = [UIColor colorWithAlphaHexString:kTileColorHighlightHintA];
-			break;
-			
-		case ZSTileBackgroundTypeHighlightHintB:
-			self.view.backgroundColor = [UIColor colorWithAlphaHexString:kTileColorHighlightHintB];
-			break;
-			
-		case ZSTileBackgroundTypeHighlightHintC:
-			self.view.backgroundColor = [UIColor colorWithAlphaHexString:kTileColorHighlightHintC];
-			break;
-			
-		case ZSTileBackgroundTypeHighlightHintD:
-			self.view.backgroundColor = [UIColor colorWithAlphaHexString:kTileColorHighlightHintD];
-			break;
+	if (_backgroundType != _previousBackgroundType) {
+		_previousBackgroundType = _backgroundType;
+		
+		switch (_backgroundType) {
+			case ZSTileBackgroundTypeDefault:
+				self.view.backgroundColor = [ZSTileViewController getTileColorDefault];
+				break;
+				
+			case ZSTileBackgroundTypeSelected:
+				self.view.backgroundColor = [ZSTileViewController getTileColorSelected];
+				break;
+				
+			case ZSTileBackgroundTypeSimilarPencil:
+				self.view.backgroundColor = [UIColor colorWithAlphaHexString:_isDarkTile ? kTileColorDarkHighlightSimilarPencil : kTileColorHighlightSimilarPencil];
+				break;
+				
+			case ZSTileBackgroundTypeSimilarAnswer:
+				self.view.backgroundColor = [UIColor colorWithAlphaHexString:_isDarkTile ? kTileColorDarkHighlightSimilarAnswer : kTileColorHighlightSimilarAnswer];
+				break;
+				
+			case ZSTileBackgroundTypeSimilarError:
+				self.view.backgroundColor = [ZSTileViewController getTileColorSimilarError];
+				break;
+				
+			case ZSTileBackgroundTypeSimilarErrorGroup:
+				self.view.backgroundColor = [ZSTileViewController getTileColorSimilarErrorGroup];
+				break;
+				
+			case ZSTileBackgroundTypeOtherError:
+				self.view.backgroundColor = [ZSTileViewController getTileColorOtherError];
+				break;
+				
+			case ZSTileBackgroundTypeHighlightHintA:
+				self.view.backgroundColor = [ZSTileViewController getTileColorHighlightHintA];
+				break;
+				
+			case ZSTileBackgroundTypeHighlightHintB:
+				self.view.backgroundColor = [ZSTileViewController getTileColorHighlightHintB];
+				break;
+				
+			case ZSTileBackgroundTypeHighlightHintC:
+				self.view.backgroundColor = [ZSTileViewController getTileColorHighlightHintC];
+				break;
+				
+			case ZSTileBackgroundTypeHighlightHintD:
+				self.view.backgroundColor = [ZSTileViewController getTileColorHighlightHintD];
+				break;
+		}
 	}
 	
+	// Reload is done. We no longer need to reload this tile.
+	self.needsReload = NO;
 }
 
 - (void)reloadTextAndBackgroundType {
 	// Choose the text color.
 	if (ghosted) {
-		textType = ZSTileTextTypeGuessFingerDown;
+		_textType = ZSTileTextTypeGuessFingerDown;
 	} else {
 		if (tile.guess) {
 			if (highlightGuessHint == ZSTileTextHintHighlightTypeNone) {
 				if (tile.locked) {
-					textType = ZSTileTextTypeAnswer;
+					_textType = ZSTileTextTypeAnswer;
 				} else {
 					if (selected) {
 						if (error) {
-							textType = ZSTileTextTypeGuessErrorSelected;
+							_textType = ZSTileTextTypeGuessErrorSelected;
 						} else {
-							textType = ZSTileTextTypeGuessSelected;
+							_textType = ZSTileTextTypeGuessSelected;
 						}
 					} else {
 						if (error) {
-							textType = ZSTileTextTypeGuessError;
+							_textType = ZSTileTextTypeGuessError;
 						} else {
-							textType = ZSTileTextTypeGuess;
+							_textType = ZSTileTextTypeGuess;
 						}
 					}
 				}
 			} else {
 				switch (highlightGuessHint) {
-					case ZSTileTextHintHighlightTypeA: textType = ZSTileTextTypeHighlightHintA; break;
-					case ZSTileTextHintHighlightTypeB: textType = ZSTileTextTypeHighlightHintB; break;
+					case ZSTileTextHintHighlightTypeA: _textType = ZSTileTextTypeHighlightHintA; break;
+					case ZSTileTextHintHighlightTypeB: _textType = ZSTileTextTypeHighlightHintB; break;
 					default: break;
 				}
 			}
@@ -288,9 +347,9 @@ NSString * const kTileColorHighlightHintD = @"#4C2FADD4";
 				UILabel *pencilView = [pencilViews objectAtIndex:i];
 				
 				switch (highlightPencilHints[i]) {
-					case ZSTilePencilTextTypeNormal: pencilView.textColor = [UIColor colorWithAlphaHexString:kTextColorPencil]; break;
-					case ZSTilePencilTextTypeHighlightHintA: pencilView.textColor = [UIColor colorWithAlphaHexString:kTextColorPencilHighlightHintA]; break;
-					case ZSTilePencilTextTypeHighlightHintB: pencilView.textColor = [UIColor colorWithAlphaHexString:kTextColorPencilHighlightHintB]; break;
+					case ZSTilePencilTextTypeNormal: pencilView.textColor = [ZSTileViewController getTextColorPencil]; break;
+					case ZSTilePencilTextTypeHighlightHintA: pencilView.textColor = [ZSTileViewController getTextColorPencilHighlightHintA]; break;
+					case ZSTilePencilTextTypeHighlightHintB: pencilView.textColor = [ZSTileViewController getTextColorPencilHighlightHintB]; break;
 				}
 			}
 		}
@@ -299,41 +358,41 @@ NSString * const kTileColorHighlightHintD = @"#4C2FADD4";
 	// Choose the background color.
 	if (highlightedHintType == ZSTileHintHighlightTypeNone) {
 		if (selected) {
-			backgroundType = ZSTileBackgroundTypeSelected;
+			_backgroundType = ZSTileBackgroundTypeSelected;
 		} else {
 			if (highlightedError) {
 				// Todo: this should really only be set if the guess of the tile matches that of the selected tile
 				if (tile.guess && highlightedSimilar) {
-					backgroundType = ZSTileBackgroundTypeSimilarError;
+					_backgroundType = ZSTileBackgroundTypeSimilarError;
 				} else {
 					if (error) {
-						backgroundType = ZSTileBackgroundTypeOtherError;
+						_backgroundType = ZSTileBackgroundTypeOtherError;
 					} else {
-						backgroundType = ZSTileBackgroundTypeSimilarErrorGroup;
+						_backgroundType = ZSTileBackgroundTypeSimilarErrorGroup;
 					}
 				}
 			} else {
 				if (error) {
-					backgroundType = ZSTileBackgroundTypeOtherError;
+					_backgroundType = ZSTileBackgroundTypeOtherError;
 				} else {
 					if (highlightedSimilar) {
 						if (tile.guess) {
-							backgroundType = ZSTileBackgroundTypeSimilarAnswer;
+							_backgroundType = ZSTileBackgroundTypeSimilarAnswer;
 						} else {
-							backgroundType = ZSTileBackgroundTypeSimilarPencil;
+							_backgroundType = ZSTileBackgroundTypeSimilarPencil;
 						}
 					} else {
-						backgroundType = ZSTileBackgroundTypeDefault;
+						_backgroundType = ZSTileBackgroundTypeDefault;
 					}
 				}
 			}
 		}
 	} else {
 		switch (highlightedHintType) {
-			case ZSTileHintHighlightTypeA: backgroundType = ZSTileBackgroundTypeHighlightHintA; break;
-			case ZSTileHintHighlightTypeB: backgroundType = ZSTileBackgroundTypeHighlightHintB; break;
-			case ZSTileHintHighlightTypeC: backgroundType = ZSTileBackgroundTypeHighlightHintC; break;
-			case ZSTileHintHighlightTypeD: backgroundType = ZSTileBackgroundTypeHighlightHintD; break;
+			case ZSTileHintHighlightTypeA: _backgroundType = ZSTileBackgroundTypeHighlightHintA; break;
+			case ZSTileHintHighlightTypeB: _backgroundType = ZSTileBackgroundTypeHighlightHintB; break;
+			case ZSTileHintHighlightTypeC: _backgroundType = ZSTileBackgroundTypeHighlightHintC; break;
+			case ZSTileHintHighlightTypeD: _backgroundType = ZSTileBackgroundTypeHighlightHintD; break;
 			default: break;
 		}
 	}
@@ -369,6 +428,278 @@ NSString * const kTileColorHighlightHintD = @"#4C2FADD4";
 	// NSLog(@"Answer: %i", tile.answer);
 	
 	[touchDelegate tileWasTouched:self];
+}
+
+#pragma mark - Colors
+
++ (UIColor *)getTextColorAnswer {
+	static UIColor *color = nil;
+	
+	if (color == nil) {
+		color = [UIColor colorWithAlphaHexString:kTextColorAnswer];
+	}
+	
+	return color;
+}
+
++ (UIColor *)getTextColorGuess {
+	static UIColor *color = nil;
+	
+	if (color == nil) {
+		color = [UIColor colorWithAlphaHexString:kTextColorGuess];
+	}
+	
+	return color;
+}
+
++ (UIColor *)getTextColorGuessSelected {
+	static UIColor *color = nil;
+	
+	if (color == nil) {
+		color = [UIColor colorWithAlphaHexString:kTextColorGuessSelected];
+	}
+	
+	return color;
+}
+
++ (UIColor *)getTextColorGuessFingerDown {
+	static UIColor *color = nil;
+	
+	if (color == nil) {
+		color = [UIColor colorWithAlphaHexString:kTextColorGuessFingerDown];
+	}
+	
+	return color;
+}
+
++ (UIColor *)getTextColorError {
+	static UIColor *color = nil;
+	
+	if (color == nil) {
+		color = [UIColor colorWithAlphaHexString:kTextColorError];
+	}
+	
+	return color;
+}
+
++ (UIColor *)getTextColorErrorSelected {
+	static UIColor *color = nil;
+	
+	if (color == nil) {
+		color = [UIColor colorWithAlphaHexString:kTextColorErrorSelected];
+	}
+	
+	return color;
+}
+
++ (UIColor *)getTextColorHighlightHintA {
+	static UIColor *color = nil;
+	
+	if (color == nil) {
+		color = [UIColor colorWithAlphaHexString:kTextColorHighlightHintA];
+	}
+	
+	return color;
+}
+
++ (UIColor *)getTextColorHighlightHintB {
+	static UIColor *color = nil;
+	
+	if (color == nil) {
+		color = [UIColor colorWithAlphaHexString:kTextColorHighlightHintB];
+	}
+	
+	return color;
+}
+
++ (UIColor *)getTextColorPencil {
+	static UIColor *color = nil;
+	
+	if (color == nil) {
+		color = [UIColor colorWithAlphaHexString:kTextColorPencil];
+	}
+	
+	return color;
+}
+
++ (UIColor *)getTextColorPencilHighlightHintA {
+	static UIColor *color = nil;
+	
+	if (color == nil) {
+		color = [UIColor colorWithAlphaHexString:kTextColorPencilHighlightHintA];
+	}
+	
+	return color;
+}
+
++ (UIColor *)getTextColorPencilHighlightHintB {
+	static UIColor *color = nil;
+	
+	if (color == nil) {
+		color = [UIColor colorWithAlphaHexString:kTextColorPencilHighlightHintB];
+	}
+	
+	return color;
+}
+
++ (UIColor *)getTextShadowColorGuess {
+	static UIColor *color = nil;
+	
+	if (color == nil) {
+		color = [UIColor colorWithAlphaHexString:kTextShadowColorGuess];
+	}
+	
+	return color;
+}
+
++ (UIColor *)getTextShadowColorGuessSelected {
+	static UIColor *color = nil;
+	
+	if (color == nil) {
+		color = [UIColor colorWithAlphaHexString:kTextShadowColorGuessSelected];
+	}
+	
+	return color;
+}
+
++ (UIColor *)getTextShadowColorGuessFingerDown {
+	static UIColor *color = nil;
+	
+	if (color == nil) {
+		color = [UIColor colorWithAlphaHexString:kTextShadowColorGuessFingerDown];
+	}
+	
+	return color;
+}
+
++ (UIColor *)getTileColorDefault {
+	static UIColor *color = nil;
+	
+	if (color == nil) {
+		color = [UIColor colorWithAlphaHexString:kTileColorDefault];
+	}
+	
+	return color;
+}
+
++ (UIColor *)getTileColorSelected {
+	static UIColor *color = nil;
+	
+	if (color == nil) {
+		color = [UIColor colorWithAlphaHexString:kTileColorSelected];
+	}
+	
+	return color;
+}
+
++ (UIColor *)getTileColorHighlightSimilarAnswer {
+	static UIColor *color = nil;
+	
+	if (color == nil) {
+		color = [UIColor colorWithAlphaHexString:kTileColorHighlightSimilarAnswer];
+	}
+	
+	return color;
+}
+
++ (UIColor *)getTileColorDarkHighlightSimilarAnswer {
+	static UIColor *color = nil;
+	
+	if (color == nil) {
+		color = [UIColor colorWithAlphaHexString:kTileColorDarkHighlightSimilarAnswer];
+	}
+	
+	return color;
+}
+
++ (UIColor *)getTileColorHighlightSimilarPencil {
+	static UIColor *color = nil;
+	
+	if (color == nil) {
+		color = [UIColor colorWithAlphaHexString:kTileColorHighlightSimilarPencil];
+	}
+	
+	return color;
+}
+
++ (UIColor *)getTileColorDarkHighlightSimilarPencil {
+	static UIColor *color = nil;
+	
+	if (color == nil) {
+		color = [UIColor colorWithAlphaHexString:kTileColorDarkHighlightSimilarPencil];
+	}
+	
+	return color;
+}
+
++ (UIColor *)getTileColorSimilarError {
+	static UIColor *color = nil;
+	
+	if (color == nil) {
+		color = [UIColor colorWithAlphaHexString:kTileColorSimilarError];
+	}
+	
+	return color;
+}
+
++ (UIColor *)getTileColorSimilarErrorGroup {
+	static UIColor *color = nil;
+	
+	if (color == nil) {
+		color = [UIColor colorWithAlphaHexString:kTileColorSimilarErrorGroup];
+	}
+	
+	return color;
+}
+
++ (UIColor *)getTileColorOtherError {
+	static UIColor *color = nil;
+	
+	if (color == nil) {
+		color = [UIColor colorWithAlphaHexString:kTileColorOtherError];
+	}
+	
+	return color;
+}
+
++ (UIColor *)getTileColorHighlightHintA {
+	static UIColor *color = nil;
+	
+	if (color == nil) {
+		color = [UIColor colorWithAlphaHexString:kTileColorHighlightHintA];
+	}
+	
+	return color;
+}
+
++ (UIColor *)getTileColorHighlightHintB {
+	static UIColor *color = nil;
+	
+	if (color == nil) {
+		color = [UIColor colorWithAlphaHexString:kTileColorHighlightHintB];
+	}
+	
+	return color;
+}
+
++ (UIColor *)getTileColorHighlightHintC {
+	static UIColor *color = nil;
+	
+	if (color == nil) {
+		color = [UIColor colorWithAlphaHexString:kTileColorHighlightHintC];
+	}
+	
+	return color;
+}
+
++ (UIColor *)getTileColorHighlightHintD {
+	static UIColor *color = nil;
+	
+	if (color == nil) {
+		color = [UIColor colorWithAlphaHexString:kTileColorHighlightHintD];
+	}
+	
+	return color;
 }
 
 @end

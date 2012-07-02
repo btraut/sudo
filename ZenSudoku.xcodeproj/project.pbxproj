@@ -14,7 +14,6 @@
 		841F854714C2651700DFFABC /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 841F854614C2651600DFFABC /* MessageUI.framework */; };
 		841F854A14C40F5600DFFABC /* ZSStatisticsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841F854914C40F5500DFFABC /* ZSStatisticsController.m */; };
 		841F854E14C4287700DFFABC /* ZSStatisticsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841F854C14C4287600DFFABC /* ZSStatisticsViewController.m */; };
-		84262F261585C24700CA6899 /* BackwardsPageGuide@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84262F251585C24700CA6899 /* BackwardsPageGuide@2x.png */; };
 		8426A79D14ED16A3006DAD1C /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 8426A79814ED16A3006DAD1C /* FMDatabase.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8426A79E14ED16A3006DAD1C /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8426A79A14ED16A3006DAD1C /* FMDatabaseAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8426A79F14ED16A3006DAD1C /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 8426A79C14ED16A3006DAD1C /* FMResultSet.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -90,6 +89,7 @@
 		84A097581548B22D0082C9D0 /* HintsHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A097501548B22D0082C9D0 /* HintsHighlighted.png */; };
 		84A097591548B22D0082C9D0 /* HintsHighlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A097511548B22D0082C9D0 /* HintsHighlighted@2x.png */; };
 		84A0975F1549DDE40082C9D0 /* ZSGameBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A0975E1549DDE40082C9D0 /* ZSGameBookViewController.m */; };
+		84A509F215A02CC8002C9C70 /* BackwardsPageTranslucent@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A509F115A02CC8002C9C70 /* BackwardsPageTranslucent@2x.png */; };
 		84AC26C91480950F00E966A5 /* ZSBoardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC26C71480950F00E966A5 /* ZSBoardViewController.m */; };
 		84AC26CE1480986900E966A5 /* ZSTileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC26CC1480986900E966A5 /* ZSTileViewController.m */; };
 		84AC26DD1480D9C700E966A5 /* ZSGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC26DC1480D9C700E966A5 /* ZSGame.m */; };
@@ -135,7 +135,6 @@
 		841F854914C40F5500DFFABC /* ZSStatisticsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSStatisticsController.m; path = "Model Controllers/ZSStatisticsController.m"; sourceTree = "<group>"; };
 		841F854B14C4287600DFFABC /* ZSStatisticsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSStatisticsViewController.h; path = "View Controllers/ZSStatisticsViewController.h"; sourceTree = "<group>"; };
 		841F854C14C4287600DFFABC /* ZSStatisticsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSStatisticsViewController.m; path = "View Controllers/ZSStatisticsViewController.m"; sourceTree = "<group>"; };
-		84262F251585C24700CA6899 /* BackwardsPageGuide@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BackwardsPageGuide@2x.png"; path = "Resources/Images/BackwardsPageGuide@2x.png"; sourceTree = "<group>"; };
 		8426A79714ED16A3006DAD1C /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
 		8426A79814ED16A3006DAD1C /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
 		8426A79914ED16A3006DAD1C /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
@@ -166,9 +165,9 @@
 		843947E71589D74C00463720 /* ZSFoldedCornerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSFoldedCornerViewController.m; path = "View Controllers/ZSFoldedCornerViewController.m"; sourceTree = "<group>"; };
 		843947E91589DB8900463720 /* ZSGLSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSGLSprite.h; path = Utilities/ZSGLSprite.h; sourceTree = "<group>"; };
 		843947EA1589DB8900463720 /* ZSGLSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSGLSprite.m; path = Utilities/ZSGLSprite.m; sourceTree = "<group>"; };
-		8449D9551481D77C003F6FB3 /* ZSAnswerOptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; name = ZSAnswerOptionsViewController.h; path = "View Controllers/ZSAnswerOptionsViewController.h"; sourceTree = "<group>"; };
+		8449D9551481D77C003F6FB3 /* ZSAnswerOptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSAnswerOptionsViewController.h; path = "View Controllers/ZSAnswerOptionsViewController.h"; sourceTree = "<group>"; };
 		8449D9561481D77D003F6FB3 /* ZSAnswerOptionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSAnswerOptionsViewController.m; path = "View Controllers/ZSAnswerOptionsViewController.m"; sourceTree = "<group>"; };
-		8449D9581481E518003F6FB3 /* ZSAnswerOptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; name = ZSAnswerOptionViewController.h; path = "View Controllers/ZSAnswerOptionViewController.h"; sourceTree = "<group>"; };
+		8449D9581481E518003F6FB3 /* ZSAnswerOptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSAnswerOptionViewController.h; path = "View Controllers/ZSAnswerOptionViewController.h"; sourceTree = "<group>"; };
 		8449D9591481E518003F6FB3 /* ZSAnswerOptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSAnswerOptionViewController.m; path = "View Controllers/ZSAnswerOptionViewController.m"; sourceTree = "<group>"; };
 		845ABB161587E50B006D2616 /* ZSFoldedCornerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSFoldedCornerView.h; path = "View Controllers/ZSFoldedCornerView.h"; sourceTree = "<group>"; };
 		845ABB171587E50B006D2616 /* ZSFoldedCornerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSFoldedCornerView.m; path = "View Controllers/ZSFoldedCornerView.m"; sourceTree = "<group>"; };
@@ -229,6 +228,7 @@
 		84A097511548B22D0082C9D0 /* HintsHighlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "HintsHighlighted@2x.png"; path = "Resources/Images/HintsHighlighted@2x.png"; sourceTree = "<group>"; };
 		84A0975D1549DDE40082C9D0 /* ZSGameBookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSGameBookViewController.h; path = "View Controllers/ZSGameBookViewController.h"; sourceTree = "<group>"; };
 		84A0975E1549DDE40082C9D0 /* ZSGameBookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSGameBookViewController.m; path = "View Controllers/ZSGameBookViewController.m"; sourceTree = "<group>"; };
+		84A509F115A02CC8002C9C70 /* BackwardsPageTranslucent@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BackwardsPageTranslucent@2x.png"; path = "Resources/Images/BackwardsPageTranslucent@2x.png"; sourceTree = "<group>"; };
 		84AC26C61480950F00E966A5 /* ZSBoardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSBoardViewController.h; path = "View Controllers/ZSBoardViewController.h"; sourceTree = "<group>"; };
 		84AC26C71480950F00E966A5 /* ZSBoardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSBoardViewController.m; path = "View Controllers/ZSBoardViewController.m"; sourceTree = "<group>"; };
 		84AC26CB1480986900E966A5 /* ZSTileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSTileViewController.h; path = "View Controllers/ZSTileViewController.h"; sourceTree = "<group>"; };
@@ -399,7 +399,6 @@
 		8472509315829D3A0073D113 /* Global Page Parts */ = {
 			isa = PBXGroup;
 			children = (
-				84262F251585C24700CA6899 /* BackwardsPageGuide@2x.png */,
 				8472508F15829D330073D113 /* PageCurl.png */,
 				8472509015829D330073D113 /* PageCurl@2x.png */,
 				84C092E11582D38F005799F8 /* PageCurlGradient.png */,
@@ -408,6 +407,7 @@
 				849B69EF14F2666400870F09 /* PaperBackground@2x.png */,
 				84B0B1D3157D859300A99510 /* BackwardsPage.png */,
 				84B0B1D4157D859300A99510 /* BackwardsPage@2x.png */,
+				84A509F115A02CC8002C9C70 /* BackwardsPageTranslucent@2x.png */,
 				8472508B15829D1F0073D113 /* ForwardsPage.png */,
 				8472508C15829D1F0073D113 /* ForwardsPage@2x.png */,
 				8463D8DD15947F9700AED0B4 /* ShadowBlobStraight.png */,
@@ -766,7 +766,6 @@
 				8472509215829D330073D113 /* PageCurl@2x.png in Resources */,
 				84C092E31582D38F005799F8 /* PageCurlGradient.png in Resources */,
 				84C092E41582D38F005799F8 /* PageCurlGradient@2x.png in Resources */,
-				84262F261585C24700CA6899 /* BackwardsPageGuide@2x.png in Resources */,
 				8463D8D61593B15F00AED0B4 /* ShadowBlobStraightOpaque@2x.png in Resources */,
 				8463D8DC15947F3D00AED0B4 /* ShadowBlobStraightOpaque.png in Resources */,
 				8463D8DF15947F9800AED0B4 /* ShadowBlobStraight.png in Resources */,
@@ -787,6 +786,7 @@
 				8463D90515986B8D00AED0B4 /* Undo@2x.png in Resources */,
 				8463D90615986B8D00AED0B4 /* UndoHighlighted.png in Resources */,
 				8463D90715986B8D00AED0B4 /* UndoHighlighted@2x.png in Resources */,
+				84A509F215A02CC8002C9C70 /* BackwardsPageTranslucent@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
