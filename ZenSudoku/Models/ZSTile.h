@@ -10,7 +10,7 @@
 
 @class ZSBoard;
 
-@interface ZSTile : NSObject
+@interface ZSTile : NSObject <NSCoding>
 
 @property (weak) ZSBoard *board;
 
@@ -23,9 +23,8 @@
 @property (assign) BOOL locked;
 
 - (id)initWithBoard:(ZSBoard *)board;
-
-- (void)setValuesForDictionaryRepresentation:(NSDictionary *)dict;
-- (NSDictionary *)getDictionaryRepresentation;
+- (id)initWithSize:(NSInteger)size;
+- (void)copyTile:(ZSTile *)tile;
 
 - (BOOL)getPencilForGuess:(NSInteger)newGuess;
 - (void)setPencil:(BOOL)isset forGuess:(NSInteger)guess;
@@ -34,6 +33,7 @@
 
 @end
 
+extern NSString * const kDictionaryRepresentationGameTileSizeKey;
 extern NSString * const kDictionaryRepresentationGameTileGuessKey;
 extern NSString * const kDictionaryRepresentationGameTileAnswerKey;
 extern NSString * const kDictionaryRepresentationGameTileLockedKey;

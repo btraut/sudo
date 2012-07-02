@@ -63,7 +63,7 @@ typedef enum {
 @class ZSBoard;
 @class ZSTile;
 
-@interface ZSGame : NSObject <ZSBoardDelegate>
+@interface ZSGame : NSObject <ZSBoardDelegate, NSCoding>
 
 @property (assign) ZSGameDifficulty difficulty;
 @property (assign) ZSGameType type;
@@ -85,11 +85,6 @@ typedef enum {
 - (id)initWithSize:(NSInteger)size answers:(NSInteger **)answers groupMap:(NSInteger **)groupMap;
 
 - (void)notifyStatisticsOfNewGame;
-
-// Persistant Storage Methods
-
-- (id)initWithDictionaryRepresentation:(NSDictionary *)dict;
-- (NSDictionary *)getDictionaryRepresentation;
 
 // Tile Methods
 

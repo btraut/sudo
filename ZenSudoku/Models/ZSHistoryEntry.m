@@ -48,26 +48,25 @@ NSString * const kDictionaryRepresentationGameHistoryEntryPencilNumberKey = @"kD
 	return self;
 }
 
+#pragma mark - NSCoder Methods
 
-- (id)initWithDictionaryRepresentation:(NSDictionary *)dict {
-	ZSHistoryEntry *newEntry = [self initWithType:[[dict objectForKey:kDictionaryRepresentationGameHistoryEntryTypeKey] intValue]
-												  row:[[dict objectForKey:kDictionaryRepresentationGameHistoryEntryTileRowKey] intValue]
-												  col:[[dict objectForKey:kDictionaryRepresentationGameHistoryEntryTileColKey] intValue]
-										previousValue:[[dict objectForKey:kDictionaryRepresentationGameHistoryEntryPreviousValueKey] intValue]];
+- (id)initWithCoder:(NSCoder *)decoder {
+	ZSHistoryEntry *newEntry = [self initWithType:[decoder decodeIntForKey:kDictionaryRepresentationGameHistoryEntryTypeKey]
+											  row:[decoder decodeIntForKey:kDictionaryRepresentationGameHistoryEntryTileRowKey]
+											  col:[decoder decodeIntForKey:kDictionaryRepresentationGameHistoryEntryTileColKey]
+									previousValue:[decoder decodeIntForKey:kDictionaryRepresentationGameHistoryEntryPreviousValueKey]];
 	
-	newEntry.pencilNumber = [[dict objectForKey:kDictionaryRepresentationGameHistoryEntryPencilNumberKey] intValue];
+	newEntry.pencilNumber = [decoder decodeIntForKey:kDictionaryRepresentationGameHistoryEntryPencilNumberKey];
 	
 	return newEntry;
 }
 
-- (NSDictionary *)getDictionaryRepresentation {
-	return [NSMutableDictionary dictionaryWithObjectsAndKeys:
-			[NSNumber numberWithInt:type], kDictionaryRepresentationGameHistoryEntryTypeKey,
-			[NSNumber numberWithInt:row], kDictionaryRepresentationGameHistoryEntryTileRowKey,
-			[NSNumber numberWithInt:col], kDictionaryRepresentationGameHistoryEntryTileColKey,
-			[NSNumber numberWithInt:previousValue], kDictionaryRepresentationGameHistoryEntryPreviousValueKey,
-			[NSNumber numberWithInt:pencilNumber], kDictionaryRepresentationGameHistoryEntryPencilNumberKey,
-			nil];
+- (void)encodeWithCoder:(NSCoder *)encoder {
+	[encoder encodeInt:type forKey:kDictionaryRepresentationGameHistoryEntryTypeKey];
+	[encoder encodeInt:row forKey:kDictionaryRepresentationGameHistoryEntryTileRowKey];
+	[encoder encodeInt:col forKey:kDictionaryRepresentationGameHistoryEntryTileColKey];
+	[encoder encodeInt:previousValue forKey:kDictionaryRepresentationGameHistoryEntryPreviousValueKey];
+	[encoder encodeInt:pencilNumber forKey:kDictionaryRepresentationGameHistoryEntryPencilNumberKey];
 }
 
 @end

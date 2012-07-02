@@ -12,6 +12,7 @@
 #import "ZSBoard.h"
 #import "ZSHistoryEntry.h"
 
+NSString * const kDictionaryRepresentationGameTileSizeKey = @"kDictionaryRepresentationGameTileSizeKey";
 NSString * const kDictionaryRepresentationGameTileGuessKey = @"kDictionaryRepresentationGameTileGuessKey";
 NSString * const kDictionaryRepresentationGameTileAnswerKey = @"kDictionaryRepresentationGameTileAnswerKey";
 NSString * const kDictionaryRepresentationGameTileLockedKey = @"kDictionaryRepresentationGameTileLockedKey";
@@ -20,6 +21,8 @@ NSString * const kDictionaryRepresentationGameTilePencilsKey = @"kDictionaryRepr
 
 @interface ZSTile() {
 	BOOL *_pencils;
+	
+	NSInteger _size;
 }
 
 @end
@@ -32,20 +35,29 @@ NSString * const kDictionaryRepresentationGameTilePencilsKey = @"kDictionaryRepr
 
 #pragma mark - Object Lifecycle
 
-// Don't call this directly!
 - (id)init {
-	return nil;
+	return [self initWithSize:9];
 }
 
-- (id)initWithBoard:(ZSBoard *)newGameBoard {
+- (id)initWithBoard:(ZSBoard *)newBoard {
+	self = [self initWithSize:newBoard.size];
+	
+	if (self) {
+		board = newBoard;
+	}
+	
+	return self;
+}
+
+- (id)initWithSize:(NSInteger)size {
 	self = [super init];
 	
 	if (self) {
-		board = newGameBoard;
+		_size = size;
 		
-		_pencils = malloc(board.size * sizeof(BOOL));
+		_pencils = malloc(_size * sizeof(BOOL));
 		
-		for (NSInteger i = 0; i < board.size; ++i) {
+		for (NSInteger i = 0; i < _size; ++i) {
 			_pencils[i] = NO;
 		}
 	}
@@ -53,43 +65,63 @@ NSString * const kDictionaryRepresentationGameTilePencilsKey = @"kDictionaryRepr
 	return self;
 }
 
+- (void)copyTile:(ZSTile *)tile {
+	guess = tile.guess;
+	answer = tile.answer;
+	locked = tile.locked;
+	
+	groupId = tile.groupId;
+	
+	for (NSInteger i = 1; i <= _size; ++i) {
+		[self setPencil:[tile getPencilForGuess:i] forGuess:i];
+	}
+}
+
 - (void)dealloc {
 	free(_pencils);
 }
 
-#pragma mark - Dictionary Representations
+#pragma mark - NSCoder Methods
 
-- (void)setValuesForDictionaryRepresentation:(NSDictionary *)dict {
-	guess = [[dict objectForKey:kDictionaryRepresentationGameTileGuessKey] intValue];
-	answer = [[dict objectForKey:kDictionaryRepresentationGameTileAnswerKey] intValue];
-	locked = [[dict objectForKey:kDictionaryRepresentationGameTileLockedKey] boolValue];
+- (id)initWithCoder:(NSCoder *)decoder {
+	NSInteger size = [decoder decodeIntForKey:kDictionaryRepresentationGameTileSizeKey];
 	
-	groupId = [[dict objectForKey:kDictionaryRepresentationGameTileGroupIdKey] intValue];
+	self = [self initWithSize:size];
 	
-	for (NSInteger i = 0; i < board.size; ++i) {
-		NSNumber *pencilNumber = [[dict objectForKey:kDictionaryRepresentationGameTilePencilsKey] objectAtIndex:i];
-		[self setPencil:[pencilNumber boolValue] forGuess:(i + 1)];
+	if (self) {
+		guess = [decoder decodeIntForKey:kDictionaryRepresentationGameTileGuessKey];
+		answer = [decoder decodeIntForKey:kDictionaryRepresentationGameTileAnswerKey];
+		locked = [decoder decodeBoolForKey:kDictionaryRepresentationGameTileLockedKey];
+		
+		groupId = [decoder decodeIntForKey:kDictionaryRepresentationGameTileGroupIdKey];
+		
+		NSArray *pencilArray = [decoder decodeObjectForKey:kDictionaryRepresentationGameTilePencilsKey];
+		
+		for (NSInteger i = 0; i < _size; ++i) {
+			NSNumber *pencilNumber = [pencilArray objectAtIndex:i];
+			[self setPencil:[pencilNumber boolValue] forGuess:(i + 1)];
+		}
 	}
+	
+	return self;
 }
 
-- (NSDictionary *)getDictionaryRepresentation {
-	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+- (void)encodeWithCoder:(NSCoder *)encoder {
+	[encoder encodeInt:_size forKey:kDictionaryRepresentationGameTileSizeKey];
 	
-	[dict setValue:[NSNumber numberWithInt:guess] forKey:kDictionaryRepresentationGameTileGuessKey];
-	[dict setValue:[NSNumber numberWithInt:answer] forKey:kDictionaryRepresentationGameTileAnswerKey];
-	[dict setValue:[NSNumber numberWithBool:locked] forKey:kDictionaryRepresentationGameTileLockedKey];
+	[encoder encodeInt:guess forKey:kDictionaryRepresentationGameTileGuessKey];
+	[encoder encodeInt:answer forKey:kDictionaryRepresentationGameTileAnswerKey];
+	[encoder encodeBool:locked forKey:kDictionaryRepresentationGameTileLockedKey];
 	
-	[dict setValue:[NSNumber numberWithInt:groupId] forKey:kDictionaryRepresentationGameTileGroupIdKey];
+	[encoder encodeInt:groupId forKey:kDictionaryRepresentationGameTileGroupIdKey];
 	
 	NSMutableArray *pencilsArray = [NSMutableArray array];
 	
-	for (NSInteger i = 0; i < board.size; ++i) {
+	for (NSInteger i = 0; i < _size; ++i) {
 		[pencilsArray addObject:[NSNumber numberWithBool:_pencils[i]]];
 	}
 	
-	[dict setValue:pencilsArray forKey:kDictionaryRepresentationGameTilePencilsKey];
-	
-	return dict;
+	[encoder encodeObject:pencilsArray forKey:kDictionaryRepresentationGameTilePencilsKey];
 }
 
 #pragma mark - Setters / Getters
@@ -103,7 +135,7 @@ NSString * const kDictionaryRepresentationGameTilePencilsKey = @"kDictionaryRepr
 }
 
 - (void)setAllPencils:(BOOL)isset {
-	for (NSInteger i = 1; i <= board.size; ++i) {
+	for (NSInteger i = 1; i <= _size; ++i) {
 		[self setPencil:isset forGuess:i];
 	}
 }

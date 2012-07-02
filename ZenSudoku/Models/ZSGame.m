@@ -131,114 +131,70 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 
 #pragma mark - Persistant Storage Methods
 
-- (id)initWithDictionaryRepresentation:(NSDictionary *)dict {
+- (id)initWithCoder:(NSCoder *)decoder {
+	NSInteger size = [decoder decodeIntForKey:kDictionaryRepresentationGameSizeKey];
+	
 	// Init the game with the proper size.
-	self = [self initWithSize:[[dict objectForKey:kDictionaryRepresentationGameSizeKey] intValue]];
+	self = [self initWithSize:size];
 	
 	if (self) {
 		// Set the game properties.
-		difficulty = [[dict objectForKey:kDictionaryRepresentationGameDifficultyKey] intValue];
-		type = [[dict objectForKey:kDictionaryRepresentationGameTypeKey] intValue];
+		difficulty = [decoder decodeIntForKey:kDictionaryRepresentationGameDifficultyKey];
+		type = [decoder decodeIntForKey:kDictionaryRepresentationGameTypeKey];
 		
 		// Unpack the tiles.
+		NSArray *coderTiles = [decoder decodeObjectForKey:kDictionaryRepresentationGameTilesKey];
+		
 		for (NSInteger row = 0; row < board.size; row++) {
 			for (NSInteger col = 0; col < board.size; col++) {
 				ZSTile *tile = [board getTileAtRow:row col:col];
-				[tile setValuesForDictionaryRepresentation:[[[dict objectForKey:kDictionaryRepresentationGameTilesKey] objectAtIndex:row] objectAtIndex:col]];
+				[tile copyTile:[[coderTiles objectAtIndex:row] objectAtIndex:col]];
 			}
 		}
 		
 		// Set the game status data.
-		timerCount = [[dict objectForKey:kDictionaryRepresentationGameTimerCountKey] intValue];
-		totalStrikes = [[dict objectForKey:kDictionaryRepresentationGameTotalStrikesKey] intValue];
+		timerCount = [decoder decodeIntForKey:kDictionaryRepresentationGameTimerCountKey];
+		totalStrikes = [decoder decodeIntForKey:kDictionaryRepresentationGameTotalStrikesKey];
 		
 		// Unpack history.
-		NSMutableArray *undoStackDictionaries = [dict objectForKey:kDictionaryRepresentationGameUndoStackKey];
-		NSMutableArray *redoStackDictionaries = [dict objectForKey:kDictionaryRepresentationGameRedoStackKey];
-		
-		for (NSArray *stackEntries in undoStackDictionaries) {
-			NSMutableArray *stackEntry = [NSMutableArray array];
-			
-			for (NSDictionary *historyEntry in stackEntries) {
-				[stackEntry addObject:[[ZSHistoryEntry alloc] initWithDictionaryRepresentation:historyEntry]];
-			}
-			
-			[_undoStack addObject:stackEntry];
-		}
-		
-		for (NSArray *stackEntries in redoStackDictionaries) {
-			NSMutableArray *stackEntry = [NSMutableArray array];
-			
-			for (NSDictionary *historyEntry in stackEntries) {
-				[stackEntry addObject:[[ZSHistoryEntry alloc] initWithDictionaryRepresentation:historyEntry]];
-			}
-			
-			[_redoStack addObject:stackEntry];
-		}
+		_undoStack = [decoder decodeObjectForKey:kDictionaryRepresentationGameUndoStackKey];
+		_redoStack = [decoder decodeObjectForKey:kDictionaryRepresentationGameRedoStackKey];
 	}
 	
 	return self;
 }
 
-- (NSDictionary *)getDictionaryRepresentation {
-	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+- (void)encodeWithCoder:(NSCoder *)encoder {
+	// Encode game properties.
+	[encoder encodeInt:board.size forKey:kDictionaryRepresentationGameSizeKey];
+	[encoder encodeInt:difficulty forKey:kDictionaryRepresentationGameDifficultyKey];
+	[encoder encodeInt:type forKey:kDictionaryRepresentationGameTypeKey];
 	
-	// Set the game properties.
-	[dict setValue:[NSNumber numberWithInt:board.size] forKey:kDictionaryRepresentationGameSizeKey];
-	[dict setValue:[NSNumber numberWithInt:difficulty] forKey:kDictionaryRepresentationGameDifficultyKey];
-	[dict setValue:[NSNumber numberWithInt:type] forKey:kDictionaryRepresentationGameTypeKey];
-	
-	// Build dictionary representations of the tiles and pack them up.
+	// Encode tiles.
 	NSMutableArray *tileRowArray = [NSMutableArray array];
 	
 	for (NSInteger row = 0; row < board.size; row++) {
 		NSMutableArray *tileColArray = [NSMutableArray array];
 		
 		for (NSInteger col = 0; col < board.size; col++) {
-			[tileColArray addObject:[[self getTileAtRow:row col:col] getDictionaryRepresentation]];
+			[tileColArray addObject:[self getTileAtRow:row col:col]];
 		}
 		
 		[tileRowArray addObject:tileColArray];
 	}
 	
-	[dict setValue:tileRowArray forKey:kDictionaryRepresentationGameTilesKey];
+	[encoder encodeObject:tileRowArray forKey:kDictionaryRepresentationGameTilesKey];
 	
-	// Set the game status data.
-	[dict setValue:[NSNumber numberWithInt:timerCount] forKey:kDictionaryRepresentationGameTimerCountKey];
-	[dict setValue:[NSNumber numberWithInt:totalStrikes] forKey:kDictionaryRepresentationGameTotalStrikesKey];
-		
-	// Build game history dictionaries.
-	NSMutableArray *undoStackDictionaries = [NSMutableArray array];
-	NSMutableArray *redoStackDictionaries = [NSMutableArray array];
+	// Encode game status.
+	[encoder encodeInt:timerCount forKey:kDictionaryRepresentationGameTimerCountKey];
+	[encoder encodeInt:totalStrikes forKey:kDictionaryRepresentationGameTotalStrikesKey];
 	
-	for (NSArray *stackEntries in _undoStack) {
-		NSMutableArray *stackEntry = [NSMutableArray array];
-		
-		for (ZSHistoryEntry *historyEntry in stackEntries) {
-			[stackEntry addObject:[historyEntry getDictionaryRepresentation]];
-		}
-		
-		[undoStackDictionaries addObject:stackEntry];
-	}
-	
-	for (NSArray *stackEntries in _redoStack) {
-		NSMutableArray *stackEntry = [NSMutableArray array];
-		
-		for (ZSHistoryEntry *historyEntry in stackEntries) {
-			[stackEntry addObject:[historyEntry getDictionaryRepresentation]];
-		}
-		
-		[redoStackDictionaries addObject:stackEntry];
-	}
-	
-	[dict setValue:undoStackDictionaries forKey:kDictionaryRepresentationGameUndoStackKey];
-	[dict setValue:redoStackDictionaries forKey:kDictionaryRepresentationGameRedoStackKey];
-	
-	// Done.
-	return dict;
+	// Encode game history.
+	[encoder encodeObject:_undoStack forKey:kDictionaryRepresentationGameUndoStackKey];
+	[encoder encodeObject:_redoStack forKey:kDictionaryRepresentationGameRedoStackKey];
 }
 
-#pragma mark - Tile Methods
+#pragma mark - NSCoder Methods
 
 - (NSInteger)getGuessForTileAtRow:(NSInteger)row col:(NSInteger)col {
 	return [self getTileAtRow:row col:col].guess;

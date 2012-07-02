@@ -14,7 +14,7 @@ typedef enum {
 	ZSHistoryEntryTypeGuess
 } ZSHistoryEntryType;
 
-@interface ZSHistoryEntry : NSObject
+@interface ZSHistoryEntry : NSObject <NSCoding>
 
 @property (assign) ZSHistoryEntryType type;
 @property (assign) NSInteger row;
@@ -26,9 +26,6 @@ typedef enum {
 + (id)undoDescriptionWithType:(ZSHistoryEntryType)newType tile:(ZSTile *)newTile previousValue:(NSInteger)newPreviousValue;
 - (id)initWithType:(ZSHistoryEntryType)newType tile:(ZSTile *)newTile previousValue:(NSInteger)newPreviousValue;
 - (id)initWithType:(ZSHistoryEntryType)newType row:(NSInteger)row col:(NSInteger)col previousValue:(NSInteger)newPreviousValue;
-
-- (id)initWithDictionaryRepresentation:(NSDictionary *)dict;
-- (NSDictionary *)getDictionaryRepresentation;
 
 @end
 

@@ -11,6 +11,8 @@
 #import "ZSGame.h"
 #import "ZSPuzzleFetcher.h"
 
+#define UNARCHIVER_DATA_KEY @"data"
+
 NSString * const kSavedGameFileName = @"SavedGame.plist";
 
 @implementation ZSGameController
@@ -43,8 +45,17 @@ NSString * const kSavedGameFileName = @"SavedGame.plist";
 - (ZSGame *)loadSavedGame {
 	ZSAppDelegate *appDelegate = (ZSAppDelegate *)[[UIApplication sharedApplication] delegate];
 	NSString *savedGameFilePath = [appDelegate getPathForFileName:kSavedGameFileName];
-	NSDictionary *dictionaryRepresentation = [[NSDictionary alloc] initWithContentsOfFile:savedGameFilePath];
-	return [[ZSGame alloc] initWithDictionaryRepresentation:dictionaryRepresentation];
+	NSData *data = [[NSData alloc] initWithContentsOfFile:savedGameFilePath];
+	
+	if (data == nil) {
+		return nil;
+	}
+	
+	NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
+	ZSGame *game = [unarchiver decodeObjectForKey:UNARCHIVER_DATA_KEY];
+	[unarchiver finishDecoding];
+	
+	return game;
 }
 
 - (void)saveGame:(ZSGame *)game {
@@ -52,9 +63,12 @@ NSString * const kSavedGameFileName = @"SavedGame.plist";
 	
 	ZSAppDelegate *appDelegate = (ZSAppDelegate *)[[UIApplication sharedApplication] delegate];
 	NSString *savedGameFilePath = [appDelegate getPathForFileName:kSavedGameFileName];
-	NSDictionary *dictionaryRepresentation = [game getDictionaryRepresentation];
 	
-	[dictionaryRepresentation writeToFile:savedGameFilePath atomically:YES];
+	NSMutableData *data = [[NSMutableData alloc] init];
+	NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+	[archiver encodeObject:game forKey:UNARCHIVER_DATA_KEY];
+	[archiver finishEncoding];
+	[data writeToFile:savedGameFilePath atomically:YES];
 }
 
 - (void)clearSavedGame {

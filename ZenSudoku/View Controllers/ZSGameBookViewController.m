@@ -83,8 +83,6 @@
 }
 
 - (void)loadNewNextGame {
-	NSLog(@"Loading new game!");
-	
 	ZSGameDifficulty randomDifficulty = arc4random() % 5;
 	ZSGame *newGame = [[ZSGameController sharedInstance] fetchGameWithDifficulty:randomDifficulty];
 	
