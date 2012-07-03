@@ -111,6 +111,7 @@
 		84D1CB1115703CB00027230B /* ZSHintGeneratorEliminatePencilsHiddenSubgroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D1CB1015703CB00027230B /* ZSHintGeneratorEliminatePencilsHiddenSubgroup.m */; };
 		84D1CB141571829E0027230B /* ZSHintGeneratorEliminatePencilsPointingPairs.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D1CB131571829E0027230B /* ZSHintGeneratorEliminatePencilsPointingPairs.m */; };
 		84D1CB171571A5280027230B /* ZSHintGeneratorEliminatePencilsBoxLineReduction.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D1CB161571A5280027230B /* ZSHintGeneratorEliminatePencilsBoxLineReduction.m */; };
+		84D2032815A3B02D00BA9CCF /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D2032715A3B02D00BA9CCF /* iCarousel.m */; };
 		84D55014147F1C4A00A7934E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D55013147F1C4A00A7934E /* UIKit.framework */; };
 		84D55016147F1C4A00A7934E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D55015147F1C4A00A7934E /* Foundation.framework */; };
 		84D55018147F1C4A00A7934E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D55017147F1C4A00A7934E /* CoreGraphics.framework */; };
@@ -265,6 +266,8 @@
 		84D1CB131571829E0027230B /* ZSHintGeneratorEliminatePencilsPointingPairs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSHintGeneratorEliminatePencilsPointingPairs.m; path = "ZenSudoku/Models/Hint Generators/ZSHintGeneratorEliminatePencilsPointingPairs.m"; sourceTree = SOURCE_ROOT; };
 		84D1CB151571A5270027230B /* ZSHintGeneratorEliminatePencilsBoxLineReduction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSHintGeneratorEliminatePencilsBoxLineReduction.h; path = "ZenSudoku/Models/Hint Generators/ZSHintGeneratorEliminatePencilsBoxLineReduction.h"; sourceTree = SOURCE_ROOT; };
 		84D1CB161571A5280027230B /* ZSHintGeneratorEliminatePencilsBoxLineReduction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSHintGeneratorEliminatePencilsBoxLineReduction.m; path = "ZenSudoku/Models/Hint Generators/ZSHintGeneratorEliminatePencilsBoxLineReduction.m"; sourceTree = SOURCE_ROOT; };
+		84D2032615A3B02D00BA9CCF /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
+		84D2032715A3B02D00BA9CCF /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
 		84D5500F147F1C4A00A7934E /* sudo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sudo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84D55013147F1C4A00A7934E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		84D55015147F1C4A00A7934E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -373,6 +376,7 @@
 		8449D95B14833649003F6FB3 /* External */ = {
 			isa = PBXGroup;
 			children = (
+				84D2032515A3B02D00BA9CCF /* iCarousel */,
 				84AC6B3D1508B2D000C2F192 /* UIColor+ColorWithHex */,
 				8426A79614ED16A3006DAD1C /* FMDB */,
 				840216E41538EAAD00B16131 /* TestFlightSDK1.0 */,
@@ -549,6 +553,16 @@
 				84B1155B158F36B900983B3A /* ZSPointAnimation.m */,
 			);
 			name = Utilities;
+			sourceTree = "<group>";
+		};
+		84D2032515A3B02D00BA9CCF /* iCarousel */ = {
+			isa = PBXGroup;
+			children = (
+				84D2032615A3B02D00BA9CCF /* iCarousel.h */,
+				84D2032715A3B02D00BA9CCF /* iCarousel.m */,
+			);
+			name = iCarousel;
+			path = External/iCarousel;
 			sourceTree = "<group>";
 		};
 		84D55004147F1C4A00A7934E = {
@@ -865,6 +879,7 @@
 				84B11559158F274D00983B3A /* ZSAnimation.m in Sources */,
 				84B1155C158F36B900983B3A /* ZSPointAnimation.m in Sources */,
 				8463D8E61595239200AED0B4 /* ZSFoldedCornerPlusButtonViewController.m in Sources */,
+				84D2032815A3B02D00BA9CCF /* iCarousel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
