@@ -249,6 +249,9 @@ typedef enum {
 - (void)resetToStartPosition {
 	_foldPoint = _foldStartPoint;
 	
+	_animationState = ZSFoldedCornerViewControllerAnimationStateStopped;
+	[_animationHelper reset];
+	
 	[self pushUpdate];
 	
 	self.view.hidden = NO;
@@ -257,6 +260,9 @@ typedef enum {
 
 - (void)resetToDefaultPosition {
 	_foldPoint = _foldDefaultPoint;
+	
+	_animationState = ZSFoldedCornerViewControllerAnimationStateStopped;
+	[_animationHelper reset];
 	
 	[self pushUpdate];
 	

@@ -83,6 +83,7 @@
 // View Lifecycle
 - (void)viewWasPromotedToFrontAnimated:(BOOL)animated;
 - (void)viewWasPushedToBack;
+- (void)applicationWillResignActive:(UIApplication *)application;
 
 - (void)setTitle;
 

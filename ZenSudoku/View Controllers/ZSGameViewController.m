@@ -317,6 +317,10 @@ typedef struct {
 	[_backgroundProcessTimer invalidate];
 }
 
+- (void)applicationWillResignActive:(UIApplication *)application {
+	[self.foldedCornerViewController resetToDefaultPosition];
+}
+
 - (void)setTitle {
 	switch (game.difficulty) {
 		default:

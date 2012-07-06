@@ -66,6 +66,8 @@ NSString * const kRemoveTileAfterErrorKey = @"kRemoveTileAfterErrorKey";
 - (void)applicationWillResignActive:(UIApplication *)application {
 	ZSGameBookViewController *gameBookViewController = (ZSGameBookViewController *)_window.rootViewController;
 	
+	[gameBookViewController.currentGameViewController applicationWillResignActive:application];
+	
 	[[ZSGameController sharedInstance] saveGame:gameBookViewController.currentGameViewController.game];
 	[[ZSStatisticsController sharedInstance] saveStats];
 }
