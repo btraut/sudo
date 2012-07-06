@@ -23,6 +23,8 @@
 @property (strong) NSMutableArray *setGuess;
 @property (assign) BOOL setAutoPencil;
 
+@property (readonly, getter = modifiesHistory) BOOL modifiesHistory;
+
 @property (assign) BOOL allowsLearn;
 
 - (void)addInstructionHighlightPencil:(NSInteger)pencil forTileAtRow:(NSInteger)row col:(NSInteger)col highlightType:(ZSTilePencilTextHintHighlightType)pencilTextHintHighlightType;

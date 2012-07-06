@@ -20,7 +20,6 @@
 		8428AD2B154A2C2D00BA8EE0 /* ZSFastGameBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 8428AD24154A2C2D00BA8EE0 /* ZSFastGameBoard.m */; };
 		8428AD2D154A2C2D00BA8EE0 /* ZSHintGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8428AD28154A2C2D00BA8EE0 /* ZSHintGenerator.m */; };
 		8428AD36154A48F700BA8EE0 /* ZSHintViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8428AD34154A48F700BA8EE0 /* ZSHintViewController.m */; };
-		8428AD37154A48F700BA8EE0 /* ZSHintViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8428AD35154A48F700BA8EE0 /* ZSHintViewController.xib */; };
 		8428AD39154A498200BA8EE0 /* HintPaper@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8428AD38154A498200BA8EE0 /* HintPaper@2x.png */; };
 		8428AD3C154A52F700BA8EE0 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 8428AD3A154A52F700BA8EE0 /* Default.png */; };
 		8428AD3D154A52F700BA8EE0 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8428AD3B154A52F700BA8EE0 /* Default@2x.png */; };
@@ -91,6 +90,8 @@
 		84A0975F1549DDE40082C9D0 /* ZSGameBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A0975E1549DDE40082C9D0 /* ZSGameBookViewController.m */; };
 		84A509F615A21D99002C9C70 /* BackwardsTranslucentPage.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A509F415A21D99002C9C70 /* BackwardsTranslucentPage.png */; };
 		84A509F715A21D99002C9C70 /* BackwardsTranslucentPage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A509F515A21D99002C9C70 /* BackwardsTranslucentPage@2x.png */; };
+		84A8FB1515A6A06400D802C8 /* MTLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A8FB1315A6A06400D802C8 /* MTLabel.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		84A8FB1D15A6A1FB00D802C8 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A8FB1C15A6A1FB00D802C8 /* CoreText.framework */; };
 		84AC26C91480950F00E966A5 /* ZSBoardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC26C71480950F00E966A5 /* ZSBoardViewController.m */; };
 		84AC26CE1480986900E966A5 /* ZSTileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC26CC1480986900E966A5 /* ZSTileViewController.m */; };
 		84AC26DD1480D9C700E966A5 /* ZSGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC26DC1480D9C700E966A5 /* ZSGame.m */; };
@@ -112,6 +113,13 @@
 		84D1CB141571829E0027230B /* ZSHintGeneratorEliminatePencilsPointingPairs.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D1CB131571829E0027230B /* ZSHintGeneratorEliminatePencilsPointingPairs.m */; };
 		84D1CB171571A5280027230B /* ZSHintGeneratorEliminatePencilsBoxLineReduction.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D1CB161571A5280027230B /* ZSHintGeneratorEliminatePencilsBoxLineReduction.m */; };
 		84D2032815A3B02D00BA9CCF /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D2032715A3B02D00BA9CCF /* iCarousel.m */; };
+		84D2032C15A3C67F00BA9CCF /* IndexCard.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D2032A15A3C67F00BA9CCF /* IndexCard.png */; };
+		84D2032D15A3C67F00BA9CCF /* IndexCard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D2032B15A3C67F00BA9CCF /* IndexCard@2x.png */; };
+		84D2033115A64D4400BA9CCF /* ProgressDots.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D2033015A64D4400BA9CCF /* ProgressDots.m */; };
+		84D2033615A6553E00BA9CCF /* DarkBlueDot.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D2033215A6553E00BA9CCF /* DarkBlueDot.png */; };
+		84D2033715A6553E00BA9CCF /* DarkBlueDot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D2033315A6553E00BA9CCF /* DarkBlueDot@2x.png */; };
+		84D2033815A6553E00BA9CCF /* LightBlueDot.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D2033415A6553E00BA9CCF /* LightBlueDot.png */; };
+		84D2033915A6553E00BA9CCF /* LightBlueDot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D2033515A6553E00BA9CCF /* LightBlueDot@2x.png */; };
 		84D55014147F1C4A00A7934E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D55013147F1C4A00A7934E /* UIKit.framework */; };
 		84D55016147F1C4A00A7934E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D55015147F1C4A00A7934E /* Foundation.framework */; };
 		84D55018147F1C4A00A7934E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D55017147F1C4A00A7934E /* CoreGraphics.framework */; };
@@ -149,7 +157,6 @@
 		8428AD28154A2C2D00BA8EE0 /* ZSHintGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = ZSHintGenerator.m; path = Models/ZSHintGenerator.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		8428AD33154A48F700BA8EE0 /* ZSHintViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSHintViewController.h; path = "View Controllers/ZSHintViewController.h"; sourceTree = "<group>"; };
 		8428AD34154A48F700BA8EE0 /* ZSHintViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSHintViewController.m; path = "View Controllers/ZSHintViewController.m"; sourceTree = "<group>"; };
-		8428AD35154A48F700BA8EE0 /* ZSHintViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ZSHintViewController.xib; path = "View Controllers/ZSHintViewController.xib"; sourceTree = "<group>"; };
 		8428AD38154A498200BA8EE0 /* HintPaper@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "HintPaper@2x.png"; path = "Resources/Images/HintPaper@2x.png"; sourceTree = "<group>"; };
 		8428AD3A154A52F700BA8EE0 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = Resources/Images/Default.png; sourceTree = "<group>"; };
 		8428AD3B154A52F700BA8EE0 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Resources/Images/Default@2x.png"; sourceTree = "<group>"; };
@@ -232,6 +239,9 @@
 		84A0975E1549DDE40082C9D0 /* ZSGameBookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSGameBookViewController.m; path = "View Controllers/ZSGameBookViewController.m"; sourceTree = "<group>"; };
 		84A509F415A21D99002C9C70 /* BackwardsTranslucentPage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BackwardsTranslucentPage.png; path = Resources/Images/BackwardsTranslucentPage.png; sourceTree = "<group>"; };
 		84A509F515A21D99002C9C70 /* BackwardsTranslucentPage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BackwardsTranslucentPage@2x.png"; path = "Resources/Images/BackwardsTranslucentPage@2x.png"; sourceTree = "<group>"; };
+		84A8FB1215A6A06400D802C8 /* MTLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTLabel.h; sourceTree = "<group>"; };
+		84A8FB1315A6A06400D802C8 /* MTLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTLabel.m; sourceTree = "<group>"; };
+		84A8FB1C15A6A1FB00D802C8 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		84AC26C61480950F00E966A5 /* ZSBoardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSBoardViewController.h; path = "View Controllers/ZSBoardViewController.h"; sourceTree = "<group>"; };
 		84AC26C71480950F00E966A5 /* ZSBoardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSBoardViewController.m; path = "View Controllers/ZSBoardViewController.m"; sourceTree = "<group>"; };
 		84AC26CB1480986900E966A5 /* ZSTileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSTileViewController.h; path = "View Controllers/ZSTileViewController.h"; sourceTree = "<group>"; };
@@ -268,6 +278,14 @@
 		84D1CB161571A5280027230B /* ZSHintGeneratorEliminatePencilsBoxLineReduction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSHintGeneratorEliminatePencilsBoxLineReduction.m; path = "ZenSudoku/Models/Hint Generators/ZSHintGeneratorEliminatePencilsBoxLineReduction.m"; sourceTree = SOURCE_ROOT; };
 		84D2032615A3B02D00BA9CCF /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
 		84D2032715A3B02D00BA9CCF /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
+		84D2032A15A3C67F00BA9CCF /* IndexCard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = IndexCard.png; path = Resources/Images/IndexCard.png; sourceTree = "<group>"; };
+		84D2032B15A3C67F00BA9CCF /* IndexCard@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "IndexCard@2x.png"; path = "Resources/Images/IndexCard@2x.png"; sourceTree = "<group>"; };
+		84D2032F15A64D4400BA9CCF /* ProgressDots.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProgressDots.h; path = External/ProgressDots/ProgressDots.h; sourceTree = "<group>"; };
+		84D2033015A64D4400BA9CCF /* ProgressDots.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProgressDots.m; path = External/ProgressDots/ProgressDots.m; sourceTree = "<group>"; };
+		84D2033215A6553E00BA9CCF /* DarkBlueDot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DarkBlueDot.png; path = Resources/Images/DarkBlueDot.png; sourceTree = "<group>"; };
+		84D2033315A6553E00BA9CCF /* DarkBlueDot@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "DarkBlueDot@2x.png"; path = "Resources/Images/DarkBlueDot@2x.png"; sourceTree = "<group>"; };
+		84D2033415A6553E00BA9CCF /* LightBlueDot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LightBlueDot.png; path = Resources/Images/LightBlueDot.png; sourceTree = "<group>"; };
+		84D2033515A6553E00BA9CCF /* LightBlueDot@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "LightBlueDot@2x.png"; path = "Resources/Images/LightBlueDot@2x.png"; sourceTree = "<group>"; };
 		84D5500F147F1C4A00A7934E /* sudo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sudo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84D55013147F1C4A00A7934E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		84D55015147F1C4A00A7934E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -294,6 +312,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84A8FB1D15A6A1FB00D802C8 /* CoreText.framework in Frameworks */,
 				8492B76114C911FF0093B7AC /* libsqlite3.0.dylib in Frameworks */,
 				841F854714C2651700DFFABC /* MessageUI.framework in Frameworks */,
 				84D55014147F1C4A00A7934E /* UIKit.framework in Frameworks */,
@@ -376,6 +395,8 @@
 		8449D95B14833649003F6FB3 /* External */ = {
 			isa = PBXGroup;
 			children = (
+				84A8FB1115A6A06400D802C8 /* MTLabel */,
+				84D2032E15A64CF400BA9CCF /* ProgressDots */,
 				84D2032515A3B02D00BA9CCF /* iCarousel */,
 				84AC6B3D1508B2D000C2F192 /* UIColor+ColorWithHex */,
 				8426A79614ED16A3006DAD1C /* FMDB */,
@@ -470,6 +491,16 @@
 			path = Resources/Fonts;
 			sourceTree = "<group>";
 		};
+		84A8FB1115A6A06400D802C8 /* MTLabel */ = {
+			isa = PBXGroup;
+			children = (
+				84A8FB1215A6A06400D802C8 /* MTLabel.h */,
+				84A8FB1315A6A06400D802C8 /* MTLabel.m */,
+			);
+			name = MTLabel;
+			path = External/MTLabel;
+			sourceTree = "<group>";
+		};
 		84AC26C21480834B00E966A5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -490,6 +521,12 @@
 				8472509415829D5E0073D113 /* Bottom Buttons */,
 				8428AD3E154AA62600BA8EE0 /* HintPaper.png */,
 				8428AD38154A498200BA8EE0 /* HintPaper@2x.png */,
+				84D2032A15A3C67F00BA9CCF /* IndexCard.png */,
+				84D2032B15A3C67F00BA9CCF /* IndexCard@2x.png */,
+				84D2033215A6553E00BA9CCF /* DarkBlueDot.png */,
+				84D2033315A6553E00BA9CCF /* DarkBlueDot@2x.png */,
+				84D2033415A6553E00BA9CCF /* LightBlueDot.png */,
+				84D2033515A6553E00BA9CCF /* LightBlueDot@2x.png */,
 				8428AD3A154A52F700BA8EE0 /* Default.png */,
 				8428AD3B154A52F700BA8EE0 /* Default@2x.png */,
 			);
@@ -565,6 +602,15 @@
 			path = External/iCarousel;
 			sourceTree = "<group>";
 		};
+		84D2032E15A64CF400BA9CCF /* ProgressDots */ = {
+			isa = PBXGroup;
+			children = (
+				84D2032F15A64D4400BA9CCF /* ProgressDots.h */,
+				84D2033015A64D4400BA9CCF /* ProgressDots.m */,
+			);
+			name = ProgressDots;
+			sourceTree = "<group>";
+		};
 		84D55004147F1C4A00A7934E = {
 			isa = PBXGroup;
 			children = (
@@ -587,6 +633,7 @@
 		84D55012147F1C4A00A7934E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				84A8FB1C15A6A1FB00D802C8 /* CoreText.framework */,
 				843947E31589D30C00463720 /* GLKit.framework */,
 				845ABB231587ED5B006D2616 /* QuartzCore.framework */,
 				845ABB191587EBFA006D2616 /* OpenGLES.framework */,
@@ -648,7 +695,6 @@
 				841F854C14C4287600DFFABC /* ZSStatisticsViewController.m */,
 				8428AD33154A48F700BA8EE0 /* ZSHintViewController.h */,
 				8428AD34154A48F700BA8EE0 /* ZSHintViewController.m */,
-				8428AD35154A48F700BA8EE0 /* ZSHintViewController.xib */,
 				843947E61589D74C00463720 /* ZSFoldedCornerViewController.h */,
 				843947E71589D74C00463720 /* ZSFoldedCornerViewController.m */,
 				845ABB161587E50B006D2616 /* ZSFoldedCornerView.h */,
@@ -768,7 +814,6 @@
 				84A097571548B22D0082C9D0 /* Hints@2x.png in Resources */,
 				84A097581548B22D0082C9D0 /* HintsHighlighted.png in Resources */,
 				84A097591548B22D0082C9D0 /* HintsHighlighted@2x.png in Resources */,
-				8428AD37154A48F700BA8EE0 /* ZSHintViewController.xib in Resources */,
 				8428AD39154A498200BA8EE0 /* HintPaper@2x.png in Resources */,
 				8428AD3C154A52F700BA8EE0 /* Default.png in Resources */,
 				8428AD3D154A52F700BA8EE0 /* Default@2x.png in Resources */,
@@ -805,6 +850,12 @@
 				8463D90715986B8D00AED0B4 /* UndoHighlighted@2x.png in Resources */,
 				84A509F615A21D99002C9C70 /* BackwardsTranslucentPage.png in Resources */,
 				84A509F715A21D99002C9C70 /* BackwardsTranslucentPage@2x.png in Resources */,
+				84D2032C15A3C67F00BA9CCF /* IndexCard.png in Resources */,
+				84D2032D15A3C67F00BA9CCF /* IndexCard@2x.png in Resources */,
+				84D2033615A6553E00BA9CCF /* DarkBlueDot.png in Resources */,
+				84D2033715A6553E00BA9CCF /* DarkBlueDot@2x.png in Resources */,
+				84D2033815A6553E00BA9CCF /* LightBlueDot.png in Resources */,
+				84D2033915A6553E00BA9CCF /* LightBlueDot@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -880,6 +931,8 @@
 				84B1155C158F36B900983B3A /* ZSPointAnimation.m in Sources */,
 				8463D8E61595239200AED0B4 /* ZSFoldedCornerPlusButtonViewController.m in Sources */,
 				84D2032815A3B02D00BA9CCF /* iCarousel.m in Sources */,
+				84D2033115A64D4400BA9CCF /* ProgressDots.m in Sources */,
+				84A8FB1515A6A06400D802C8 /* MTLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

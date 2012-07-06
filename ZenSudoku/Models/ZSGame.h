@@ -128,6 +128,7 @@ typedef enum {
 // Undo / Redo Helpers
 
 - (void)undo;
+- (void)undoAndPlaceOntoRedoStack:(BOOL)placeOntoRedoStack;
 - (void)redo;
 - (void)addHistoryDescription:(ZSHistoryEntry *)undoDescription;
 - (void)startGenericUndoStop;

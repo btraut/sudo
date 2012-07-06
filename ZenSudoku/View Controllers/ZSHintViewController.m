@@ -7,119 +7,146 @@
 //
 
 #import "ZSHintViewController.h"
+
 #import "ZSGameViewController.h"
 #import "ZSBoardViewController.h"
 #import "ZSHintCard.h"
 
-@interface ZSHintViewController () {
+#import "ProgressDots.h"
+#import "iCarousel.h"
+#import "MTLabel.h"
+#import "UIColor+ColorWithHex.h"
+
+@interface ZSHintViewController () <iCarouselDataSource, iCarouselDelegate> {
 	NSArray *_hintDeck;
 	ZSGameViewController *_gameViewController;
 	
+	iCarousel *_carousel;
+	NSMutableArray *_cardLabels;
+	
 	NSInteger _currentCard;
+	NSInteger _previousCard;
+	BOOL _currentCardModifiedHistory;
 	
 	UILabel *_textView;
 	
-	UILabel *_learnButton;
-	UILabel *_moreButton;
-	UILabel *_doneButton;
+	ProgressDots *_progressDots;
 }
-
-- (void)_learnButtonWasTouched;
-- (void)_moreButtonWasTouched;
-- (void)_doneButtonWasTouched;
-
-- (void)loadHintCard;
 
 @end
 
 @implementation ZSHintViewController
 
+- (void)loadView {
+	UIImage *hintPaperImage = [UIImage imageNamed:@"IndexCard.png"];
+	self.view = [[UIImageView alloc] initWithImage:hintPaperImage];
+	
+	self.view.frame = CGRectMake(0, 0, hintPaperImage.size.width, hintPaperImage.size.height);
+	self.view.userInteractionEnabled = YES;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
-	// Create the text view.
-	_textView = [[UILabel alloc] initWithFrame:CGRectMake(28, 22, 264, 78)];
-	_textView.font = [UIFont fontWithName:@"Courier New" size:14.0f];
-	_textView.backgroundColor = [UIColor clearColor];
-	_textView.numberOfLines = 0;
+	// Init the carousel.
+	_cardLabels = [NSMutableArray array];
 	
-	[self.view addSubview:_textView];
+	_carousel = [[iCarousel alloc] initWithFrame:CGRectMake(5, 5, 320, 115)];
+    _carousel.type = iCarouselTypeLinear;
+	_carousel.delegate = self;
+	_carousel.dataSource = self;
+	_carousel.bounceDistance = 0.2f;
+	_carousel.scrollSpeed = 0.7f;
+	_carousel.decelerationRate = 0.15f;
+	[self.view addSubview:_carousel];
+
+	// Create progress dots.
+	_progressDots = [[ProgressDots alloc] initWithFrame:CGRectMake(165, 89, 0, 0)];
+	_progressDots.dotOffset = 5.0f;
+	[self.view addSubview:_progressDots];
+}
+
+- (NSUInteger)numberOfItemsInCarousel:(iCarousel *)carousel {
+    return [_cardLabels count];
+}
+
+- (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSUInteger)index reusingView:(UIView *)view {
+    return [_cardLabels objectAtIndex:index];
+}
+
+- (void)carouselCurrentItemIndexDidChange:(iCarousel *)carousel {
+	_progressDots.selectedDot = carousel.currentItemIndex;
 	
-	// Create previous button.
-	_learnButton = [[UILabel alloc] initWithFrame:CGRectMake(28, 108, 85, 21)];
-	_learnButton.font = [UIFont fontWithName:@"Courier New" size:14.0f];
-	_learnButton.text = @"learn";
-	_learnButton.textAlignment = UITextAlignmentLeft;
-	_learnButton.backgroundColor = [UIColor clearColor];
-	_learnButton.userInteractionEnabled = YES;
-	
-	UITapGestureRecognizer *previousGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_learnButtonWasTouched)];
-	[_learnButton addGestureRecognizer:previousGestureRecognizer];
-	
-	[self.view addSubview:_learnButton];
-	
-	// Create next button.
-	_moreButton = [[UILabel alloc] initWithFrame:CGRectMake(212, 108, 85, 21)];
-	_moreButton.font = [UIFont fontWithName:@"Courier New" size:14.0f];
-	_moreButton.text = @"more";
-	_moreButton.textAlignment = UITextAlignmentRight;
-	_moreButton.backgroundColor = [UIColor clearColor];
-	_moreButton.userInteractionEnabled = YES;
-	
-	UITapGestureRecognizer *nextGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_moreButtonWasTouched)];
-	[_moreButton addGestureRecognizer:nextGestureRecognizer];
-	
-	[self.view addSubview:_moreButton];
-	
-	// Create done button.
-	_doneButton = [[UILabel alloc] initWithFrame:CGRectMake(124, 108, 85, 21)];
-	_doneButton.font = [UIFont fontWithName:@"Courier New" size:14.0f];
-	_doneButton.text = @"done";
-	_doneButton.textAlignment = UITextAlignmentCenter;
-	_doneButton.backgroundColor = [UIColor clearColor];
-	_doneButton.userInteractionEnabled = YES;
-	
-	UITapGestureRecognizer *doneGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_doneButtonWasTouched)];
-	[_doneButton addGestureRecognizer:doneGestureRecognizer];
-	
-	[self.view addSubview:_doneButton];
+	_previousCard = _currentCard;
+	_currentCard = carousel.currentItemIndex;
+	[self _doHintCardActions];
+}
+
+- (CGFloat)carousel:(iCarousel *)carousel valueForOption:(iCarouselOption)option withDefault:(CGFloat)value {
+    switch (option) {
+        case iCarouselOptionVisibleItems:
+            return 3.0f;
+			
+		default:
+			return value;
+	}
 }
 
 - (void)beginHintDeck:(NSArray *)hintDeck forGameViewController:(ZSGameViewController *)gameViewController {
 	_hintDeck = hintDeck;
 	_gameViewController = gameViewController;
 	
+	[_cardLabels removeAllObjects];
+	
+	NSInteger sidePadding = 16;
+	NSInteger topPadding = 13;
+	
+	for (ZSHintCard *card in hintDeck) {
+		MTLabel *label = [[MTLabel alloc] initWithFrame:CGRectMake(sidePadding, topPadding, _carousel.frame.size.width - sidePadding * 2, _carousel.frame.size.height - topPadding * 2)];
+		label.backgroundColor = [UIColor clearColor];
+		label.shadowColor = [UIColor clearColor];
+		label.text = card.text;
+		label.font = [UIFont fontWithName:@"Helvetica Neue" size:16.0f];
+		label.fontColor = [UIColor colorWithHexString:@"#2e2e2e"];
+		label.lineHeight = 22.5f;
+		
+		UIView *container = [[UIView alloc] initWithFrame:CGRectMake(0, 0, _carousel.frame.size.width, _carousel.frame.size.height)];
+		[container addSubview:label];
+		
+		[_cardLabels addObject:container];
+	}
+	
+	[_carousel reloadData];
+	_carousel.currentItemIndex = 0;
+	
+	_progressDots.totalDots = hintDeck.count;
+	_progressDots.selectedDot = 0;
+	
 	[gameViewController deselectTileView];
 	
 	_currentCard = 0;
-	[self loadHintCard];
-}
-
-- (void)_learnButtonWasTouched {
-	--_currentCard;
-	[self loadHintCard];
-}
-
-- (void)_moreButtonWasTouched {
-	++_currentCard;
-	[self loadHintCard];
-}
-
-- (void)_doneButtonWasTouched {
-	[_gameViewController closeHintButtonWasTouched];
-}
-
-- (void)loadHintCard {
-	ZSHintCard *currentCard = [_hintDeck objectAtIndex:_currentCard];
+	_previousCard = -1;
 	
-	_learnButton.hidden = !currentCard.allowsLearn;
-	_moreButton.hidden = (_currentCard == [_hintDeck count] - 1);
-	
-	_textView.text = currentCard.text;
-	_textView.frame = CGRectMake(28, 22, 264, 78);
-	[_textView sizeToFit];
+	[self _doHintCardActions];
+}
+
+- (void)_doHintCardActions {
+	if (_previousCard > _currentCard) {
+		ZSHintCard *previousCard = [_hintDeck objectAtIndex:_previousCard];
+		
+		// Only undo if the previous card actually had action on it.
+		if (previousCard.modifiesHistory) {
+			[_gameViewController.game undoAndPlaceOntoRedoStack:NO];
+		}
+	}
 	
 	[_gameViewController.boardViewController removeAllHintHighlights];
+
+	ZSHintCard *currentCard = [_hintDeck objectAtIndex:_currentCard];
+	
+	if (currentCard.modifiesHistory) {
+		[_gameViewController.game startGenericUndoStop];
+	}
 	
 	for (NSDictionary *dict in currentCard.highlightPencils) {
 		NSInteger row = [[dict objectForKey:kDictionaryKeyTileRow] intValue];
@@ -152,39 +179,45 @@
 		tile.highlightedHintType = hintHighlightType;
 	}
 	
-	for (NSDictionary *dict in currentCard.removePencils) {
-		NSInteger row = [[dict objectForKey:kDictionaryKeyTileRow] intValue];
-		NSInteger col = [[dict objectForKey:kDictionaryKeyTileCol] intValue];
-		NSInteger pencil = [[dict objectForKey:kDictionaryKeyTileValue] intValue];
+	if (_previousCard < _currentCard) {
+		for (NSDictionary *dict in currentCard.removePencils) {
+			NSInteger row = [[dict objectForKey:kDictionaryKeyTileRow] intValue];
+			NSInteger col = [[dict objectForKey:kDictionaryKeyTileCol] intValue];
+			NSInteger pencil = [[dict objectForKey:kDictionaryKeyTileValue] intValue];
+			
+			[_gameViewController.game setPencil:NO forPencilNumber:pencil forTileAtRow:row col:col];
+		}
 		
-		[_gameViewController.game setPencil:NO forPencilNumber:pencil forTileAtRow:row col:col];
+		for (NSDictionary *dict in currentCard.addPencils) {
+			NSInteger row = [[dict objectForKey:kDictionaryKeyTileRow] intValue];
+			NSInteger col = [[dict objectForKey:kDictionaryKeyTileCol] intValue];
+			NSInteger pencil = [[dict objectForKey:kDictionaryKeyTileValue] intValue];
+			
+			[_gameViewController.game setPencil:YES forPencilNumber:pencil forTileAtRow:row col:col];
+		}
+		
+		for (NSDictionary *dict in currentCard.removeGuess) {
+			NSInteger row = [[dict objectForKey:kDictionaryKeyTileRow] intValue];
+			NSInteger col = [[dict objectForKey:kDictionaryKeyTileCol] intValue];
+			
+			[_gameViewController.game clearGuessForTileAtRow:row col:col];
+		}
+		
+		for (NSDictionary *dict in currentCard.setGuess) {
+			NSInteger row = [[dict objectForKey:kDictionaryKeyTileRow] intValue];
+			NSInteger col = [[dict objectForKey:kDictionaryKeyTileCol] intValue];
+			NSInteger guess = [[dict objectForKey:kDictionaryKeyTileValue] intValue];
+			
+			[_gameViewController.game setGuess:guess forTileAtRow:row col:col];
+		}
+		
+		if (currentCard.setAutoPencil) {
+			[_gameViewController.game addAutoPencils];
+		}
 	}
 	
-	for (NSDictionary *dict in currentCard.addPencils) {
-		NSInteger row = [[dict objectForKey:kDictionaryKeyTileRow] intValue];
-		NSInteger col = [[dict objectForKey:kDictionaryKeyTileCol] intValue];
-		NSInteger pencil = [[dict objectForKey:kDictionaryKeyTileValue] intValue];
-		
-		[_gameViewController.game setPencil:YES forPencilNumber:pencil forTileAtRow:row col:col];
-	}
-	
-	for (NSDictionary *dict in currentCard.removeGuess) {
-		NSInteger row = [[dict objectForKey:kDictionaryKeyTileRow] intValue];
-		NSInteger col = [[dict objectForKey:kDictionaryKeyTileCol] intValue];
-		
-		[_gameViewController.game clearGuessForTileAtRow:row col:col];
-	}
-	
-	for (NSDictionary *dict in currentCard.setGuess) {
-		NSInteger row = [[dict objectForKey:kDictionaryKeyTileRow] intValue];
-		NSInteger col = [[dict objectForKey:kDictionaryKeyTileCol] intValue];
-		NSInteger guess = [[dict objectForKey:kDictionaryKeyTileValue] intValue];
-		
-		[_gameViewController.game setGuess:guess forTileAtRow:row col:col];
-	}
-	
-	if (currentCard.setAutoPencil) {
-		[_gameViewController.game addAutoPencils];
+	if (currentCard.modifiesHistory) {
+		[_gameViewController.game stopGenericUndoStop];
 	}
 	
 	// We can get away with just reloading the board here because we're gauranteed to have no selection

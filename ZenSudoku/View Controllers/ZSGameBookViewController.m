@@ -61,7 +61,7 @@
 	
 	// Create the hint.
 	hintViewController = [[ZSHintViewController alloc] initWithNibName:@"ZSHintViewController" bundle:[NSBundle mainBundle]];
-	hintViewController.view.frame = CGRectMake(0, 480, hintViewController.view.frame.size.width, hintViewController.view.frame.size.height);
+	hintViewController.view.frame = CGRectMake(-5, 500, hintViewController.view.frame.size.width, hintViewController.view.frame.size.height);
 	[self.view addSubview:hintViewController.view];
 }
 
@@ -125,8 +125,8 @@
 	 delay:0
 	 options:UIViewAnimationOptionCurveEaseOut
 	 animations:^{
-		 hintViewController.view.frame = CGRectMake(0, 310, hintViewController.view.frame.size.width, hintViewController.view.frame.size.height);
-		 currentGameViewController.view.frame = CGRectMake(0, -45, currentGameViewController.view.frame.size.width, currentGameViewController.view.frame.size.height);
+		 hintViewController.view.frame = CGRectMake(-5, 407, hintViewController.view.frame.size.width, hintViewController.view.frame.size.height);
+		 self.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y - 45, self.view.frame.size.width, self.view.frame.size.height);
 	 }
 	 completion:NULL];
 }
@@ -147,8 +147,8 @@
 		delay:0
 		options:UIViewAnimationOptionCurveEaseOut
 		animations:^{
-			hintViewController.view.frame = CGRectMake(0, 480, hintViewController.view.frame.size.width, hintViewController.view.frame.size.height);
-			currentGameViewController.view.frame = CGRectMake(0, 0, currentGameViewController.view.frame.size.width, currentGameViewController.view.frame.size.height);
+			hintViewController.view.frame = CGRectMake(-5, 500, hintViewController.view.frame.size.width, hintViewController.view.frame.size.height);
+			self.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y + 45, self.view.frame.size.width, self.view.frame.size.height);
 		}
 		completion:NULL];
 }

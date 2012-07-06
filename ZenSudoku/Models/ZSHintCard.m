@@ -98,5 +98,12 @@ NSString * const kDictionaryKeyHighlightType = @"kDictionaryKeyHighlightType";
 	[setGuess addObject:dict];
 }
 
+- (BOOL)modifiesHistory {
+	if (removePencils.count || addPencils.count || removeGuess.count || setGuess.count || setAutoPencil) {
+		return YES;
+	}
+	
+	return NO;
+}
 
 @end

@@ -439,6 +439,10 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 #pragma mark - Undo/Redo
 
 - (void)undo {
+	[self undoAndPlaceOntoRedoStack:YES];
+}
+
+- (void)undoAndPlaceOntoRedoStack:(BOOL)placeOntoRedoStack {
 	// Keep popping the undo stack until a state is found with one or more actions.
 	NSMutableArray *historyState;
 	BOOL foundValidHistoryState = NO;
@@ -485,7 +489,9 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 	}
 	
 	// Add the state back to the redo stack.
-	[_redoStack addObject:historyState];
+	if (placeOntoRedoStack) {
+		[_redoStack addObject:historyState];
+	}
 	
 	// Turn recording back on.
 	recordingHistory = YES;
