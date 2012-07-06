@@ -15,18 +15,24 @@
 #import "ZSHintViewController.h"
 #import "ZSFoldedCornerViewController.h"
 
+@interface ZSGameBookViewController () {
+	UIImageView *innerBook;
+}
+
+@end
+
 @implementation ZSGameBookViewController
 
 @synthesize currentGameViewController, nextGameViewController, tempGameViewController;
 
-- (void)loadView {
-	self.view = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"PaperBackground.png"]];
-	self.view.frame = CGRectMake(0, 0, 320, 460);
-	self.view.userInteractionEnabled = YES;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
+	
+	// Create the inner part of the book (containing all pages).
+	innerBook = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"PaperBackground.png"]];
+	innerBook.frame = CGRectMake(0, 0, 320, 460);
+	innerBook.userInteractionEnabled = YES;
+	[self.view addSubview:innerBook];
 	
 	// Create the game view.
 	ZSGame *currentGame;
@@ -42,7 +48,7 @@
 	currentGameViewController.hintDelegate = self;
 	currentGameViewController.majorGameStateDelegate = self;
 	currentGameViewController.foldedCornerVisibleOnLoad = YES;
-	[self.view addSubview:currentGameViewController.view];
+	[innerBook addSubview:currentGameViewController.view];
 	
 	[currentGameViewController viewWasPromotedToFrontAnimated:NO];
 	
@@ -52,16 +58,16 @@
 	// Create the page curl gradient on the left.
 	UIImageView *pageCurlGradient = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"PageCurlGradient.png"]];
 	pageCurlGradient.frame = CGRectMake(0, 0, 17, 460);
-	[self.view addSubview:pageCurlGradient];
+	[innerBook addSubview:pageCurlGradient];
 	
 	// Create the page curl on the left. This needs to go over the top of the folded corner.
 	UIImageView *pageCurl = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"PageCurl.png"]];
 	pageCurl.frame = CGRectMake(0, 0, 17, 460);
-	[self.view addSubview:pageCurl];
+	[innerBook addSubview:pageCurl];
 	
 	// Create the hint.
 	hintViewController = [[ZSHintViewController alloc] initWithNibName:@"ZSHintViewController" bundle:[NSBundle mainBundle]];
-	hintViewController.view.frame = CGRectMake(-5, 500, hintViewController.view.frame.size.width, hintViewController.view.frame.size.height);
+	hintViewController.view.frame = CGRectMake(-5, innerBook.frame.size.height, hintViewController.view.frame.size.width, hintViewController.view.frame.size.height);
 	[self.view addSubview:hintViewController.view];
 }
 
@@ -74,7 +80,7 @@
 	self.currentGameViewController = self.nextGameViewController;
 	
 	// Fire up the new game.
-	[currentGameViewController viewWasPromotedToFrontAnimated:YES];
+	[self.currentGameViewController viewWasPromotedToFrontAnimated:YES];
 }
 
 - (void)frontViewControllerFinishedDisplaying {
@@ -97,7 +103,7 @@
 		nextGameViewController.majorGameStateDelegate = self;
 	}
 
-	[self.view insertSubview:self.nextGameViewController.view belowSubview:self.currentGameViewController.view];
+	[innerBook insertSubview:self.nextGameViewController.view belowSubview:self.currentGameViewController.view];
 }
 
 - (BOOL)getHintsShown {
@@ -120,13 +126,15 @@
 	
 	hintsShown = YES;
 	
+	self.currentGameViewController.foldedCornerViewController.view.userInteractionEnabled = NO;
+	
 	[UIView
 	 animateWithDuration:0.4f
 	 delay:0
 	 options:UIViewAnimationOptionCurveEaseOut
 	 animations:^{
-		 hintViewController.view.frame = CGRectMake(-5, 407, hintViewController.view.frame.size.width, hintViewController.view.frame.size.height);
-		 self.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y - 45, self.view.frame.size.width, self.view.frame.size.height);
+		 hintViewController.view.frame = CGRectMake(-5, 362, hintViewController.view.frame.size.width, hintViewController.view.frame.size.height);
+		 innerBook.frame = CGRectMake(0, -45, innerBook.frame.size.width, innerBook.frame.size.height);
 	 }
 	 completion:NULL];
 }
@@ -138,6 +146,8 @@
 	
 	hintsShown = NO;
 	
+	self.currentGameViewController.foldedCornerViewController.view.userInteractionEnabled = YES;
+	
 	[currentGameViewController.boardViewController removeAllHintHighlights];
 	
 	[currentGameViewController completeCoreGameOperation];
@@ -147,8 +157,8 @@
 		delay:0
 		options:UIViewAnimationOptionCurveEaseOut
 		animations:^{
-			hintViewController.view.frame = CGRectMake(-5, 500, hintViewController.view.frame.size.width, hintViewController.view.frame.size.height);
-			self.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y + 45, self.view.frame.size.width, self.view.frame.size.height);
+			hintViewController.view.frame = CGRectMake(-5, innerBook.frame.size.height, hintViewController.view.frame.size.width, hintViewController.view.frame.size.height);
+			innerBook.frame = CGRectMake(0, 0, innerBook.frame.size.width, innerBook.frame.size.height);
 		}
 		completion:NULL];
 }

@@ -65,7 +65,6 @@ typedef struct {
 @synthesize game;
 @synthesize boardViewController, gameAnswerOptionsViewController;
 @synthesize foldedCornerVisibleOnLoad, foldedCornerViewController;
-@synthesize foldedPageViewController;
 @synthesize pencilButton, penciling;
 @synthesize allowsInput;
 @synthesize hintDelegate, majorGameStateDelegate;

@@ -17,7 +17,6 @@
 @class ZSTileViewController;
 @class ZSGameViewController;
 @class ZSHintGenerator;
-@class ZSFoldedPageViewController;
 
 @protocol ZSHintDelegate <NSObject>
 
@@ -68,8 +67,6 @@
 
 @property (strong, readonly) ZSFoldedCornerViewController *foldedCornerViewController;
 @property (assign) BOOL foldedCornerVisibleOnLoad;
-
-@property (strong, readonly) ZSFoldedPageViewController *foldedPageViewController;
 
 @property (strong, readonly) UIButton *pencilButton;
 @property (assign) BOOL penciling;

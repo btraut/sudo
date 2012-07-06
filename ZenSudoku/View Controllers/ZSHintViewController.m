@@ -48,6 +48,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
+	// Create progress dots.
+	_progressDots = [[ProgressDots alloc] initWithFrame:CGRectMake(165, 89, 0, 0)];
+	_progressDots.dotOffset = 5.0f;
+	[self.view addSubview:_progressDots];
+	
 	// Init the carousel.
 	_cardLabels = [NSMutableArray array];
 	
@@ -59,11 +64,6 @@
 	_carousel.scrollSpeed = 0.7f;
 	_carousel.decelerationRate = 0.15f;
 	[self.view addSubview:_carousel];
-
-	// Create progress dots.
-	_progressDots = [[ProgressDots alloc] initWithFrame:CGRectMake(165, 89, 0, 0)];
-	_progressDots.dotOffset = 5.0f;
-	[self.view addSubview:_progressDots];
 }
 
 - (NSUInteger)numberOfItemsInCarousel:(iCarousel *)carousel {
