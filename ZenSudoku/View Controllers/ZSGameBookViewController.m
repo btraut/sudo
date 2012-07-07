@@ -19,6 +19,7 @@
 	UIImageView *_innerBook;
 	
 	UISwipeGestureRecognizer *_downSwipeGestureRecognizer;
+	UITapGestureRecognizer *_tapGestureRecognizer;
 }
 
 @end
@@ -74,6 +75,8 @@
 	
 	_downSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(hideHint)];
 	_downSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionDown;
+	
+	_tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideHint)];
 }
 
 - (void)startNewGame {
@@ -134,13 +137,14 @@
 	self.currentGameViewController.foldedCornerViewController.view.userInteractionEnabled = NO;
 	
 	[self.view addGestureRecognizer:_downSwipeGestureRecognizer];
+	[_innerBook addGestureRecognizer:_tapGestureRecognizer];
 	
 	[UIView
 	 animateWithDuration:0.4f
 	 delay:0
 	 options:UIViewAnimationOptionCurveEaseOut
 	 animations:^{
-		 hintViewController.view.frame = CGRectMake(-5, 362, hintViewController.view.frame.size.width, hintViewController.view.frame.size.height);
+		 hintViewController.view.frame = CGRectMake(-5, 339, hintViewController.view.frame.size.width, hintViewController.view.frame.size.height);
 		 _innerBook.frame = CGRectMake(0, -45, _innerBook.frame.size.width, _innerBook.frame.size.height);
 	 }
 	 completion:NULL];
@@ -156,6 +160,7 @@
 	self.currentGameViewController.foldedCornerViewController.view.userInteractionEnabled = YES;
 	
 	[self.view removeGestureRecognizer:_downSwipeGestureRecognizer];
+	[_innerBook removeGestureRecognizer:_tapGestureRecognizer];
 	
 	[currentGameViewController.boardViewController removeAllHintHighlights];
 	

@@ -22,6 +22,7 @@
 	ZSGameViewController *_gameViewController;
 	
 	iCarousel *_carousel;
+	BOOL _ignoreCarouselChanges;
 	NSMutableArray *_cardLabels;
 	
 	NSInteger _currentCard;
@@ -49,7 +50,7 @@
     [super viewDidLoad];
 	
 	// Create progress dots.
-	_progressDots = [[ProgressDots alloc] initWithFrame:CGRectMake(165, 89, 0, 0)];
+	_progressDots = [[ProgressDots alloc] initWithFrame:CGRectMake(165, 112, 0, 0)];
 	_progressDots.dotOffset = 5.0f;
 	[self.view addSubview:_progressDots];
 	
@@ -74,12 +75,18 @@
     return [_cardLabels objectAtIndex:index];
 }
 
+- (UIView *)carousel:(iCarousel *)carousel placeholderViewAtIndex:(NSUInteger)index reusingView:(UIView *)view {
+	return nil;
+}
+
 - (void)carouselCurrentItemIndexDidChange:(iCarousel *)carousel {
-	_progressDots.selectedDot = carousel.currentItemIndex;
-	
-	_previousCard = _currentCard;
-	_currentCard = carousel.currentItemIndex;
-	[self _doHintCardActions];
+	if (!_ignoreCarouselChanges) {
+		_progressDots.selectedDot = carousel.currentItemIndex;
+		
+		_previousCard = _currentCard;
+		_currentCard = carousel.currentItemIndex;
+		[self _doHintCardActions];
+	}
 }
 
 - (CGFloat)carousel:(iCarousel *)carousel valueForOption:(iCarouselOption)option withDefault:(CGFloat)value {
@@ -99,7 +106,7 @@
 	[_cardLabels removeAllObjects];
 	
 	NSInteger sidePadding = 16;
-	NSInteger topPadding = 13;
+	NSInteger topPadding = 12;
 	
 	for (ZSHintCard *card in hintDeck) {
 		MTLabel *label = [[MTLabel alloc] initWithFrame:CGRectMake(sidePadding, topPadding, _carousel.frame.size.width - sidePadding * 2, _carousel.frame.size.height - topPadding * 2)];
@@ -108,7 +115,7 @@
 		label.text = card.text;
 		label.font = [UIFont fontWithName:@"Helvetica Neue" size:16.0f];
 		label.fontColor = [UIColor colorWithHexString:@"#2e2e2e"];
-		label.lineHeight = 22.5f;
+		label.lineHeight = 23.0f;
 		
 		UIView *container = [[UIView alloc] initWithFrame:CGRectMake(0, 0, _carousel.frame.size.width, _carousel.frame.size.height)];
 		[container addSubview:label];
@@ -116,8 +123,10 @@
 		[_cardLabels addObject:container];
 	}
 	
+	_ignoreCarouselChanges = YES;
 	[_carousel reloadData];
 	_carousel.currentItemIndex = 0;
+	_ignoreCarouselChanges = NO;
 	
 	_progressDots.totalDots = hintDeck.count;
 	_progressDots.selectedDot = 0;
@@ -131,6 +140,8 @@
 }
 
 - (void)_doHintCardActions {
+	
+	
 	if (_previousCard > _currentCard) {
 		ZSHintCard *previousCard = [_hintDeck objectAtIndex:_previousCard];
 		
