@@ -61,7 +61,7 @@
 	_carousel.delegate = self;
 	_carousel.dataSource = self;
 	_carousel.bounceDistance = 0.2f;
-	_carousel.scrollSpeed = 0.7f;
+	_carousel.scrollSpeed = 0.9f;
 	_carousel.decelerationRate = 0.15f;
 	[self.view addSubview:_carousel];
 }
