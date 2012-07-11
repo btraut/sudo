@@ -17,7 +17,6 @@
 #import "ZSGameController.h"
 #import "ZSHintGenerator.h"
 #import "ZSHintCard.h"
-#import "ZSFoldedCornerViewController.h"
 
 #import "TestFlight.h"
 
@@ -32,16 +31,11 @@ typedef struct {
 	CGPoint _foldStartPoint;
 	BOOL _foldedCornerTouchCrossedTapThreshold;
 	
-	UIImageView *_innerView;
-	
 	ZSFoldedCornerPlusButtonViewController *_foldedCornerPlusButtonViewController;
 	
 	NSArray *_hintDeck;
 	
-	dispatch_queue_t _screenshotRenderDispatchQueue;
 	dispatch_queue_t _hintGenerationDispatchQueue;
-	
-	dispatch_group_t _screenshotRenderDispatchGroup;
 	dispatch_group_t _hintGenerationDispatchGroup;
 	
 	BOOL _guessInSameTileWasJustMade;
@@ -64,10 +58,11 @@ typedef struct {
 
 @synthesize game;
 @synthesize boardViewController, gameAnswerOptionsViewController;
-@synthesize foldedCornerVisibleOnLoad, foldedCornerViewController;
 @synthesize pencilButton, penciling;
 @synthesize allowsInput;
-@synthesize hintDelegate, majorGameStateDelegate;
+@synthesize hintDelegate;
+
+@dynamic animationDelegate;
 
 @synthesize needsScreenshotUpdate = _needsScreenshotUpdate;
 
@@ -89,13 +84,9 @@ typedef struct {
 		
 		allowsInput = YES;
 		
-		foldedCornerVisibleOnLoad = NO;
 		_foldedCornerTouchCrossedTapThreshold = NO;
 		
-		_screenshotRenderDispatchQueue = dispatch_queue_create("com.tenfoursoftware.screenshotRenderQueue", NULL);
 		_hintGenerationDispatchQueue = dispatch_queue_create("com.tenfoursoftware.hintGenerationQueue", NULL);
-		
-		_screenshotRenderDispatchGroup = dispatch_group_create();
 		_hintGenerationDispatchGroup = dispatch_group_create();
 		
 		_guessInSameTileWasJustMade = NO;
@@ -132,16 +123,13 @@ typedef struct {
 	[_foldedCornerPlusButtonViewController setState:ZSFoldedCornerPlusButtonStateHidden animated:NO];
 		
 	self.needsScreenshotUpdate = YES;
-	[self _setScreenshotVisible:NO];
+	[self setScreenshotVisible:NO];
 }
 
 - (void)dealloc {
 	free(_pencilChangesSinceLastGuess);
 	
-	dispatch_release(_screenshotRenderDispatchGroup);
 	dispatch_release(_hintGenerationDispatchGroup);
-	
-	dispatch_release(_screenshotRenderDispatchQueue);
 	dispatch_release(_hintGenerationDispatchQueue);
 }
 
@@ -159,16 +147,6 @@ typedef struct {
 	// TestFlight Checkpoint
 	[TestFlight passCheckpoint:kTestFlightCheckPointStartedNewPuzzle];
 	
-	// Hide the menu bar.
-	[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackOpaque animated:YES];
-	self.navigationController.navigationBarHidden = YES;
-	
-	// Add the inner view.
-	_innerView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ForwardsPage.png"]];
-	_innerView.userInteractionEnabled = YES;
-	_innerView.frame = self.view.frame;
-	[self.view addSubview:_innerView];
-	
 	// Build the plus button.
 	_foldedCornerPlusButtonViewController = [[ZSFoldedCornerPlusButtonViewController alloc] init];
 	_foldedCornerPlusButtonViewController.animationDelegate = self;
@@ -176,31 +154,27 @@ typedef struct {
 	[_foldedCornerPlusButtonViewController setState:ZSFoldedCornerPlusButtonStateHidden animated:NO];
 	
 	// Build the folded corner.
-	foldedCornerViewController = [[ZSFoldedCornerViewController alloc] init];
-	foldedCornerViewController.view.hidden = !self.foldedCornerVisibleOnLoad;
-	foldedCornerViewController.touchDelegate = self;
-	foldedCornerViewController.plusButtonViewController = _foldedCornerPlusButtonViewController;
-	[self.view addSubview:foldedCornerViewController.view];
+	self.foldedCornerViewController.plusButtonViewController = _foldedCornerPlusButtonViewController;
 	
 	// Build the title.
 	title = [[UILabel alloc] initWithFrame:CGRectMake(70, 12, 180, 32)];
 	title.font = [UIFont fontWithName:@"ReklameScript-Medium" size:30.0f];
 	title.textAlignment = UITextAlignmentCenter;
 	title.backgroundColor = [UIColor clearColor];
-	[_innerView addSubview:title];
+	[self.innerView addSubview:title];
 	[self setTitle];
 	
 	// Build the game board.
 	boardViewController = [[ZSBoardViewController alloc] initWithGame:game];
 	boardViewController.view.frame = CGRectMake(8, 54, boardViewController.view.frame.size.width, boardViewController.view.frame.size.height);
 	boardViewController.touchDelegate = self;
-	[_innerView addSubview:boardViewController.view];
+	[self.innerView addSubview:boardViewController.view];
 	
 	// Build the answer options.
 	gameAnswerOptionsViewController = [[ZSAnswerOptionsViewController alloc] initWithGameViewController:self];
 	gameAnswerOptionsViewController.view.frame = CGRectMake(6, 371, gameAnswerOptionsViewController.view.frame.size.width, gameAnswerOptionsViewController.view.frame.size.height);
 	gameAnswerOptionsViewController.touchDelegate = self;
-	[_innerView addSubview:gameAnswerOptionsViewController.view];
+	[self.innerView addSubview:gameAnswerOptionsViewController.view];
 	[gameAnswerOptionsViewController reloadView];
 	
 	// Build pencil button.
@@ -214,7 +188,7 @@ typedef struct {
 	[pencilButton setBackgroundImage:pencilImage forState:UIControlStateNormal];
 	[pencilButton setBackgroundImage:pencilSelectedImage forState:UIControlStateSelected];
 	
-	[_innerView addSubview:pencilButton];
+	[self.innerView addSubview:pencilButton];
 	
 	// Build the hints button.
 	undoButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -227,7 +201,7 @@ typedef struct {
 	[undoButton setBackgroundImage:undoImage forState:UIControlStateNormal];
 	[undoButton setBackgroundImage:undoHighlightedImage forState:UIControlStateHighlighted];
 	
-	[_innerView addSubview:undoButton];
+	[self.innerView addSubview:undoButton];
 	
 	// Build the autopencil button.
 	autoPencilButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -240,7 +214,7 @@ typedef struct {
 	[autoPencilButton setBackgroundImage:autoPencilImage forState:UIControlStateNormal];
 	[autoPencilButton setBackgroundImage:autoPencilHighlightedImage forState:UIControlStateHighlighted];
 	
-	[_innerView addSubview:autoPencilButton];
+	[self.innerView addSubview:autoPencilButton];
 	
 	// Build the hints button.
 	hintButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -253,20 +227,20 @@ typedef struct {
 	[hintButton setBackgroundImage:hintsImage forState:UIControlStateNormal];
 	[hintButton setBackgroundImage:hintsHighlightedImage forState:UIControlStateHighlighted];
 	
-	[_innerView addSubview:hintButton];
+	[self.innerView addSubview:hintButton];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	
-	[foldedCornerViewController pushUpdate];
-	[self.view setNeedsDisplay];
+//	[foldedCornerViewController pushUpdate];
+//	[self.view setNeedsDisplay];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
 	
-	self.needsScreenshotUpdate = YES;
+//	self.needsScreenshotUpdate = YES;
 }
 
 - (void)viewWasPromotedToFrontAnimated:(BOOL)animated {
@@ -293,7 +267,7 @@ typedef struct {
 	
 	if (animated) {
 		[self.foldedCornerViewController resetToStartPosition];
-		[foldedCornerViewController animateStartFold];
+		[self.foldedCornerViewController animateStartFold];
 		
 		// Plus button will be animated when animateStartFold finishes.
 	} else {
@@ -346,42 +320,21 @@ typedef struct {
 	}
 }
 
-- (UIImage *)getScreenshotImage {
-    UIGraphicsBeginImageContextWithOptions(_innerView.bounds.size, NO, 0.0f);
-	
-	[_innerView.layer renderInContext:UIGraphicsGetCurrentContext()];
-	UIImage *screenshot = UIGraphicsGetImageFromCurrentImageContext();
-	
-	UIGraphicsEndImageContext();
-	
-	return screenshot;
-}
-
-- (void)_updateScreenshot {
-	dispatch_group_async(_screenshotRenderDispatchGroup, _screenshotRenderDispatchQueue, ^{
-		if (self.needsScreenshotUpdate) {
-			self.needsScreenshotUpdate = NO;
-			
-			[self.foldedCornerViewController setPageImage:[self getScreenshotImage]];
-		}
-	});
-}
-
 - (void)_backgroundProcessTimerDidAdvance:(NSTimer *)timer {
 	++_backgroundProcessTimerCount;
 	
 	if (_backgroundProcessTimerCount % 1 == 0) {
-//		NSLog(@"Updating screenshot.");
-		[self _updateScreenshot];
+		// NSLog(@"Updating screenshot.");
+		[self updateScreenshotSynchronous:NO];
 	}
 	
 	if (_backgroundProcessTimerCount % 10 == 0) {
-//		NSLog(@"Updating hint deck.");
+		// NSLog(@"Updating hint deck.");
 		[self _updateHintDeck];
 	}
 	
 	if (_backgroundProcessTimerCount % 60 == 0) {
-//		NSLog(@"Saving game.");
+		// NSLog(@"Saving game.");
 		[[ZSGameController sharedInstance] saveGame:self.game];
 	}
 }
@@ -625,80 +578,37 @@ typedef struct {
 	[completionAlert show];
 }
 
-#pragma mark - ZSFoldedCornerViewControllerTouchDelegate Implementation
+#pragma mark - ZSFoldedCornerViewControllerAnimationDelegate Implementation
 
-- (void)foldedCornerTouchStartedWithFoldPoint:(CGPoint)foldPoint foldDimensions:(CGSize)foldDimensions {
-	_foldStartPoint = foldPoint;
-	_foldedCornerTouchCrossedTapThreshold = NO;
-	
-	// Force a screenshot update if one is needed.
-	[self _updateScreenshot];
-	dispatch_group_wait(_screenshotRenderDispatchGroup, DISPATCH_TIME_FOREVER);
-	
-	[self _setScreenshotVisible:YES];
-}
-
-- (void)foldedCornerTouchMovedWithFoldPoint:(CGPoint)foldPoint foldDimensions:(CGSize)foldDimensions {
-	if (_foldedCornerTouchCrossedTapThreshold || (foldPoint.x - _foldStartPoint.x) * (foldPoint.x - _foldStartPoint.x) + (foldPoint.y - _foldStartPoint.y) * (foldPoint.y - _foldStartPoint.y) > 16) {
-		_foldedCornerTouchCrossedTapThreshold = YES;
-	}
-}
-
-- (void)foldedCornerTouchEndedWithFoldPoint:(CGPoint)foldPoint foldDimensions:(CGSize)foldDimensions {
-	if (_foldedCornerTouchCrossedTapThreshold) {
-		if (foldPoint.x > foldedCornerViewController.view.frame.size.width / 2) {
-			[foldedCornerViewController animatePageTurn];
-		} else {
-			[foldedCornerViewController animateSendFoldBackToCorner];
-		}
-	} else {
-		[foldedCornerViewController animateCornerTug];
-	}
-}
-
-- (void)foldedCornerRestoredToDefaultPoint {
-	[self _setScreenshotVisible:NO];
-}
-
-- (void)pageTurnAnimationDidFinish {
-	[self.majorGameStateDelegate startNewGame];
+- (void)pageTurnAnimationDidFinishWithViewController:(ZSFoldedCornerViewController *)viewController {
+	[super pageTurnAnimationDidFinishWithViewController:viewController];
 	
 	[self viewWasPushedToBack];
 }
 
-- (void)startFoldAnimationDidFinish {
-	[self foldedCornerRestoredToDefaultPoint];
+- (void)startFoldAnimationDidFinishWithViewController:(ZSFoldedCornerViewController *)viewController {
+	[super startFoldAnimationDidFinishWithViewController:viewController];
 	
 	[_foldedCornerPlusButtonViewController setState:ZSFoldedCornerPlusButtonStateNormal animated:YES];
 }
 
-- (void)_setScreenshotVisible:(BOOL)visible {
-	if (visible) {
-		foldedCornerViewController.drawPage = YES;
-		[foldedCornerViewController pushUpdate];
-		
-		_innerView.hidden = YES;
-	} else {
-		_innerView.hidden = NO;
-		
-		foldedCornerViewController.drawPage = NO;
-		[foldedCornerViewController pushUpdate];
-	}
-}
-
 #pragma mark - ZSFoldedCornerPlusButtonViewControllerAnimationDelegate Implementation
 
-- (void)foldedCornerPlusButtonStartAnimationFinished {
-	[self.majorGameStateDelegate frontViewControllerFinishedDisplaying];
+- (void)foldedCornerPlusButtonStartAnimationFinishedWithViewController:(ZSFoldedCornerPlusButtonViewController *)viewController {
+	if ([self.animationDelegate respondsToSelector: @selector(plusButtonStartAnimationDidFinishWithViewController:)]) {
+		[self.animationDelegate plusButtonStartAnimationDidFinishWithViewController:self];
+	}
 	
 	// Force an immediate update of the screenshot.
 	self.needsScreenshotUpdate = YES;
-	[self _updateScreenshot];
+	[self updateScreenshotSynchronous:NO];
 }
 
 #pragma mark - ZSAnswerOptionsViewControllerTouchDelegate Implementation
 
 - (void)gameAnswerOptionTouchEnteredWithGameAnswerOption:(ZSAnswerOption)gameAnswerOption {
+	NSLog(@"Entered");
+	
 	// If we aren't allowing input, end here.
 	if (!allowsInput) {
 		return;
@@ -724,6 +634,8 @@ typedef struct {
 }
 
 - (void)gameAnswerOptionTouchExitedWithGameAnswerOption:(ZSAnswerOption)gameAnswerOption {
+	NSLog(@"Exited");
+	
 	// If we aren't allowing input, end here.
 	if (!allowsInput) {
 		return;
@@ -749,6 +661,8 @@ typedef struct {
 }
 
 - (void)gameAnswerOptionTappedWithGameAnswerOption:(ZSAnswerOption)gameAnswerOption {
+	NSLog(@"Tapped");
+	
 	// Fetch the touched game answer option view controller.
 	ZSAnswerOptionViewController *gameAnswerOptionView = [gameAnswerOptionsViewController.gameAnswerOptionViewControllers objectAtIndex:gameAnswerOption];
 	
@@ -931,6 +845,5 @@ typedef struct {
 		}
 	}
 }
-
 
 @end

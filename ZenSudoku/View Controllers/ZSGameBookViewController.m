@@ -18,6 +18,8 @@
 @interface ZSGameBookViewController () {
 	UIImageView *_innerBook;
 	
+	ZSSplashPageViewController *_splashPageViewController;
+	
 	UISwipeGestureRecognizer *_downSwipeGestureRecognizer;
 	UITapGestureRecognizer *_tapGestureRecognizer;
 }
@@ -49,14 +51,14 @@
 	
 	currentGameViewController = [[ZSGameViewController alloc] initWithGame:currentGame];
 	currentGameViewController.hintDelegate = self;
-	currentGameViewController.majorGameStateDelegate = self;
-	currentGameViewController.foldedCornerVisibleOnLoad = YES;
+	currentGameViewController.animationDelegate = self;
 	[_innerBook addSubview:currentGameViewController.view];
 	
-	[currentGameViewController viewWasPromotedToFrontAnimated:NO];
-	
-	// Create the new next game view.
-	[self loadNewNextGame];
+	// Create the splash page view.
+	_splashPageViewController = [[ZSSplashPageViewController alloc] init];
+	_splashPageViewController.foldedCornerVisibleOnLoad = YES;
+	_splashPageViewController.animationDelegate = self;
+	[_innerBook addSubview:_splashPageViewController.view];
 	
 	// Create the page curl gradient on the left.
 	UIImageView *pageCurlGradient = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"PageCurlGradient.png"]];
@@ -79,23 +81,6 @@
 	_tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideHint)];
 }
 
-- (void)startNewGame {
-	// Get the previous game out of the way.
-	[self.currentGameViewController.view removeFromSuperview];
-	
-	// Swap the next game view controller for the current. We'll recycle the old one so we don't need to reinitialize.
-	self.tempGameViewController = currentGameViewController;
-	self.currentGameViewController = self.nextGameViewController;
-	
-	// Fire up the new game.
-	[self.currentGameViewController viewWasPromotedToFrontAnimated:YES];
-}
-
-- (void)frontViewControllerFinishedDisplaying {
-	// Load a new game into the recycled view controller.
-	[self loadNewNextGame];
-}
-
 - (void)loadNewNextGame {
 	ZSGameDifficulty randomDifficulty = arc4random() % 5;
 	ZSGame *newGame = [[ZSGameController sharedInstance] fetchGameWithDifficulty:randomDifficulty];
@@ -108,23 +93,10 @@
 	} else {
 		self.nextGameViewController = [[ZSGameViewController alloc] initWithGame:newGame];
 		nextGameViewController.hintDelegate = self;
-		nextGameViewController.majorGameStateDelegate = self;
+		nextGameViewController.animationDelegate = self;
 	}
-
+	
 	[_innerBook insertSubview:self.nextGameViewController.view belowSubview:self.currentGameViewController.view];
-}
-
-- (BOOL)getHintsShown {
-	return hintsShown;
-}
-
-- (void)beginHintDeck:(NSArray *)hintDeck forGameViewController:(ZSGameViewController *)gameViewController {
-	[hintViewController beginHintDeck:hintDeck forGameViewController:gameViewController];
-	[self showHint];
-}
-
-- (void)endHintDeck {
-	[self hideHint];
 }
 
 - (void)showHint {
@@ -167,14 +139,57 @@
 	[currentGameViewController completeCoreGameOperation];
 	
 	[UIView
-		animateWithDuration:0.4f
-		delay:0
-		options:UIViewAnimationOptionCurveEaseOut
-		animations:^{
-			hintViewController.view.frame = CGRectMake(-5, _innerBook.frame.size.height, hintViewController.view.frame.size.width, hintViewController.view.frame.size.height);
-			_innerBook.frame = CGRectMake(0, 0, _innerBook.frame.size.width, _innerBook.frame.size.height);
-		}
-		completion:NULL];
+	 animateWithDuration:0.4f
+	 delay:0
+	 options:UIViewAnimationOptionCurveEaseOut
+	 animations:^{
+		 hintViewController.view.frame = CGRectMake(-5, _innerBook.frame.size.height, hintViewController.view.frame.size.width, hintViewController.view.frame.size.height);
+		 _innerBook.frame = CGRectMake(0, 0, _innerBook.frame.size.width, _innerBook.frame.size.height);
+	 }
+	 completion:NULL];
+}
+
+#pragma mark - ZSFoldedPageViewControllerAnimationDelegate Implementation
+
+- (void)pageTurnAnimationDidFinishWithViewController:(ZSFoldedPageViewController *)viewController {
+	if (viewController == _splashPageViewController) {
+		[_splashPageViewController.view removeFromSuperview];
+		_splashPageViewController = nil;
+		
+		[currentGameViewController viewWasPromotedToFrontAnimated:YES];
+	} else {
+		// Get the previous game out of the way.
+		[self.currentGameViewController.view removeFromSuperview];
+		
+		// Swap the next game view controller for the current. We'll recycle the old one so we don't need to reinitialize.
+		self.tempGameViewController = currentGameViewController;
+		self.currentGameViewController = self.nextGameViewController;
+		
+		// Fire up the new game.
+		[self.currentGameViewController viewWasPromotedToFrontAnimated:YES];
+	}
+}
+
+#pragma mark - ZSFoldedPageAndPlusButtonViewControllerAnimationDelegate Implementation
+
+- (void)plusButtonStartAnimationDidFinishWithViewController:(ZSGameViewController *)viewController {
+	// Load a new game into the recycled view controller.
+	[self loadNewNextGame];
+}
+
+#pragma mark - ZSHintDelegate Implementation
+
+- (BOOL)getHintsShown {
+	return hintsShown;
+}
+
+- (void)beginHintDeck:(NSArray *)hintDeck forGameViewController:(ZSGameViewController *)gameViewController {
+	[hintViewController beginHintDeck:hintDeck forGameViewController:gameViewController];
+	[self showHint];
+}
+
+- (void)endHintDeck {
+	[self hideHint];
 }
 
 @end

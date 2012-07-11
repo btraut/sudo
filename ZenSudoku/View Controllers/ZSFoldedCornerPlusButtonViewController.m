@@ -229,7 +229,9 @@ NSString * const kTextShadowColorPlusLabel = @"66FFFFFF";
 			break;
 			
 		case ZSFoldedCornerPlusButtonAnimationStateAnimatingStartStage2:
-			[self.animationDelegate foldedCornerPlusButtonStartAnimationFinished];
+			if ([self.animationDelegate respondsToSelector: @selector(foldedCornerPlusButtonStartAnimationFinishedWithViewController:)]) {
+				[self.animationDelegate foldedCornerPlusButtonStartAnimationFinishedWithViewController:self];
+			}
 			break;
 			
 		case ZSFoldedCornerPlusButtonAnimationStateIdle:

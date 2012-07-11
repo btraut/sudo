@@ -1,0 +1,43 @@
+//
+//  ZSFoldedPageViewController.h
+//  ZenSudoku
+//
+//  Created by Brent Traut on 7/9/12.
+//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+#import "ZSFoldedCornerViewController.h"
+
+@class ZSFoldedPageViewController;
+
+@protocol ZSFoldedPageViewControllerAnimationDelegate <NSObject>
+@optional
+
+- (void)pageTurnAnimationDidFinishWithViewController:(ZSFoldedPageViewController *)viewController;
+- (void)startFoldAnimationDidFinishWithViewController:(ZSFoldedPageViewController *)viewController;
+- (void)sendFoldBackToCornerAnimationDidFinishWithViewController:(ZSFoldedPageViewController *)viewController;
+- (void)cornerTugAnimationDidFinishWithViewController:(ZSFoldedPageViewController *)viewController;
+
+@end
+
+@interface ZSFoldedPageViewController : UIViewController <ZSFoldedCornerViewControllerTouchDelegate, ZSFoldedCornerViewControllerAnimationDelegate>
+
+@property (weak) id<ZSFoldedPageViewControllerAnimationDelegate> animationDelegate;
+
+@property (strong, readonly) UIView *innerView;
+@property (strong) UIImage *innerViewImage;
+
+@property (strong, readonly) ZSFoldedCornerViewController *foldedCornerViewController;
+@property (assign) BOOL foldedCornerVisibleOnLoad;
+
+@property (assign) BOOL needsScreenshotUpdate;
+
+- (UIImage *)getScreenshotImage;
+- (void)updateScreenshotSynchronous:(BOOL)syncronous;
+- (void)setScreenshotVisible:(BOOL)visible;
+
+- (void)foldedCornerRestoredToDefaultPoint;
+
+@end

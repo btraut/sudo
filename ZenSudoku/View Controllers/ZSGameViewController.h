@@ -7,6 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+
+#import "ZSFoldedPageViewController.h"
+
 #import "ZSGame.h"
 #import "ZSBoardViewController.h"
 #import "ZSAnswerOptionViewController.h"
@@ -26,16 +29,17 @@
 
 @end
 
-@protocol ZSMajorGameStateDelegate <NSObject>
+@protocol ZSFoldedPageAndPlusButtonViewControllerAnimationDelegate <ZSFoldedPageViewControllerAnimationDelegate>
+@optional
 
-- (void)startNewGame;
-- (void)frontViewControllerFinishedDisplaying;
+- (void)plusButtonStartAnimationDidFinishWithViewController:(ZSGameViewController *)viewController;
 
 @end
 
-@interface ZSGameViewController : UIViewController <
+@interface ZSGameViewController : ZSFoldedPageViewController <
 	ZSGameStateChangeDelegate,
 	ZSFoldedCornerViewControllerTouchDelegate,
+	ZSFoldedCornerViewControllerAnimationDelegate,
 	ZSFoldedCornerPlusButtonViewControllerAnimationDelegate,
 	ZSAnswerOptionsViewControllerTouchDelegate,
 	ZSBoardViewControllerTouchDelegate
@@ -45,8 +49,6 @@
 	
 	ZSBoardViewController *boardViewController;
 	ZSAnswerOptionsViewController *gameAnswerOptionsViewController;
-	
-	ZSFoldedCornerViewController *foldedCornerViewController;
 	
 	UIButton *pencilButton;
 	BOOL penciling;
@@ -65,16 +67,13 @@
 @property (strong, readonly) ZSBoardViewController *boardViewController;
 @property (strong, readonly) ZSAnswerOptionsViewController *gameAnswerOptionsViewController;
 
-@property (strong, readonly) ZSFoldedCornerViewController *foldedCornerViewController;
-@property (assign) BOOL foldedCornerVisibleOnLoad;
-
 @property (strong, readonly) UIButton *pencilButton;
 @property (assign) BOOL penciling;
 
 @property (assign) BOOL allowsInput;
 
 @property (weak) id<ZSHintDelegate> hintDelegate;
-@property (weak) id<ZSMajorGameStateDelegate> majorGameStateDelegate;
+@property (weak) id<ZSFoldedPageAndPlusButtonViewControllerAnimationDelegate> animationDelegate;
 
 // Construction / Deconstruction
 - (id)initWithGame:(ZSGame *)game;
@@ -86,8 +85,6 @@
 - (void)applicationWillResignActive:(UIApplication *)application;
 
 - (void)setTitle;
-
-- (UIImage *)getScreenshotImage;
 
 // Game Functions
 - (void)deselectTileView;

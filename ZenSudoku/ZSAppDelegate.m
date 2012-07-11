@@ -60,6 +60,9 @@ NSString * const kRemoveTileAfterErrorKey = @"kRemoveTileAfterErrorKey";
 	_window.rootViewController = gameBookViewController;
 	[_window makeKeyAndVisible];
 	
+	// Hide the menu bar.
+	[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackOpaque animated:YES];
+	
 	return YES;
 }
 

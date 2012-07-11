@@ -26,9 +26,12 @@ typedef enum {
 	ZSFoldedCornerPlusButtonAnimationStateAnimatingStartStage2
 } ZSFoldedCornerPlusButtonAnimationState;
 
-@protocol ZSFoldedCornerPlusButtonViewControllerAnimationDelegate <NSObject>
+@class ZSFoldedCornerPlusButtonViewController;
 
-- (void)foldedCornerPlusButtonStartAnimationFinished;
+@protocol ZSFoldedCornerPlusButtonViewControllerAnimationDelegate <NSObject>
+@optional
+
+- (void)foldedCornerPlusButtonStartAnimationFinishedWithViewController:(ZSFoldedCornerPlusButtonViewController *)viewController;
 
 @end
 

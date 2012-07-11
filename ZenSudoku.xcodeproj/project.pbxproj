@@ -92,6 +92,10 @@
 		84A509F715A21D99002C9C70 /* BackwardsTranslucentPage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A509F515A21D99002C9C70 /* BackwardsTranslucentPage@2x.png */; };
 		84A8FB1515A6A06400D802C8 /* MTLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A8FB1315A6A06400D802C8 /* MTLabel.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		84A8FB1D15A6A1FB00D802C8 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A8FB1C15A6A1FB00D802C8 /* CoreText.framework */; };
+		84A8FB2015AB738800D802C8 /* ZSFoldedPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A8FB1F15AB738800D802C8 /* ZSFoldedPageViewController.m */; };
+		84A8FB2315AB7C7A00D802C8 /* ZSSplashPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A8FB2215AB7C7A00D802C8 /* ZSSplashPageViewController.m */; };
+		84A8FB2615AB8DCE00D802C8 /* SplashPage.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A8FB2415AB8DCE00D802C8 /* SplashPage.png */; };
+		84A8FB2715AB8DCE00D802C8 /* SplashPage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A8FB2515AB8DCE00D802C8 /* SplashPage@2x.png */; };
 		84AC26C91480950F00E966A5 /* ZSBoardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC26C71480950F00E966A5 /* ZSBoardViewController.m */; };
 		84AC26CE1480986900E966A5 /* ZSTileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC26CC1480986900E966A5 /* ZSTileViewController.m */; };
 		84AC26DD1480D9C700E966A5 /* ZSGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC26DC1480D9C700E966A5 /* ZSGame.m */; };
@@ -242,6 +246,12 @@
 		84A8FB1215A6A06400D802C8 /* MTLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTLabel.h; sourceTree = "<group>"; };
 		84A8FB1315A6A06400D802C8 /* MTLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTLabel.m; sourceTree = "<group>"; };
 		84A8FB1C15A6A1FB00D802C8 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		84A8FB1E15AB738600D802C8 /* ZSFoldedPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSFoldedPageViewController.h; path = "View Controllers/ZSFoldedPageViewController.h"; sourceTree = "<group>"; };
+		84A8FB1F15AB738800D802C8 /* ZSFoldedPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSFoldedPageViewController.m; path = "View Controllers/ZSFoldedPageViewController.m"; sourceTree = "<group>"; };
+		84A8FB2115AB7C7A00D802C8 /* ZSSplashPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSSplashPageViewController.h; path = "View Controllers/ZSSplashPageViewController.h"; sourceTree = "<group>"; };
+		84A8FB2215AB7C7A00D802C8 /* ZSSplashPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSSplashPageViewController.m; path = "View Controllers/ZSSplashPageViewController.m"; sourceTree = "<group>"; };
+		84A8FB2415AB8DCE00D802C8 /* SplashPage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SplashPage.png; path = Resources/Images/SplashPage.png; sourceTree = "<group>"; };
+		84A8FB2515AB8DCE00D802C8 /* SplashPage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SplashPage@2x.png"; path = "Resources/Images/SplashPage@2x.png"; sourceTree = "<group>"; };
 		84AC26C61480950F00E966A5 /* ZSBoardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSBoardViewController.h; path = "View Controllers/ZSBoardViewController.h"; sourceTree = "<group>"; };
 		84AC26C71480950F00E966A5 /* ZSBoardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSBoardViewController.m; path = "View Controllers/ZSBoardViewController.m"; sourceTree = "<group>"; };
 		84AC26CB1480986900E966A5 /* ZSTileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSTileViewController.h; path = "View Controllers/ZSTileViewController.h"; sourceTree = "<group>"; };
@@ -527,6 +537,8 @@
 				84D2033315A6553E00BA9CCF /* DarkBlueDot@2x.png */,
 				84D2033415A6553E00BA9CCF /* LightBlueDot.png */,
 				84D2033515A6553E00BA9CCF /* LightBlueDot@2x.png */,
+				84A8FB2415AB8DCE00D802C8 /* SplashPage.png */,
+				84A8FB2515AB8DCE00D802C8 /* SplashPage@2x.png */,
 				8428AD3A154A52F700BA8EE0 /* Default.png */,
 				8428AD3B154A52F700BA8EE0 /* Default@2x.png */,
 			);
@@ -701,6 +713,10 @@
 				845ABB171587E50B006D2616 /* ZSFoldedCornerView.m */,
 				8463D8E41595239100AED0B4 /* ZSFoldedCornerPlusButtonViewController.h */,
 				8463D8E51595239100AED0B4 /* ZSFoldedCornerPlusButtonViewController.m */,
+				84A8FB1E15AB738600D802C8 /* ZSFoldedPageViewController.h */,
+				84A8FB1F15AB738800D802C8 /* ZSFoldedPageViewController.m */,
+				84A8FB2115AB7C7A00D802C8 /* ZSSplashPageViewController.h */,
+				84A8FB2215AB7C7A00D802C8 /* ZSSplashPageViewController.m */,
 			);
 			name = "Views and View Controllers";
 			sourceTree = "<group>";
@@ -856,6 +872,8 @@
 				84D2033715A6553E00BA9CCF /* DarkBlueDot@2x.png in Resources */,
 				84D2033815A6553E00BA9CCF /* LightBlueDot.png in Resources */,
 				84D2033915A6553E00BA9CCF /* LightBlueDot@2x.png in Resources */,
+				84A8FB2615AB8DCE00D802C8 /* SplashPage.png in Resources */,
+				84A8FB2715AB8DCE00D802C8 /* SplashPage@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -933,6 +951,8 @@
 				84D2032815A3B02D00BA9CCF /* iCarousel.m in Sources */,
 				84D2033115A64D4400BA9CCF /* ProgressDots.m in Sources */,
 				84A8FB1515A6A06400D802C8 /* MTLabel.m in Sources */,
+				84A8FB2015AB738800D802C8 /* ZSFoldedPageViewController.m in Sources */,
+				84A8FB2315AB7C7A00D802C8 /* ZSSplashPageViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

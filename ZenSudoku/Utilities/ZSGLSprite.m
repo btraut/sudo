@@ -63,7 +63,7 @@
     if (self) {  
         self.effect = effect;
 		
-        NSError *error = nil;    
+		NSError *error = nil;    
         NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
 								 [NSNumber numberWithBool:YES], GLKTextureLoaderOriginBottomLeft,
 								 nil];

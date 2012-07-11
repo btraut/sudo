@@ -361,7 +361,6 @@ NSString * const kTileColorHighlightHintD = @"#4C2FADD4";
 			_backgroundType = ZSTileBackgroundTypeSelected;
 		} else {
 			if (highlightedError) {
-				// Todo: this should really only be set if the guess of the tile matches that of the selected tile
 				if (tile.guess && highlightedSimilar) {
 					_backgroundType = ZSTileBackgroundTypeSimilarError;
 				} else {

@@ -11,16 +11,25 @@
 #import "ZSFoldedCornerView.h"
 #import "ZSPointAnimation.h"
 
+@class ZSFoldedCornerViewController;
 @class ZSFoldedCornerPlusButtonViewController;
 
 @protocol ZSFoldedCornerViewControllerTouchDelegate <NSObject>
+@optional
 
-- (void)foldedCornerTouchStartedWithFoldPoint:(CGPoint)foldPoint foldDimensions:(CGSize)foldDimensions;
-- (void)foldedCornerTouchMovedWithFoldPoint:(CGPoint)foldPoint foldDimensions:(CGSize)foldDimensions;
-- (void)foldedCornerTouchEndedWithFoldPoint:(CGPoint)foldPoint foldDimensions:(CGSize)foldDimensions;
-- (void)foldedCornerRestoredToDefaultPoint;
-- (void)pageTurnAnimationDidFinish;
-- (void)startFoldAnimationDidFinish;
+- (void)foldedCornerViewController:(ZSFoldedCornerViewController *)viewController touchStartedWithFoldPoint:(CGPoint)foldPoint foldDimensions:(CGSize)foldDimensions;
+- (void)foldedCornerViewController:(ZSFoldedCornerViewController *)viewController touchMovedWithFoldPoint:(CGPoint)foldPoint foldDimensions:(CGSize)foldDimensions;
+- (void)foldedCornerViewController:(ZSFoldedCornerViewController *)viewController touchEndedWithFoldPoint:(CGPoint)foldPoint foldDimensions:(CGSize)foldDimensions;
+
+@end
+
+@protocol ZSFoldedCornerViewControllerAnimationDelegate <NSObject>
+@optional
+
+- (void)pageTurnAnimationDidFinishWithViewController:(ZSFoldedCornerViewController *)viewController;
+- (void)startFoldAnimationDidFinishWithViewController:(ZSFoldedCornerViewController *)viewController;
+- (void)sendFoldBackToCornerAnimationDidFinishWithViewController:(ZSFoldedCornerViewController *)viewController;
+- (void)cornerTugAnimationDidFinishWithViewController:(ZSFoldedCornerViewController *)viewController;
 
 @end
 
@@ -36,6 +45,7 @@
 }
 
 @property (weak) id<ZSFoldedCornerViewControllerTouchDelegate> touchDelegate;
+@property (weak) id<ZSFoldedCornerViewControllerAnimationDelegate> animationDelegate;
 
 @property (weak) ZSFoldedCornerPlusButtonViewController *plusButtonViewController;
 
@@ -50,6 +60,7 @@
 
 - (void)animateSendFoldBackToCorner;
 - (void)animatePageTurn;
+- (void)animatePageTurnSlower;
 - (void)animateStartFold;
 - (void)animateCornerTug;
 

@@ -32,10 +32,6 @@ typedef enum {
 	CGPoint _foldDefaultPoint;
 	CGPoint _foldStartPoint;
 	
-	GLKBaseEffect *_effect;
-	
-	UIImage *_backwardsPageImage;
-	
 	ZSGLShape *_foldGradient;
 	ZSGLShape *_cornerGradient;
 	
@@ -51,27 +47,38 @@ typedef enum {
 @property (assign) BOOL useTranslucentPage;
 @property (strong) UIImage *screenshotImage;
 
+@property (strong) UIImage *backwardsPageImage;
+
 @property (strong) ZSGLSprite *backwardsPageSprite;
 @property (strong) ZSGLSprite *backwardsTranslucentPageSprite;
 @property (strong) ZSGLSprite *shadowBlobOpaqueSprite;
 @property (strong) ZSGLSprite *shadowBlobSprite;
 @property (strong) ZSGLSprite *screenshotSprite;
 
-@property (strong, nonatomic) EAGLContext *context;
+@property (strong) EAGLContext *drawContext;
+@property (strong) EAGLContext *renderScreenshotContext;
+@property (strong) EAGLContext *renderTranslucentPageContext;
+@property (strong) GLKBaseEffect *effect;
 
 @end
 
 @implementation ZSFoldedCornerViewController
 
 @synthesize touchDelegate;
+@synthesize animationDelegate;
 @synthesize plusButtonViewController;
 
-@synthesize context = _context;
+@synthesize drawContext = _drawContext;
+@synthesize renderScreenshotContext = _renderScreenshotContext;
+@synthesize renderTranslucentPageContext = _renderTranslucentPageContext;
+@synthesize effect = _effect;
 
 @synthesize drawPage;
 
 @synthesize useTranslucentPage = _useTranslucentPage;
 @synthesize screenshotImage = _screenshotImage;
+
+@synthesize backwardsPageImage = _backwardsPageImage;
 
 @synthesize backwardsPageSprite = _backwardsPageSprite;
 @synthesize backwardsTranslucentPageSprite = _backwardsTranslucentPageSprite;
@@ -130,41 +137,43 @@ typedef enum {
     [super viewDidLoad];
 	
 	// Set up the context for the view.
-	self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
+	self.drawContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
+	self.renderScreenshotContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2 sharegroup:self.drawContext.sharegroup];
+	self.renderTranslucentPageContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2 sharegroup:self.drawContext.sharegroup];
 	
-	if (!self.context) {
+	if (!self.drawContext || !self.renderScreenshotContext || !self.renderTranslucentPageContext) {
         NSLog(@"Failed to create ES context");
     }
 	
     ZSFoldedCornerView *view = (ZSFoldedCornerView *)self.view;
-    view.context = self.context;
-    [EAGLContext setCurrentContext:self.context];
+    view.context = self.drawContext;
+    [EAGLContext setCurrentContext:self.drawContext];
 		
-	// Load the effect.
-	_effect = [[GLKBaseEffect alloc] init];
+	// Load the effects.
+	self.effect = [[GLKBaseEffect alloc] init];
 	GLKMatrix4 projectionMatrix = GLKMatrix4MakeOrtho(0, self.view.frame.size.width, 0, self.view.frame.size.height, -1024, 1024);
-	_effect.transform.projectionMatrix = projectionMatrix;
+	self.effect.transform.projectionMatrix = projectionMatrix;
 	
 	// Load the images.
-	_backwardsPageImage = [UIImage imageNamed:@"BackwardsPage.png"];
+	self.backwardsPageImage = [UIImage imageNamed:@"BackwardsPage.png"];
 	
 	if ([UIScreen mainScreen].scale == 2.0) {
-		_backwardsPageSprite = [[ZSGLSprite alloc] initWithFile:@"BackwardsTranslucentPage@2x.png" effect:_effect];
-		_backwardsTranslucentPageSprite = [[ZSGLSprite alloc] initWithFile:@"BackwardsTranslucentPage@2x.png" effect:_effect];
-		_shadowBlobOpaqueSprite = [[ZSGLSprite alloc] initWithFile:@"ShadowBlobStraightOpaque@2x.png" effect:_effect];
-		_shadowBlobSprite = [[ZSGLSprite alloc] initWithFile:@"ShadowBlobStraight@2x.png" effect:_effect];
+		self.backwardsPageSprite = [[ZSGLSprite alloc] initWithFile:@"BackwardsTranslucentPage@2x.png" effect:self.effect];
+		self.backwardsTranslucentPageSprite = [[ZSGLSprite alloc] initWithFile:@"BackwardsTranslucentPage@2x.png" effect:self.effect];
+		self.shadowBlobOpaqueSprite = [[ZSGLSprite alloc] initWithFile:@"ShadowBlobStraightOpaque@2x.png" effect:self.effect];
+		self.shadowBlobSprite = [[ZSGLSprite alloc] initWithFile:@"ShadowBlobStraight@2x.png" effect:self.effect];
 	} else {
-		_backwardsPageSprite = [[ZSGLSprite alloc] initWithFile:@"BackwardsTranslucentPage.png" effect:_effect];
-		_backwardsTranslucentPageSprite = [[ZSGLSprite alloc] initWithFile:@"BackwardsTranslucentPage.png" effect:_effect];
-		_shadowBlobOpaqueSprite = [[ZSGLSprite alloc] initWithFile:@"ShadowBlobStraightOpaque.png" effect:_effect];
-		_shadowBlobSprite = [[ZSGLSprite alloc] initWithFile:@"ShadowBlobStraight.png" effect:_effect];
+		self.backwardsPageSprite = [[ZSGLSprite alloc] initWithFile:@"BackwardsTranslucentPage.png" effect:self.effect];
+		self.backwardsTranslucentPageSprite = [[ZSGLSprite alloc] initWithFile:@"BackwardsTranslucentPage.png" effect:self.effect];
+		self.shadowBlobOpaqueSprite = [[ZSGLSprite alloc] initWithFile:@"ShadowBlobStraightOpaque.png" effect:self.effect];
+		self.shadowBlobSprite = [[ZSGLSprite alloc] initWithFile:@"ShadowBlobStraight.png" effect:self.effect];
 	}
 	
-	_shadowBlobOpaqueSprite.overlay = YES;
+	self.shadowBlobOpaqueSprite.overlay = YES;
 	
 	// Load the gradients.
-	_foldGradient = [[ZSGLShape alloc] initWithEffect:_effect];
-	_cornerGradient = [[ZSGLShape alloc] initWithEffect:_effect];
+	_foldGradient = [[ZSGLShape alloc] initWithEffect:self.effect];
+	_cornerGradient = [[ZSGLShape alloc] initWithEffect:self.effect];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -191,15 +200,15 @@ typedef enum {
 
 - (void)loadNewScreenshotSprite {
 	// Set the context again. Seems like this is needed for threading.
-    [EAGLContext setCurrentContext:self.context];
+	[EAGLContext setCurrentContext:self.renderScreenshotContext];
 	
 	// Load the images into textures.
-	self.screenshotSprite = [[ZSGLSprite alloc] initWithCGImage:self.screenshotImage.CGImage effect:_effect];
+	self.screenshotSprite = [[ZSGLSprite alloc] initWithCGImage:self.screenshotImage.CGImage effect:self.effect];
 }
 
 - (void)loadNewTranslucentPageSprite {
 	// Set the context again. Seems like this is needed for threading.
-    [EAGLContext setCurrentContext:self.context];
+    [EAGLContext setCurrentContext:self.renderTranslucentPageContext];
 	
 	// Cache the screenshot image in this function so if it gets changed while rendering, it doesn't break the render.
 	UIImage *image = self.screenshotImage;
@@ -211,7 +220,7 @@ typedef enum {
 	// Draw the paper background.
 	CGContextScaleCTM(context, 1, -1);
 	CGContextTranslateCTM(context, 0, -image.size.height);
-	CGContextDrawImage(context, CGRectMake(0, 0, image.size.width, image.size.height), _backwardsPageImage.CGImage);
+	CGContextDrawImage(context, CGRectMake(0, 0, image.size.width, image.size.height), self.backwardsPageImage.CGImage);
 	
 	CGContextScaleCTM(context, -1, 1);
 	CGContextTranslateCTM(context, -image.size.width, 0);
@@ -242,8 +251,8 @@ typedef enum {
 	// Create a new image from the context.
 	UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
 	UIGraphicsEndImageContext();
-	
-	self.backwardsPageSprite = [[ZSGLSprite alloc] initWithCGImage:newImage.CGImage effect:_effect];
+		
+	self.backwardsPageSprite = [[ZSGLSprite alloc] initWithCGImage:newImage.CGImage effect:self.effect];
 }
 
 - (void)resetToStartPosition {
@@ -389,8 +398,8 @@ typedef enum {
     GLKMatrix4 shadowBlobMatrix = baseMatrix;
 	shadowBlobMatrix = GLKMatrix4Translate(shadowBlobMatrix, 0, -underShadowDimensions.height, 0);
 	shadowBlobMatrix = GLKMatrix4Translate(shadowBlobMatrix, foldDimensions.width - underShadowDimensions.width, underShadowDimensions.height - foldDimensions.height, 0);
-	_shadowBlobOpaqueSprite.transform = shadowBlobMatrix;
-	_shadowBlobSprite.transform = shadowBlobMatrix;
+	self.shadowBlobOpaqueSprite.transform = shadowBlobMatrix;
+	self.shadowBlobSprite.transform = shadowBlobMatrix;
 	
 	// Draw the shadow blob.
 	TexturedVertex shadowBlobTriangle[6];
@@ -404,10 +413,10 @@ typedef enum {
 	shadowBlobTriangle[2].textureVertex = CGPointMake(0, 0);
 	
 	if (self.drawPage) {
-		[_shadowBlobOpaqueSprite renderTriangleStrip:shadowBlobTriangle ofSize:3];
+		[self.shadowBlobOpaqueSprite renderTriangleStrip:shadowBlobTriangle ofSize:3];
 	} else {
 		glDisable(GL_BLEND);
-		[_shadowBlobSprite renderTriangleStrip:shadowBlobTriangle ofSize:3];
+		[self.shadowBlobSprite renderTriangleStrip:shadowBlobTriangle ofSize:3];
 		glEnable(GL_BLEND);
 	}
 	
@@ -461,9 +470,9 @@ typedef enum {
 	
 	if (_animationState == ZSFoldedCornerViewControllerAnimationStateUserAnimating) {
 		if (foldPointXToLeft < self.view.frame.size.width / 2) {
-			[plusButtonViewController setState:ZSFoldedCornerPlusButtonStateBig animated:YES];
+			[self.plusButtonViewController setState:ZSFoldedCornerPlusButtonStateBig animated:YES];
 		} else {
-			[plusButtonViewController setState:ZSFoldedCornerPlusButtonStateNormal animated:YES];
+			[self.plusButtonViewController setState:ZSFoldedCornerPlusButtonStateNormal animated:YES];
 		}
 	}
 }
@@ -515,7 +524,9 @@ typedef enum {
 	
 	[self redraw];
 	
-	[self.touchDelegate foldedCornerTouchStartedWithFoldPoint:_foldPoint foldDimensions:foldDimensions];
+	if ([self.touchDelegate respondsToSelector: @selector(foldedCornerViewController:touchStartedWithFoldPoint:foldDimensions:)]) {
+		[self.touchDelegate foldedCornerViewController:self touchStartedWithFoldPoint:_foldPoint foldDimensions:foldDimensions];
+	}
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -525,13 +536,17 @@ typedef enum {
 	
 	[self redraw];
 	
-	[self.touchDelegate foldedCornerTouchMovedWithFoldPoint:_foldPoint foldDimensions:foldDimensions];
+	if ([self.touchDelegate respondsToSelector: @selector(foldedCornerViewController:touchMovedWithFoldPoint:foldDimensions:)]) {
+		[self.touchDelegate foldedCornerViewController:self touchMovedWithFoldPoint:_foldPoint foldDimensions:foldDimensions];
+	}
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
 	_animationState = ZSFoldedCornerViewControllerAnimationStateStopped;
 	
-	[self.touchDelegate foldedCornerTouchEndedWithFoldPoint:_foldPoint foldDimensions:foldDimensions];
+	if ([self.touchDelegate respondsToSelector: @selector(foldedCornerViewController:touchEndedWithFoldPoint:foldDimensions:)]) {
+		[self.touchDelegate foldedCornerViewController:self touchEndedWithFoldPoint:_foldPoint foldDimensions:foldDimensions];
+	}
 }
 
 - (void)redraw {
@@ -542,7 +557,10 @@ typedef enum {
 
 - (void)pushUpdate {
 	[self redraw];
-	[self.touchDelegate foldedCornerTouchMovedWithFoldPoint:_foldPoint foldDimensions:foldDimensions];
+	
+	if ([self.touchDelegate respondsToSelector: @selector(foldedCornerViewController:touchMovedWithFoldPoint:foldDimensions:)]) {
+		[self.touchDelegate foldedCornerViewController:self touchMovedWithFoldPoint:_foldPoint foldDimensions:foldDimensions];
+	}
 }
 
 - (void)animationAdvanced:(CGPoint)point progress:(float)progress {
@@ -571,19 +589,25 @@ typedef enum {
 		// User stopped dragging, fold is moving back to the corner:
 		case ZSFoldedCornerViewControllerAnimationStateSendFoldBackToCornerStage1:
 			_animationState = ZSFoldedCornerViewControllerAnimationStateStopped;
-			[self.touchDelegate foldedCornerRestoredToDefaultPoint];
+			if ([self.animationDelegate respondsToSelector: @selector(sendFoldBackToCornerAnimationDidFinishWithViewController:)]) {
+				[self.animationDelegate sendFoldBackToCornerAnimationDidFinishWithViewController:self];
+			}
 			break;
 		
 		// Page is turning:
 		case ZSFoldedCornerViewControllerAnimationStatePageTurnStage1:
 			_animationState = ZSFoldedCornerViewControllerAnimationStateStopped;
-			[self.touchDelegate pageTurnAnimationDidFinish];
+			if ([self.animationDelegate respondsToSelector: @selector(pageTurnAnimationDidFinishWithViewController:)]) {
+				[self.animationDelegate pageTurnAnimationDidFinishWithViewController:self];
+			}
 			break;
 			
 		// After page turns, a new fold is made in the next page:
 		case ZSFoldedCornerViewControllerAnimationStateStartFoldStage1:
 			_animationState = ZSFoldedCornerViewControllerAnimationStateStopped;
-			[self.touchDelegate startFoldAnimationDidFinish];
+			if ([self.animationDelegate respondsToSelector: @selector(startFoldAnimationDidFinishWithViewController:)]) {
+				[self.animationDelegate startFoldAnimationDidFinishWithViewController:self];
+			}
 			break;
 			
 		// User tapped on the + button, so folded corner gets tugged:
@@ -601,7 +625,9 @@ typedef enum {
 			
 		case ZSFoldedCornerViewControllerAnimationStateCornerTugStage4:
 			_animationState = ZSFoldedCornerViewControllerAnimationStateStopped;
-			[self.touchDelegate foldedCornerRestoredToDefaultPoint];
+			if ([self.animationDelegate respondsToSelector: @selector(cornerTugAnimationDidFinishWithViewController:)]) {
+				[self.animationDelegate cornerTugAnimationDidFinishWithViewController:self];
+			}
 			break;
 			
 		// No animation:
@@ -641,6 +667,25 @@ typedef enum {
 	
 	_animationHelper.startPoint = _foldPoint;
 	_animationHelper.endPoint = CGPointMake(628, 0.1f);
+	
+	[_animationHelper start];
+	
+	[self.plusButtonViewController setState:ZSFoldedCornerPlusButtonStateHidden animated:YES];
+}
+
+- (void)animatePageTurnSlower {
+	// Only start the animation if we're not currently running an animation.
+	if (_animationState != ZSFoldedCornerViewControllerAnimationStateStopped) {
+		return;
+	}
+	
+	_animationState = ZSFoldedCornerViewControllerAnimationStatePageTurnStage1;
+	
+	_animationHelper.duration = 0.6f;
+	_animationHelper.timingFunction = ZSAnimationTimingFunctionEaseOut;
+	
+	_animationHelper.startPoint = _foldPoint;
+	_animationHelper.endPoint = CGPointMake(628, 30);
 	
 	[_animationHelper start];
 	

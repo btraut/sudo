@@ -10,10 +10,11 @@
 
 #import "ZSGame.h"
 #import "ZSGameViewController.h"
+#import "ZSSplashPageViewController.h"
 
 @class ZSHintViewController;
 
-@interface ZSGameBookViewController : UIViewController <ZSHintDelegate, ZSMajorGameStateDelegate> {
+@interface ZSGameBookViewController : UIViewController <ZSHintDelegate, ZSFoldedPageViewControllerAnimationDelegate, ZSFoldedPageAndPlusButtonViewControllerAnimationDelegate> {
 	ZSHintViewController *hintViewController;
 	
 	BOOL hintsShown;
@@ -23,12 +24,7 @@
 @property (strong) ZSGameViewController *nextGameViewController;
 @property (strong) ZSGameViewController *tempGameViewController;
 
-- (BOOL)getHintsShown;
-- (void)beginHintDeck:(NSArray *)hintDeck forGameViewController:(ZSGameViewController *)gameViewController;
-- (void)endHintDeck;
 - (void)showHint;
 - (void)hideHint;
-
-- (void)startNewGame;
 
 @end
