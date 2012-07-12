@@ -98,7 +98,7 @@ NSString * const kTextShadowColorAnswerOptionToggledOff = @"77FFFFFF";
 		case ZSAnswerOption7:
 		case ZSAnswerOption8:
 		case ZSAnswerOption9:
-			_labelView.text = [NSString stringWithFormat:@"%i", ((NSInteger)gameAnswerOption + 1)];
+			_labelView.text = [NSString stringWithFormat:@"%i", ((NSInteger)self.gameAnswerOption + 1)];
 			break;
 		
 		default:
@@ -107,8 +107,8 @@ NSString * const kTextShadowColorAnswerOptionToggledOff = @"77FFFFFF";
 }
 
 - (void)reloadView {
-	if (enabled) {
-		if (gameAnswerOptionsViewController.gameViewController.penciling) {
+	if (self.enabled) {
+		if (self.gameAnswerOptionsViewController.gameViewController.penciling) {
 			if (toggled) {
 				_labelView.textColor = [UIColor colorWithAlphaHexString:kTextColorAnswerOptionToggledOn];
 				_labelView.shadowColor = [UIColor colorWithAlphaHexString:kTextShadowColorAnswerOptionToggledOn];
@@ -131,20 +131,20 @@ NSString * const kTextShadowColorAnswerOptionToggledOff = @"77FFFFFF";
 #pragma mark - Touch Events
 
 - (void)handleTouchEnter {
-	if (enabled) {
-		[delegate gameAnswerOptionTouchEntered:self];
+	if (self.enabled) {
+		[self.delegate gameAnswerOptionTouchEntered:self];
 	}
 }
 
 - (void)handleTouchExit {
-	if (enabled) {
-		[delegate gameAnswerOptionTouchExited:self];
+	if (self.enabled) {
+		[self.delegate gameAnswerOptionTouchExited:self];
 	}
 }
 
 - (void)handleTap {
-	if (enabled) {
-		[delegate gameAnswerOptionTapped:self];
+	if (self.enabled) {
+		[self.delegate gameAnswerOptionTapped:self];
 	}
 }
 

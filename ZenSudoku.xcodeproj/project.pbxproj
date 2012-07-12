@@ -124,6 +124,7 @@
 		84D2033715A6553E00BA9CCF /* DarkBlueDot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D2033315A6553E00BA9CCF /* DarkBlueDot@2x.png */; };
 		84D2033815A6553E00BA9CCF /* LightBlueDot.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D2033415A6553E00BA9CCF /* LightBlueDot.png */; };
 		84D2033915A6553E00BA9CCF /* LightBlueDot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D2033515A6553E00BA9CCF /* LightBlueDot@2x.png */; };
+		84D54E8B15AECADB003B1705 /* ZSPanBetweenSubviewsGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D54E8A15AECADB003B1705 /* ZSPanBetweenSubviewsGestureRecognizer.m */; };
 		84D55014147F1C4A00A7934E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D55013147F1C4A00A7934E /* UIKit.framework */; };
 		84D55016147F1C4A00A7934E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D55015147F1C4A00A7934E /* Foundation.framework */; };
 		84D55018147F1C4A00A7934E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D55017147F1C4A00A7934E /* CoreGraphics.framework */; };
@@ -296,6 +297,8 @@
 		84D2033315A6553E00BA9CCF /* DarkBlueDot@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "DarkBlueDot@2x.png"; path = "Resources/Images/DarkBlueDot@2x.png"; sourceTree = "<group>"; };
 		84D2033415A6553E00BA9CCF /* LightBlueDot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LightBlueDot.png; path = Resources/Images/LightBlueDot.png; sourceTree = "<group>"; };
 		84D2033515A6553E00BA9CCF /* LightBlueDot@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "LightBlueDot@2x.png"; path = "Resources/Images/LightBlueDot@2x.png"; sourceTree = "<group>"; };
+		84D54E8915AECADA003B1705 /* ZSPanBetweenSubviewsGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSPanBetweenSubviewsGestureRecognizer.h; path = Utilities/ZSPanBetweenSubviewsGestureRecognizer.h; sourceTree = "<group>"; };
+		84D54E8A15AECADB003B1705 /* ZSPanBetweenSubviewsGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSPanBetweenSubviewsGestureRecognizer.m; path = Utilities/ZSPanBetweenSubviewsGestureRecognizer.m; sourceTree = "<group>"; };
 		84D5500F147F1C4A00A7934E /* sudo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sudo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84D55013147F1C4A00A7934E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		84D55015147F1C4A00A7934E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -600,6 +603,8 @@
 				84B11558158F274D00983B3A /* ZSAnimation.m */,
 				84B1155A158F36B900983B3A /* ZSPointAnimation.h */,
 				84B1155B158F36B900983B3A /* ZSPointAnimation.m */,
+				84D54E8915AECADA003B1705 /* ZSPanBetweenSubviewsGestureRecognizer.h */,
+				84D54E8A15AECADB003B1705 /* ZSPanBetweenSubviewsGestureRecognizer.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -953,6 +958,7 @@
 				84A8FB1515A6A06400D802C8 /* MTLabel.m in Sources */,
 				84A8FB2015AB738800D802C8 /* ZSFoldedPageViewController.m in Sources */,
 				84A8FB2315AB7C7A00D802C8 /* ZSSplashPageViewController.m in Sources */,
+				84D54E8B15AECADB003B1705 /* ZSPanBetweenSubviewsGestureRecognizer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

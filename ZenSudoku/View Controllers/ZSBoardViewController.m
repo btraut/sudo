@@ -53,7 +53,7 @@
 		for (NSInteger col = 0; col < game.board.size; col++) {
 			ZSTileViewController *tileViewController = [[tileViews objectAtIndex:row] objectAtIndex:col];
 			tileViewController.tile = [game getTileAtRow:row col:col];
-			tileViewController.needsReload = YES;
+			[tileViewController reset];
 		}
 	}
 	

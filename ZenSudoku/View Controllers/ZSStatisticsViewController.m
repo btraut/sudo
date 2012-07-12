@@ -27,9 +27,6 @@
 #pragma mark - View Lifecycle
 
 - (void)viewDidLoad {
-	// TestFlight Checkpoint
-	[TestFlight passCheckpoint:kTestFlightCheckPointOpenedStatistics];
-	
 	[super viewDidLoad];
 	
 	self.title = @"Statistics";

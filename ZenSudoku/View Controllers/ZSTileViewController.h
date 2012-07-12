@@ -78,7 +78,6 @@ typedef enum {
 
 @property (assign) BOOL needsReload;
 
-@property (assign) BOOL ghosted;
 @property (assign) NSInteger ghostedValue;
 @property (assign) BOOL selected;
 @property (assign) BOOL highlightedSimilar;
@@ -90,6 +89,7 @@ typedef enum {
 @property (assign) ZSTilePencilTextType *highlightPencilHints;
 
 - (id)initWithTile:(ZSTile *)newTile;
+- (void)reset;
 
 - (void)handleTap;
 

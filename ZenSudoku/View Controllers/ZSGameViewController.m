@@ -120,6 +120,9 @@ typedef struct {
 	[self.boardViewController resetWithGame:newGame];
 	[self.gameAnswerOptionsViewController reloadView];
 	
+	[self _setErrors];
+	[boardViewController reloadView];
+	
 	[_foldedCornerPlusButtonViewController setState:ZSFoldedCornerPlusButtonStateHidden animated:NO];
 		
 	self.needsScreenshotUpdate = YES;
@@ -143,9 +146,6 @@ typedef struct {
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
-	
-	// TestFlight Checkpoint
-	[TestFlight passCheckpoint:kTestFlightCheckPointStartedNewPuzzle];
 	
 	// Build the plus button.
 	_foldedCornerPlusButtonViewController = [[ZSFoldedCornerPlusButtonViewController alloc] init];
@@ -228,30 +228,20 @@ typedef struct {
 	[hintButton setBackgroundImage:hintsHighlightedImage forState:UIControlStateHighlighted];
 	
 	[self.innerView addSubview:hintButton];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-	[super viewWillAppear:animated];
-	
-//	[foldedCornerViewController pushUpdate];
-//	[self.view setNeedsDisplay];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-	[super viewDidAppear:animated];
-	
-//	self.needsScreenshotUpdate = YES;
-}
-
-- (void)viewWasPromotedToFrontAnimated:(BOOL)animated {
-	// Debug
-	if (game.difficulty == ZSGameDifficultyEasy) {
-		[self solveMostOfThePuzzle];
-	}
 	
 	// Reload errors.
 	[self _setErrors];
 	[boardViewController reloadView];
+}
+
+- (void)viewWasPromotedToFrontAnimated:(BOOL)animated {
+	// TestFlight Checkpoint
+	[TestFlight passCheckpoint:kTestFlightCheckPointStartedNewPuzzle];
+	
+	// Debug
+	if (game.difficulty == ZSGameDifficultyEasy) {
+		[self solveMostOfThePuzzle];
+	}
 	
 	// If the game is already solved, shut off input.
 	if ([game isSolved]) {
@@ -426,12 +416,18 @@ typedef struct {
 }
 
 - (void)autoPencilButtonWasTouched {
+	// TestFlight Checkpoint
+	[TestFlight passCheckpoint:kTestFlightCheckPointUsedAutoPencil];
+	
 	[self setAutoPencils];
 	
 	_guessInSameTileWasJustMade = NO;
 }
 
 - (void)undoButtonWasTouched {
+	// TestFlight Checkpoint
+	[TestFlight passCheckpoint:kTestFlightCheckPointUsedUndo];
+	
 	// Reset pencil changes.
 	_totalPencilChangesSinceLastGuess = 0;
 	
@@ -470,6 +466,9 @@ typedef struct {
 }
 
 - (void)hintButtonWasTouched {
+	// TestFlight Checkpoint
+	[TestFlight passCheckpoint:kTestFlightCheckPointUsedAHint];
+	
 	// Force an update immediately if one is needed.
 	[self _updateHintDeck];
 	dispatch_group_wait(_hintGenerationDispatchGroup, DISPATCH_TIME_FOREVER);
@@ -607,8 +606,6 @@ typedef struct {
 #pragma mark - ZSAnswerOptionsViewControllerTouchDelegate Implementation
 
 - (void)gameAnswerOptionTouchEnteredWithGameAnswerOption:(ZSAnswerOption)gameAnswerOption {
-	NSLog(@"Entered");
-	
 	// If we aren't allowing input, end here.
 	if (!allowsInput) {
 		return;
@@ -626,7 +623,6 @@ typedef struct {
 		
 		// No previews for pencils.
 		if (!penciling) {
-			selectedTileView.ghosted = YES;
 			selectedTileView.ghostedValue = (NSInteger)gameAnswerOption + 1;
 			[selectedTileView reloadView];
 		}
@@ -634,8 +630,6 @@ typedef struct {
 }
 
 - (void)gameAnswerOptionTouchExitedWithGameAnswerOption:(ZSAnswerOption)gameAnswerOption {
-	NSLog(@"Exited");
-	
 	// If we aren't allowing input, end here.
 	if (!allowsInput) {
 		return;
@@ -653,7 +647,6 @@ typedef struct {
 		
 		// No previews for pencils.
 		if (!penciling) {
-			selectedTileView.ghosted = NO;
 			selectedTileView.ghostedValue = 0;
 			[selectedTileView reloadView];
 		}
@@ -661,8 +654,6 @@ typedef struct {
 }
 
 - (void)gameAnswerOptionTappedWithGameAnswerOption:(ZSAnswerOption)gameAnswerOption {
-	NSLog(@"Tapped");
-	
 	// Fetch the touched game answer option view controller.
 	ZSAnswerOptionViewController *gameAnswerOptionView = [gameAnswerOptionsViewController.gameAnswerOptionViewControllers objectAtIndex:gameAnswerOption];
 	
@@ -765,10 +756,8 @@ typedef struct {
 }
 
 - (void)_setGuessForTile:(ZSTileViewController *)tileView withAnswerOption:(ZSAnswerOptionViewController *)answerOptionView {
+	NSInteger previousGuess = tileView.tile.guess;
 	NSInteger guess = ((NSInteger)answerOptionView.gameAnswerOption + 1);
-	
-	tileView.ghosted = NO;
-	tileView.ghostedValue = 0;
 	
 	// Start a generic undo stop. We're going to be tying multiple actions together.
 	[game startGenericUndoStop];
@@ -790,8 +779,8 @@ typedef struct {
 	_guessInSameTileWasJustMade = YES;
 	_totalPencilChangesSinceLastGuess = 0;
 	
-	// If the guess we're setting isn't empty (0), set the new value for it. 
-	if (guess) {
+	// If the guess we're setting isn't empty (0) and isn't the same value as was previously in the tile, set the new value for it. 
+	if (guess != previousGuess) {
 		// Set the new guess to the selected guess option value.
 		[game setGuess:guess forTileAtRow:tileView.tile.row col:tileView.tile.col];
 	}
@@ -808,6 +797,9 @@ typedef struct {
 	for (NSInteger row = 0; row < game.board.size; row++) {
 		for (NSInteger col = 0; col < game.board.size; col++) {
 			ZSTileViewController *tileView = [boardViewController getTileViewControllerAtRow:row col:col];
+			
+			// Keep track of the previous error setting.
+			BOOL previouslyError = tileView.error;
 			
 			// Start by assuming no error.
 			tileView.error = NO;
@@ -841,6 +833,11 @@ typedef struct {
 						tileView.error = YES;
 					}
 				}
+			}
+			
+			// If the error value has changed, the tile needs a reload.
+			if (tileView.error != previouslyError) {
+				tileView.needsReload = YES;
 			}
 		}
 	}

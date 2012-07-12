@@ -13,6 +13,7 @@
 #import "ZSTile.h"
 #import "ZSGame.h"
 #import "ZSBoard.h"
+#import "ZSPanBetweenSubviewsGestureRecognizer.h"
 
 #define DEFAULT_FRAME_HEIGHT 300
 #define DEFAULT_FRAME_WIDTH 31
@@ -36,6 +37,8 @@
 	
 	if (self) {
 		gameViewController = newGameViewController;
+		
+		_previousTouchedAnswerOption = -1;
 	}
 	
 	return self;
@@ -55,6 +58,10 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	
+	// Create the gesture recognizer.
+	ZSPanBetweenSubviewsGestureRecognizer *panBetweenSubviewsGestureRecognizer = [[ZSPanBetweenSubviewsGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
+	[self.view addGestureRecognizer:panBetweenSubviewsGestureRecognizer];
+	
 	// Build numbers.
 	NSMutableArray *buttons = [NSMutableArray array];
 	ZSAnswerOptionViewController *gameAnswerOptionViewController;
@@ -69,6 +76,8 @@
 		
 		[self.view addSubview:gameAnswerOptionViewController.view];
 		[buttons addObject:gameAnswerOptionViewController];
+		
+		[panBetweenSubviewsGestureRecognizer addSubview:gameAnswerOptionViewController.view];
 		
 		xOffset += DEFAULT_FRAME_WIDTH;
 	}
@@ -130,99 +139,35 @@
 
 #pragma mark - Handle Touches
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-	// Figure out which (if any) option is being touched.
-	UITouch *touch = [touches anyObject];
-	ZSAnswerOptionViewController *touchedViewController;
-	
-	CGPoint touchPoint = [touch locationInView:self.view];
-	BOOL touchIsInBounds = touchPoint.x >= 0 && touchPoint.y >= 0 && touchPoint.x < self.view.frame.size.width && touchPoint.y < self.view.frame.size.height;
-	
-	if (touchIsInBounds) {
-		for (ZSAnswerOptionViewController *viewController in gameAnswerOptionViewControllers) {
-			if (touchPoint.x >= viewController.view.frame.origin.x && touchPoint.x < viewController.view.frame.origin.x + viewController.view.frame.size.width) {
-				touchedViewController = viewController;
-				break;
-			}
-		}
-	}
-	
-	// Mark the option as touched.
-	if (touchedViewController && touchedViewController.enabled) {
-		[touchedViewController handleTouchEnter];
-		
-		_answerOptionIsBeingTouched = YES;
-		_previousTouchedAnswerOption = touchedViewController.gameAnswerOption;
-	}
-}
-
-
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-	// Figure out which (if any) option is being touched.
-	UITouch *touch = [touches anyObject];
-	ZSAnswerOptionViewController *touchedViewController;
-	
-	CGPoint touchPoint = [touch locationInView:self.view];
-	BOOL touchIsInBounds = touchPoint.x >= 0 && touchPoint.y >= 0 && touchPoint.x < self.view.frame.size.width && touchPoint.y < self.view.frame.size.height;
-	
-	if (touchIsInBounds) {
-		for (ZSAnswerOptionViewController *viewController in gameAnswerOptionViewControllers) {
-			if (touchPoint.x >= viewController.view.frame.origin.x && touchPoint.x < viewController.view.frame.origin.x + viewController.view.frame.size.width) {
-				touchedViewController = viewController;
-				break;
-			}
-		}
-	}
-	
-	// If the user is touching a tile, mark it touched. If a previous one was being touched, turn that one off first.
-	if (touchedViewController && touchedViewController.enabled) {
-		if (_answerOptionIsBeingTouched) {
-			if (_previousTouchedAnswerOption != touchedViewController.gameAnswerOption) {
-				[[self getGameAnswerOptionViewControllerForGameAnswerOption:_previousTouchedAnswerOption] handleTouchExit];
-				[touchedViewController handleTouchEnter];
-			}
+- (void)pan:(ZSPanBetweenSubviewsGestureRecognizer *)sender {
+	if (sender.selectedSubviewIndex != _previousTouchedAnswerOption) {
+		if (sender.selectedSubviewIndex == -1) {
+			ZSAnswerOptionViewController *previouslySelectedViewController = [self getGameAnswerOptionViewControllerForGameAnswerOption:_previousTouchedAnswerOption];
+			[previouslySelectedViewController handleTouchExit];
 		} else {
-			[touchedViewController handleTouchEnter];
+			if (_previousTouchedAnswerOption != -1) {
+				ZSAnswerOptionViewController *previouslySelectedViewController = [self getGameAnswerOptionViewControllerForGameAnswerOption:_previousTouchedAnswerOption];
+				[previouslySelectedViewController handleTouchExit];
+			}
+			
+			ZSAnswerOptionViewController *selectedViewController = [self getGameAnswerOptionViewControllerForGameAnswerOption:sender.selectedSubviewIndex];
+			[selectedViewController handleTouchEnter];
+			
 		}
 		
-		_answerOptionIsBeingTouched = YES;
-		_previousTouchedAnswerOption = touchedViewController.gameAnswerOption;
-	} else {
-		if (_answerOptionIsBeingTouched) {
-			_answerOptionIsBeingTouched = NO;
-			[[self getGameAnswerOptionViewControllerForGameAnswerOption:_previousTouchedAnswerOption] handleTouchExit];
-		}
+		_previousTouchedAnswerOption = sender.selectedSubviewIndex;
+	}
+
+	if (sender.state == UIGestureRecognizerStateEnded && sender.selectedSubviewIndex != -1) {
+		ZSAnswerOptionViewController *selectedViewController = [self getGameAnswerOptionViewControllerForGameAnswerOption:sender.selectedSubviewIndex];
+		[selectedViewController handleTouchExit];
+		[selectedViewController handleTap];
+		
+		_previousTouchedAnswerOption = -1;
 	}
 }
 
-
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-	// Figure out which (if any) option is being touched.
-	UITouch *touch = [touches anyObject];
-	ZSAnswerOptionViewController *touchedViewController;
-	
-	CGPoint touchPoint = [touch locationInView:self.view];
-	BOOL touchIsInBounds = touchPoint.x >= 0 && touchPoint.y >= 0 && touchPoint.x < self.view.frame.size.width && touchPoint.y < self.view.frame.size.height;
-	
-	if (touchIsInBounds) {
-		for (ZSAnswerOptionViewController *viewController in gameAnswerOptionViewControllers) {
-			if (touchPoint.x >= viewController.view.frame.origin.x && touchPoint.x < viewController.view.frame.origin.x + viewController.view.frame.size.width) {
-				touchedViewController = viewController;
-				break;
-			}
-		}
-	}
-	
-	// If an answer option was being touched, turn it off and register a tap.
-	if (touchedViewController && touchedViewController.enabled) {
-		[touchedViewController handleTouchExit];
-		[touchedViewController handleTap];
-	}
-	
-	_answerOptionIsBeingTouched = NO;
-}
-
-#pragma mark - Delegate Responsibilities
+#pragma mark - ZSAnswerOptionTouchDelegate Methods
 
 - (void)gameAnswerOptionTouchEntered:(ZSAnswerOptionViewController *)touchedView {
 	[touchDelegate gameAnswerOptionTouchEnteredWithGameAnswerOption:touchedView.gameAnswerOption];

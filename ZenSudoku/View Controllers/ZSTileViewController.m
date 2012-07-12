@@ -52,8 +52,8 @@ NSString * const kTileColorHighlightHintD = @"#4C2FADD4";
 	ZSTileBackgroundType _backgroundType;
 	ZSTileBackgroundType _previousBackgroundType;
 	
-	NSInteger _previousGhostedValue;
-	NSInteger _previousGuess;
+	BOOL _previouslyGhosted;
+	NSInteger _previousValue;
 }
 
 @end
@@ -62,26 +62,14 @@ NSString * const kTileColorHighlightHintD = @"#4C2FADD4";
 
 @synthesize needsReload;
 @synthesize tile, touchDelegate;
-@synthesize ghosted, ghostedValue, selected, highlightedSimilar, highlightedError, error;
+@synthesize ghostedValue, selected, highlightedSimilar, highlightedError, error;
 @synthesize highlightedHintType, highlightGuessHint, highlightPencilHints;
 
 - (id)init {
 	self = [super init];
 	
 	if (self) {
-		needsReload = YES;
-		
-		ghosted = NO;
-		selected = NO;
-		highlightedSimilar = NO;
-		highlightedError = NO;
-		error = NO;
-		
-		// Make sure the "previous" settings are different than the current ones.
-		_previousTextType = -1;
-		_previousBackgroundType = -1;
-		_previousGhostedValue = -1;
-		_previousGuess = -1;
+		[self reset];
 	}
 	
 	return self;
@@ -95,6 +83,20 @@ NSString * const kTileColorHighlightHintD = @"#4C2FADD4";
 	}
 	
 	return self;
+}
+
+- (void)reset {
+	needsReload = YES;
+	
+	selected = NO;
+	highlightedSimilar = NO;
+	highlightedError = NO;
+	error = NO;
+	
+	// Make sure the "previous" settings are different than the current ones.
+	_previousTextType = -1;
+	_previousBackgroundType = -1;
+	_previousValue = -1;
 }
 
 #pragma mark - View Lifecycle
@@ -185,23 +187,21 @@ NSString * const kTileColorHighlightHintD = @"#4C2FADD4";
 #pragma mark - Sudoku Stuff
 
 - (void)reloadView {
-	// Choose whether to show the guess or pencil marks.
-	if (ghosted) {
-		if (ghostedValue != _previousGhostedValue) {
-			_previousGhostedValue = ghostedValue;
-			
-			guessView.text = [NSString stringWithFormat:@"%i", ghostedValue];
-		}
-		
-		[self showGuess];		
+	NSInteger newValue = 0;
+	
+	if (ghostedValue) {
+		newValue = ghostedValue;
 	} else if (tile.guess) {
-		if (tile.guess != _previousGuess) {
-			_previousGuess = tile.guess;
-			
-			guessView.text = [NSString stringWithFormat:@"%i", tile.guess];
-		}
+		newValue = tile.guess;
+	}
+	
+	if (newValue != _previousValue) {
+		guessView.text = [NSString stringWithFormat:@"%i", newValue];
+		_previousValue = newValue;
+	}
 		
-		[self showGuess];		
+	if (tile.guess > 0 || ghostedValue > 0) {
+		[self showGuess];
 	} else {
 		[self hideGuess];
 	}
@@ -313,7 +313,7 @@ NSString * const kTileColorHighlightHintD = @"#4C2FADD4";
 
 - (void)reloadTextAndBackgroundType {
 	// Choose the text color.
-	if (ghosted) {
+	if (ghostedValue) {
 		_textType = ZSTileTextTypeGuessFingerDown;
 	} else {
 		if (tile.guess) {

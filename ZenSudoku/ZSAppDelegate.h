@@ -26,8 +26,9 @@
 extern NSString * const kTestFlightTeamToken;
 extern NSString * const kTestFlightCheckPointStartedNewPuzzle;
 extern NSString * const kTestFlightCheckPointSolvedPuzzle;
-extern NSString * const kTestFlightCheckPointOpenedStatistics;
-extern NSString * const kTestFlightCheckPointOpenedSettings;
+extern NSString * const kTestFlightCheckPointUsedUndo;
+extern NSString * const kTestFlightCheckPointUsedAutoPencil;
+extern NSString * const kTestFlightCheckPointUsedAHint;
 
 // Preference Keys
 
