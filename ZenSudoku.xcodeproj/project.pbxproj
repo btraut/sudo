@@ -125,6 +125,8 @@
 		84D2033815A6553E00BA9CCF /* LightBlueDot.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D2033415A6553E00BA9CCF /* LightBlueDot.png */; };
 		84D2033915A6553E00BA9CCF /* LightBlueDot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D2033515A6553E00BA9CCF /* LightBlueDot@2x.png */; };
 		84D54E8B15AECADB003B1705 /* ZSPanBetweenSubviewsGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D54E8A15AECADB003B1705 /* ZSPanBetweenSubviewsGestureRecognizer.m */; };
+		84D54E8F15AFE8D4003B1705 /* PaperBackgroundWithBoard.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D54E8D15AFE8D4003B1705 /* PaperBackgroundWithBoard.png */; };
+		84D54E9015AFE8D4003B1705 /* PaperBackgroundWithBoard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D54E8E15AFE8D4003B1705 /* PaperBackgroundWithBoard@2x.png */; };
 		84D55014147F1C4A00A7934E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D55013147F1C4A00A7934E /* UIKit.framework */; };
 		84D55016147F1C4A00A7934E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D55015147F1C4A00A7934E /* Foundation.framework */; };
 		84D55018147F1C4A00A7934E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D55017147F1C4A00A7934E /* CoreGraphics.framework */; };
@@ -299,6 +301,8 @@
 		84D2033515A6553E00BA9CCF /* LightBlueDot@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "LightBlueDot@2x.png"; path = "Resources/Images/LightBlueDot@2x.png"; sourceTree = "<group>"; };
 		84D54E8915AECADA003B1705 /* ZSPanBetweenSubviewsGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSPanBetweenSubviewsGestureRecognizer.h; path = Utilities/ZSPanBetweenSubviewsGestureRecognizer.h; sourceTree = "<group>"; };
 		84D54E8A15AECADB003B1705 /* ZSPanBetweenSubviewsGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSPanBetweenSubviewsGestureRecognizer.m; path = Utilities/ZSPanBetweenSubviewsGestureRecognizer.m; sourceTree = "<group>"; };
+		84D54E8D15AFE8D4003B1705 /* PaperBackgroundWithBoard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PaperBackgroundWithBoard.png; path = Resources/Images/PaperBackgroundWithBoard.png; sourceTree = "<group>"; };
+		84D54E8E15AFE8D4003B1705 /* PaperBackgroundWithBoard@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "PaperBackgroundWithBoard@2x.png"; path = "Resources/Images/PaperBackgroundWithBoard@2x.png"; sourceTree = "<group>"; };
 		84D5500F147F1C4A00A7934E /* sudo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sudo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84D55013147F1C4A00A7934E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		84D55015147F1C4A00A7934E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -445,6 +449,8 @@
 				84C092E21582D38F005799F8 /* PageCurlGradient@2x.png */,
 				849B69EE14F2666400870F09 /* PaperBackground.png */,
 				849B69EF14F2666400870F09 /* PaperBackground@2x.png */,
+				84D54E8D15AFE8D4003B1705 /* PaperBackgroundWithBoard.png */,
+				84D54E8E15AFE8D4003B1705 /* PaperBackgroundWithBoard@2x.png */,
 				84B0B1D3157D859300A99510 /* BackwardsPage.png */,
 				84B0B1D4157D859300A99510 /* BackwardsPage@2x.png */,
 				84A509F415A21D99002C9C70 /* BackwardsTranslucentPage.png */,
@@ -879,6 +885,8 @@
 				84D2033915A6553E00BA9CCF /* LightBlueDot@2x.png in Resources */,
 				84A8FB2615AB8DCE00D802C8 /* SplashPage.png in Resources */,
 				84A8FB2715AB8DCE00D802C8 /* SplashPage@2x.png in Resources */,
+				84D54E8F15AFE8D4003B1705 /* PaperBackgroundWithBoard.png in Resources */,
+				84D54E9015AFE8D4003B1705 /* PaperBackgroundWithBoard@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -584,30 +584,41 @@ typedef enum {
 		// User is dragging the fold:
 		case ZSFoldedCornerViewControllerAnimationStateUserAnimating:
 			_animationState = ZSFoldedCornerViewControllerAnimationStateStopped;
+			self.view.userInteractionEnabled = YES;
 			break;
 		
 		// User stopped dragging, fold is moving back to the corner:
 		case ZSFoldedCornerViewControllerAnimationStateSendFoldBackToCornerStage1:
 			_animationState = ZSFoldedCornerViewControllerAnimationStateStopped;
+			
+			self.view.userInteractionEnabled = YES;
+			
 			if ([self.animationDelegate respondsToSelector: @selector(sendFoldBackToCornerAnimationDidFinishWithViewController:)]) {
 				[self.animationDelegate sendFoldBackToCornerAnimationDidFinishWithViewController:self];
 			}
+			
 			break;
 		
 		// Page is turning:
 		case ZSFoldedCornerViewControllerAnimationStatePageTurnStage1:
 			_animationState = ZSFoldedCornerViewControllerAnimationStateStopped;
+			
 			if ([self.animationDelegate respondsToSelector: @selector(pageTurnAnimationDidFinishWithViewController:)]) {
 				[self.animationDelegate pageTurnAnimationDidFinishWithViewController:self];
 			}
+			
 			break;
 			
 		// After page turns, a new fold is made in the next page:
 		case ZSFoldedCornerViewControllerAnimationStateStartFoldStage1:
 			_animationState = ZSFoldedCornerViewControllerAnimationStateStopped;
+			
+			self.view.userInteractionEnabled = YES;
+			
 			if ([self.animationDelegate respondsToSelector: @selector(startFoldAnimationDidFinishWithViewController:)]) {
 				[self.animationDelegate startFoldAnimationDidFinishWithViewController:self];
 			}
+			
 			break;
 			
 		// User tapped on the + button, so folded corner gets tugged:
@@ -625,9 +636,13 @@ typedef enum {
 			
 		case ZSFoldedCornerViewControllerAnimationStateCornerTugStage4:
 			_animationState = ZSFoldedCornerViewControllerAnimationStateStopped;
+			
+			self.view.userInteractionEnabled = YES;
+			
 			if ([self.animationDelegate respondsToSelector: @selector(cornerTugAnimationDidFinishWithViewController:)]) {
 				[self.animationDelegate cornerTugAnimationDidFinishWithViewController:self];
 			}
+			
 			break;
 			
 		// No animation:
@@ -642,6 +657,8 @@ typedef enum {
 	if (_animationState != ZSFoldedCornerViewControllerAnimationStateStopped) {
 		return;
 	}
+	
+	self.view.userInteractionEnabled = NO;
 	
 	_animationState = ZSFoldedCornerViewControllerAnimationStateSendFoldBackToCornerStage1;
 	
@@ -659,6 +676,8 @@ typedef enum {
 	if (_animationState != ZSFoldedCornerViewControllerAnimationStateStopped) {
 		return;
 	}
+	
+	self.view.userInteractionEnabled = NO;
 	
 	_animationState = ZSFoldedCornerViewControllerAnimationStatePageTurnStage1;
 	
@@ -704,6 +723,8 @@ typedef enum {
 		return;
 	}
 	
+	self.view.userInteractionEnabled = NO;
+	
 	_animationState = ZSFoldedCornerViewControllerAnimationStateStartFoldStage1;
 	
 	_animationHelper.duration = 0.4f;
@@ -733,6 +754,8 @@ typedef enum {
 	if (_animationState != ZSFoldedCornerViewControllerAnimationStateStopped) {
 		return;
 	}
+	
+	self.view.userInteractionEnabled = NO;
 	
 	[self _animateCornerTugStage1];
 }

@@ -46,26 +46,25 @@ NSString * const kDBPuzzleDefinitionGroupMapKey = @"kDBPuzzleDefinitionGroupMapK
 	[db close];
 }
 
-- (ZSGame *)fetchGameWithType:(ZSGameType)type size:(NSInteger)size difficulty:(ZSGameDifficulty)difficulty {
-	NSDictionary *dict = [self getRandomPuzzleWithType:type size:size difficulty:difficulty];
-	return [self createGameWithDictionary:dict];
+- (NSArray *)fetchGames:(NSInteger)howMany withDifficulty:(ZSGameDifficulty)difficulty {
+	NSMutableArray *games = [NSMutableArray array];
+	
+	NSArray *puzzles = [self _getRandomPuzzles:howMany type:ZSGameTypeTraditional size:9 difficulty:difficulty];
+	
+	for (NSDictionary *dict in puzzles) {
+		[games addObject:[self _createGameWithDictionary:dict]];
+	}
+	
+	return games;
 }
 
-- (NSDictionary *)getRandomPuzzleWithType:(ZSGameType)type size:(NSInteger)size difficulty:(ZSGameDifficulty)difficulty {
-	/*
-	NSMutableDictionary *puzzleDefinition = [NSMutableDictionary dictionary];
-	
-	[puzzleDefinition setObject:[NSNumber numberWithInt:123] forKey:kDBPuzzleDefinitionIdKey];
-	[puzzleDefinition setObject:@"1.......2.9.4...5...6...7...5.9.3.......7.......85..4.7.....6...3...9.8...2.....1" forKey:kDBPuzzleDefinitionGuessesKey];
-	[puzzleDefinition setObject:@"174385962293467158586192734451923876928674315367851249719548623635219487842736591" forKey:kDBPuzzleDefinitionAnswersKey];
-	[puzzleDefinition setObject:@"000111222000111222000111222333444555333444555333444555666777888666777888666777888" forKey:kDBPuzzleDefinitionGroupMapKey];
-	
-	[puzzleDefinition setObject:[NSNumber numberWithInt:0] forKey:kDBPuzzleDefinitionTypeKey];
-	[puzzleDefinition setObject:[NSNumber numberWithInt:9] forKey:kDBPuzzleDefinitionSizeKey];
-	[puzzleDefinition setObject:[NSNumber numberWithInt:3] forKey:kDBPuzzleDefinitionDifficultyKey];
-	
-	return puzzleDefinition;
-	*/
+- (NSDictionary *)_getRandomPuzzleWithType:(ZSGameType)type size:(NSInteger)size difficulty:(ZSGameDifficulty)difficulty {
+	return [[self _getRandomPuzzles:1 type:type size:size difficulty:difficulty] objectAtIndex:0];
+}
+
+- (NSArray *)_getRandomPuzzles:(NSInteger)howMany type:(ZSGameType)type size:(NSInteger)size difficulty:(ZSGameDifficulty)difficulty {
+	// Initialize return array.
+	NSMutableArray *puzzles = [NSMutableArray array];
 	
 	// Pick a specific puzzle (debug purposes).
 	BOOL forcePuzzleById = NO;
@@ -93,17 +92,19 @@ NSString * const kDBPuzzleDefinitionGroupMapKey = @"kDBPuzzleDefinitionGroupMapK
 		
 		assert(totalPuzzles);
 		
+		// TODO: Randomize better. Right now, the cache will pick a random starting point but will use the next 10 sequential puzzles from that point.
+		
 		// Pick a random puzzle from the remaining total.
 		NSInteger puzzleNumber = arc4random() % totalPuzzles;
 		
-		NSString *puzzleQuery = @"SELECT `puzzle_id`, `puzzle_guesses`, `puzzle_answers`, `puzzle_group_map` FROM `puzzles` WHERE `puzzle_type` = ? AND `puzzle_size` = ? AND `puzzle_difficulty` = ? LIMIT ?, 1";
-		result = [db executeQuery:puzzleQuery, [NSNumber numberWithInt:type], [NSNumber numberWithInt:size], [NSNumber numberWithInt:difficulty], [NSNumber numberWithInt:puzzleNumber]];
+		NSString *puzzleQuery = @"SELECT `puzzle_id`, `puzzle_guesses`, `puzzle_answers`, `puzzle_group_map` FROM `puzzles` WHERE `puzzle_type` = ? AND `puzzle_size` = ? AND `puzzle_difficulty` = ? LIMIT ?, ?";
+		result = [db executeQuery:puzzleQuery, [NSNumber numberWithInt:type], [NSNumber numberWithInt:size], [NSNumber numberWithInt:difficulty], [NSNumber numberWithInt:puzzleNumber], [NSNumber numberWithInt:howMany]];
 	}
 	
 	// Load the puzzle row into a dictionary.
-	NSMutableDictionary *puzzleDefinition = [NSMutableDictionary dictionary];
-	
-	if ([result next]) {
+	while ([result next]) {
+		NSMutableDictionary *puzzleDefinition = [NSMutableDictionary dictionary];
+		
 		[puzzleDefinition setObject:[NSNumber numberWithInt:[result intForColumn:@"puzzle_id"]] forKey:kDBPuzzleDefinitionIdKey];
 		[puzzleDefinition setObject:[result stringForColumn:@"puzzle_guesses"] forKey:kDBPuzzleDefinitionGuessesKey];
 		[puzzleDefinition setObject:[result stringForColumn:@"puzzle_answers"] forKey:kDBPuzzleDefinitionAnswersKey];
@@ -113,19 +114,18 @@ NSString * const kDBPuzzleDefinitionGroupMapKey = @"kDBPuzzleDefinitionGroupMapK
 		[puzzleDefinition setObject:[NSNumber numberWithInt:size] forKey:kDBPuzzleDefinitionSizeKey];
 		[puzzleDefinition setObject:[NSNumber numberWithInt:difficulty] forKey:kDBPuzzleDefinitionDifficultyKey];
 		
-		// NSLog(@"Chose puzzle id: %i", [result intForColumn:@"puzzle_id"]);
-		// NSLog(@"Puzzle guesses: %@", [result stringForColumn:@"puzzle_guesses"]);
+		[puzzles addObject:puzzleDefinition];
 	}
 	
 	[result close];
 	
-	assert([puzzleDefinition count]);
+	assert(puzzles.count);
 	
-	// Return the puzzle string.
-	return puzzleDefinition;
+	// Return the array of puzzle dictionaries.
+	return puzzles;
 }
 
-- (ZSGame *)createGameWithDictionary:dict {
+- (ZSGame *)_createGameWithDictionary:dict {
 	// Create a new game.
 	ZSGame *game = [ZSGame emptyStandard9x9Game];
 	

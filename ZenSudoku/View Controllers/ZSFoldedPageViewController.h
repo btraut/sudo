@@ -35,7 +35,7 @@
 @property (assign) BOOL needsScreenshotUpdate;
 
 - (UIImage *)getScreenshotImage;
-- (void)updateScreenshotSynchronous:(BOOL)syncronous;
+- (void)updateScreenshotSynchronous:(BOOL)synchronous;
 - (void)setScreenshotVisible:(BOOL)visible;
 
 - (void)foldedCornerRestoredToDefaultPoint;

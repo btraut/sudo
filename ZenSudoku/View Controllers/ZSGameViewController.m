@@ -241,6 +241,7 @@ typedef struct {
 	// Debug
 	if (game.difficulty == ZSGameDifficultyEasy) {
 		[self solveMostOfThePuzzle];
+		[self.boardViewController reloadView];
 	}
 	
 	// If the game is already solved, shut off input.
@@ -597,10 +598,6 @@ typedef struct {
 	if ([self.animationDelegate respondsToSelector: @selector(plusButtonStartAnimationDidFinishWithViewController:)]) {
 		[self.animationDelegate plusButtonStartAnimationDidFinishWithViewController:self];
 	}
-	
-	// Force an immediate update of the screenshot.
-	self.needsScreenshotUpdate = YES;
-	[self updateScreenshotSynchronous:NO];
 }
 
 #pragma mark - ZSAnswerOptionsViewControllerTouchDelegate Implementation

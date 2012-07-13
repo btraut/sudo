@@ -82,16 +82,18 @@
 	return screenshot;
 }
 
-- (void)updateScreenshotSynchronous:(BOOL)syncronous {
+- (void)updateScreenshotSynchronous:(BOOL)synchronous {
 	dispatch_group_async(_screenshotRenderDispatchGroup, _screenshotRenderDispatchQueue, ^{
 		if (self.needsScreenshotUpdate) {
+			NSLog(@"updating screenshot");
+			
 			self.needsScreenshotUpdate = NO;
 			
 			[self.foldedCornerViewController setPageImage:[self getScreenshotImage]];
 		}
 	});
 	
-	if (syncronous) {
+	if (synchronous) {
 		dispatch_group_wait(_screenshotRenderDispatchGroup, DISPATCH_TIME_FOREVER);
 	}
 }

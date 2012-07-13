@@ -34,7 +34,7 @@
     [super viewDidLoad];
 	
 	// Create the inner part of the book (containing all pages).
-	_innerBook = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"PaperBackground.png"]];
+	_innerBook = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"PaperBackgroundWithBoard.png"]];
 	_innerBook.frame = CGRectMake(0, 0, 320, 460);
 	_innerBook.userInteractionEnabled = YES;
 	[self.view addSubview:_innerBook];
@@ -45,7 +45,7 @@
 	if ([[ZSGameController sharedInstance] savedGameInProgress]) {
 		currentGame = [[ZSGameController sharedInstance] loadSavedGame];
 	} else {
-		ZSGameDifficulty randomDifficulty = arc4random() % 5;
+		ZSGameDifficulty randomDifficulty = ZSGameDifficultyChallenging;// arc4random() % 5;
 		currentGame = [[ZSGameController sharedInstance] fetchGameWithDifficulty:randomDifficulty];
 	}
 	
@@ -82,7 +82,7 @@
 }
 
 - (void)loadNewNextGame {
-	ZSGameDifficulty randomDifficulty = arc4random() % 5;
+	ZSGameDifficulty randomDifficulty = ZSGameDifficultyChallenging;// arc4random() % 5;
 	ZSGame *newGame = [[ZSGameController sharedInstance] fetchGameWithDifficulty:randomDifficulty];
 	
 	if (self.tempGameViewController) {
@@ -162,7 +162,7 @@
 		[self.currentGameViewController.view removeFromSuperview];
 		
 		// Swap the next game view controller for the current. We'll recycle the old one so we don't need to reinitialize.
-		self.tempGameViewController = currentGameViewController;
+		self.tempGameViewController = self.currentGameViewController;
 		self.currentGameViewController = self.nextGameViewController;
 		
 		// Fire up the new game.

@@ -15,11 +15,7 @@
 	FMDatabase *db;
 }
 
-- (ZSGame *)fetchGameWithType:(ZSGameType)type size:(NSInteger)size difficulty:(ZSGameDifficulty)difficulty;
-
-- (NSDictionary *)getRandomPuzzleWithType:(ZSGameType)type size:(NSInteger)size difficulty:(ZSGameDifficulty)difficulty;
-
-- (ZSGame *)createGameWithDictionary:dict;
+- (NSArray *)fetchGames:(NSInteger)howMany withDifficulty:(ZSGameDifficulty)difficulty;
 
 @end
 

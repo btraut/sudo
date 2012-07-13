@@ -13,25 +13,102 @@
 
 #define UNARCHIVER_DATA_KEY @"data"
 
+#define CACHE_THRESHOLD 5
+
 NSString * const kSavedGameFileName = @"SavedGame.plist";
 
+@interface ZSGameController () {
+	dispatch_queue_t _cachePopulationDispatchQueue;
+	dispatch_group_t _cachePopulationDispatchGroup;
+}
+
+@property (strong) NSMutableArray *standard9x9EasyCache;
+@property (strong) NSMutableArray *standard9x9ModerateCache;
+@property (strong) NSMutableArray *standard9x9ChallengingCache;
+@property (strong) NSMutableArray *standard9x9DiabolicalCache;
+@property (strong) NSMutableArray *standard9x9InsaneCache;
+
+@end
+
 @implementation ZSGameController
+
+@synthesize standard9x9EasyCache = _standard9x9EasyCache;
+@synthesize standard9x9ModerateCache = _standard9x9ModerateCache;
+@synthesize standard9x9ChallengingCache = _standard9x9ChallengingCache;
+@synthesize standard9x9DiabolicalCache = _standard9x9DiabolicalCache;
+@synthesize standard9x9InsaneCache = _standard9x9InsaneCache;
 
 - (id)init {
 	self = [super init];
 	
 	if (self) {
+		// Init cache.
+		_cachePopulationDispatchQueue = dispatch_queue_create("com.tenfoursoftware.cachePopulationQueue", NULL);
+		_cachePopulationDispatchGroup = dispatch_group_create();
 		
+		_standard9x9EasyCache = [NSMutableArray array];
+		_standard9x9ModerateCache = [NSMutableArray array];
+		_standard9x9ChallengingCache = [NSMutableArray array];
+		_standard9x9DiabolicalCache = [NSMutableArray array];
+		_standard9x9InsaneCache = [NSMutableArray array];
 	}
 	
 	return self;
 }
 
+- (void)dealloc {
+	dispatch_release(_cachePopulationDispatchGroup);
+	dispatch_release(_cachePopulationDispatchQueue);
+}
+
 #pragma mark Game Creation
 
 - (ZSGame *)fetchGameWithDifficulty:(ZSGameDifficulty)difficulty {
-	ZSPuzzleFetcher *fetcher = [[ZSPuzzleFetcher alloc] init];
-	return [fetcher fetchGameWithType:ZSGameTypeTraditional size:9 difficulty:difficulty];
+	NSMutableArray *cacheArray;
+	
+	switch (difficulty) {
+		case ZSGameDifficultyEasy: cacheArray = self.standard9x9EasyCache; break;
+		case ZSGameDifficultyModerate: cacheArray = self.standard9x9ModerateCache; break;
+		case ZSGameDifficultyChallenging: cacheArray = self.standard9x9ChallengingCache; break;
+		case ZSGameDifficultyDiabolical: cacheArray = self.standard9x9DiabolicalCache; break;
+		case ZSGameDifficultyInsane: cacheArray = self.standard9x9InsaneCache; break;
+	}
+	
+	if (cacheArray.count == 0) {
+		[self populateCacheForDifficulty:difficulty synchronous:YES];
+	}
+	
+	ZSGame *newGame = [cacheArray objectAtIndex:0];
+	[cacheArray removeObjectAtIndex:0];
+	
+	return newGame;
+}
+
+- (void)populateCacheForDifficulty:(ZSGameDifficulty)difficulty synchronous:(BOOL)synchronous {
+	dispatch_group_async(_cachePopulationDispatchGroup, _cachePopulationDispatchQueue, ^{
+		NSMutableArray *cacheArray;
+		
+		switch (difficulty) {
+			case ZSGameDifficultyEasy: cacheArray = self.standard9x9EasyCache; break;
+			case ZSGameDifficultyModerate: cacheArray = self.standard9x9ModerateCache; break;
+			case ZSGameDifficultyChallenging: cacheArray = self.standard9x9ChallengingCache; break;
+			case ZSGameDifficultyDiabolical: cacheArray = self.standard9x9DiabolicalCache; break;
+			case ZSGameDifficultyInsane: cacheArray = self.standard9x9InsaneCache; break;
+		}
+		
+		NSInteger puzzlesToFetch = CACHE_THRESHOLD - cacheArray.count;
+		
+		ZSPuzzleFetcher *fetcher = [[ZSPuzzleFetcher alloc] init];
+		NSArray *games = [fetcher fetchGames:puzzlesToFetch withDifficulty:difficulty];
+		
+		for (ZSGame *game in games) {
+			[cacheArray addObject:game];
+		}
+	});
+	
+	if (synchronous) {
+		dispatch_group_wait(_cachePopulationDispatchGroup, DISPATCH_TIME_FOREVER);
+	}
 }
 
 #pragma mark Saved Game
