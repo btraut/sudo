@@ -84,6 +84,8 @@ NSString * const kSavedGameFileName = @"SavedGame.plist";
 	return newGame;
 }
 
+#pragma mark Cache Management
+
 - (void)populateCacheForDifficulty:(ZSGameDifficulty)difficulty synchronous:(BOOL)synchronous {
 	dispatch_group_async(_cachePopulationDispatchGroup, _cachePopulationDispatchQueue, ^{
 		NSMutableArray *cacheArray;
@@ -111,6 +113,62 @@ NSString * const kSavedGameFileName = @"SavedGame.plist";
 	if (synchronous) {
 		dispatch_group_wait(_cachePopulationDispatchGroup, DISPATCH_TIME_FOREVER);
 	}
+}
+
+- (void)populateCacheFromUserDefaults {
+	NSData *encodedDefaultsCache = [[NSUserDefaults standardUserDefaults] objectForKey:kPuzzleCacheKey];
+    NSDictionary *defaultsCache;
+	
+	if (encodedDefaultsCache.length) {
+		defaultsCache = [NSKeyedUnarchiver unarchiveObjectWithData:encodedDefaultsCache];
+	}
+	
+	if (defaultsCache) {
+		NSArray *currentDifficultyCache;
+		
+		if ((currentDifficultyCache = [defaultsCache objectForKey:@"standard9x9EasyCache"])) {
+			for (ZSGame *game in currentDifficultyCache) {
+				[self.standard9x9EasyCache addObject:game];
+			}
+		}
+		
+		if ((currentDifficultyCache = [defaultsCache objectForKey:@"standard9x9ModerateCache"])) {
+			for (ZSGame *game in currentDifficultyCache) {
+				[self.standard9x9ModerateCache addObject:game];
+			}
+		}
+		
+		if ((currentDifficultyCache = [defaultsCache objectForKey:@"standard9x9ChallengingCache"])) {
+			for (ZSGame *game in currentDifficultyCache) {
+				[self.standard9x9ChallengingCache addObject:game];
+			}
+		}
+		
+		if ((currentDifficultyCache = [defaultsCache objectForKey:@"standard9x9DiabolicalCache"])) {
+			for (ZSGame *game in currentDifficultyCache) {
+				[self.standard9x9DiabolicalCache addObject:game];
+			}
+		}
+		
+		if ((currentDifficultyCache = [defaultsCache objectForKey:@"standard9x9InsaneCache"])) {
+			for (ZSGame *game in currentDifficultyCache) {
+				[self.standard9x9InsaneCache addObject:game];
+			}
+		}
+	}
+}
+
+- (void)saveCacheToUserDefaults {
+	NSMutableDictionary *defaultsCache = [NSDictionary dictionaryWithObjectsAndKeys:
+										  self.standard9x9EasyCache, @"standard9x9EasyCache",
+										  self.standard9x9ModerateCache, @"standard9x9ModerateCache",
+										  self.standard9x9ChallengingCache, @"standard9x9ChallengingCache",
+										  self.standard9x9DiabolicalCache, @"standard9x9DiabolicalCache",
+										  self.standard9x9InsaneCache, @"standard9x9InsaneCache",
+										  nil];
+	
+    NSData *encodedDefaultsCache = [NSKeyedArchiver archivedDataWithRootObject:defaultsCache];
+	[[NSUserDefaults standardUserDefaults] setObject:encodedDefaultsCache forKey:kPuzzleCacheKey];
 }
 
 #pragma mark Saved Game

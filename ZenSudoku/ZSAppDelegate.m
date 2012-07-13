@@ -23,11 +23,9 @@ NSString * const kTestFlightCheckPointUsedAHint = @"kTestFlightCheckPointUsedAHi
 
 NSString * const kLastUsedVersionKey = @"kLastUsedVersionKey";
 
-NSString * const kTileAnswerOrderKey = @"kTileAnswerOrderKey";
+NSString * const kPuzzleCacheKey = @"kPuzzleCacheKey";
 
-NSString * const kClearAnswerOptionSelectionAfterPickingTileForAnswerKey = @"kClearAnswerOptionSelectionAfterPickingTileForAnswerKey";
 NSString * const kClearTileSelectionAfterPickingAnswerOptionForAnswerKey = @"kClearTileSelectionAfterPickingAnswerOptionForAnswerKey";
-NSString * const kClearAnswerOptionSelectionAfterPickingTileForPencilKey = @"kClearAnswerOptionSelectionAfterPickingTileForPencilKey";
 NSString * const kClearTileSelectionAfterPickingAnswerOptionForPencilKey = @"kClearTileSelectionAfterPickingAnswerOptionForPencilKey";
 
 NSString * const kClearPencilsAfterGuessingKey = @"kClearPencilsAfterGuessingKey";
@@ -53,6 +51,9 @@ NSString * const kRemoveTileAfterErrorKey = @"kRemoveTileAfterErrorKey";
 		[self userDidUpgradeVersion];
 	}
 	
+	// Load puzzles in from the defaults cache.
+	[[ZSGameController sharedInstance] populateCacheFromUserDefaults];
+	
 	// Build the window.
     _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
@@ -72,8 +73,12 @@ NSString * const kRemoveTileAfterErrorKey = @"kRemoveTileAfterErrorKey";
 	
 	[gameBookViewController.currentGameViewController applicationWillResignActive:application];
 	
+	// Save the game and statistics.
 	[[ZSGameController sharedInstance] saveGame:gameBookViewController.currentGameViewController.game];
 	[[ZSStatisticsController sharedInstance] saveStats];
+	
+	// Load the puzzle cache back into user defaults.
+	[[ZSGameController sharedInstance] saveCacheToUserDefaults];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
@@ -111,12 +116,12 @@ NSString * const kRemoveTileAfterErrorKey = @"kRemoveTileAfterErrorKey";
 - (void)setUserDefaults {
     NSDictionary *appDefaults = [NSDictionary dictionaryWithObjectsAndKeys:
 								 
-								 [NSNumber numberWithBool:NO], kClearAnswerOptionSelectionAfterPickingTileForAnswerKey,
-								 [NSNumber numberWithBool:NO], kClearTileSelectionAfterPickingAnswerOptionForAnswerKey,
-								 [NSNumber numberWithBool:NO], kClearAnswerOptionSelectionAfterPickingTileForPencilKey,
-								 [NSNumber numberWithBool:NO], kClearTileSelectionAfterPickingAnswerOptionForPencilKey,
+								 @"(never)", kLastUsedVersionKey,
 								 
-								 [NSNumber numberWithInt:ZSTileAnswerOrderTileFirst], kTileAnswerOrderKey,
+								 [NSData data], kPuzzleCacheKey,
+								 
+								 [NSNumber numberWithBool:NO], kClearTileSelectionAfterPickingAnswerOptionForAnswerKey,
+								 [NSNumber numberWithBool:NO], kClearTileSelectionAfterPickingAnswerOptionForPencilKey,
 								 
 								 [NSNumber numberWithBool:YES], kClearPencilsAfterGuessingKey,
 								 

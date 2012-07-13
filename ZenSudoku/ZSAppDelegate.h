@@ -34,11 +34,9 @@ extern NSString * const kTestFlightCheckPointUsedAHint;
 
 extern NSString * const kLastUsedVersionKey;
 
-extern NSString * const kTileAnswerOrderKey;
+extern NSString * const kPuzzleCacheKey;
 
-extern NSString * const kClearAnswerOptionSelectionAfterPickingTileForAnswerKey;
 extern NSString * const kClearTileSelectionAfterPickingAnswerOptionForAnswerKey;
-extern NSString * const kClearAnswerOptionSelectionAfterPickingTileForPencilKey;
 extern NSString * const kClearTileSelectionAfterPickingAnswerOptionForPencilKey;
 
 extern NSString * const kClearPencilsAfterGuessingKey;
