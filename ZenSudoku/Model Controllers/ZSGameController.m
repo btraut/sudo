@@ -86,6 +86,14 @@ NSString * const kSavedGameFileName = @"SavedGame.plist";
 
 #pragma mark Cache Management
 
+- (void)populateCacheForAllDifficultiesSynchronous:(BOOL)synchronous {
+	[self populateCacheForDifficulty:ZSGameDifficultyEasy synchronous:synchronous];
+	[self populateCacheForDifficulty:ZSGameDifficultyModerate synchronous:synchronous];
+	[self populateCacheForDifficulty:ZSGameDifficultyChallenging synchronous:synchronous];
+	[self populateCacheForDifficulty:ZSGameDifficultyDiabolical synchronous:synchronous];
+	[self populateCacheForDifficulty:ZSGameDifficultyInsane synchronous:synchronous];
+}
+
 - (void)populateCacheForDifficulty:(ZSGameDifficulty)difficulty synchronous:(BOOL)synchronous {
 	dispatch_group_async(_cachePopulationDispatchGroup, _cachePopulationDispatchQueue, ^{
 		NSMutableArray *cacheArray;

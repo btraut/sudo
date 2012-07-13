@@ -17,6 +17,7 @@
 - (ZSGame *)fetchGameWithDifficulty:(ZSGameDifficulty)difficulty;
 
 // Cache Management
+- (void)populateCacheForAllDifficultiesSynchronous:(BOOL)synchronous;
 - (void)populateCacheForDifficulty:(ZSGameDifficulty)difficulty synchronous:(BOOL)synchronous;
 - (void)populateCacheFromUserDefaults;
 - (void)saveCacheToUserDefaults;

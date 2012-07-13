@@ -22,7 +22,9 @@
 
 @property (strong) ZSGameViewController *currentGameViewController;
 @property (strong) ZSGameViewController *nextGameViewController;
-@property (strong) ZSGameViewController *tempGameViewController;
+@property (strong) ZSGameViewController *lastGameViewController;
+
+@property (strong) ZSGameViewController *extraGameViewController;
 
 - (void)showHint;
 - (void)hideHint;

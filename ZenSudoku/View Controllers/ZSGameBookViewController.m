@@ -33,7 +33,7 @@
 
 @implementation ZSGameBookViewController
 
-@synthesize currentGameViewController, nextGameViewController, tempGameViewController;
+@synthesize currentGameViewController, nextGameViewController, lastGameViewController, extraGameViewController;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -58,6 +58,15 @@
 	currentGameViewController.hintDelegate = self;
 	currentGameViewController.animationDelegate = self;
 	[_innerBook addSubview:currentGameViewController.view];
+	
+	// Load the page behind the current. Yet another page will be loaded when the current page is done animating.
+	ZSGameDifficulty randomDifficulty = ZSGameDifficultyChallenging;// arc4random() % 5;
+	ZSGame *newGame = [[ZSGameController sharedInstance] fetchGameWithDifficulty:randomDifficulty];
+	
+	self.nextGameViewController = [[ZSGameViewController alloc] initWithGame:newGame];
+	self.nextGameViewController.hintDelegate = self;
+	self.nextGameViewController.animationDelegate = self;
+	[_innerBook insertSubview:self.nextGameViewController.view belowSubview:self.currentGameViewController.view];
 	
 	// Create the splash page view.
 	_splashPageViewController = [[ZSSplashPageViewController alloc] init];
@@ -90,22 +99,22 @@
 	_backgroundProcessTimerCount = 0;
 }
 
-- (void)loadNewNextGame {
+- (void)_loadNewGame {
 	ZSGameDifficulty randomDifficulty = ZSGameDifficultyChallenging;// arc4random() % 5;
 	ZSGame *newGame = [[ZSGameController sharedInstance] fetchGameWithDifficulty:randomDifficulty];
 	
-	if (self.tempGameViewController) {
-		self.nextGameViewController = self.tempGameViewController;
-		self.tempGameViewController = nil;
+	if (self.extraGameViewController) {
+		self.lastGameViewController = self.extraGameViewController;
+		self.extraGameViewController = nil;
 		
-		[self.nextGameViewController resetWithGame:newGame];
+		[self.lastGameViewController resetWithGame:newGame];
 	} else {
-		self.nextGameViewController = [[ZSGameViewController alloc] initWithGame:newGame];
-		nextGameViewController.hintDelegate = self;
-		nextGameViewController.animationDelegate = self;
+		self.lastGameViewController = [[ZSGameViewController alloc] initWithGame:newGame];
+		self.lastGameViewController.hintDelegate = self;
+		self.lastGameViewController.animationDelegate = self;
 	}
-	
-	[_innerBook insertSubview:self.nextGameViewController.view belowSubview:self.currentGameViewController.view];
+
+	[_innerBook insertSubview:self.lastGameViewController.view belowSubview:self.nextGameViewController.view];
 }
 
 - (void)showHint {
@@ -190,8 +199,12 @@
 		[self.currentGameViewController.view removeFromSuperview];
 		
 		// Swap the next game view controller for the current. We'll recycle the old one so we don't need to reinitialize.
-		self.tempGameViewController = self.currentGameViewController;
+		self.extraGameViewController = self.currentGameViewController;
+		
+		// Promote the other view controllers.
 		self.currentGameViewController = self.nextGameViewController;
+		self.nextGameViewController = self.lastGameViewController;
+		self.lastGameViewController = nil;
 		
 		// Fire up the new game.
 		[self.currentGameViewController viewWasPromotedToFrontAnimated:YES];
@@ -202,7 +215,7 @@
 
 - (void)plusButtonStartAnimationDidFinishWithViewController:(ZSGameViewController *)viewController {
 	// Load a new game into the recycled view controller.
-	[self loadNewNextGame];
+	[self _loadNewGame];
 }
 
 #pragma mark - ZSHintDelegate Implementation
