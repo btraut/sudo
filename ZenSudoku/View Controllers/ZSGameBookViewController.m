@@ -22,6 +22,11 @@
 	
 	UISwipeGestureRecognizer *_downSwipeGestureRecognizer;
 	UITapGestureRecognizer *_tapGestureRecognizer;
+	
+	NSTimer *_backgroundProcessTimer;
+	NSInteger _backgroundProcessTimerCount;
+	
+	ZSGameDifficulty _previouslyCachedDifficulty;
 }
 
 @end
@@ -79,6 +84,10 @@
 	_downSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionDown;
 	
 	_tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideHint)];
+	
+	// Start the background process timer.
+	_backgroundProcessTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(_backgroundProcessTimerDidAdvance:) userInfo:nil repeats:YES];
+	_backgroundProcessTimerCount = 0;
 }
 
 - (void)loadNewNextGame {
@@ -147,6 +156,25 @@
 		 _innerBook.frame = CGRectMake(0, 0, _innerBook.frame.size.width, _innerBook.frame.size.height);
 	 }
 	 completion:NULL];
+}
+
+- (void)_backgroundProcessTimerDidAdvance:(NSTimer *)timer {
+	++_backgroundProcessTimerCount;
+	
+	if (_backgroundProcessTimerCount % 10 == 0) {
+		switch (_previouslyCachedDifficulty) {
+			case ZSGameDifficultyInsane:
+				_previouslyCachedDifficulty = ZSGameDifficultyEasy;
+				break;
+				
+			default:
+				++_previouslyCachedDifficulty;
+				break;
+		}
+		
+		// NSLog(@"Populating cache, difficulty %i.", _previouslyCachedDifficulty);
+		[[ZSGameController sharedInstance] populateCacheForDifficulty:_previouslyCachedDifficulty synchronous:NO];
+	}
 }
 
 #pragma mark - ZSFoldedPageViewControllerAnimationDelegate Implementation

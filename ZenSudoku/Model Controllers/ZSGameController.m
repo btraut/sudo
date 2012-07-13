@@ -98,11 +98,13 @@ NSString * const kSavedGameFileName = @"SavedGame.plist";
 		
 		NSInteger puzzlesToFetch = CACHE_THRESHOLD - cacheArray.count;
 		
-		ZSPuzzleFetcher *fetcher = [[ZSPuzzleFetcher alloc] init];
-		NSArray *games = [fetcher fetchGames:puzzlesToFetch withDifficulty:difficulty];
-		
-		for (ZSGame *game in games) {
-			[cacheArray addObject:game];
+		if (puzzlesToFetch) {
+			ZSPuzzleFetcher *fetcher = [[ZSPuzzleFetcher alloc] init];
+			NSArray *games = [fetcher fetchGames:puzzlesToFetch withDifficulty:difficulty];
+			
+			for (ZSGame *game in games) {
+				[cacheArray addObject:game];
+			}
 		}
 	});
 	

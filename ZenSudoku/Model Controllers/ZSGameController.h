@@ -15,6 +15,7 @@
 
 // Game Management
 - (ZSGame *)fetchGameWithDifficulty:(ZSGameDifficulty)difficulty;
+- (void)populateCacheForDifficulty:(ZSGameDifficulty)difficulty synchronous:(BOOL)synchronous;
 
 // Saved Games
 - (BOOL)savedGameInProgress;

@@ -85,8 +85,6 @@
 - (void)updateScreenshotSynchronous:(BOOL)synchronous {
 	dispatch_group_async(_screenshotRenderDispatchGroup, _screenshotRenderDispatchQueue, ^{
 		if (self.needsScreenshotUpdate) {
-			NSLog(@"updating screenshot");
-			
 			self.needsScreenshotUpdate = NO;
 			
 			[self.foldedCornerViewController setPageImage:[self getScreenshotImage]];
