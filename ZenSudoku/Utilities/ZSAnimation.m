@@ -12,10 +12,10 @@
 
 @interface ZSAnimation()
 
-@property (strong) CADisplayLink *_displayLink;
+@property (strong) CADisplayLink *displayLink;
 
-@property (assign) BOOL _startTimeSet; 
-@property (strong) NSDate *_startTime; 
+@property (strong) NSDate *startTime; 
+@property (assign) NSTimeInterval timeElapsedBeforePause;
 
 @end
 
@@ -23,16 +23,17 @@
 
 @synthesize delegate;
 @synthesize duration, timingFunction;
-@synthesize isAnimating;
 
-@synthesize _displayLink;
-@synthesize _startTimeSet, _startTime;
+@synthesize displayLink = _displayLink;
+@synthesize state = _state;
+@synthesize startTime = _startTime;
+@synthesize timeElapsedBeforePause = _timeElapsedBeforePause;
 
 - (id)init {
 	self = [super init];
 	
 	if (self) {
-		_startTimeSet = NO;
+		_state = ZSAnimationStateIdle;
 		
 		_displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(_animationAdvanced:)];
 		_displayLink.frameInterval = 2;
@@ -43,33 +44,54 @@
 }
 
 - (void)start {
-	if (!_startTimeSet) {
-		_startTime = [NSDate date];
-		
-		[_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+	if (self.state == ZSAnimationStateAnimating) {
+		return;
 	}
 	
-	isAnimating = YES;
-	_displayLink.paused = NO;
+	self.startTime = [NSDate date];
+	
+	if (self.state == ZSAnimationStateIdle) {
+		self.timeElapsedBeforePause = 0;
+		
+		[self.displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+	}
+	
+	self.displayLink.paused = NO;
+	
+	_state = ZSAnimationStateAnimating;
 }
 
 - (void)pause {
-	isAnimating = NO;
-	_displayLink.paused = YES;
+	if (self.state == ZSAnimationStatePaused) {
+		return;
+	}
+	
+	NSDate *now = [NSDate date];
+	NSTimeInterval elapsedTime = [now timeIntervalSinceDate:self.startTime];
+	self.timeElapsedBeforePause += elapsedTime;
+	
+	self.displayLink.paused = YES;
+	
+	_state = ZSAnimationStatePaused;
 }
 
 - (void)reset {
+	if (self.state == ZSAnimationStateIdle) {
+		return;
+	}
+	
 	[self pause];
 	
-	_startTimeSet = NO;
-	[_displayLink removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+	[self.displayLink removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+	
+	_state = ZSAnimationStateIdle;
 }
 
 - (void)_animationAdvanced:(CADisplayLink *)sender {
-	if (self.isAnimating) {
+	if (self.state == ZSAnimationStateAnimating) {
 		NSDate *now = [NSDate date];
-		
-		NSTimeInterval elapsedTime = [now timeIntervalSinceDate:_startTime];
+		NSTimeInterval elapsedTime = [now timeIntervalSinceDate:self.startTime];
+		elapsedTime += self.timeElapsedBeforePause;
 		
 		float unweightedPercentComplete = (elapsedTime / self.duration);
 		float percentComplete = [self _getPercentCompleteForRatio:unweightedPercentComplete];

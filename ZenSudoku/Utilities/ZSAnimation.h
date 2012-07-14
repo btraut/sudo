@@ -9,6 +9,12 @@
 #import <Foundation/Foundation.h>
 
 typedef enum {
+	ZSAnimationStateIdle,
+	ZSAnimationStateAnimating,
+	ZSAnimationStatePaused
+} ZSAnimationState;
+
+typedef enum {
 	ZSAnimationTimingFunctionLinear,
 	ZSAnimationTimingFunctionEaseIn,
 	ZSAnimationTimingFunctionEaseOut,
@@ -29,7 +35,7 @@ typedef enum {
 @property (assign) NSTimeInterval duration;
 @property (assign) ZSAnimationTimingFunction timingFunction;
 
-@property (assign, readonly) BOOL isAnimating;
+@property (assign, readonly) ZSAnimationState state; 
 
 - (void)start;
 - (void)pause;

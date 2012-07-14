@@ -69,7 +69,13 @@ NSString * const kTextShadowColorPlusLabel = @"66FFFFFF";
 }
 
 - (void)resumeAnimation {
-	[_animationHelper start];
+	if (self.isAnimating) {
+		[_animationHelper start];
+	}
+}
+
+- (BOOL)getIsAnimating {
+	return _animationState != ZSFoldedCornerPlusButtonAnimationStateIdle;
 }
 
 - (void)resetToDefaultPosition {

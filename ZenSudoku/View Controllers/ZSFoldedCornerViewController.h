@@ -51,6 +51,8 @@
 
 @property (assign) BOOL drawPage;
 
+@property (assign, readonly, getter = getIsAnimating) BOOL isAnimating;
+
 - (void)setPageImage:(UIImage *)image;
 
 - (void)pauseAnimation;

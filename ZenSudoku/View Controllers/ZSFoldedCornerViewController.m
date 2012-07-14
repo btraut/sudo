@@ -68,6 +68,8 @@ typedef enum {
 @synthesize animationDelegate;
 @synthesize plusButtonViewController;
 
+@synthesize isAnimating;
+
 @synthesize drawContext = _drawContext;
 @synthesize renderScreenshotContext = _renderScreenshotContext;
 @synthesize renderTranslucentPageContext = _renderTranslucentPageContext;
@@ -260,7 +262,13 @@ typedef enum {
 }
 
 - (void)resumeAnimation {
-	[_animationHelper start];
+	if (self.isAnimating) {
+		[_animationHelper start];
+	}
+}
+
+- (BOOL)getIsAnimating {
+	return _animationState != ZSFoldedCornerViewControllerAnimationStateStopped;
 }
 
 - (void)resetToStartPosition {
