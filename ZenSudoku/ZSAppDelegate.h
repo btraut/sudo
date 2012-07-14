@@ -36,6 +36,8 @@ extern NSString * const kLastUsedVersionKey;
 
 extern NSString * const kPuzzleCacheKey;
 
+extern NSString * const kLastPlayedPuzzleDifficulty;
+
 extern NSString * const kClearTileSelectionAfterPickingAnswerOptionForAnswerKey;
 extern NSString * const kClearTileSelectionAfterPickingAnswerOptionForPencilKey;
 

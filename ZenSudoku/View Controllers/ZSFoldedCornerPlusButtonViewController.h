@@ -37,6 +37,10 @@ typedef enum {
 
 @interface ZSFoldedCornerPlusButtonViewController : UIViewController <ZSAnimationDelegate>
 
+- (void)pauseAnimation;
+- (void)resumeAnimation;
+- (void)resetToDefaultPosition;
+
 - (void)setState:(ZSFoldedCornerPlusButtonState)state animated:(BOOL)animated;
 
 @property (weak) id<ZSFoldedCornerPlusButtonViewControllerAnimationDelegate> animationDelegate;

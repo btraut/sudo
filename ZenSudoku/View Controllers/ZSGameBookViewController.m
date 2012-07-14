@@ -14,6 +14,7 @@
 #import "ZSBoardViewController.h"
 #import "ZSHintViewController.h"
 #import "ZSFoldedCornerViewController.h"
+#import "ZSAppDelegate.h"
 
 @interface ZSGameBookViewController () {
 	UIImageView *_innerBook;
@@ -50,8 +51,8 @@
 	if ([[ZSGameController sharedInstance] savedGameInProgress]) {
 		currentGame = [[ZSGameController sharedInstance] loadSavedGame];
 	} else {
-		ZSGameDifficulty randomDifficulty = ZSGameDifficultyChallenging;// arc4random() % 5;
-		currentGame = [[ZSGameController sharedInstance] fetchGameWithDifficulty:randomDifficulty];
+		ZSGameDifficulty newGameDifficulty = [[NSUserDefaults standardUserDefaults] integerForKey:kLastPlayedPuzzleDifficulty];
+		currentGame = [[ZSGameController sharedInstance] fetchGameWithDifficulty:newGameDifficulty];
 	}
 	
 	currentGameViewController = [[ZSGameViewController alloc] initWithGame:currentGame];
@@ -60,8 +61,8 @@
 	[_innerBook addSubview:currentGameViewController.view];
 	
 	// Load the page behind the current. Yet another page will be loaded when the current page is done animating.
-	ZSGameDifficulty randomDifficulty = ZSGameDifficultyChallenging;// arc4random() % 5;
-	ZSGame *newGame = [[ZSGameController sharedInstance] fetchGameWithDifficulty:randomDifficulty];
+	ZSGameDifficulty newGameDifficulty = [[NSUserDefaults standardUserDefaults] integerForKey:kLastPlayedPuzzleDifficulty];
+	ZSGame *newGame = [[ZSGameController sharedInstance] fetchGameWithDifficulty:newGameDifficulty];
 	
 	self.nextGameViewController = [[ZSGameViewController alloc] initWithGame:newGame];
 	self.nextGameViewController.hintDelegate = self;
@@ -100,8 +101,8 @@
 }
 
 - (void)_loadNewGame {
-	ZSGameDifficulty randomDifficulty = ZSGameDifficultyChallenging;// arc4random() % 5;
-	ZSGame *newGame = [[ZSGameController sharedInstance] fetchGameWithDifficulty:randomDifficulty];
+	ZSGameDifficulty newGameDifficulty = [[NSUserDefaults standardUserDefaults] integerForKey:kLastPlayedPuzzleDifficulty];
+	ZSGame *newGame = [[ZSGameController sharedInstance] fetchGameWithDifficulty:newGameDifficulty];
 	
 	if (self.extraGameViewController) {
 		self.lastGameViewController = self.extraGameViewController;

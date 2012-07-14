@@ -64,6 +64,28 @@ NSString * const kTextShadowColorPlusLabel = @"66FFFFFF";
 	_animationHelper.delegate = self;
 }
 
+- (void)pauseAnimation {
+	[_animationHelper pause];
+}
+
+- (void)resumeAnimation {
+	[_animationHelper start];
+}
+
+- (void)resetToDefaultPosition {
+	[_animationHelper reset];
+	
+	[self setSize:18.0f];
+	
+	self.view.hidden = NO;
+	
+	_state = ZSFoldedCornerPlusButtonStateNormal;
+	_animationState = ZSFoldedCornerPlusButtonAnimationStateIdle;
+	
+	_queuedState = ZSFoldedCornerPlusButtonStateNormal;
+	_animateQueuedState = NO;
+}
+
 - (void)setState:(ZSFoldedCornerPlusButtonState)state animated:(BOOL)animated {
 	_queuedState = state;
 	_animateQueuedState = animated;

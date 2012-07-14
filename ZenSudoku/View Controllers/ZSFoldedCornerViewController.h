@@ -53,6 +53,8 @@
 
 - (void)setPageImage:(UIImage *)image;
 
+- (void)pauseAnimation;
+- (void)resumeAnimation;
 - (void)resetToStartPosition;
 - (void)resetToDefaultPosition;
 

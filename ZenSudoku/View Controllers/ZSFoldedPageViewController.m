@@ -71,6 +71,14 @@
 	[self updateScreenshotSynchronous:NO];
 }
 
+- (void)applicationWillResignActive:(UIApplication *)application {
+	[self.foldedCornerViewController pauseAnimation];
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+	[self.foldedCornerViewController resumeAnimation];
+}
+
 - (UIImage *)getScreenshotImage {
     UIGraphicsBeginImageContextWithOptions(self.innerView.bounds.size, NO, 0.0f);
 	

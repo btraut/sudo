@@ -83,6 +83,7 @@
 - (void)viewWasPromotedToFrontAnimated:(BOOL)animated;
 - (void)viewWasPushedToBack;
 - (void)applicationWillResignActive:(UIApplication *)application;
+- (void)applicationDidBecomeActive:(UIApplication *)application;
 
 - (void)setTitle;
 

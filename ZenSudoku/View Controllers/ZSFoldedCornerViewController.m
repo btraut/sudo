@@ -255,6 +255,14 @@ typedef enum {
 	self.backwardsPageSprite = [[ZSGLSprite alloc] initWithCGImage:newImage.CGImage effect:self.effect];
 }
 
+- (void)pauseAnimation {
+	[_animationHelper pause];
+}
+
+- (void)resumeAnimation {
+	[_animationHelper start];
+}
+
 - (void)resetToStartPosition {
 	_foldPoint = _foldStartPoint;
 	
@@ -263,6 +271,7 @@ typedef enum {
 	
 	[self pushUpdate];
 	
+	self.view.userInteractionEnabled = YES;
 	self.view.hidden = NO;
 	self.view.alpha = 1;
 }
@@ -275,6 +284,7 @@ typedef enum {
 	
 	[self pushUpdate];
 	
+	self.view.userInteractionEnabled = YES;
 	self.view.hidden = NO;
 	self.view.alpha = 1;
 }

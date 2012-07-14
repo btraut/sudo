@@ -31,8 +31,6 @@ typedef struct {
 	CGPoint _foldStartPoint;
 	BOOL _foldedCornerTouchCrossedTapThreshold;
 	
-	ZSFoldedCornerPlusButtonViewController *_foldedCornerPlusButtonViewController;
-	
 	NSArray *_hintDeck;
 	
 	dispatch_queue_t _hintGenerationDispatchQueue;
@@ -46,6 +44,8 @@ typedef struct {
 	NSTimer *_backgroundProcessTimer;
 	NSInteger _backgroundProcessTimerCount;
 }
+
+@property (strong) ZSFoldedCornerPlusButtonViewController *foldedCornerPlusButtonViewController;
 
 @property (assign) BOOL needsScreenshotUpdate;
 
@@ -63,6 +63,8 @@ typedef struct {
 @synthesize hintDelegate;
 
 @dynamic animationDelegate;
+
+@synthesize foldedCornerPlusButtonViewController = _foldedCornerPlusButtonViewController;
 
 @synthesize needsScreenshotUpdate = _needsScreenshotUpdate;
 
@@ -123,7 +125,7 @@ typedef struct {
 	[self _setErrors];
 	[boardViewController reloadView];
 	
-	[_foldedCornerPlusButtonViewController setState:ZSFoldedCornerPlusButtonStateHidden animated:NO];
+	[self.foldedCornerPlusButtonViewController setState:ZSFoldedCornerPlusButtonStateHidden animated:NO];
 		
 	self.needsScreenshotUpdate = YES;
 	[self setScreenshotVisible:NO];
@@ -148,13 +150,13 @@ typedef struct {
 	[super viewDidLoad];
 	
 	// Build the plus button.
-	_foldedCornerPlusButtonViewController = [[ZSFoldedCornerPlusButtonViewController alloc] init];
-	_foldedCornerPlusButtonViewController.animationDelegate = self;
-	[self.view addSubview:_foldedCornerPlusButtonViewController.view];
-	[_foldedCornerPlusButtonViewController setState:ZSFoldedCornerPlusButtonStateHidden animated:NO];
+	self.foldedCornerPlusButtonViewController = [[ZSFoldedCornerPlusButtonViewController alloc] init];
+	self.foldedCornerPlusButtonViewController.animationDelegate = self;
+	[self.view addSubview:self.foldedCornerPlusButtonViewController.view];
+	[self.foldedCornerPlusButtonViewController setState:ZSFoldedCornerPlusButtonStateHidden animated:NO];
 	
-	// Build the folded corner.
-	self.foldedCornerViewController.plusButtonViewController = _foldedCornerPlusButtonViewController;
+	// Set the plus button (delegate) on the folded corner.
+	self.foldedCornerViewController.plusButtonViewController = self.foldedCornerPlusButtonViewController;
 	
 	// Build the title.
 	title = [[UILabel alloc] initWithFrame:CGRectMake(70, 12, 180, 32)];
@@ -264,7 +266,7 @@ typedef struct {
 	} else {
 		[self.foldedCornerViewController resetToDefaultPosition];
 		
-		[_foldedCornerPlusButtonViewController setState:ZSFoldedCornerPlusButtonStateNormal animated:NO];
+		[self.foldedCornerPlusButtonViewController setState:ZSFoldedCornerPlusButtonStateNormal animated:NO];
 	}
 	
 	// Update the hint deck.
@@ -283,7 +285,15 @@ typedef struct {
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
-	[self.foldedCornerViewController resetToDefaultPosition];
+	[super applicationWillResignActive:application];
+	
+	[self.foldedCornerPlusButtonViewController pauseAnimation];
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+	[super applicationDidBecomeActive:application];
+	
+	[self.foldedCornerPlusButtonViewController resumeAnimation];
 }
 
 - (void)setTitle {
@@ -589,7 +599,7 @@ typedef struct {
 - (void)startFoldAnimationDidFinishWithViewController:(ZSFoldedCornerViewController *)viewController {
 	[super startFoldAnimationDidFinishWithViewController:viewController];
 	
-	[_foldedCornerPlusButtonViewController setState:ZSFoldedCornerPlusButtonStateNormal animated:YES];
+	[self.foldedCornerPlusButtonViewController setState:ZSFoldedCornerPlusButtonStateNormal animated:YES];
 }
 
 #pragma mark - ZSFoldedCornerPlusButtonViewControllerAnimationDelegate Implementation

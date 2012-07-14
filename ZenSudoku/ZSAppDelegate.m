@@ -25,6 +25,8 @@ NSString * const kLastUsedVersionKey = @"kLastUsedVersionKey";
 
 NSString * const kPuzzleCacheKey = @"kPuzzleCacheKey";
 
+NSString * const kLastPlayedPuzzleDifficulty = @"kLastPlayedPuzzleDifficulty";
+
 NSString * const kClearTileSelectionAfterPickingAnswerOptionForAnswerKey = @"kClearTileSelectionAfterPickingAnswerOptionForAnswerKey";
 NSString * const kClearTileSelectionAfterPickingAnswerOptionForPencilKey = @"kClearTileSelectionAfterPickingAnswerOptionForPencilKey";
 
@@ -93,7 +95,9 @@ NSString * const kRemoveTileAfterErrorKey = @"kRemoveTileAfterErrorKey";
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
+	ZSGameBookViewController *gameBookViewController = (ZSGameBookViewController *)_window.rootViewController;
 	
+	[gameBookViewController.currentGameViewController applicationDidBecomeActive:application];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -122,6 +126,8 @@ NSString * const kRemoveTileAfterErrorKey = @"kRemoveTileAfterErrorKey";
 								 @"(never)", kLastUsedVersionKey,
 								 
 								 [NSData data], kPuzzleCacheKey,
+								 
+								 [NSNumber numberWithInt:ZSGameDifficultyChallenging], kLastPlayedPuzzleDifficulty,
 								 
 								 [NSNumber numberWithBool:NO], kClearTileSelectionAfterPickingAnswerOptionForAnswerKey,
 								 [NSNumber numberWithBool:NO], kClearTileSelectionAfterPickingAnswerOptionForPencilKey,

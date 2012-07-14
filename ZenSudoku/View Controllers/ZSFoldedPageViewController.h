@@ -34,6 +34,9 @@
 
 @property (assign) BOOL needsScreenshotUpdate;
 
+- (void)applicationWillResignActive:(UIApplication *)application;
+- (void)applicationDidBecomeActive:(UIApplication *)application;
+
 - (UIImage *)getScreenshotImage;
 - (void)updateScreenshotSynchronous:(BOOL)synchronous;
 - (void)setScreenshotVisible:(BOOL)visible;
