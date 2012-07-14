@@ -109,8 +109,9 @@ NSString * const kTileColorHighlightHintD = @"#4C2FADD4";
 	[super viewDidLoad];
 	
 	// Listen to the view's taps.
-	UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap)];
-	[self.view addGestureRecognizer:gestureRecognizer];
+	UITapGestureRecognizer *singleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget: self action:@selector(handleTap)];
+	singleTapRecognizer.numberOfTapsRequired = 1; 
+	[self.view addGestureRecognizer:singleTapRecognizer];
 	
 	// Create the pencil labels.
 	NSMutableArray *newPencils = [NSMutableArray array];
@@ -426,7 +427,7 @@ NSString * const kTileColorHighlightHintD = @"#4C2FADD4";
 	// NSLog(@"Guess: %i", tile.guess);
 	// NSLog(@"Answer: %i", tile.answer);
 	
-	[touchDelegate tileWasTouched:self];
+	[touchDelegate tileWasTapped:self];
 }
 
 #pragma mark - Colors

@@ -14,11 +14,23 @@
 #import "ZSTile.h"
 #import "ZSAppDelegate.h"
 
+#define DOUBLE_TAP_TIME_THRESHOLD 0.3f
+
+@interface ZSBoardViewController ()
+
+@property (weak) ZSTileViewController *lastTileTapped;
+@property (strong) NSDate *lastTileTappedTime; 
+
+@end
+
 @implementation ZSBoardViewController
 
 @synthesize game, tileViews;
 @synthesize touchDelegate;
 @synthesize selectedTileView, highlightedSimilarTileViews;
+
+@synthesize lastTileTapped = _lastTileTapped;
+@synthesize lastTileTappedTime = _lastTileTappedTime;
 
 #pragma mark - Construction / Deconstruction
 
@@ -314,10 +326,19 @@
 	return [[tileViews objectAtIndex:row] objectAtIndex:col];
 }
 
-#pragma mark - ZSTileTouchDelegate Implementation
+#pragma mark - ZSTileViewControllerTouchDelegate Implementation
 
-- (void)tileWasTouched:(ZSTileViewController *)newSelected {
-	[self.touchDelegate tileWasTouchedInRow:newSelected.tile.row col:newSelected.tile.col];
+- (void)tileWasTapped:(ZSTileViewController *)newSelected {
+	NSDate *now = [NSDate date];
+	
+	if (self.lastTileTapped == newSelected && self.lastTileTappedTime && [now timeIntervalSinceDate:self.lastTileTappedTime] < DOUBLE_TAP_TIME_THRESHOLD) {
+		[self.touchDelegate tileWasDoubleTappedInRow:newSelected.tile.row col:newSelected.tile.col];
+		self.lastTileTappedTime = nil;
+	} else {
+		[self.touchDelegate tileWasTappedInRow:newSelected.tile.row col:newSelected.tile.col];
+		self.lastTileTapped = newSelected;
+		self.lastTileTappedTime = now;
+	}
 }
 
 @end

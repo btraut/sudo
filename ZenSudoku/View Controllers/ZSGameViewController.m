@@ -17,6 +17,7 @@
 #import "ZSGameController.h"
 #import "ZSHintGenerator.h"
 #import "ZSHintCard.h"
+#import "ZSTile.h"
 
 #import "TestFlight.h"
 
@@ -719,7 +720,7 @@ typedef struct {
 
 #pragma mark - ZSBoardViewControllerTouchDelegate Implementation
 
-- (void)tileWasTouchedInRow:(NSInteger)row col:(NSInteger)col {
+- (void)tileWasTappedInRow:(NSInteger)row col:(NSInteger)col {
 	// If we aren't allowing input, end here.
 	if (!allowsInput) {
 		return;
@@ -736,7 +737,7 @@ typedef struct {
 	// Save the selected tile and answer option. One or both may be nil.
 	ZSTileViewController *selectedTileView = boardViewController.selectedTileView;
 	
-	// If there was a previously selected tile, deselect it. Otherwise, select the new one.
+	// If the tapped tile was previously selected, deselect it. Otherwise, select the new one.
 	if (selectedTileView == tileView) {
 		[boardViewController deselectTileView];
 	} else {
@@ -750,21 +751,68 @@ typedef struct {
 	self.needsScreenshotUpdate = YES;
 }
 
+- (void)tileWasDoubleTappedInRow:(NSInteger)row col:(NSInteger)col {
+	// If we aren't allowing input, end here.
+	if (!self.allowsInput) {
+		return;
+	}
+	
+	// Clear hints.
+	if ([self.hintDelegate getHintsShown]) {
+		[self.hintDelegate endHintDeck];
+	}
+	
+	// Fetch the touched game tile view controller.
+	ZSTileViewController *tileView = [[boardViewController.tileViews objectAtIndex:row] objectAtIndex:col];
+	
+	// Check the tile for pencil marks;
+	NSInteger totalPencilsFound = 0;
+	NSInteger lastPencilFound = 0;
+	
+	for (NSInteger i = 1; i <= self.boardViewController.game.board.size; ++i) {
+		if ([tileView.tile getPencilForGuess:i]) {
+			++totalPencilsFound;
+			lastPencilFound = i;
+		}
+	}
+	
+	// If the tile only has one pencil mark, fill it in.
+	if (totalPencilsFound == 1) {
+		[self _setGuess:lastPencilFound forTile:tileView];
+	}
+	
+	// Select the new tile.
+	[self.boardViewController selectTileView:tileView];
+	
+	// Reload views.
+	[self.boardViewController reloadView];
+	[self.gameAnswerOptionsViewController reloadView];
+
+	self.needsScreenshotUpdate = YES;
+}
+
 #pragma mark - State Changes
 
 - (void)_setPencilForTile:(ZSTileViewController *)tileView withAnswerOption:(ZSAnswerOptionViewController *)answerOptionView {
+	[self _setPencil:((NSInteger)answerOptionView.gameAnswerOption + 1) forTile:tileView];
+}
+
+- (void)_setPencil:(NSInteger)pencilNumber forTile:(ZSTileViewController *)tileView {
 	// Only honor the pencil mark if there is no guess in the tile.
 	if (tileView.tile.guess) {
 		return;
 	}
 	
 	// Set the new pencil to the selected answer option value.
-	[game togglePencilForPencilNumber:((NSInteger)answerOptionView.gameAnswerOption + 1) forTileAtRow:tileView.tile.row col:tileView.tile.col];
+	[game togglePencilForPencilNumber:pencilNumber forTileAtRow:tileView.tile.row col:tileView.tile.col];
 }
 
 - (void)_setGuessForTile:(ZSTileViewController *)tileView withAnswerOption:(ZSAnswerOptionViewController *)answerOptionView {
+	[self _setGuess:((NSInteger)answerOptionView.gameAnswerOption + 1) forTile:tileView];
+}
+
+- (void)_setGuess:(NSInteger)guess forTile:(ZSTileViewController *)tileView {
 	NSInteger previousGuess = tileView.tile.guess;
-	NSInteger guess = ((NSInteger)answerOptionView.gameAnswerOption + 1);
 	
 	// Start a generic undo stop. We're going to be tying multiple actions together.
 	[game startGenericUndoStop];

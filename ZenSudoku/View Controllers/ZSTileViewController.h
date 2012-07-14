@@ -64,7 +64,7 @@ typedef enum {
 
 @protocol ZSTileViewControllerTouchDelegate <NSObject>
 
-- (void)tileWasTouched:(ZSTileViewController *)tileView;
+- (void)tileWasTapped:(ZSTileViewController *)tileView;
 
 @end
 

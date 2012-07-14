@@ -14,7 +14,8 @@
 
 @protocol ZSBoardViewControllerTouchDelegate <NSObject>
 
-- (void)tileWasTouchedInRow:(NSInteger)row col:(NSInteger)col;
+- (void)tileWasTappedInRow:(NSInteger)row col:(NSInteger)col;
+- (void)tileWasDoubleTappedInRow:(NSInteger)row col:(NSInteger)col;
 
 @end
 
