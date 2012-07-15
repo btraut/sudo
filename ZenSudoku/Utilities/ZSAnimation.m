@@ -62,7 +62,7 @@
 }
 
 - (void)pause {
-	if (self.state == ZSAnimationStatePaused) {
+	if (self.state == ZSAnimationStatePaused || self.state == ZSAnimationStateIdle) {
 		return;
 	}
 	
