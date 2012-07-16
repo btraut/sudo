@@ -3,7 +3,7 @@
 //  ZenSudoku
 //
 //  Created by Brent Traut on 7/9/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2012 Ten Four Software, LLC. All rights reserved.
 //
 
 #import "ZSSplashPageViewController.h"

@@ -19,10 +19,15 @@
 @interface ZSGameBookViewController () {
 	UIImageView *_innerBook;
 	
+	ZSHintViewController *_hintViewController;
+	ZSRibbonViewController *_ribbonViewController;
+	
 	ZSSplashPageViewController *_splashPageViewController;
 	
+	UISwipeGestureRecognizer *_upSwipeGestureRecognizer;
 	UISwipeGestureRecognizer *_downSwipeGestureRecognizer;
-	UITapGestureRecognizer *_tapGestureRecognizer;
+	UITapGestureRecognizer *_hintTapGestureRecognizer;
+	UITapGestureRecognizer *_ribbonTapGestureRecognizer;
 	
 	NSTimer *_backgroundProcessTimer;
 	NSInteger _backgroundProcessTimerCount;
@@ -35,6 +40,8 @@
 @implementation ZSGameBookViewController
 
 @synthesize currentGameViewController, nextGameViewController, lastGameViewController, extraGameViewController;
+@synthesize hintsShown = _hintsShown;
+@synthesize ribbonShown = _ribbonShown;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -86,18 +93,34 @@
 	[_innerBook addSubview:pageCurl];
 	
 	// Create the hint.
-	hintViewController = [[ZSHintViewController alloc] initWithNibName:@"ZSHintViewController" bundle:[NSBundle mainBundle]];
-	hintViewController.view.frame = CGRectMake(-5, _innerBook.frame.size.height, hintViewController.view.frame.size.width, hintViewController.view.frame.size.height);
-	[self.view addSubview:hintViewController.view];
+	_hintViewController = [[ZSHintViewController alloc] initWithNibName:@"ZSHintViewController" bundle:[NSBundle mainBundle]];
+	_hintViewController.view.frame = CGRectMake(-5, _innerBook.frame.size.height, _hintViewController.view.frame.size.width, _hintViewController.view.frame.size.height);
+	[self.view addSubview:_hintViewController.view];
 	
 	_downSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(hideHint)];
 	_downSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionDown;
 	
-	_tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideHint)];
+	_hintTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideHint)];
+	
+	// Create the ribbon.
+	_ribbonViewController = [[ZSRibbonViewController alloc] init];
+	_ribbonViewController.delegate = self;
+	[self.view addSubview:_ribbonViewController.view];
+	
+	_upSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(hideRibbon)];
+	_upSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionUp;
+	
+	_ribbonTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideRibbon)];
 	
 	// Start the background process timer.
 	_backgroundProcessTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(_backgroundProcessTimerDidAdvance:) userInfo:nil repeats:YES];
 	_backgroundProcessTimerCount = 0;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+	[super viewDidAppear:animated];
+	
+	[self showRibbon];
 }
 
 - (void)_loadNewGame {
@@ -119,39 +142,39 @@
 }
 
 - (void)showHint {
-	if (hintsShown) {
+	if (_hintsShown) {
 		return;
 	}
 	
-	hintsShown = YES;
+	_hintsShown = YES;
 	
 	self.currentGameViewController.foldedCornerViewController.view.userInteractionEnabled = NO;
 	
 	[self.view addGestureRecognizer:_downSwipeGestureRecognizer];
-	[_innerBook addGestureRecognizer:_tapGestureRecognizer];
+	[_innerBook addGestureRecognizer:_hintTapGestureRecognizer];
 	
 	[UIView
 	 animateWithDuration:0.4f
 	 delay:0
 	 options:UIViewAnimationOptionCurveEaseOut
 	 animations:^{
-		 hintViewController.view.frame = CGRectMake(-5, 339, hintViewController.view.frame.size.width, hintViewController.view.frame.size.height);
+		 _hintViewController.view.frame = CGRectMake(-5, 339, _hintViewController.view.frame.size.width, _hintViewController.view.frame.size.height);
 		 _innerBook.frame = CGRectMake(0, -45, _innerBook.frame.size.width, _innerBook.frame.size.height);
 	 }
 	 completion:NULL];
 }
 
 - (void)hideHint {
-	if (!hintsShown) {
+	if (!_hintsShown) {
 		return;
 	}
 	
-	hintsShown = NO;
+	_hintsShown = NO;
 	
 	self.currentGameViewController.foldedCornerViewController.view.userInteractionEnabled = YES;
 	
 	[self.view removeGestureRecognizer:_downSwipeGestureRecognizer];
-	[_innerBook removeGestureRecognizer:_tapGestureRecognizer];
+	[_innerBook removeGestureRecognizer:_hintTapGestureRecognizer];
 	
 	[currentGameViewController.boardViewController removeAllHintHighlights];
 	
@@ -162,8 +185,52 @@
 	 delay:0
 	 options:UIViewAnimationOptionCurveEaseOut
 	 animations:^{
-		 hintViewController.view.frame = CGRectMake(-5, _innerBook.frame.size.height, hintViewController.view.frame.size.width, hintViewController.view.frame.size.height);
+		 _hintViewController.view.frame = CGRectMake(-5, _innerBook.frame.size.height, _hintViewController.view.frame.size.width, _hintViewController.view.frame.size.height);
 		 _innerBook.frame = CGRectMake(0, 0, _innerBook.frame.size.width, _innerBook.frame.size.height);
+	 }
+	 completion:NULL];
+}
+
+- (void)showRibbon {
+	if (_ribbonShown) {
+		return;
+	}
+	
+	_ribbonShown = YES;
+	
+	self.currentGameViewController.foldedCornerViewController.view.userInteractionEnabled = NO;
+	
+	[self.view addGestureRecognizer:_upSwipeGestureRecognizer];
+	[_innerBook addGestureRecognizer:_ribbonTapGestureRecognizer];
+	
+	[UIView
+	 animateWithDuration:0.4f
+	 delay:0
+	 options:UIViewAnimationOptionCurveEaseOut
+	 animations:^{
+		 _ribbonViewController.view.frame = CGRectMake(53, -3, _ribbonViewController.view.frame.size.width, _ribbonViewController.view.frame.size.height);
+	 }
+	 completion:NULL];
+}
+
+- (void)hideRibbon {
+	if (!_ribbonShown) {
+		return;
+	}
+	
+	_ribbonShown = NO;
+	
+	self.currentGameViewController.foldedCornerViewController.view.userInteractionEnabled = YES;
+	
+	[self.view removeGestureRecognizer:_upSwipeGestureRecognizer];
+	[_innerBook removeGestureRecognizer:_ribbonTapGestureRecognizer];
+	
+	[UIView
+	 animateWithDuration:0.4f
+	 delay:0
+	 options:UIViewAnimationOptionCurveEaseOut
+	 animations:^{
+		 _ribbonViewController.view.frame = CGRectMake(53, -329, _ribbonViewController.view.frame.size.width, _ribbonViewController.view.frame.size.height);
 	 }
 	 completion:NULL];
 }
@@ -224,16 +291,22 @@
 #pragma mark - ZSHintDelegate Implementation
 
 - (BOOL)getHintsShown {
-	return hintsShown;
+	return _hintsShown;
 }
 
 - (void)beginHintDeck:(NSArray *)hintDeck forGameViewController:(ZSGameViewController *)gameViewController {
-	[hintViewController beginHintDeck:hintDeck forGameViewController:gameViewController];
+	[_hintViewController beginHintDeck:hintDeck forGameViewController:gameViewController];
 	[self showHint];
 }
 
 - (void)endHintDeck {
 	[self hideHint];
+}
+
+#pragma mark - ZSRibbonViewControllerDelegate Implementation
+
+- (void)difficultyWasSelected:(ZSGameDifficulty)difficulty {
+	
 }
 
 @end

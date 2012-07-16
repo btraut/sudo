@@ -127,6 +127,9 @@
 		84D54E8B15AECADB003B1705 /* ZSPanBetweenSubviewsGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D54E8A15AECADB003B1705 /* ZSPanBetweenSubviewsGestureRecognizer.m */; };
 		84D54E8F15AFE8D4003B1705 /* PaperBackgroundWithBoard.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D54E8D15AFE8D4003B1705 /* PaperBackgroundWithBoard.png */; };
 		84D54E9015AFE8D4003B1705 /* PaperBackgroundWithBoard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D54E8E15AFE8D4003B1705 /* PaperBackgroundWithBoard@2x.png */; };
+		84D54E9715B4139D003B1705 /* Ribbon.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D54E9515B4139D003B1705 /* Ribbon.png */; };
+		84D54E9815B4139D003B1705 /* Ribbon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D54E9615B4139D003B1705 /* Ribbon@2x.png */; };
+		84D54E9C15B41595003B1705 /* ZSRibbonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D54E9B15B41593003B1705 /* ZSRibbonViewController.m */; };
 		84D55014147F1C4A00A7934E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D55013147F1C4A00A7934E /* UIKit.framework */; };
 		84D55016147F1C4A00A7934E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D55015147F1C4A00A7934E /* Foundation.framework */; };
 		84D55018147F1C4A00A7934E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D55017147F1C4A00A7934E /* CoreGraphics.framework */; };
@@ -303,6 +306,10 @@
 		84D54E8A15AECADB003B1705 /* ZSPanBetweenSubviewsGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSPanBetweenSubviewsGestureRecognizer.m; path = Utilities/ZSPanBetweenSubviewsGestureRecognizer.m; sourceTree = "<group>"; };
 		84D54E8D15AFE8D4003B1705 /* PaperBackgroundWithBoard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PaperBackgroundWithBoard.png; path = Resources/Images/PaperBackgroundWithBoard.png; sourceTree = "<group>"; };
 		84D54E8E15AFE8D4003B1705 /* PaperBackgroundWithBoard@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "PaperBackgroundWithBoard@2x.png"; path = "Resources/Images/PaperBackgroundWithBoard@2x.png"; sourceTree = "<group>"; };
+		84D54E9515B4139D003B1705 /* Ribbon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Ribbon.png; path = Resources/Images/Ribbon.png; sourceTree = "<group>"; };
+		84D54E9615B4139D003B1705 /* Ribbon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Ribbon@2x.png"; path = "Resources/Images/Ribbon@2x.png"; sourceTree = "<group>"; };
+		84D54E9A15B41590003B1705 /* ZSRibbonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSRibbonViewController.h; path = "View Controllers/ZSRibbonViewController.h"; sourceTree = "<group>"; };
+		84D54E9B15B41593003B1705 /* ZSRibbonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSRibbonViewController.m; path = "View Controllers/ZSRibbonViewController.m"; sourceTree = "<group>"; };
 		84D5500F147F1C4A00A7934E /* sudo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sudo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84D55013147F1C4A00A7934E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		84D55015147F1C4A00A7934E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -548,6 +555,8 @@
 				84D2033515A6553E00BA9CCF /* LightBlueDot@2x.png */,
 				84A8FB2415AB8DCE00D802C8 /* SplashPage.png */,
 				84A8FB2515AB8DCE00D802C8 /* SplashPage@2x.png */,
+				84D54E9515B4139D003B1705 /* Ribbon.png */,
+				84D54E9615B4139D003B1705 /* Ribbon@2x.png */,
 				8428AD3A154A52F700BA8EE0 /* Default.png */,
 				8428AD3B154A52F700BA8EE0 /* Default@2x.png */,
 			);
@@ -728,6 +737,8 @@
 				84A8FB1F15AB738800D802C8 /* ZSFoldedPageViewController.m */,
 				84A8FB2115AB7C7A00D802C8 /* ZSSplashPageViewController.h */,
 				84A8FB2215AB7C7A00D802C8 /* ZSSplashPageViewController.m */,
+				84D54E9A15B41590003B1705 /* ZSRibbonViewController.h */,
+				84D54E9B15B41593003B1705 /* ZSRibbonViewController.m */,
 			);
 			name = "Views and View Controllers";
 			sourceTree = "<group>";
@@ -887,6 +898,8 @@
 				84A8FB2715AB8DCE00D802C8 /* SplashPage@2x.png in Resources */,
 				84D54E8F15AFE8D4003B1705 /* PaperBackgroundWithBoard.png in Resources */,
 				84D54E9015AFE8D4003B1705 /* PaperBackgroundWithBoard@2x.png in Resources */,
+				84D54E9715B4139D003B1705 /* Ribbon.png in Resources */,
+				84D54E9815B4139D003B1705 /* Ribbon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -967,6 +980,7 @@
 				84A8FB2015AB738800D802C8 /* ZSFoldedPageViewController.m in Sources */,
 				84A8FB2315AB7C7A00D802C8 /* ZSSplashPageViewController.m in Sources */,
 				84D54E8B15AECADB003B1705 /* ZSPanBetweenSubviewsGestureRecognizer.m in Sources */,
+				84D54E9C15B41595003B1705 /* ZSRibbonViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

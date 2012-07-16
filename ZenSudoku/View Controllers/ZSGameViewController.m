@@ -729,9 +729,7 @@ typedef struct {
 	}
 	
 	// Clear hints.
-	if ([hintDelegate getHintsShown]) {
-		[hintDelegate endHintDeck];
-	}
+	[hintDelegate endHintDeck];
 	
 	// Fetch the touched game tile view controller.
 	ZSTileViewController *tileView = [[boardViewController.tileViews objectAtIndex:row] objectAtIndex:col];
@@ -760,9 +758,7 @@ typedef struct {
 	}
 	
 	// Clear hints.
-	if ([self.hintDelegate getHintsShown]) {
-		[self.hintDelegate endHintDeck];
-	}
+	[self.hintDelegate endHintDeck];
 	
 	// Fetch the touched game tile view controller.
 	ZSTileViewController *tileView = [[boardViewController.tileViews objectAtIndex:row] objectAtIndex:col];

@@ -11,14 +11,11 @@
 #import "ZSGame.h"
 #import "ZSGameViewController.h"
 #import "ZSSplashPageViewController.h"
+#import "ZSRibbonViewController.h"
 
 @class ZSHintViewController;
 
-@interface ZSGameBookViewController : UIViewController <ZSHintDelegate, ZSFoldedPageViewControllerAnimationDelegate, ZSFoldedPageAndPlusButtonViewControllerAnimationDelegate> {
-	ZSHintViewController *hintViewController;
-	
-	BOOL hintsShown;
-}
+@interface ZSGameBookViewController : UIViewController <ZSHintDelegate, ZSFoldedPageViewControllerAnimationDelegate, ZSFoldedPageAndPlusButtonViewControllerAnimationDelegate, ZSRibbonViewControllerDelegate>
 
 @property (strong) ZSGameViewController *currentGameViewController;
 @property (strong) ZSGameViewController *nextGameViewController;
@@ -26,7 +23,13 @@
 
 @property (strong) ZSGameViewController *extraGameViewController;
 
+@property (assign, readonly) BOOL hintsShown;
+@property (assign, readonly) BOOL ribbonShown;
+
 - (void)showHint;
 - (void)hideHint;
+
+- (void)showRibbon;
+- (void)hideRibbon;
 
 @end

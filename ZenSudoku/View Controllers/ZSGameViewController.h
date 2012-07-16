@@ -23,7 +23,6 @@
 
 @protocol ZSHintDelegate <NSObject>
 
-- (BOOL)getHintsShown;
 - (void)beginHintDeck:(NSArray *)hintDeck forGameViewController:(ZSGameViewController *)gameViewController;
 - (void)endHintDeck;
 
