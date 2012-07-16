@@ -62,13 +62,11 @@ typedef struct {
 @synthesize pencilButton, penciling;
 @synthesize allowsInput;
 @synthesize hintDelegate;
-
 @dynamic animationDelegate;
+@synthesize animateCornerWhenPromoted;
 
 @synthesize foldedCornerPlusButtonViewController = _foldedCornerPlusButtonViewController;
-
 @synthesize needsScreenshotUpdate = _needsScreenshotUpdate;
-
 @synthesize hintDeck = _hintDeck;
 @synthesize needsHintDeckUpdate = _needsHintDeckUpdate;
 
@@ -82,6 +80,8 @@ typedef struct {
 		game.stateChangeDelegate = self;
 		
 		hintGenerator = [[ZSHintGenerator alloc] initWithSize:game.board.size];
+		
+		animateCornerWhenPromoted = YES;
 		
 		penciling = NO;
 		
@@ -237,7 +237,7 @@ typedef struct {
 	[boardViewController reloadView];
 }
 
-- (void)viewWasPromotedToFrontAnimated:(BOOL)animated {
+- (void)viewWasPromotedToFront {
 	// TestFlight Checkpoint
 	[TestFlight passCheckpoint:kTestFlightCheckPointStartedNewPuzzle];
 	
@@ -259,7 +259,9 @@ typedef struct {
 	// Update the folded corner image.
 	self.needsScreenshotUpdate = YES;
 	
-	if (animated) {
+	if (self.animateCornerWhenPromoted) {
+		[self updateScreenshotSynchronous:YES];
+		
 		[self.foldedCornerViewController resetToStartPosition];
 		[self.foldedCornerViewController animateStartFold];
 		
@@ -571,7 +573,7 @@ typedef struct {
 	hintButton.enabled = NO;
 	
 	// Deselect stuff.
-	[boardViewController deselectTileView];
+	[self.boardViewController deselectTileView];
 	[self.gameAnswerOptionsViewController reloadView];
 	
 	self.needsScreenshotUpdate = YES;

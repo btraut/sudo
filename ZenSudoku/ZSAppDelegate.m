@@ -44,6 +44,16 @@ NSString * const kRemoveTileAfterErrorKey = @"kRemoveTileAfterErrorKey";
 	// Tell TestFlight that we used the app.
 	[TestFlight takeOff:kTestFlightTeamToken];
 	
+	[TestFlight setOptions:[NSDictionary dictionaryWithObjectsAndKeys:
+							[NSNumber numberWithBool:NO], @"logToConsole",
+							[NSNumber numberWithBool:NO], @"logToSTDERR",
+							nil]];
+	
+#ifndef RELEASE 
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+	[TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
+#endif
+	
 	// Set user defaults.
 	[self setUserDefaults];
 	

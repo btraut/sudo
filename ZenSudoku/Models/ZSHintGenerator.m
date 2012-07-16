@@ -411,8 +411,6 @@
 			if (_scratchBoard.totalTilesInGroupWithPencil[i][guess] == 1) {
 				// Iterate over the set and find the tile with the matching pencil.
 				for (NSInteger j = 0; j < _scratchBoard.size; ++j) {
-					NSLog(@"%i", _scratchBoard.groups[i][j]->guess);
-					
 					if (!_scratchBoard.groups[i][j]->guess && _scratchBoard.groups[i][j]->pencils[guess]) {
 						ZSHintGeneratorSolveSinglePossibility *generator = [[ZSHintGeneratorSolveSinglePossibility alloc] init];
 						[generator setSinglePossibility:(guess + 1) forTileInRow:_scratchBoard.groups[i][j]->row col:_scratchBoard.groups[i][j]->col scope:ZSHintGeneratorTileScopeGroup];
@@ -465,8 +463,6 @@
 			if (_fastGameBoard.totalTilesInGroupWithPencil[i][guess] == 1) {
 				// Iterate over the set and find the tile with the matching pencil.
 				for (NSInteger j = 0; j < _fastGameBoard.size; ++j) {
-					NSLog(@"%i", _fastGameBoard.groups[i][j]->guess);
-					
 					if (!_fastGameBoard.groups[i][j]->guess && _fastGameBoard.groups[i][j]->pencils[guess]) {
 						ZSHintGeneratorSolveSinglePossibility *generator = [[ZSHintGeneratorSolveSinglePossibility alloc] init];
 						[generator setSinglePossibility:(guess + 1) forTileInRow:_fastGameBoard.groups[i][j]->row col:_fastGameBoard.groups[i][j]->col scope:ZSHintGeneratorTileScopeGroup];

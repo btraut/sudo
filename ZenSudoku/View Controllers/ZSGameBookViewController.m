@@ -190,11 +190,13 @@
 #pragma mark - ZSFoldedPageViewControllerAnimationDelegate Implementation
 
 - (void)pageTurnAnimationDidFinishWithViewController:(ZSFoldedPageViewController *)viewController {
+	self.currentGameViewController.animateCornerWhenPromoted = YES;
+	
 	if (viewController == _splashPageViewController) {
 		[_splashPageViewController.view removeFromSuperview];
 		_splashPageViewController = nil;
 		
-		[currentGameViewController viewWasPromotedToFrontAnimated:YES];
+		[self.currentGameViewController viewWasPromotedToFront];
 	} else {
 		// Get the previous game out of the way.
 		[self.currentGameViewController.view removeFromSuperview];
@@ -208,7 +210,7 @@
 		self.lastGameViewController = nil;
 		
 		// Fire up the new game.
-		[self.currentGameViewController viewWasPromotedToFrontAnimated:YES];
+		[self.currentGameViewController viewWasPromotedToFront];
 	}
 }
 

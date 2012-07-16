@@ -26,28 +26,57 @@
 - (id)initWithFile:(NSString *)fileName effect:(GLKBaseEffect *)effect {
 	self = [super init];
 	
-    if (self) {  
-        self.effect = effect;
+	if (self) {  
+		self.effect = effect;
 		
-        NSError *error;    
-        NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+		NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
 								 [NSNumber numberWithBool:YES], GLKTextureLoaderOriginBottomLeft,
 								 nil];
 		
 		// Fetch the file contents.
-        NSString *path = [[NSBundle mainBundle] pathForResource:fileName ofType:nil];
-        
+		NSString *path = [[NSBundle mainBundle] pathForResource:fileName ofType:nil];
+		NSError *error;
 		self.textureInfo = [GLKTextureLoader textureWithContentsOfFile:path options:options error:&error];
 		
+		glFlush();
+		
 		if (self.textureInfo == nil) {
-            NSLog(@"Error loading file: %@", [error localizedDescription]);
-            return nil;
-        }
+			NSLog(@"Error loading file: %@", [error localizedDescription]);
+			return nil;
+		}
 		
 		// Save the size of the texture.
 		self.contentSize = CGSizeMake(self.textureInfo.width, self.textureInfo.height);
 		self.contentSizeNormalized = CGSizeMake(self.textureInfo.width / [UIScreen mainScreen].scale, self.textureInfo.height / [UIScreen mainScreen].scale);
-    }
+	}
+	
+	return self;
+}
+
+- (id)initWithCGImage:(CGImageRef)imageRef effect:(GLKBaseEffect *)effect {
+	self = [super init];
+	
+	if (self) {  
+		self.effect = effect;
+		
+		NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+								 [NSNumber numberWithBool:YES], GLKTextureLoaderOriginBottomLeft,
+								 nil];
+		
+		NSError *error = nil;
+		self.textureInfo = [GLKTextureLoader textureWithCGImage:imageRef options:options error:&error];
+		
+		glFlush();
+		
+		if (self.textureInfo == nil) {
+			NSLog(@"Error loading file: %@", [error localizedDescription]);
+			return nil;
+		}
+		
+		// Save the size of the texture.
+		self.contentSize = CGSizeMake(self.textureInfo.width, self.textureInfo.height);
+		self.contentSizeNormalized = CGSizeMake(self.textureInfo.width / [UIScreen mainScreen].scale, self.textureInfo.height / [UIScreen mainScreen].scale);
+	}
 	
 	return self;
 }
@@ -55,32 +84,6 @@
 - (void)dealloc {
 	GLuint textureName = self.textureInfo.name;
 	glDeleteTextures(1, &textureName);
-}
-
-- (id)initWithCGImage:(CGImageRef)imageRef effect:(GLKBaseEffect *)effect {
-	self = [super init];
-	
-    if (self) {  
-        self.effect = effect;
-		
-		NSError *error = nil;    
-        NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
-								 [NSNumber numberWithBool:YES], GLKTextureLoaderOriginBottomLeft,
-								 nil];
-		
-		self.textureInfo = [GLKTextureLoader textureWithCGImage:imageRef options:options error:&error];
-		
-		if (self.textureInfo == nil) {
-            NSLog(@"Error loading file: %@", [error localizedDescription]);
-            return nil;
-        }
-		
-		// Save the size of the texture.
-		self.contentSize = CGSizeMake(self.textureInfo.width, self.textureInfo.height);
-		self.contentSizeNormalized = CGSizeMake(self.textureInfo.width / [UIScreen mainScreen].scale, self.textureInfo.height / [UIScreen mainScreen].scale);
-    }
-	
-	return self;
 }
 
 - (void)render {
@@ -114,7 +117,7 @@
 	newQuad.tl.textureVertex = CGPointMake(0, 1);
 	newQuad.tr.textureVertex = CGPointMake(1, 1);
 	
-	long offset = (long)&newQuad;        
+	long offset = (long)&newQuad;
 	glVertexAttribPointer(GLKVertexAttribPosition, 2, GL_FLOAT, GL_FALSE, sizeof(TexturedVertex), (void *) (offset + offsetof(TexturedVertex, geometryVertex)));
 	glVertexAttribPointer(GLKVertexAttribTexCoord0, 2, GL_FLOAT, GL_FALSE, sizeof(TexturedVertex), (void *) (offset + offsetof(TexturedVertex, textureVertex)));
 	
@@ -144,7 +147,7 @@
 	glEnableVertexAttribArray(GLKVertexAttribPosition);
 	glEnableVertexAttribArray(GLKVertexAttribTexCoord0);
 	
-	long offset = (long)coordinates;        
+	long offset = (long)coordinates;
 	glVertexAttribPointer(GLKVertexAttribPosition, 2, GL_FLOAT, GL_FALSE, sizeof(TexturedVertex), (void *) (offset + offsetof(TexturedVertex, geometryVertex)));
 	glVertexAttribPointer(GLKVertexAttribTexCoord0, 2, GL_FLOAT, GL_FALSE, sizeof(TexturedVertex), (void *) (offset + offsetof(TexturedVertex, textureVertex)));
 	

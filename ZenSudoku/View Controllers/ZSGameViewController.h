@@ -75,12 +75,14 @@
 @property (weak) id<ZSHintDelegate> hintDelegate;
 @property (weak) id<ZSFoldedPageAndPlusButtonViewControllerAnimationDelegate> animationDelegate;
 
+@property (assign) BOOL animateCornerWhenPromoted;
+
 // Construction / Deconstruction
 - (id)initWithGame:(ZSGame *)game;
 - (void)resetWithGame:(ZSGame *)newGame;
 
 // View Lifecycle
-- (void)viewWasPromotedToFrontAnimated:(BOOL)animated;
+- (void)viewWasPromotedToFront;
 - (void)viewWasPushedToBack;
 - (void)applicationWillResignActive:(UIApplication *)application;
 - (void)applicationDidBecomeActive:(UIApplication *)application;

@@ -67,6 +67,10 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+	// Update the folded corner.
+	[self.foldedCornerViewController pushUpdate];
+	
+	// Queue the screenshot for update.
 	self.needsScreenshotUpdate = YES;
 	[self updateScreenshotSynchronous:NO];
 }

@@ -201,7 +201,7 @@ typedef enum {
 }
 
 - (void)loadNewScreenshotSprite {
-	// Set the context again. Seems like this is needed for threading.
+	// Set the OpenGL context.
 	[EAGLContext setCurrentContext:self.renderScreenshotContext];
 	
 	// Load the images into textures.
@@ -209,9 +209,6 @@ typedef enum {
 }
 
 - (void)loadNewTranslucentPageSprite {
-	// Set the context again. Seems like this is needed for threading.
-    [EAGLContext setCurrentContext:self.renderTranslucentPageContext];
-	
 	// Cache the screenshot image in this function so if it gets changed while rendering, it doesn't break the render.
 	UIImage *image = self.screenshotImage;
 	
@@ -250,10 +247,13 @@ typedef enum {
 	CGContextTranslateCTM(context, 0, -2);
 	CGContextDrawImage(context, CGRectMake(0, 0, image.size.width, image.size.height), image.CGImage);
 	
+	// Set the OpenGL context.
+    [EAGLContext setCurrentContext:self.renderTranslucentPageContext];
+	
 	// Create a new image from the context.
 	UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
 	UIGraphicsEndImageContext();
-		
+	
 	self.backwardsPageSprite = [[ZSGLSprite alloc] initWithCGImage:newImage.CGImage effect:self.effect];
 }
 
