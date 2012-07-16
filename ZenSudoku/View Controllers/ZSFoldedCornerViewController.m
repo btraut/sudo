@@ -42,6 +42,8 @@ typedef enum {
 	CGFloat _foldOverflowBottomWidth;
 	
 	dispatch_queue_t _translucentPageRenderDispatchQueue;
+	
+	dispatch_semaphore_t _openglContextDispatchSemaphore;
 }
 
 @property (assign) BOOL useTranslucentPage;
@@ -110,6 +112,8 @@ typedef enum {
 		
 		// Init the dispatch queue.
 		_translucentPageRenderDispatchQueue = dispatch_queue_create("com.tenfoursoftware.screenshotRenderQueue", NULL);
+		
+		_openglContextDispatchSemaphore = dispatch_semaphore_create(1);
 	}
 	
 	return self;
@@ -149,8 +153,11 @@ typedef enum {
 	
     ZSFoldedCornerView *view = (ZSFoldedCornerView *)self.view;
     view.context = self.drawContext;
-    [EAGLContext setCurrentContext:self.drawContext];
-		
+	
+	dispatch_semaphore_wait(_openglContextDispatchSemaphore, DISPATCH_TIME_FOREVER);
+	
+	[EAGLContext setCurrentContext:self.drawContext];
+	
 	// Load the effects.
 	self.effect = [[GLKBaseEffect alloc] init];
 	GLKMatrix4 projectionMatrix = GLKMatrix4MakeOrtho(0, self.view.frame.size.width, 0, self.view.frame.size.height, -1024, 1024);
@@ -176,6 +183,8 @@ typedef enum {
 	// Load the gradients.
 	_foldGradient = [[ZSGLShape alloc] initWithEffect:self.effect];
 	_cornerGradient = [[ZSGLShape alloc] initWithEffect:self.effect];
+	
+	dispatch_semaphore_signal(_openglContextDispatchSemaphore);
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -201,11 +210,15 @@ typedef enum {
 }
 
 - (void)loadNewScreenshotSprite {
+	dispatch_semaphore_wait(_openglContextDispatchSemaphore, DISPATCH_TIME_FOREVER);
+	
 	// Set the OpenGL context.
 	[EAGLContext setCurrentContext:self.renderScreenshotContext];
 	
 	// Load the images into textures.
 	self.screenshotSprite = [[ZSGLSprite alloc] initWithCGImage:self.screenshotImage.CGImage effect:self.effect];
+	
+	dispatch_semaphore_signal(_openglContextDispatchSemaphore);
 }
 
 - (void)loadNewTranslucentPageSprite {
@@ -247,6 +260,8 @@ typedef enum {
 	CGContextTranslateCTM(context, 0, -2);
 	CGContextDrawImage(context, CGRectMake(0, 0, image.size.width, image.size.height), image.CGImage);
 	
+	dispatch_semaphore_wait(_openglContextDispatchSemaphore, DISPATCH_TIME_FOREVER);
+	
 	// Set the OpenGL context.
     [EAGLContext setCurrentContext:self.renderTranslucentPageContext];
 	
@@ -255,6 +270,8 @@ typedef enum {
 	UIGraphicsEndImageContext();
 	
 	self.backwardsPageSprite = [[ZSGLSprite alloc] initWithCGImage:newImage.CGImage effect:self.effect];
+	
+	dispatch_semaphore_signal(_openglContextDispatchSemaphore);
 }
 
 - (void)pauseAnimation {
@@ -354,6 +371,10 @@ typedef enum {
 }
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect {
+	dispatch_semaphore_wait(_openglContextDispatchSemaphore, DISPATCH_TIME_FOREVER);
+	
+	[EAGLContext setCurrentContext:self.drawContext];
+	
 	glClearColor(0, 0, 0, 0);
 	glClear(GL_COLOR_BUFFER_BIT);    
 
@@ -481,6 +502,8 @@ typedef enum {
 	cornerGradientVertices[2].color = GLKVector4Make(0, 0, 0, 0.35f);
 	
 	[_cornerGradient renderVertices:cornerGradientVertices ofSize:3];
+	
+	dispatch_semaphore_signal(_openglContextDispatchSemaphore);
 }
 
 - (void)updatePlusButton {
