@@ -295,6 +295,7 @@ typedef struct {
 }
 
 - (void)viewWasPushedToBack {
+	[game stopGameTimer];
 	[_backgroundProcessTimer invalidate];
 }
 
