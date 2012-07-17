@@ -31,6 +31,8 @@
 	NSInteger _backgroundProcessTimerCount;
 	
 	ZSGameDifficulty _previouslyCachedDifficulty;
+	
+	BOOL _shouldTurnPageAfterRibbonCloses;
 }
 
 @end
@@ -277,13 +279,19 @@
 		[self.lastGameViewController resetWithGame:newLastGame];
 		
 		[[NSUserDefaults standardUserDefaults] setInteger:difficulty forKey:kLastPlayedPuzzleDifficulty];
+		
+		_shouldTurnPageAfterRibbonCloses = YES;
 	}
 }
 
 - (void)hideRibbonAnimationDidFinish {
 	[_ribbonViewController.view removeFromSuperview];
 	
-	[self.currentGameViewController turnPage];
+	if (_shouldTurnPageAfterRibbonCloses) {
+		_shouldTurnPageAfterRibbonCloses = NO;
+		
+		[self.currentGameViewController turnPage];
+	}
 }
 
 #pragma mark - ZSDifficultyButtonViewControllerDelegate Implementation
