@@ -35,6 +35,12 @@
 
 @end
 
+@protocol ZSDifficultyButtonViewControllerDelegate <ZSFoldedPageViewControllerAnimationDelegate>
+
+- (void)difficultyButtonWasPressedWithViewController:(ZSGameViewController *)viewController;
+
+@end
+
 @interface ZSGameViewController : ZSFoldedPageViewController <
 	ZSGameStateChangeDelegate,
 	ZSFoldedCornerViewControllerTouchDelegate,
@@ -73,6 +79,7 @@
 
 @property (weak) id<ZSHintDelegate> hintDelegate;
 @property (weak) id<ZSFoldedPageAndPlusButtonViewControllerAnimationDelegate> animationDelegate;
+@property (weak) id<ZSDifficultyButtonViewControllerDelegate> difficultyButtonDelegate;
 
 @property (assign) BOOL animateCornerWhenPromoted;
 
@@ -93,14 +100,5 @@
 - (void)setAutoPencils;
 - (void)solveMostOfThePuzzle;
 - (void)completeCoreGameOperation;
-
-// Button Handlers
-- (void)pencilButtonWasTouched;
-- (void)autoPencilButtonWasTouched;
-- (void)undoButtonWasTouched;
-- (void)redoButtonWasTouched;
-
-- (void)hintButtonWasTouched;
-- (void)closeHintButtonWasTouched;
 
 @end

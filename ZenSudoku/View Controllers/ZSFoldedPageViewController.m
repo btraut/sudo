@@ -119,6 +119,16 @@
 	}
 }
 
+- (void)turnPage {
+	[self updateScreenshotSynchronous:YES];
+	
+	[self setScreenshotVisible:YES];
+	
+	[self.foldedCornerViewController animatePageTurnSlower];
+	
+	self.innerView.hidden = YES;
+}
+
 - (void)foldedCornerRestoredToDefaultPoint {
 	[self setScreenshotVisible:NO];
 }

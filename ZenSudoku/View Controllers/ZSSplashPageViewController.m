@@ -27,13 +27,8 @@
 
 - (void)viewDidAppear:(BOOL)animated {
 	self.needsScreenshotUpdate = YES;
-	[self updateScreenshotSynchronous:YES];
 	
-	[self setScreenshotVisible:YES];
-	
-	[self.foldedCornerViewController animatePageTurnSlower];
-	
-	self.innerView.hidden = YES;
+	[self turnPage];
 }
 
 @end

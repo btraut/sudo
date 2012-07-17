@@ -53,6 +53,15 @@ typedef struct {
 @property (assign) BOOL needsHintDeckUpdate;
 @property (strong) NSArray *hintDeck;
 
+// Button Handlers
+- (void)pencilButtonWasTouched;
+- (void)autoPencilButtonWasTouched;
+- (void)undoButtonWasTouched;
+- (void)redoButtonWasTouched;
+
+- (void)hintButtonWasTouched;
+- (void)closeHintButtonWasTouched;
+
 @end
 
 @implementation ZSGameViewController
@@ -63,6 +72,7 @@ typedef struct {
 @synthesize allowsInput;
 @synthesize hintDelegate;
 @dynamic animationDelegate;
+@synthesize difficultyButtonDelegate;
 @synthesize animateCornerWhenPromoted;
 
 @synthesize foldedCornerPlusButtonViewController = _foldedCornerPlusButtonViewController;
@@ -160,12 +170,16 @@ typedef struct {
 	self.foldedCornerViewController.plusButtonViewController = self.foldedCornerPlusButtonViewController;
 	
 	// Build the title.
-	title = [[UILabel alloc] initWithFrame:CGRectMake(70, 12, 180, 32)];
+	title = [[UILabel alloc] initWithFrame:CGRectMake(70, 12, 180, 36)];
 	title.font = [UIFont fontWithName:@"ReklameScript-Medium" size:30.0f];
 	title.textAlignment = UITextAlignmentCenter;
 	title.backgroundColor = [UIColor clearColor];
+	title.userInteractionEnabled = YES;
 	[self.innerView addSubview:title];
 	[self setTitle];
+	
+	UITapGestureRecognizer *titleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_difficultyButtonWasPressed:)];
+	[title addGestureRecognizer:titleTapGestureRecognizer];
 	
 	// Build the game board.
 	boardViewController = [[ZSBoardViewController alloc] initWithGame:game];
@@ -244,7 +258,6 @@ typedef struct {
 	// Debug
 	if (game.difficulty == ZSGameDifficultyEasy) {
 		[self solveMostOfThePuzzle];
-		[self.boardViewController reloadView];
 	}
 	
 	// If the game is already solved, shut off input.
@@ -260,8 +273,6 @@ typedef struct {
 	self.needsScreenshotUpdate = YES;
 	
 	if (self.animateCornerWhenPromoted) {
-		[self updateScreenshotSynchronous:YES];
-		
 		[self.foldedCornerViewController resetToStartPosition];
 		[self.foldedCornerViewController animateStartFold];
 		
@@ -324,6 +335,10 @@ typedef struct {
 	}
 }
 
+- (void)_difficultyButtonWasPressed:(UIGestureRecognizer *)gestureRecognizer {
+	[self.difficultyButtonDelegate difficultyButtonWasPressedWithViewController:self];
+}
+
 - (void)_backgroundProcessTimerDidAdvance:(NSTimer *)timer {
 	++_backgroundProcessTimerCount;
 	
@@ -377,6 +392,8 @@ typedef struct {
 }
 
 - (void)solveMostOfThePuzzle {
+	[self.boardViewController deselectTileView];
+	
 	NSInteger totalUnsolved = game.board.size * game.board.size;
 	
 	for (NSInteger row = 0; row < game.board.size; ++row) {
@@ -405,6 +422,16 @@ typedef struct {
 	[game stopGenericUndoStop];
 	
 	_guessInSameTileWasJustMade = NO;
+	
+	// Reload views.
+	[self.boardViewController reloadView];
+	[self.gameAnswerOptionsViewController reloadView];
+	
+	// Update the screenshot.
+	self.needsScreenshotUpdate = YES;
+	
+	// Update hint deck.
+	self.needsHintDeckUpdate = YES;
 }
 
 - (void)completeCoreGameOperation {

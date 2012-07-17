@@ -41,6 +41,8 @@
 - (void)updateScreenshotSynchronous:(BOOL)synchronous;
 - (void)setScreenshotVisible:(BOOL)visible;
 
+- (void)turnPage;
+
 - (void)foldedCornerRestoredToDefaultPoint;
 
 @end

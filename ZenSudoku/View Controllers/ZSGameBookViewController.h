@@ -15,7 +15,13 @@
 
 @class ZSHintViewController;
 
-@interface ZSGameBookViewController : UIViewController <ZSHintDelegate, ZSFoldedPageViewControllerAnimationDelegate, ZSFoldedPageAndPlusButtonViewControllerAnimationDelegate, ZSRibbonViewControllerDelegate>
+@interface ZSGameBookViewController : UIViewController <
+	ZSHintDelegate,
+	ZSFoldedPageViewControllerAnimationDelegate,
+	ZSFoldedPageAndPlusButtonViewControllerAnimationDelegate,
+	ZSRibbonViewControllerDelegate,
+	ZSDifficultyButtonViewControllerDelegate
+>
 
 @property (strong) ZSGameViewController *currentGameViewController;
 @property (strong) ZSGameViewController *nextGameViewController;

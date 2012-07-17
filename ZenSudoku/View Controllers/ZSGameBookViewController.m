@@ -24,10 +24,8 @@
 	
 	ZSSplashPageViewController *_splashPageViewController;
 	
-	UISwipeGestureRecognizer *_upSwipeGestureRecognizer;
 	UISwipeGestureRecognizer *_downSwipeGestureRecognizer;
 	UITapGestureRecognizer *_hintTapGestureRecognizer;
-	UITapGestureRecognizer *_ribbonTapGestureRecognizer;
 	
 	NSTimer *_backgroundProcessTimer;
 	NSInteger _backgroundProcessTimerCount;
@@ -65,6 +63,7 @@
 	currentGameViewController = [[ZSGameViewController alloc] initWithGame:currentGame];
 	currentGameViewController.hintDelegate = self;
 	currentGameViewController.animationDelegate = self;
+	currentGameViewController.difficultyButtonDelegate = self;
 	[_innerBook addSubview:currentGameViewController.view];
 	
 	// Load the page behind the current. Yet another page will be loaded when the current page is done animating.
@@ -74,6 +73,7 @@
 	self.nextGameViewController = [[ZSGameViewController alloc] initWithGame:newGame];
 	self.nextGameViewController.hintDelegate = self;
 	self.nextGameViewController.animationDelegate = self;
+	self.nextGameViewController.difficultyButtonDelegate = self;
 	[_innerBook insertSubview:self.nextGameViewController.view belowSubview:self.currentGameViewController.view];
 	
 	// Create the splash page view.
@@ -105,22 +105,10 @@
 	// Create the ribbon.
 	_ribbonViewController = [[ZSRibbonViewController alloc] init];
 	_ribbonViewController.delegate = self;
-	[self.view addSubview:_ribbonViewController.view];
-	
-	_upSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(hideRibbon)];
-	_upSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionUp;
-	
-	_ribbonTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideRibbon)];
 	
 	// Start the background process timer.
 	_backgroundProcessTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(_backgroundProcessTimerDidAdvance:) userInfo:nil repeats:YES];
 	_backgroundProcessTimerCount = 0;
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-	[super viewDidAppear:animated];
-	
-	[self showRibbon];
 }
 
 - (void)_loadNewGame {
@@ -136,6 +124,7 @@
 		self.lastGameViewController = [[ZSGameViewController alloc] initWithGame:newGame];
 		self.lastGameViewController.hintDelegate = self;
 		self.lastGameViewController.animationDelegate = self;
+		self.lastGameViewController.difficultyButtonDelegate = self;
 	}
 
 	[_innerBook insertSubview:self.lastGameViewController.view belowSubview:self.nextGameViewController.view];
@@ -176,9 +165,9 @@
 	[self.view removeGestureRecognizer:_downSwipeGestureRecognizer];
 	[_innerBook removeGestureRecognizer:_hintTapGestureRecognizer];
 	
-	[currentGameViewController.boardViewController removeAllHintHighlights];
+	[self.currentGameViewController.boardViewController removeAllHintHighlights];
 	
-	[currentGameViewController completeCoreGameOperation];
+	[self.currentGameViewController completeCoreGameOperation];
 	
 	[UIView
 	 animateWithDuration:0.4f
@@ -192,47 +181,21 @@
 }
 
 - (void)showRibbon {
-	if (_ribbonShown) {
+	if (_ribbonViewController.shown) {
 		return;
 	}
 	
-	_ribbonShown = YES;
+	[self.view addSubview:_ribbonViewController.view];
 	
-	self.currentGameViewController.foldedCornerViewController.view.userInteractionEnabled = NO;
-	
-	[self.view addGestureRecognizer:_upSwipeGestureRecognizer];
-	[_innerBook addGestureRecognizer:_ribbonTapGestureRecognizer];
-	
-	[UIView
-	 animateWithDuration:0.4f
-	 delay:0
-	 options:UIViewAnimationOptionCurveEaseOut
-	 animations:^{
-		 _ribbonViewController.view.frame = CGRectMake(53, -3, _ribbonViewController.view.frame.size.width, _ribbonViewController.view.frame.size.height);
-	 }
-	 completion:NULL];
+	[_ribbonViewController showRibbon];
 }
 
 - (void)hideRibbon {
-	if (!_ribbonShown) {
+	if (!_ribbonViewController.shown) {
 		return;
 	}
 	
-	_ribbonShown = NO;
-	
-	self.currentGameViewController.foldedCornerViewController.view.userInteractionEnabled = YES;
-	
-	[self.view removeGestureRecognizer:_upSwipeGestureRecognizer];
-	[_innerBook removeGestureRecognizer:_ribbonTapGestureRecognizer];
-	
-	[UIView
-	 animateWithDuration:0.4f
-	 delay:0
-	 options:UIViewAnimationOptionCurveEaseOut
-	 animations:^{
-		 _ribbonViewController.view.frame = CGRectMake(53, -329, _ribbonViewController.view.frame.size.width, _ribbonViewController.view.frame.size.height);
-	 }
-	 completion:NULL];
+	[_ribbonViewController hideRibbon];
 }
 
 - (void)_backgroundProcessTimerDidAdvance:(NSTimer *)timer {
@@ -306,7 +269,27 @@
 #pragma mark - ZSRibbonViewControllerDelegate Implementation
 
 - (void)difficultyWasSelected:(ZSGameDifficulty)difficulty {
+	if (difficulty != self.nextGameViewController.game.difficulty) {
+		ZSGame *newNextGame = [[ZSGameController sharedInstance] fetchGameWithDifficulty:difficulty];
+		[self.nextGameViewController resetWithGame:newNextGame];
+		
+		ZSGame *newLastGame = [[ZSGameController sharedInstance] fetchGameWithDifficulty:difficulty];
+		[self.lastGameViewController resetWithGame:newLastGame];
+		
+		[[NSUserDefaults standardUserDefaults] setInteger:difficulty forKey:kLastPlayedPuzzleDifficulty];
+	}
+}
+
+- (void)hideRibbonAnimationDidFinish {
+	[_ribbonViewController.view removeFromSuperview];
 	
+	[self.currentGameViewController turnPage];
+}
+
+#pragma mark - ZSDifficultyButtonViewControllerDelegate Implementation
+
+- (void)difficultyButtonWasPressedWithViewController:(ZSGameViewController *)viewController {
+	[self showRibbon];
 }
 
 @end
