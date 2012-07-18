@@ -238,6 +238,20 @@
 	}
 }
 
+- (void)_setHiddenOnTapToChangeDifficultyNotices {
+	if (self.currentGameViewController.actionWasMadeOnPuzzle) {
+		_gamesInARowWithNoAction = 0;
+	}
+	
+	if (_gamesInARowWithNoAction > 2) {
+		[self.nextGameViewController showTapToChangeDifficultyNoticeAnimated:NO];
+		[self.lastGameViewController showTapToChangeDifficultyNoticeAnimated:NO];
+	} else {
+		[self.nextGameViewController hideTapToChangeDifficultyNoticeAnimated:NO];
+		[self.lastGameViewController hideTapToChangeDifficultyNoticeAnimated:NO];
+	}
+}
+
 #pragma mark - ZSFoldedPageViewControllerAnimationDelegate Implementation
 
 - (void)pageTurnAnimationDidFinishWithViewController:(ZSFoldedPageViewController *)viewController {
@@ -279,17 +293,7 @@
 }
 
 - (void)userBeganDraggingFoldedCornerWithViewController:(ZSGameViewController *)viewController {
-	if (self.currentGameViewController.actionWasMadeOnPuzzle) {
-		_gamesInARowWithNoAction = 0;
-	}
-	
-	if (_gamesInARowWithNoAction > 2) {
-		[self.nextGameViewController showTapToChangeDifficultyNoticeAnimated:NO];
-		[self.lastGameViewController showTapToChangeDifficultyNoticeAnimated:NO];
-	} else {
-		[self.nextGameViewController hideTapToChangeDifficultyNoticeAnimated:NO];
-		[self.lastGameViewController hideTapToChangeDifficultyNoticeAnimated:NO];
-	}
+	[self _setHiddenOnTapToChangeDifficultyNotices];
 }
 
 #pragma mark - ZSHintDelegate Implementation
@@ -337,6 +341,9 @@
 
 - (void)difficultyButtonWasPressedWithViewController:(ZSGameViewController *)viewController {
 	[self showRibbon];
+	
+	_gamesInARowWithNoAction = 0;
+	[self _setHiddenOnTapToChangeDifficultyNotices];
 }
 
 @end

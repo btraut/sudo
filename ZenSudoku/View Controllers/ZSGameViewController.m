@@ -18,6 +18,7 @@
 #import "ZSHintGenerator.h"
 #import "ZSHintCard.h"
 #import "ZSTile.h"
+#import "UIColor+ColorWithHex.h"
 
 #import "TestFlight.h"
 
@@ -30,6 +31,7 @@ typedef struct {
 
 @interface ZSGameViewController() {
 	UILabel *title;
+	UIButton *_difficultyButton;
 	
 	UIImageView *_tapToChangeDifficultyNotice;
 	NSTimer *_tapToChangeDifficultyNoticeTimer;
@@ -185,12 +187,15 @@ typedef struct {
 	[self.innerView addSubview:_tapToChangeDifficultyNotice];
 	
 	// Build the title.
-	title = [[UILabel alloc] initWithFrame:CGRectMake(70, 12, 180, 36)];
-	title.font = [UIFont fontWithName:@"ReklameScript-Medium" size:30.0f];
-	title.textAlignment = UITextAlignmentCenter;
-	title.backgroundColor = [UIColor clearColor];
-	title.userInteractionEnabled = YES;
-	[self.innerView addSubview:title];
+	_difficultyButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	[_difficultyButton addTarget:self action:@selector(_difficultyButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
+	_difficultyButton.frame = CGRectMake(70, 12, 180, 36);
+	_difficultyButton.titleLabel.font = [UIFont fontWithName:@"ReklameScript-Medium" size:30.0f];
+	_difficultyButton.titleLabel.textAlignment = UITextAlignmentCenter;
+	[_difficultyButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+	[_difficultyButton setTitleColor:[UIColor colorWithHexString:@"#2F83D4"] forState:UIControlStateHighlighted];
+	[_difficultyButton addTarget:self action:@selector(_difficultyButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
+	[self.innerView addSubview:_difficultyButton];
 	
 	[self setTitle];
 	
@@ -339,27 +344,27 @@ typedef struct {
 	switch (game.difficulty) {
 		default:
 		case ZSGameDifficultyEasy:
-			title.text = @"Easy";
+			[_difficultyButton setTitle:@" Easy " forState:UIControlStateNormal];
 			_tapToChangeDifficultyNotice.frame = CGRectMake(32, 14, _tapToChangeDifficultyNotice.frame.size.width, _tapToChangeDifficultyNotice.frame.size.height);
 			break;
 			
 		case ZSGameDifficultyModerate:
-			title.text = @"Moderate";
+			[_difficultyButton setTitle:@" Moderate " forState:UIControlStateNormal];
 			_tapToChangeDifficultyNotice.frame = CGRectMake(18, 14, _tapToChangeDifficultyNotice.frame.size.width, _tapToChangeDifficultyNotice.frame.size.height);
 			break;
 			
 		case ZSGameDifficultyChallenging:
-			title.text = @"Challenging";
+			[_difficultyButton setTitle:@" Challenging " forState:UIControlStateNormal];
 			_tapToChangeDifficultyNotice.frame = CGRectMake(12, 14, _tapToChangeDifficultyNotice.frame.size.width, _tapToChangeDifficultyNotice.frame.size.height);
 			break;
 			
 		case ZSGameDifficultyDiabolical:
-			title.text = @"Diabolical";
+			[_difficultyButton setTitle:@" Diabolical " forState:UIControlStateNormal];
 			_tapToChangeDifficultyNotice.frame = CGRectMake(14, 14, _tapToChangeDifficultyNotice.frame.size.width, _tapToChangeDifficultyNotice.frame.size.height);
 			break;
 		
 		case ZSGameDifficultyInsane:
-			title.text = @"Insane";
+			[_difficultyButton setTitle:@" Insane " forState:UIControlStateNormal];
 			_tapToChangeDifficultyNotice.frame = CGRectMake(28, 14, _tapToChangeDifficultyNotice.frame.size.width, _tapToChangeDifficultyNotice.frame.size.height);
 			break;
 	}
