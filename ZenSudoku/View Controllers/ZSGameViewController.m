@@ -29,6 +29,11 @@ typedef struct {
 } ZSGameViewControllerPencilChangeDescription;
 
 @interface ZSGameViewController() {
+	UILabel *title;
+	
+	UIImageView *_tapToChangeDifficultyNotice;
+	NSTimer *_tapToChangeDifficultyNoticeTimer;
+	
 	CGPoint _foldStartPoint;
 	BOOL _foldedCornerTouchCrossedTapThreshold;
 	
@@ -67,6 +72,7 @@ typedef struct {
 @implementation ZSGameViewController
 
 @synthesize game;
+@synthesize active;
 @synthesize boardViewController, gameAnswerOptionsViewController;
 @synthesize pencilButton, penciling;
 @synthesize allowsInput;
@@ -74,6 +80,7 @@ typedef struct {
 @dynamic animationDelegate;
 @synthesize difficultyButtonDelegate;
 @synthesize animateCornerWhenPromoted;
+@synthesize actionWasMadeOnPuzzle = _actionWasMadeOnPuzzle;
 
 @synthesize foldedCornerPlusButtonViewController = _foldedCornerPlusButtonViewController;
 @synthesize needsScreenshotUpdate = _needsScreenshotUpdate;
@@ -106,6 +113,8 @@ typedef struct {
 		_lastTileToReceiveGuess = nil;
 		_totalPencilChangesSinceLastGuess = 0;
 		_pencilChangesSinceLastGuess = malloc(sizeof(ZSGameViewControllerPencilChangeDescription) * 81 * 9 * 3);
+		
+		_actionWasMadeOnPuzzle = NO;
 	}
 	
 	return self;
@@ -127,6 +136,8 @@ typedef struct {
 	_guessInSameTileWasJustMade = NO;
 	_lastTileToReceiveGuess = nil;
 	_totalPencilChangesSinceLastGuess = 0;
+	
+	_actionWasMadeOnPuzzle = NO;
 	
 	[self setTitle];
 	
@@ -169,6 +180,10 @@ typedef struct {
 	// Set the plus button (delegate) on the folded corner.
 	self.foldedCornerViewController.plusButtonViewController = self.foldedCornerPlusButtonViewController;
 	
+	// Build the reminder for how to change difficulty.
+	_tapToChangeDifficultyNotice = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TapToChangeDifficultyNotice.png"]];
+	[self.innerView addSubview:_tapToChangeDifficultyNotice];
+	
 	// Build the title.
 	title = [[UILabel alloc] initWithFrame:CGRectMake(70, 12, 180, 36)];
 	title.font = [UIFont fontWithName:@"ReklameScript-Medium" size:30.0f];
@@ -176,6 +191,7 @@ typedef struct {
 	title.backgroundColor = [UIColor clearColor];
 	title.userInteractionEnabled = YES;
 	[self.innerView addSubview:title];
+	
 	[self setTitle];
 	
 	UITapGestureRecognizer *titleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_difficultyButtonWasPressed:)];
@@ -255,6 +271,9 @@ typedef struct {
 	// TestFlight Checkpoint
 	[TestFlight passCheckpoint:kTestFlightCheckPointStartedNewPuzzle];
 	
+	// This is now the active game.
+	self.active = YES;
+	
 	// Debug
 	if (game.difficulty == ZSGameDifficultyEasy) {
 		[self solveMostOfThePuzzle];
@@ -292,6 +311,11 @@ typedef struct {
 	// Start the background process timer.
 	_backgroundProcessTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(_backgroundProcessTimerDidAdvance:) userInfo:nil repeats:YES];
 	_backgroundProcessTimerCount = 0;
+	
+	// Animate the "tap difficulty" notice.
+	if (!_tapToChangeDifficultyNotice.hidden) {
+		_tapToChangeDifficultyNoticeTimer = [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(_hideTapToChangeDifficultyNoticeIfActive) userInfo:nil repeats:NO];
+	}
 }
 
 - (void)viewWasPushedToBack {
@@ -316,28 +340,96 @@ typedef struct {
 		default:
 		case ZSGameDifficultyEasy:
 			title.text = @"Easy";
+			_tapToChangeDifficultyNotice.frame = CGRectMake(32, 14, _tapToChangeDifficultyNotice.frame.size.width, _tapToChangeDifficultyNotice.frame.size.height);
 			break;
 			
 		case ZSGameDifficultyModerate:
 			title.text = @"Moderate";
+			_tapToChangeDifficultyNotice.frame = CGRectMake(18, 14, _tapToChangeDifficultyNotice.frame.size.width, _tapToChangeDifficultyNotice.frame.size.height);
 			break;
 			
 		case ZSGameDifficultyChallenging:
 			title.text = @"Challenging";
+			_tapToChangeDifficultyNotice.frame = CGRectMake(12, 14, _tapToChangeDifficultyNotice.frame.size.width, _tapToChangeDifficultyNotice.frame.size.height);
 			break;
 			
 		case ZSGameDifficultyDiabolical:
 			title.text = @"Diabolical";
+			_tapToChangeDifficultyNotice.frame = CGRectMake(14, 14, _tapToChangeDifficultyNotice.frame.size.width, _tapToChangeDifficultyNotice.frame.size.height);
 			break;
 		
 		case ZSGameDifficultyInsane:
 			title.text = @"Insane";
+			_tapToChangeDifficultyNotice.frame = CGRectMake(28, 14, _tapToChangeDifficultyNotice.frame.size.width, _tapToChangeDifficultyNotice.frame.size.height);
 			break;
 	}
 }
 
 - (void)_difficultyButtonWasPressed:(UIGestureRecognizer *)gestureRecognizer {
+	// TestFlight Checkpoint
+	[TestFlight passCheckpoint:kTestFlightCheckPointOpenedRibbon];
+	
 	[self.difficultyButtonDelegate difficultyButtonWasPressedWithViewController:self];
+}
+
+- (void)showTapToChangeDifficultyNoticeAnimated:(BOOL)animated {
+	if (_tapToChangeDifficultyNoticeTimer) {
+		[_tapToChangeDifficultyNoticeTimer invalidate];
+		_tapToChangeDifficultyNoticeTimer = nil;
+	}
+	
+	if (animated) {
+		[UIView
+		 animateWithDuration:0.4f
+		 delay:0
+		 options:UIViewAnimationOptionCurveEaseOut
+		 animations:^{
+			 _tapToChangeDifficultyNotice.alpha = 1;
+		 }
+		 completion:^(BOOL finished){
+			 _tapToChangeDifficultyNotice.hidden = NO;
+			 
+			 self.needsScreenshotUpdate = YES;
+		 }];
+	} else {
+		_tapToChangeDifficultyNotice.alpha = 1;
+		_tapToChangeDifficultyNotice.hidden = NO;
+		
+		self.needsScreenshotUpdate = YES;
+	}
+}
+
+- (void)_hideTapToChangeDifficultyNoticeIfActive {
+	if (self.active) {
+		[self hideTapToChangeDifficultyNoticeAnimated:YES];
+	}
+}
+
+- (void)hideTapToChangeDifficultyNoticeAnimated:(BOOL)animated {
+	if (_tapToChangeDifficultyNoticeTimer) {
+		[_tapToChangeDifficultyNoticeTimer invalidate];
+		_tapToChangeDifficultyNoticeTimer = nil;
+	}
+	
+	if (animated) {
+		[UIView
+		 animateWithDuration:0.4f
+		 delay:0
+		 options:UIViewAnimationOptionCurveEaseOut
+		 animations:^{
+			 _tapToChangeDifficultyNotice.alpha = 0;
+		 }
+		 completion:^(BOOL finished){
+			 _tapToChangeDifficultyNotice.hidden = YES;
+			 
+			 self.needsScreenshotUpdate = YES;
+		 }];
+	} else {
+		_tapToChangeDifficultyNotice.hidden = YES;
+		_tapToChangeDifficultyNotice.alpha = 0;
+		
+		self.needsScreenshotUpdate = YES;
+	}
 }
 
 - (void)_backgroundProcessTimerDidAdvance:(NSTimer *)timer {
@@ -390,6 +482,9 @@ typedef struct {
 
 	// Update hint deck.
 	self.needsHintDeckUpdate = YES;
+	
+	// Note the action.
+	_actionWasMadeOnPuzzle = YES;
 }
 
 - (void)solveMostOfThePuzzle {
@@ -433,6 +528,9 @@ typedef struct {
 	
 	// Update hint deck.
 	self.needsHintDeckUpdate = YES;
+	
+	// These actions don't count as real actions.
+	_actionWasMadeOnPuzzle = NO;
 }
 
 - (void)completeCoreGameOperation {
@@ -602,6 +700,8 @@ typedef struct {
 	
 	// Deselect stuff.
 	[self.boardViewController deselectTileView];
+	self.boardViewController.allowsSelection = NO;
+	
 	[self.gameAnswerOptionsViewController reloadView];
 	
 	self.needsScreenshotUpdate = YES;
@@ -622,6 +722,13 @@ typedef struct {
 #pragma mark - ZSFoldedCornerViewControllerAnimationDelegate Implementation
 
 - (void)pageTurnAnimationDidFinishWithViewController:(ZSFoldedCornerViewController *)viewController {
+	self.active = NO;
+	
+	if (_tapToChangeDifficultyNoticeTimer) {
+		[_tapToChangeDifficultyNoticeTimer invalidate];
+		_tapToChangeDifficultyNoticeTimer = nil;
+	}
+	
 	[super pageTurnAnimationDidFinishWithViewController:viewController];
 	
 	[self viewWasPushedToBack];
@@ -638,6 +745,14 @@ typedef struct {
 - (void)foldedCornerPlusButtonStartAnimationFinishedWithViewController:(ZSFoldedCornerPlusButtonViewController *)viewController {
 	if ([self.animationDelegate respondsToSelector: @selector(plusButtonStartAnimationDidFinishWithViewController:)]) {
 		[self.animationDelegate plusButtonStartAnimationDidFinishWithViewController:self];
+	}
+}
+
+- (void)foldedCornerViewController:(ZSFoldedCornerViewController *)viewController touchStartedWithFoldPoint:(CGPoint)foldPoint foldDimensions:(CGSize)foldDimensions {
+	[super foldedCornerViewController:viewController touchStartedWithFoldPoint:foldPoint foldDimensions:foldDimensions];
+	
+	if ([self.animationDelegate respondsToSelector:@selector(userBeganDraggingFoldedCornerWithViewController:)]) {
+		[self.animationDelegate userBeganDraggingFoldedCornerWithViewController:self];
 	}
 }
 
@@ -831,6 +946,9 @@ typedef struct {
 	
 	// Set the new pencil to the selected answer option value.
 	[game togglePencilForPencilNumber:pencilNumber forTileAtRow:tileView.tile.row col:tileView.tile.col];
+	
+	// Note the action.
+	_actionWasMadeOnPuzzle = YES;
 }
 
 - (void)_setGuessForTile:(ZSTileViewController *)tileView withAnswerOption:(ZSAnswerOptionViewController *)answerOptionView {
@@ -868,6 +986,9 @@ typedef struct {
 	
 	// We're done tying actions together. End the undo stop.
 	[game stopGenericUndoStop];
+	
+	// Note the action.
+	_actionWasMadeOnPuzzle = YES;
 }
 
 - (void)_setErrors {

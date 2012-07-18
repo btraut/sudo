@@ -35,6 +35,8 @@
 @property (strong, readonly) ZSTileViewController *selectedTileView;
 @property (strong, readonly) NSMutableArray *highlightedSimilarTileViews;
 
+@property (assign) BOOL allowsSelection;
+
 // Construction / Deconstruction
 - (id)initWithGame:(ZSGame *)game;
 - (void)resetWithGame:(ZSGame *)newGame;

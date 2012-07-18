@@ -14,6 +14,8 @@
 		841F854714C2651700DFFABC /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 841F854614C2651600DFFABC /* MessageUI.framework */; };
 		841F854A14C40F5600DFFABC /* ZSStatisticsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841F854914C40F5500DFFABC /* ZSStatisticsController.m */; };
 		841F854E14C4287700DFFABC /* ZSStatisticsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841F854C14C4287600DFFABC /* ZSStatisticsViewController.m */; };
+		842311E515B628B500221E19 /* TapToChangeDifficultyNotice.png in Resources */ = {isa = PBXBuildFile; fileRef = 842311E315B628B500221E19 /* TapToChangeDifficultyNotice.png */; };
+		842311E615B628B500221E19 /* TapToChangeDifficultyNotice@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 842311E415B628B500221E19 /* TapToChangeDifficultyNotice@2x.png */; };
 		8426A79D14ED16A3006DAD1C /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 8426A79814ED16A3006DAD1C /* FMDatabase.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8426A79E14ED16A3006DAD1C /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8426A79A14ED16A3006DAD1C /* FMDatabaseAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8426A79F14ED16A3006DAD1C /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 8426A79C14ED16A3006DAD1C /* FMResultSet.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -155,6 +157,8 @@
 		841F854914C40F5500DFFABC /* ZSStatisticsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSStatisticsController.m; path = "Model Controllers/ZSStatisticsController.m"; sourceTree = "<group>"; };
 		841F854B14C4287600DFFABC /* ZSStatisticsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSStatisticsViewController.h; path = "View Controllers/ZSStatisticsViewController.h"; sourceTree = "<group>"; };
 		841F854C14C4287600DFFABC /* ZSStatisticsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSStatisticsViewController.m; path = "View Controllers/ZSStatisticsViewController.m"; sourceTree = "<group>"; };
+		842311E315B628B500221E19 /* TapToChangeDifficultyNotice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TapToChangeDifficultyNotice.png; path = Resources/Images/TapToChangeDifficultyNotice.png; sourceTree = "<group>"; };
+		842311E415B628B500221E19 /* TapToChangeDifficultyNotice@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TapToChangeDifficultyNotice@2x.png"; path = "Resources/Images/TapToChangeDifficultyNotice@2x.png"; sourceTree = "<group>"; };
 		8426A79714ED16A3006DAD1C /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
 		8426A79814ED16A3006DAD1C /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
 		8426A79914ED16A3006DAD1C /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
@@ -557,6 +561,8 @@
 				84A8FB2515AB8DCE00D802C8 /* SplashPage@2x.png */,
 				84D54E9515B4139D003B1705 /* Ribbon.png */,
 				84D54E9615B4139D003B1705 /* Ribbon@2x.png */,
+				842311E315B628B500221E19 /* TapToChangeDifficultyNotice.png */,
+				842311E415B628B500221E19 /* TapToChangeDifficultyNotice@2x.png */,
 				8428AD3A154A52F700BA8EE0 /* Default.png */,
 				8428AD3B154A52F700BA8EE0 /* Default@2x.png */,
 			);
@@ -900,6 +906,8 @@
 				84D54E9015AFE8D4003B1705 /* PaperBackgroundWithBoard@2x.png in Resources */,
 				84D54E9715B4139D003B1705 /* Ribbon.png in Resources */,
 				84D54E9815B4139D003B1705 /* Ribbon@2x.png in Resources */,
+				842311E515B628B500221E19 /* TapToChangeDifficultyNotice.png in Resources */,
+				842311E615B628B500221E19 /* TapToChangeDifficultyNotice@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

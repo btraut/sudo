@@ -33,6 +33,8 @@
 	ZSGameDifficulty _previouslyCachedDifficulty;
 	
 	BOOL _shouldTurnPageAfterRibbonCloses;
+	
+	NSInteger _gamesInARowWithNoAction;
 }
 
 @end
@@ -57,16 +59,25 @@
 	
 	if ([[ZSGameController sharedInstance] savedGameInProgress]) {
 		currentGame = [[ZSGameController sharedInstance] loadSavedGame];
+		[[NSUserDefaults standardUserDefaults] setInteger:currentGame.difficulty forKey:kLastPlayedPuzzleDifficulty];
 	} else {
 		ZSGameDifficulty newGameDifficulty = [[NSUserDefaults standardUserDefaults] integerForKey:kLastPlayedPuzzleDifficulty];
 		currentGame = [[ZSGameController sharedInstance] fetchGameWithDifficulty:newGameDifficulty];
 	}
 	
-	currentGameViewController = [[ZSGameViewController alloc] initWithGame:currentGame];
-	currentGameViewController.hintDelegate = self;
-	currentGameViewController.animationDelegate = self;
-	currentGameViewController.difficultyButtonDelegate = self;
-	[_innerBook addSubview:currentGameViewController.view];
+	self.currentGameViewController = [[ZSGameViewController alloc] initWithGame:currentGame];
+	self.currentGameViewController.hintDelegate = self;
+	self.currentGameViewController.animationDelegate = self;
+	self.currentGameViewController.difficultyButtonDelegate = self;
+	[_innerBook addSubview:self.currentGameViewController.view];
+	
+	if ([[[NSUserDefaults standardUserDefaults] objectForKey:kDisplayedTutorialNotices] boolValue]) {
+		[self.currentGameViewController hideTapToChangeDifficultyNoticeAnimated:NO];
+	} else {
+		[self.currentGameViewController showTapToChangeDifficultyNoticeAnimated:NO];
+		
+		[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:kDisplayedTutorialNotices];
+	}
 	
 	// Load the page behind the current. Yet another page will be loaded when the current page is done animating.
 	ZSGameDifficulty newGameDifficulty = [[NSUserDefaults standardUserDefaults] integerForKey:kLastPlayedPuzzleDifficulty];
@@ -77,6 +88,8 @@
 	self.nextGameViewController.animationDelegate = self;
 	self.nextGameViewController.difficultyButtonDelegate = self;
 	[_innerBook insertSubview:self.nextGameViewController.view belowSubview:self.currentGameViewController.view];
+	
+	[self.nextGameViewController hideTapToChangeDifficultyNoticeAnimated:NO];
 	
 	// Create the splash page view.
 	_splashPageViewController = [[ZSSplashPageViewController alloc] init];
@@ -130,6 +143,12 @@
 	}
 
 	[_innerBook insertSubview:self.lastGameViewController.view belowSubview:self.nextGameViewController.view];
+	
+	if (_gamesInARowWithNoAction > 2) {
+		[self.lastGameViewController showTapToChangeDifficultyNoticeAnimated:NO];
+	} else {
+		[self.lastGameViewController hideTapToChangeDifficultyNoticeAnimated:NO];
+	}
 }
 
 - (void)showHint {
@@ -222,6 +241,12 @@
 #pragma mark - ZSFoldedPageViewControllerAnimationDelegate Implementation
 
 - (void)pageTurnAnimationDidFinishWithViewController:(ZSFoldedPageViewController *)viewController {
+	if (self.currentGameViewController.actionWasMadeOnPuzzle) {
+		_gamesInARowWithNoAction = 0;
+	} else {
+		++_gamesInARowWithNoAction;
+	}
+	
 	self.currentGameViewController.animateCornerWhenPromoted = YES;
 	
 	if (viewController == _splashPageViewController) {
@@ -251,6 +276,20 @@
 - (void)plusButtonStartAnimationDidFinishWithViewController:(ZSGameViewController *)viewController {
 	// Load a new game into the recycled view controller.
 	[self _loadNewGame];
+}
+
+- (void)userBeganDraggingFoldedCornerWithViewController:(ZSGameViewController *)viewController {
+	if (self.currentGameViewController.actionWasMadeOnPuzzle) {
+		_gamesInARowWithNoAction = 0;
+	}
+	
+	if (_gamesInARowWithNoAction > 2) {
+		[self.nextGameViewController showTapToChangeDifficultyNoticeAnimated:NO];
+		[self.lastGameViewController showTapToChangeDifficultyNoticeAnimated:NO];
+	} else {
+		[self.nextGameViewController hideTapToChangeDifficultyNoticeAnimated:NO];
+		[self.lastGameViewController hideTapToChangeDifficultyNoticeAnimated:NO];
+	}
 }
 
 #pragma mark - ZSHintDelegate Implementation

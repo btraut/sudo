@@ -29,10 +29,13 @@ extern NSString * const kTestFlightCheckPointSolvedPuzzle;
 extern NSString * const kTestFlightCheckPointUsedUndo;
 extern NSString * const kTestFlightCheckPointUsedAutoPencil;
 extern NSString * const kTestFlightCheckPointUsedAHint;
+extern NSString * const kTestFlightCheckPointOpenedRibbon;
 
 // Preference Keys
 
 extern NSString * const kLastUsedVersionKey;
+
+extern NSString * const kDisplayedTutorialNotices;
 
 extern NSString * const kPuzzleCacheKey;
 

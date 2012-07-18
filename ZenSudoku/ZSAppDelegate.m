@@ -20,8 +20,11 @@ NSString * const kTestFlightCheckPointSolvedPuzzle = @"kTestFlightCheckPointSolv
 NSString * const kTestFlightCheckPointUsedUndo = @"kTestFlightCheckPointUsedUndo";
 NSString * const kTestFlightCheckPointUsedAutoPencil = @"kTestFlightCheckPointUsedAutoPencil";
 NSString * const kTestFlightCheckPointUsedAHint = @"kTestFlightCheckPointUsedAHint";
+NSString * const kTestFlightCheckPointOpenedRibbon = @"kTestFlightCheckPointOpenedRibbon";
 
 NSString * const kLastUsedVersionKey = @"kLastUsedVersionKey";
+
+NSString * const kDisplayedTutorialNotices = @"kDisplayedTutorialNotices";
 
 NSString * const kPuzzleCacheKey = @"kPuzzleCacheKey";
 
@@ -119,7 +122,7 @@ NSString * const kRemoveTileAfterErrorKey = @"kRemoveTileAfterErrorKey";
 	NSString *currentVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
 	[[NSUserDefaults standardUserDefaults] setObject:currentVersion forKey:kLastUsedVersionKey];
 	
-	// Reset settings.
+	// Debug - Reset settings.
 	[NSUserDefaults resetStandardUserDefaults];
 	
 	// Debug - clear stats and re-save.
@@ -134,6 +137,8 @@ NSString * const kRemoveTileAfterErrorKey = @"kRemoveTileAfterErrorKey";
     NSDictionary *appDefaults = [NSDictionary dictionaryWithObjectsAndKeys:
 								 
 								 @"(never)", kLastUsedVersionKey,
+								 
+								 [NSNumber numberWithBool:NO], kDisplayedTutorialNotices,
 								 
 								 [NSData data], kPuzzleCacheKey,
 								 

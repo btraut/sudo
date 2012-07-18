@@ -32,6 +32,8 @@
 @synthesize lastTileTapped = _lastTileTapped;
 @synthesize lastTileTappedTime = _lastTileTappedTime;
 
+@synthesize allowsSelection;
+
 #pragma mark - Construction / Deconstruction
 
 - (id)init {
@@ -41,6 +43,8 @@
 		selectedTileView = nil;
 		highlightedSimilarTileViews = [NSMutableArray array];
 		highlightedErrorTileViews = [NSMutableArray array];
+		
+		allowsSelection = YES;
 	}
 	
 	return self;
@@ -68,6 +72,8 @@
 			[tileViewController reset];
 		}
 	}
+	
+	self.allowsSelection = YES;
 	
 	[self reloadView];
 }
@@ -132,6 +138,10 @@
 #pragma mark - Selection
 
 - (void)selectTileView:(ZSTileViewController *)tileView {
+	if (!self.allowsSelection) {
+		return;
+	}
+	
 	// If there was a selection, deselect it.
 	if (selectedTileView) {
 		[self deselectTileView];

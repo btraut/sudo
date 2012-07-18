@@ -32,6 +32,7 @@
 @optional
 
 - (void)plusButtonStartAnimationDidFinishWithViewController:(ZSGameViewController *)viewController;
+- (void)userBeganDraggingFoldedCornerWithViewController:(ZSGameViewController *)viewController;
 
 @end
 
@@ -63,11 +64,11 @@
 	UIButton *hintButton;
 	
 	BOOL allowsInput;
-	
-	UILabel *title;
 }
 
 @property (strong) ZSGame *game;
+
+@property (assign) BOOL active;
 
 @property (strong, readonly) ZSBoardViewController *boardViewController;
 @property (strong, readonly) ZSAnswerOptionsViewController *gameAnswerOptionsViewController;
@@ -83,6 +84,8 @@
 
 @property (assign) BOOL animateCornerWhenPromoted;
 
+@property (assign, readonly) BOOL actionWasMadeOnPuzzle;
+
 // Construction / Deconstruction
 - (id)initWithGame:(ZSGame *)game;
 - (void)resetWithGame:(ZSGame *)newGame;
@@ -92,6 +95,9 @@
 - (void)viewWasPushedToBack;
 - (void)applicationWillResignActive:(UIApplication *)application;
 - (void)applicationDidBecomeActive:(UIApplication *)application;
+
+- (void)showTapToChangeDifficultyNoticeAnimated:(BOOL)animated;
+- (void)hideTapToChangeDifficultyNoticeAnimated:(BOOL)animated;
 
 - (void)setTitle;
 
