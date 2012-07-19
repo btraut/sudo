@@ -38,6 +38,8 @@ NSString * const kClearPencilsAfterGuessingKey = @"kClearPencilsAfterGuessingKey
 NSString * const kShowErrorsOptionKey = @"kShowErrorsOptionKey";
 NSString * const kRemoveTileAfterErrorKey = @"kRemoveTileAfterErrorKey";
 
+NSString * const kPreventScreenDimmingOptionKey = @"kPreventScreenDimmingOptionKey";
+
 @implementation ZSAppDelegate
 
 @synthesize window = _window;
@@ -111,6 +113,10 @@ NSString * const kRemoveTileAfterErrorKey = @"kRemoveTileAfterErrorKey";
 	ZSGameBookViewController *gameBookViewController = (ZSGameBookViewController *)_window.rootViewController;
 	
 	[gameBookViewController.currentGameViewController applicationDidBecomeActive:application];
+	
+	// Handle screen dimming option.
+	BOOL disableIdleTimer = [[[NSUserDefaults standardUserDefaults] objectForKey:kPreventScreenDimmingOptionKey] boolValue];
+	[[UIApplication sharedApplication] setIdleTimerDisabled:disableIdleTimer];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -151,6 +157,8 @@ NSString * const kRemoveTileAfterErrorKey = @"kRemoveTileAfterErrorKey";
 								 
 								 [NSNumber numberWithInt:ZSShowErrorsOptionLogical], kShowErrorsOptionKey,
 								 [NSNumber numberWithBool:NO], kRemoveTileAfterErrorKey,
+								 
+								 [NSNumber numberWithBool:NO], kPreventScreenDimmingOptionKey,
 								 
 								 nil];
 	

@@ -48,3 +48,5 @@ extern NSString * const kClearPencilsAfterGuessingKey;
 
 extern NSString * const kShowErrorsOptionKey;
 extern NSString * const kRemoveTileAfterErrorKey;
+
+extern NSString * const kPreventScreenDimmingOptionKey;
