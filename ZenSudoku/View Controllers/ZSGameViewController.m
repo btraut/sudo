@@ -131,6 +131,8 @@ typedef struct {
 	
 	self.allowsInput = YES;
 	
+	pencilButton.enabled = YES;
+	
 	undoButton.enabled = YES;
 	autoPencilButton.enabled = YES;
 	hintButtonViewController.button.enabled = YES;
@@ -224,10 +226,8 @@ typedef struct {
 	[pencilButton addTarget:self action:@selector(pencilButtonWasTouched) forControlEvents:UIControlEventTouchUpInside];
 	pencilButton.frame = CGRectMake(288, 371, 21.5f, 32.0f);
 	
-	UIImage *pencilImage = [UIImage imageNamed:@"Pencil"];
-	UIImage *pencilSelectedImage = [UIImage imageNamed:@"PencilSelected"];
-	[pencilButton setBackgroundImage:pencilImage forState:UIControlStateNormal];
-	[pencilButton setBackgroundImage:pencilSelectedImage forState:UIControlStateSelected];
+	[pencilButton setBackgroundImage:[UIImage imageNamed:@"Pencil"] forState:UIControlStateNormal];
+	[pencilButton setBackgroundImage:[UIImage imageNamed:@"PencilSelected"] forState:UIControlStateSelected];
 	
 	[self.innerView addSubview:pencilButton];
 	
@@ -237,10 +237,8 @@ typedef struct {
 	[undoButton addTarget:self action:@selector(undoButtonWasTouched) forControlEvents:UIControlEventTouchUpInside];
 	undoButton.frame = CGRectMake(79, 412, 35, 35);
 	
-	UIImage *undoImage = [UIImage imageNamed:@"Undo"];
-	UIImage *undoHighlightedImage = [UIImage imageNamed:@"UndoHighlighted"];
-	[undoButton setBackgroundImage:undoImage forState:UIControlStateNormal];
-	[undoButton setBackgroundImage:undoHighlightedImage forState:UIControlStateHighlighted];
+	[undoButton setBackgroundImage:[UIImage imageNamed:@"Undo"] forState:UIControlStateNormal];
+	[undoButton setBackgroundImage:[UIImage imageNamed:@"UndoHighlighted"] forState:UIControlStateHighlighted];
 	
 	[self.innerView addSubview:undoButton];
 	
@@ -250,10 +248,8 @@ typedef struct {
 	[autoPencilButton addTarget:self action:@selector(autoPencilButtonWasTouched) forControlEvents:UIControlEventTouchUpInside];
 	autoPencilButton.frame = CGRectMake(142, 412, 35, 35);
 	
-	UIImage *autoPencilImage = [UIImage imageNamed:@"AutoPencil"];
-	UIImage *autoPencilHighlightedImage = [UIImage imageNamed:@"AutoPencilHighlighted"];
-	[autoPencilButton setBackgroundImage:autoPencilImage forState:UIControlStateNormal];
-	[autoPencilButton setBackgroundImage:autoPencilHighlightedImage forState:UIControlStateHighlighted];
+	[autoPencilButton setBackgroundImage:[UIImage imageNamed:@"AutoPencil"] forState:UIControlStateNormal];
+	[autoPencilButton setBackgroundImage:[UIImage imageNamed:@"AutoPencilHighlighted"] forState:UIControlStateHighlighted];
 	
 	[self.innerView addSubview:autoPencilButton];
 	
@@ -283,9 +279,21 @@ typedef struct {
 	if ([game isSolved]) {
 		allowsInput = NO;
 		
+		pencilButton.selected = NO;
+		pencilButton.enabled = NO;
+		
 		undoButton.enabled = NO;
 		autoPencilButton.enabled = NO;
 		hintButtonViewController.button.enabled = NO;
+	} else {
+		// Start the game timer.
+		[game startGameTimer];
+		
+		// Update the hint deck.
+		self.needsHintDeckUpdate = YES;
+		
+		// Handle pulsing.
+		[self _evaluateHintButtonPulsing];
 	}
 	
 	// Update the folded corner image.
@@ -302,12 +310,6 @@ typedef struct {
 		[self.foldedCornerPlusButtonViewController setState:ZSFoldedCornerPlusButtonStateNormal animated:NO];
 	}
 	
-	// Update the hint deck.
-	self.needsHintDeckUpdate = YES;
-	
-	// Start the game timer.
-	[game startGameTimer];
-	
 	// Start the background process timer.
 	_backgroundProcessTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(_backgroundProcessTimerDidAdvance:) userInfo:nil repeats:YES];
 	_backgroundProcessTimerCount = 0;
@@ -316,9 +318,6 @@ typedef struct {
 	if (!_tapToChangeDifficultyNotice.hidden) {
 		_tapToChangeDifficultyNoticeTimer = [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(_hideTapToChangeDifficultyNoticeIfActive) userInfo:nil repeats:NO];
 	}
-	
-	// Handle pulsing.
-	[self _evaluateHintButtonPulsing];
 }
 
 - (void)viewWasPushedToBack {
@@ -732,6 +731,9 @@ typedef struct {
 	
 	// Prevent future input.
 	allowsInput = NO;
+	
+	pencilButton.selected = NO;
+	pencilButton.enabled = NO;
 	
 	undoButton.enabled = NO;
 	autoPencilButton.enabled = NO;
