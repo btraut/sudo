@@ -167,11 +167,6 @@
 	 }];
 }
 
-//- (void)_difficultyButtonWasPressed:(UIGestureRecognizer *)gestureRecognizer {
-//	[self.delegate difficultyWasSelected:(ZSGameDifficulty)gestureRecognizer.view.tag];
-//	[self hideRibbon];
-//}
-
 - (void)_difficultyButtonWasPressed:(UIButton *)sender {
 	[self.delegate difficultyWasSelected:(ZSGameDifficulty)sender.tag];
 	[self hideRibbon];

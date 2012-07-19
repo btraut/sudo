@@ -19,6 +19,7 @@
 #import "ZSHintCard.h"
 #import "ZSTile.h"
 #import "UIColor+ColorWithHex.h"
+#import "UIHintButtonViewController.h"
 
 #import "TestFlight.h"
 
@@ -130,7 +131,7 @@ typedef struct {
 	
 	undoButton.enabled = YES;
 	autoPencilButton.enabled = YES;
-	hintButton.enabled = YES;
+	hintButtonViewController.button.enabled = YES;
 	
 	penciling = NO;
 	pencilButton.selected = NO;
@@ -228,7 +229,7 @@ typedef struct {
 	
 	[self.innerView addSubview:pencilButton];
 	
-	// Build the hints button.
+	// Build the undo button.
 	undoButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	
 	[undoButton addTarget:self action:@selector(undoButtonWasTouched) forControlEvents:UIControlEventTouchUpInside];
@@ -255,17 +256,9 @@ typedef struct {
 	[self.innerView addSubview:autoPencilButton];
 	
 	// Build the hints button.
-	hintButton = [UIButton buttonWithType:UIButtonTypeCustom];
-	
-	[hintButton addTarget:self action:@selector(hintButtonWasTouched) forControlEvents:UIControlEventTouchUpInside];
-	hintButton.frame = CGRectMake(205, 412, 35, 35);
-	
-	UIImage *hintsImage = [UIImage imageNamed:@"Hints"];
-	UIImage *hintsHighlightedImage = [UIImage imageNamed:@"HintsHighlighted"];
-	[hintButton setBackgroundImage:hintsImage forState:UIControlStateNormal];
-	[hintButton setBackgroundImage:hintsHighlightedImage forState:UIControlStateHighlighted];
-	
-	[self.innerView addSubview:hintButton];
+	hintButtonViewController = [[UIHintButtonViewController alloc] init];
+	[self.innerView addSubview:hintButtonViewController.view];
+	[hintButtonViewController.button addTarget:self action:@selector(hintButtonWasTouched) forControlEvents:UIControlEventTouchUpInside];
 	
 	// Reload errors.
 	[self _setErrors];
@@ -290,7 +283,7 @@ typedef struct {
 		
 		undoButton.enabled = NO;
 		autoPencilButton.enabled = NO;
-		hintButton.enabled = NO;
+		hintButtonViewController.button.enabled = NO;
 	}
 	
 	// Update the folded corner image.
@@ -701,7 +694,7 @@ typedef struct {
 	
 	undoButton.enabled = NO;
 	autoPencilButton.enabled = NO;
-	hintButton.enabled = NO;
+	hintButtonViewController.button.enabled = NO;
 	
 	// Deselect stuff.
 	[self.boardViewController deselectTileView];

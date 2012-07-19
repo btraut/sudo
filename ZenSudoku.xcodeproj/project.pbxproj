@@ -112,6 +112,10 @@
 		84B11559158F274D00983B3A /* ZSAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B11558158F274D00983B3A /* ZSAnimation.m */; };
 		84B1155C158F36B900983B3A /* ZSPointAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B1155B158F36B900983B3A /* ZSPointAnimation.m */; };
 		84B300F4148AF6FF00E568CE /* ZSHistoryEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B300F3148AF6FD00E568CE /* ZSHistoryEntry.m */; };
+		84BE033115B6B18B00156895 /* UIHintButtonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BE033015B6B18B00156895 /* UIHintButtonViewController.m */; };
+		84BE033515B6B48C00156895 /* HintsBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 84BE033315B6B48C00156895 /* HintsBackground.png */; };
+		84BE033615B6B48C00156895 /* HintsBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84BE033415B6B48C00156895 /* HintsBackground@2x.png */; };
+		84BE033C15B77E9700156895 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 84BE033B15B77E9700156895 /* Settings.bundle */; };
 		84C092E31582D38F005799F8 /* PageCurlGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 84C092E11582D38F005799F8 /* PageCurlGradient.png */; };
 		84C092E41582D38F005799F8 /* PageCurlGradient@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84C092E21582D38F005799F8 /* PageCurlGradient@2x.png */; };
 		84D1CB09156EE5A60027230B /* ZSHintGeneratorEliminatePencilsNakedSubgroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D1CB08156EE5A60027230B /* ZSHintGeneratorEliminatePencilsNakedSubgroup.m */; };
@@ -286,6 +290,11 @@
 		84B1155B158F36B900983B3A /* ZSPointAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSPointAnimation.m; path = Utilities/ZSPointAnimation.m; sourceTree = "<group>"; };
 		84B300F2148AF6FD00E568CE /* ZSHistoryEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSHistoryEntry.h; path = Models/ZSHistoryEntry.h; sourceTree = "<group>"; };
 		84B300F3148AF6FD00E568CE /* ZSHistoryEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSHistoryEntry.m; path = Models/ZSHistoryEntry.m; sourceTree = "<group>"; };
+		84BE032F15B6B18B00156895 /* UIHintButtonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIHintButtonViewController.h; path = "View Controllers/UIHintButtonViewController.h"; sourceTree = "<group>"; };
+		84BE033015B6B18B00156895 /* UIHintButtonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIHintButtonViewController.m; path = "View Controllers/UIHintButtonViewController.m"; sourceTree = "<group>"; };
+		84BE033315B6B48C00156895 /* HintsBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = HintsBackground.png; path = Resources/Images/HintsBackground.png; sourceTree = "<group>"; };
+		84BE033415B6B48C00156895 /* HintsBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "HintsBackground@2x.png"; path = "Resources/Images/HintsBackground@2x.png"; sourceTree = "<group>"; };
+		84BE033B15B77E9700156895 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		84C092E11582D38F005799F8 /* PageCurlGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PageCurlGradient.png; path = Resources/Images/PageCurlGradient.png; sourceTree = "<group>"; };
 		84C092E21582D38F005799F8 /* PageCurlGradient@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "PageCurlGradient@2x.png"; path = "Resources/Images/PageCurlGradient@2x.png"; sourceTree = "<group>"; };
 		84D1CB07156EE5A60027230B /* ZSHintGeneratorEliminatePencilsNakedSubgroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = ZSHintGeneratorEliminatePencilsNakedSubgroup.h; path = "ZenSudoku/Models/Hint Generators/ZSHintGeneratorEliminatePencilsNakedSubgroup.h"; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -489,6 +498,8 @@
 				84A0974F1548B22D0082C9D0 /* Hints@2x.png */,
 				84A097501548B22D0082C9D0 /* HintsHighlighted.png */,
 				84A097511548B22D0082C9D0 /* HintsHighlighted@2x.png */,
+				84BE033315B6B48C00156895 /* HintsBackground.png */,
+				84BE033415B6B48C00156895 /* HintsBackground@2x.png */,
 				8463D90015986B8600AED0B4 /* Undo.png */,
 				8463D90115986B8900AED0B4 /* Undo@2x.png */,
 				8463D90215986B8B00AED0B4 /* UndoHighlighted.png */,
@@ -710,6 +721,7 @@
 				84D5501C147F1C4A00A7934E /* InfoPlist.strings */,
 				84D5501F147F1C4A00A7934E /* main.m */,
 				84D55021147F1C4A00A7934E /* ZenSudoku-Prefix.pch */,
+				84BE033B15B77E9700156895 /* Settings.bundle */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -745,6 +757,8 @@
 				84A8FB2215AB7C7A00D802C8 /* ZSSplashPageViewController.m */,
 				84D54E9A15B41590003B1705 /* ZSRibbonViewController.h */,
 				84D54E9B15B41593003B1705 /* ZSRibbonViewController.m */,
+				84BE032F15B6B18B00156895 /* UIHintButtonViewController.h */,
+				84BE033015B6B18B00156895 /* UIHintButtonViewController.m */,
 			);
 			name = "Views and View Controllers";
 			sourceTree = "<group>";
@@ -908,6 +922,9 @@
 				84D54E9815B4139D003B1705 /* Ribbon@2x.png in Resources */,
 				842311E515B628B500221E19 /* TapToChangeDifficultyNotice.png in Resources */,
 				842311E615B628B500221E19 /* TapToChangeDifficultyNotice@2x.png in Resources */,
+				84BE033515B6B48C00156895 /* HintsBackground.png in Resources */,
+				84BE033615B6B48C00156895 /* HintsBackground@2x.png in Resources */,
+				84BE033C15B77E9700156895 /* Settings.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -989,6 +1006,7 @@
 				84A8FB2315AB7C7A00D802C8 /* ZSSplashPageViewController.m in Sources */,
 				84D54E8B15AECADB003B1705 /* ZSPanBetweenSubviewsGestureRecognizer.m in Sources */,
 				84D54E9C15B41595003B1705 /* ZSRibbonViewController.m in Sources */,
+				84BE033115B6B18B00156895 /* UIHintButtonViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

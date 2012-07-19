@@ -20,6 +20,7 @@
 @class ZSTileViewController;
 @class ZSGameViewController;
 @class ZSHintGenerator;
+@class UIHintButtonViewController;
 
 @protocol ZSHintDelegate <NSObject>
 
@@ -61,7 +62,7 @@
 	
 	UIButton *undoButton;
 	UIButton *autoPencilButton;
-	UIButton *hintButton;
+	UIHintButtonViewController *hintButtonViewController;
 	
 	BOOL allowsInput;
 }
