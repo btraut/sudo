@@ -68,30 +68,17 @@ NSString * const kDBPuzzleDefinitionGroupMapKey = @"kDBPuzzleDefinitionGroupMapK
 	
 	// Pick a specific puzzle (debug purposes).
 	BOOL forcePuzzleById = NO;
+	NSInteger puzzleId = 16241;
 	
 	// Fetch a puzzle.
 	FMResultSet *result;
 	
 	if (forcePuzzleById) {
-		NSInteger puzzleId = 16241;
-		
+		// Fetch a specific puzzle.
 		NSString *puzzleQuery = @"SELECT `puzzle_id`, `puzzle_guesses`, `puzzle_answers`, `puzzle_group_map` FROM `puzzles` WHERE `puzzle_id` = ?";
 		result = [db executeQuery:puzzleQuery, [NSNumber numberWithInt:puzzleId]];
 	} else {
-		// Get total puzzle count.
-		NSInteger totalPuzzles = 0;
-		
-		NSString *totalPuzzleQuery = @"SELECT count(1) AS `count` FROM `puzzles` WHERE `puzzle_type` = ? AND `puzzle_size` = ? AND `puzzle_difficulty` = ?";
-		FMResultSet *totalPuzzlesResult = [db executeQuery:totalPuzzleQuery, [NSNumber numberWithInt:type], [NSNumber numberWithInt:size], [NSNumber numberWithInt:difficulty]];
-		
-		if ([totalPuzzlesResult next]) {
-			totalPuzzles = [totalPuzzlesResult intForColumn:@"count"];
-		}
-		
-		[totalPuzzlesResult close];
-		
-		assert(totalPuzzles >= howMany);
-		
+		// Fetch some number of random puzzles.
 		NSString *puzzleQuery = @"SELECT `puzzle_id`, `puzzle_guesses`, `puzzle_answers`, `puzzle_group_map` FROM `puzzles` WHERE `puzzle_type` = ? AND `puzzle_size` = ? AND `puzzle_difficulty` = ? ORDER BY RANDOM() LIMIT ?";
 		result = [db executeQuery:puzzleQuery, [NSNumber numberWithInt:type], [NSNumber numberWithInt:size], [NSNumber numberWithInt:difficulty], [NSNumber numberWithInt:howMany]];
 	}
@@ -113,8 +100,6 @@ NSString * const kDBPuzzleDefinitionGroupMapKey = @"kDBPuzzleDefinitionGroupMapK
 	}
 	
 	[result close];
-	
-	assert(puzzles.count);
 	
 	// Return the array of puzzle dictionaries.
 	return puzzles;
