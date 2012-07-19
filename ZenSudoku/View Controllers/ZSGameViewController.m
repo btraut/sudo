@@ -52,6 +52,8 @@ typedef struct {
 	
 	NSTimer *_backgroundProcessTimer;
 	NSInteger _backgroundProcessTimerCount;
+	
+	NSTimer *_hintButtonEvalutePulsingTimer;
 }
 
 @property (strong) ZSFoldedCornerPlusButtonViewController *foldedCornerPlusButtonViewController;
@@ -314,6 +316,9 @@ typedef struct {
 	if (!_tapToChangeDifficultyNotice.hidden) {
 		_tapToChangeDifficultyNoticeTimer = [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(_hideTapToChangeDifficultyNoticeIfActive) userInfo:nil repeats:NO];
 	}
+	
+	// Handle pulsing.
+	[self _evaluateHintButtonPulsing];
 }
 
 - (void)viewWasPushedToBack {
@@ -430,6 +435,36 @@ typedef struct {
 	}
 }
 
+- (void)_evaluateHintButtonPulsing {
+	// If the button is already pulsing, check to see if the errors have been removed and stop pulsing immediately. If not,
+	// then we'll delay checking for errors until the timer is up.
+	if (hintButtonViewController.pulsing) {
+		if (!self.game.board.containsErrors) {
+			[hintButtonViewController stopPulsing];
+			self.forceScreenshotUpdateOnDrag = NO;
+		}
+	} else {
+		if (!_hintButtonEvalutePulsingTimer) {
+			_hintButtonEvalutePulsingTimer = [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(_evaluateHintButtonPulsingImmediately) userInfo:nil repeats:NO];
+		}
+	}
+}
+
+- (void)_evaluateHintButtonPulsingImmediately {
+	if (_hintButtonEvalutePulsingTimer) {
+		[_hintButtonEvalutePulsingTimer invalidate];
+		_hintButtonEvalutePulsingTimer = nil;
+	}
+	
+	if (self.game.board.containsErrors) {
+		[hintButtonViewController startPulsing];
+		self.forceScreenshotUpdateOnDrag = YES;
+	} else {
+		[hintButtonViewController stopPulsing];
+		self.forceScreenshotUpdateOnDrag = NO;
+	}
+}
+
 - (void)_backgroundProcessTimerDidAdvance:(NSTimer *)timer {
 	++_backgroundProcessTimerCount;
 	
@@ -542,6 +577,9 @@ typedef struct {
 	self.needsScreenshotUpdate = YES;
 	
 	self.needsHintDeckUpdate = YES;
+	
+	// Handle pulsing.
+	[self _evaluateHintButtonPulsing];
 }
 
 #pragma mark - Button Handlers
@@ -582,6 +620,9 @@ typedef struct {
 	self.needsHintDeckUpdate = YES;
 	
 	_guessInSameTileWasJustMade = NO;
+	
+	// Handle pulsing.
+	[self _evaluateHintButtonPulsing];
 }
 
 - (void)redoButtonWasTouched {
@@ -987,6 +1028,9 @@ typedef struct {
 	
 	// Note the action.
 	_actionWasMadeOnPuzzle = YES;
+	
+	// Handle pulsing.
+	[self _evaluateHintButtonPulsing];
 }
 
 - (void)_setErrors {

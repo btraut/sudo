@@ -74,8 +74,8 @@ typedef enum {
 
 @property (weak) id<ZSGameStateChangeDelegate> stateChangeDelegate;
 
-@property (readonly) NSInteger timerCount;
-@property (readonly) NSInteger totalStrikes;
+@property (assign, readonly) NSInteger timerCount;
+@property (assign, readonly) NSInteger totalStrikes;
 
 // Creation / Initialization
 

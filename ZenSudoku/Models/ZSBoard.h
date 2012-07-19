@@ -23,6 +23,8 @@
 @property (weak) id<ZSBoardDelegate> delegate;
 @property (assign) NSInteger size;
 
+@property (assign, readonly, getter = getContainsErrors) BOOL containsErrors;
+
 // Initialization
 
 + (id)emptyStandard9x9Game;

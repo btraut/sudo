@@ -16,6 +16,9 @@
 
 	dispatch_queue_t _screenshotRenderDispatchQueue;
 	dispatch_group_t _screenshotRenderDispatchGroup;
+	
+	BOOL _deferScreenshotUpdate;
+	BOOL _deferedScreenshotUpdateIsSychronous;
 }
 
 @end
@@ -30,6 +33,7 @@
 @synthesize foldedCornerVisibleOnLoad;
 
 @synthesize needsScreenshotUpdate;
+@synthesize forceScreenshotUpdateOnDrag;
 
 - (id)init {
 	self = [super init];
@@ -94,7 +98,10 @@
 - (void)updateScreenshotSynchronous:(BOOL)synchronous {
 	dispatch_group_async(_screenshotRenderDispatchGroup, _screenshotRenderDispatchQueue, ^{
 		if (self.needsScreenshotUpdate) {
-			if (!self.innerView.hidden) {
+			if (self.innerView.hidden) {
+				_deferScreenshotUpdate = YES;
+				_deferedScreenshotUpdateIsSychronous = _deferedScreenshotUpdateIsSychronous || synchronous;
+			} else {
 				self.needsScreenshotUpdate = NO;
 				
 				[self.foldedCornerViewController setPageImage:[self getScreenshotImage]];
@@ -118,6 +125,15 @@
 		
 		self.foldedCornerViewController.drawPage = NO;
 		[self.foldedCornerViewController pushUpdate];
+		
+		if (_deferScreenshotUpdate) {
+			BOOL synchronous = _deferedScreenshotUpdateIsSychronous;
+			
+			_deferScreenshotUpdate = NO;
+			_deferedScreenshotUpdateIsSychronous = NO;
+			
+			[self updateScreenshotSynchronous:synchronous];
+		}
 	}
 }
 
@@ -142,6 +158,10 @@
 	_foldedCornerTouchCrossedTapThreshold = NO;
 	
 	// Force a screenshot update if one is needed.
+	if (self.forceScreenshotUpdateOnDrag) {
+		self.needsScreenshotUpdate = YES;
+	}
+	
 	[self updateScreenshotSynchronous:YES];
 	
 	[self setScreenshotVisible:YES];

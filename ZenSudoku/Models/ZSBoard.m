@@ -35,6 +35,8 @@ NSInteger standard9x9GroupMap[9][9] = {
 @synthesize delegate;
 @synthesize size;
 
+@synthesize containsErrors;
+
 #pragma mark - Initialization
 
 + (id)emptyStandard9x9Game {
@@ -333,6 +335,19 @@ NSInteger standard9x9GroupMap[9][9] = {
 }
 
 #pragma mark - Getters
+
+- (BOOL)getContainsErrors {
+	for (NSInteger row = 0; row < self.size; ++row) {
+		for (NSInteger col = 0; col < self.size; ++col) {
+			ZSTile *tile = [self getTileAtRow:row col:col];
+			if (tile.guess && tile.guess != tile.answer) {
+				return YES;
+			}
+		}
+	}
+	
+	return NO;
+}
 
 - (ZSTile *)getTileAtRow:(NSInteger)row col:(NSInteger)col {
 	return [[_tiles objectAtIndex:row] objectAtIndex:col];

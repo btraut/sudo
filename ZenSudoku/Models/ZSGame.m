@@ -305,7 +305,7 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 	return [self getTileAtRow:row col:col].groupId;
 }
 
-#pragma mark - Tile Methods (Private)
+#pragma mark - Tile Methods
 
 - (ZSTile *)getTileAtRow:(NSInteger)row col:(NSInteger)col {
 	return [board getTileAtRow:row col:col];

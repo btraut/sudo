@@ -33,6 +33,7 @@
 @property (assign) BOOL foldedCornerVisibleOnLoad;
 
 @property (assign) BOOL needsScreenshotUpdate;
+@property (assign) BOOL forceScreenshotUpdateOnDrag;
 
 - (void)applicationWillResignActive:(UIApplication *)application;
 - (void)applicationDidBecomeActive:(UIApplication *)application;

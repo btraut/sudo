@@ -55,7 +55,7 @@
 
 - (void)_fadeOut {
 	[UIView
-	 animateWithDuration:2.0f
+	 animateWithDuration:1.5f
 	 delay:0
 	 options:UIViewAnimationOptionCurveEaseOut
 	 animations:^{
@@ -70,7 +70,7 @@
 
 - (void)_fadeIn {
 	[UIView
-	 animateWithDuration:2.0f
+	 animateWithDuration:1.5f
 	 delay:0
 	 options:UIViewAnimationOptionCurveEaseOut
 	 animations:^{
