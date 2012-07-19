@@ -90,15 +90,10 @@ NSString * const kDBPuzzleDefinitionGroupMapKey = @"kDBPuzzleDefinitionGroupMapK
 		
 		[totalPuzzlesResult close];
 		
-		assert(totalPuzzles);
+		assert(totalPuzzles >= howMany);
 		
-		// TODO: Randomize better. Right now, the cache will pick a random starting point but will use the next 10 sequential puzzles from that point.
-		
-		// Pick a random puzzle from the remaining total.
-		NSInteger puzzleNumber = arc4random() % totalPuzzles;
-		
-		NSString *puzzleQuery = @"SELECT `puzzle_id`, `puzzle_guesses`, `puzzle_answers`, `puzzle_group_map` FROM `puzzles` WHERE `puzzle_type` = ? AND `puzzle_size` = ? AND `puzzle_difficulty` = ? LIMIT ?, ?";
-		result = [db executeQuery:puzzleQuery, [NSNumber numberWithInt:type], [NSNumber numberWithInt:size], [NSNumber numberWithInt:difficulty], [NSNumber numberWithInt:puzzleNumber], [NSNumber numberWithInt:howMany]];
+		NSString *puzzleQuery = @"SELECT `puzzle_id`, `puzzle_guesses`, `puzzle_answers`, `puzzle_group_map` FROM `puzzles` WHERE `puzzle_type` = ? AND `puzzle_size` = ? AND `puzzle_difficulty` = ? ORDER BY RANDOM() LIMIT ?";
+		result = [db executeQuery:puzzleQuery, [NSNumber numberWithInt:type], [NSNumber numberWithInt:size], [NSNumber numberWithInt:difficulty], [NSNumber numberWithInt:howMany]];
 	}
 	
 	// Load the puzzle row into a dictionary.
