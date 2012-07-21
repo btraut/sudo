@@ -23,6 +23,8 @@
 
 @property (assign, readonly) BOOL shown;
 
+@property (nonatomic, assign, setter = setHighlightedDifficulty:) ZSGameDifficulty highlightedDifficulty;
+
 - (void)showRibbon;
 - (void)hideRibbon;
 

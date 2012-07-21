@@ -198,7 +198,7 @@ typedef struct {
 	_difficultyButton.titleLabel.font = [UIFont fontWithName:@"ReklameScript-Medium" size:30.0f];
 	_difficultyButton.titleLabel.textAlignment = UITextAlignmentCenter;
 	[_difficultyButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-	[_difficultyButton setTitleColor:[UIColor colorWithHexString:@"#2F83D4"] forState:UIControlStateHighlighted];
+	[_difficultyButton setTitleColor:[UIColor colorWithHexString:@"#e2412c"] forState:UIControlStateHighlighted];
 	[_difficultyButton addTarget:self action:@selector(_difficultyButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
 	[self.innerView addSubview:_difficultyButton];
 	

@@ -208,6 +208,7 @@
 	
 	[self.view addSubview:_ribbonViewController.view];
 	
+	_ribbonViewController.highlightedDifficulty = self.currentGameViewController.game.difficulty;
 	[_ribbonViewController showRibbon];
 }
 

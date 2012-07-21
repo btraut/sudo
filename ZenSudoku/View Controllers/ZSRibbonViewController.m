@@ -15,6 +15,12 @@
 	
 	UISwipeGestureRecognizer *_upSwipeGestureRecognizer;
 	UITapGestureRecognizer *_ribbonTapGestureRecognizer;
+	
+	UIButton *_easyButton;
+	UIButton *_moderateButton;
+	UIButton *_challengingButton;
+	UIButton *_diabolicalButton;
+	UIButton *_insaneButton;
 }
 
 @end
@@ -23,6 +29,7 @@
 
 @synthesize delegate;
 @synthesize shown = _shown;
+@synthesize highlightedDifficulty;
 
 - (void)loadView {
 	self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)];
@@ -49,86 +56,91 @@
 	_ribbonView.userInteractionEnabled = YES;
 	[self.view addSubview:_ribbonView];
 	
+	// Initialize the colors.
+	UIColor *shadowColor = [UIColor colorWithHexString:@"#7d1c0c"];
+	UIColor *textColor = [UIColor whiteColor];
+	UIColor *textColorHighlighted = [UIColor colorWithHexString:@"#7d1c0c"];
+	
 	// Build the title.
 	UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(0, 11, 198, 40)];
 	title.font = [UIFont fontWithName:@"ReklameScript-Medium" size:36.0f];
 	title.textAlignment = UITextAlignmentCenter;
 	title.backgroundColor = [UIColor clearColor];
-	title.textColor = [UIColor whiteColor];
-	title.shadowColor = [UIColor colorWithHexString:@"#7d1c0c"];
+	title.textColor = textColor;
+	title.shadowColor = shadowColor;
 	title.shadowOffset = CGSizeMake(0, -0.5f);
 	title.text = @"New Game";
 	[_ribbonView addSubview:title];
 	
 	// Build the difficulty buttons. The spaces in the titles are significant because the font gets clipped otherwise.
-	UIButton *easyButton = [UIButton buttonWithType:UIButtonTypeCustom];
-	easyButton.tag = ZSGameDifficultyEasy;
-	easyButton.frame = CGRectMake(0, 75, 198, 30);
-	easyButton.titleLabel.font = [UIFont fontWithName:@"ReklameScript-Regular" size:35.0f];
-	easyButton.titleLabel.textAlignment = UITextAlignmentCenter;
-	easyButton.titleLabel.shadowColor = [UIColor colorWithHexString:@"#7d1c0c"];
-	easyButton.titleLabel.shadowOffset = CGSizeMake(0, -0.5f);
-	[easyButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-	[easyButton setTitleColor:[UIColor colorWithHexString:@"#F7FF00"] forState:UIControlStateHighlighted];
-	[easyButton setTitle:@" Easy " forState:UIControlStateNormal];
-	[easyButton addTarget:self action:@selector(_difficultyButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
-	[_ribbonView addSubview:easyButton];
+	_easyButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	_easyButton.tag = ZSGameDifficultyEasy;
+	_easyButton.frame = CGRectMake(0, 75, 198, 30);
+	_easyButton.titleLabel.font = [UIFont fontWithName:@"ReklameScript-Regular" size:35.0f];
+	_easyButton.titleLabel.textAlignment = UITextAlignmentCenter;
+	_easyButton.titleLabel.shadowColor = shadowColor;
+	_easyButton.titleLabel.shadowOffset = CGSizeMake(0, -0.5f);
+	[_easyButton setTitleColor:textColorHighlighted forState:UIControlStateNormal];
+	[_easyButton setTitleColor:textColorHighlighted forState:UIControlStateHighlighted];
+	[_easyButton setTitle:@" Easy " forState:UIControlStateNormal];
+	[_easyButton addTarget:self action:@selector(_difficultyButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
+	[_ribbonView addSubview:_easyButton];
 	
-	UIButton *moderateButton = [UIButton buttonWithType:UIButtonTypeCustom];
-	[moderateButton addTarget:self action:@selector(_difficultyButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
-	moderateButton.tag = ZSGameDifficultyModerate;
-	moderateButton.frame = CGRectMake(0, 121, 198, 30);
-	moderateButton.titleLabel.font = [UIFont fontWithName:@"ReklameScript-Regular" size:35.0f];
-	moderateButton.titleLabel.textAlignment = UITextAlignmentCenter;
-	moderateButton.titleLabel.shadowColor = [UIColor colorWithHexString:@"#7d1c0c"];
-	moderateButton.titleLabel.shadowOffset = CGSizeMake(0, -0.5f);
-	[moderateButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-	[moderateButton setTitleColor:[UIColor colorWithHexString:@"#F7FF00"] forState:UIControlStateHighlighted];
-	[moderateButton setTitle:@" Moderate " forState:UIControlStateNormal];
-	[moderateButton addTarget:self action:@selector(_difficultyButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
-	[_ribbonView addSubview:moderateButton];
+	_moderateButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	[_moderateButton addTarget:self action:@selector(_difficultyButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
+	_moderateButton.tag = ZSGameDifficultyModerate;
+	_moderateButton.frame = CGRectMake(0, 121, 198, 30);
+	_moderateButton.titleLabel.font = [UIFont fontWithName:@"ReklameScript-Regular" size:35.0f];
+	_moderateButton.titleLabel.textAlignment = UITextAlignmentCenter;
+	_moderateButton.titleLabel.shadowColor = shadowColor;
+	_moderateButton.titleLabel.shadowOffset = CGSizeMake(0, -0.5f);
+	[_moderateButton setTitleColor:textColor forState:UIControlStateNormal];
+	[_moderateButton setTitleColor:textColorHighlighted forState:UIControlStateHighlighted];
+	[_moderateButton setTitle:@" Moderate " forState:UIControlStateNormal];
+	[_moderateButton addTarget:self action:@selector(_difficultyButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
+	[_ribbonView addSubview:_moderateButton];
 	
-	UIButton *challengingButton = [UIButton buttonWithType:UIButtonTypeCustom];
-	[challengingButton addTarget:self action:@selector(_difficultyButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
-	challengingButton.tag = ZSGameDifficultyChallenging;
-	challengingButton.frame = CGRectMake(0, 167, 198, 30);
-	challengingButton.titleLabel.font = [UIFont fontWithName:@"ReklameScript-Regular" size:35.0f];
-	challengingButton.titleLabel.textAlignment = UITextAlignmentCenter;
-	challengingButton.titleLabel.shadowColor = [UIColor colorWithHexString:@"#7d1c0c"];
-	challengingButton.titleLabel.shadowOffset = CGSizeMake(0, -0.5f);
-	[challengingButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-	[challengingButton setTitleColor:[UIColor colorWithHexString:@"#F7FF00"] forState:UIControlStateHighlighted];
-	[challengingButton setTitle:@" Challenging " forState:UIControlStateNormal];
-	[challengingButton addTarget:self action:@selector(_difficultyButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
-	[_ribbonView addSubview:challengingButton];
+	_challengingButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	[_challengingButton addTarget:self action:@selector(_difficultyButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
+	_challengingButton.tag = ZSGameDifficultyChallenging;
+	_challengingButton.frame = CGRectMake(0, 167, 198, 30);
+	_challengingButton.titleLabel.font = [UIFont fontWithName:@"ReklameScript-Regular" size:35.0f];
+	_challengingButton.titleLabel.textAlignment = UITextAlignmentCenter;
+	_challengingButton.titleLabel.shadowColor = shadowColor;
+	_challengingButton.titleLabel.shadowOffset = CGSizeMake(0, -0.5f);
+	[_challengingButton setTitleColor:textColor forState:UIControlStateNormal];
+	[_challengingButton setTitleColor:textColorHighlighted forState:UIControlStateHighlighted];
+	[_challengingButton setTitle:@" Challenging " forState:UIControlStateNormal];
+	[_challengingButton addTarget:self action:@selector(_difficultyButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
+	[_ribbonView addSubview:_challengingButton];
 	
-	UIButton *diabolicalButton = [UIButton buttonWithType:UIButtonTypeCustom];
-	[diabolicalButton addTarget:self action:@selector(_difficultyButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
-	diabolicalButton.tag = ZSGameDifficultyDiabolical;
-	diabolicalButton.frame = CGRectMake(0, 213, 198, 30);
-	diabolicalButton.titleLabel.font = [UIFont fontWithName:@"ReklameScript-Regular" size:35.0f];
-	diabolicalButton.titleLabel.textAlignment = UITextAlignmentCenter;
-	diabolicalButton.titleLabel.shadowColor = [UIColor colorWithHexString:@"#7d1c0c"];
-	diabolicalButton.titleLabel.shadowOffset = CGSizeMake(0, -0.5f);
-	[diabolicalButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-	[diabolicalButton setTitleColor:[UIColor colorWithHexString:@"#F7FF00"] forState:UIControlStateHighlighted];
-	[diabolicalButton setTitle:@" Diabolical " forState:UIControlStateNormal];
-	[diabolicalButton addTarget:self action:@selector(_difficultyButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
-	[_ribbonView addSubview:diabolicalButton];
+	_diabolicalButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	[_diabolicalButton addTarget:self action:@selector(_difficultyButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
+	_diabolicalButton.tag = ZSGameDifficultyDiabolical;
+	_diabolicalButton.frame = CGRectMake(0, 213, 198, 30);
+	_diabolicalButton.titleLabel.font = [UIFont fontWithName:@"ReklameScript-Regular" size:35.0f];
+	_diabolicalButton.titleLabel.textAlignment = UITextAlignmentCenter;
+	_diabolicalButton.titleLabel.shadowColor = shadowColor;
+	_diabolicalButton.titleLabel.shadowOffset = CGSizeMake(0, -0.5f);
+	[_diabolicalButton setTitleColor:textColor forState:UIControlStateNormal];
+	[_diabolicalButton setTitleColor:textColorHighlighted forState:UIControlStateHighlighted];
+	[_diabolicalButton setTitle:@" Diabolical " forState:UIControlStateNormal];
+	[_diabolicalButton addTarget:self action:@selector(_difficultyButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
+	[_ribbonView addSubview:_diabolicalButton];
 	
-	UIButton *insaneButton = [UIButton buttonWithType:UIButtonTypeCustom];
-	[insaneButton addTarget:self action:@selector(_difficultyButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
-	insaneButton.tag = ZSGameDifficultyInsane;
-	insaneButton.frame = CGRectMake(0, 259, 198, 30);
-	insaneButton.titleLabel.font = [UIFont fontWithName:@"ReklameScript-Regular" size:35.0f];
-	insaneButton.titleLabel.textAlignment = UITextAlignmentCenter;
-	insaneButton.titleLabel.shadowColor = [UIColor colorWithHexString:@"#7d1c0c"];
-	insaneButton.titleLabel.shadowOffset = CGSizeMake(0, -0.5f);
-	[insaneButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-	[insaneButton setTitleColor:[UIColor colorWithHexString:@"#F7FF00"] forState:UIControlStateHighlighted];
-	[insaneButton setTitle:@" Insane " forState:UIControlStateNormal];
-	[insaneButton addTarget:self action:@selector(_difficultyButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
-	[_ribbonView addSubview:insaneButton];
+	_insaneButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	[_insaneButton addTarget:self action:@selector(_difficultyButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
+	_insaneButton.tag = ZSGameDifficultyInsane;
+	_insaneButton.frame = CGRectMake(0, 259, 198, 30);
+	_insaneButton.titleLabel.font = [UIFont fontWithName:@"ReklameScript-Regular" size:35.0f];
+	_insaneButton.titleLabel.textAlignment = UITextAlignmentCenter;
+	_insaneButton.titleLabel.shadowColor = shadowColor;
+	_insaneButton.titleLabel.shadowOffset = CGSizeMake(0, -0.5f);
+	[_insaneButton setTitleColor:textColor forState:UIControlStateNormal];
+	[_insaneButton setTitleColor:textColorHighlighted forState:UIControlStateHighlighted];
+	[_insaneButton setTitle:@" Insane " forState:UIControlStateNormal];
+	[_insaneButton addTarget:self action:@selector(_difficultyButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
+	[_ribbonView addSubview:_insaneButton];
 }
 
 - (void)showRibbon {
@@ -170,6 +182,37 @@
 - (void)_difficultyButtonWasPressed:(UIButton *)sender {
 	[self.delegate difficultyWasSelected:(ZSGameDifficulty)sender.tag];
 	[self hideRibbon];
+}
+
+- (void)setHighlightedDifficulty:(ZSGameDifficulty)newHighlightedDifficulty {
+	if (newHighlightedDifficulty != highlightedDifficulty) {
+		UIColor *textColor = [UIColor whiteColor];
+		UIColor *textColorHighlighted = [UIColor colorWithHexString:@"#7d1c0c"];
+		
+		UIButton *previousDifficultyButton;
+		UIButton *newDifficultyButton;
+		
+		switch (highlightedDifficulty) {
+			case ZSGameDifficultyEasy: previousDifficultyButton = _easyButton; break;
+			case ZSGameDifficultyModerate: previousDifficultyButton = _moderateButton; break;
+			case ZSGameDifficultyChallenging: previousDifficultyButton = _challengingButton; break;
+			case ZSGameDifficultyDiabolical: previousDifficultyButton = _diabolicalButton; break;
+			case ZSGameDifficultyInsane: previousDifficultyButton = _insaneButton; break;
+		}
+		
+		switch (newHighlightedDifficulty) {
+			case ZSGameDifficultyEasy: newDifficultyButton = _easyButton; break;
+			case ZSGameDifficultyModerate: newDifficultyButton = _moderateButton; break;
+			case ZSGameDifficultyChallenging: newDifficultyButton = _challengingButton; break;
+			case ZSGameDifficultyDiabolical: newDifficultyButton = _diabolicalButton; break;
+			case ZSGameDifficultyInsane: newDifficultyButton = _insaneButton; break;
+		}
+		
+		[previousDifficultyButton setTitleColor:textColor forState:UIControlStateNormal];
+		[newDifficultyButton setTitleColor:textColorHighlighted forState:UIControlStateNormal];
+		
+		highlightedDifficulty = newHighlightedDifficulty;
+	}
 }
 
 @end
