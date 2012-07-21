@@ -45,6 +45,8 @@ typedef struct {
 	dispatch_queue_t _hintGenerationDispatchQueue;
 	dispatch_group_t _hintGenerationDispatchGroup;
 	
+	NSTimer *_hintButtonEvalutePulsingTimer;
+	
 	BOOL _guessInSameTileWasJustMade;
 	ZSTileViewController *_lastTileToReceiveGuess;
 	NSInteger _totalPencilChangesSinceLastGuess;
@@ -53,7 +55,7 @@ typedef struct {
 	NSTimer *_backgroundProcessTimer;
 	NSInteger _backgroundProcessTimerCount;
 	
-	NSTimer *_hintButtonEvalutePulsingTimer;
+	ZSTileViewController *_lastModifiedTileViewController;
 }
 
 @property (strong) ZSFoldedCornerPlusButtonViewController *foldedCornerPlusButtonViewController;
@@ -606,12 +608,18 @@ typedef struct {
 	// Reset pencil changes.
 	_totalPencilChangesSinceLastGuess = 0;
 	
+	_lastModifiedTileViewController = nil;
+	
 	[self.game undo];
+	
+	[self.boardViewController deselectTileView];
+	
+	if (_lastModifiedTileViewController) {
+		[self.boardViewController selectTileView:_lastModifiedTileViewController];
+	}
 	
 	// Here, we could reload just the changed tiles, but it's easier to reload all.
 	[self.boardViewController reloadView];
-	
-	[self.boardViewController deselectTileView];
 	[self.gameAnswerOptionsViewController reloadView];
 	
 	self.needsScreenshotUpdate = YES;
@@ -628,12 +636,18 @@ typedef struct {
 	// Reset pencil changes.
 	_totalPencilChangesSinceLastGuess = 0;
 	
+	_lastModifiedTileViewController = nil;
+	
 	[self.game redo];
+	
+	[self.boardViewController deselectTileView];
+	
+	if (_lastModifiedTileViewController) {
+		[self.boardViewController selectTileView:_lastModifiedTileViewController];
+	}
 	
 	// Here, we could reload just the changed tiles, but it's easier to reload all.
 	[self.boardViewController reloadView];
-	
-	[self.boardViewController deselectTileView];
 	[self.gameAnswerOptionsViewController reloadView];
 	
 	self.needsScreenshotUpdate = YES;
@@ -680,7 +694,11 @@ typedef struct {
 	[self _setErrors];
 	
 	// Reload the tile.
-	[self.boardViewController getTileViewControllerAtRow:row col:col].needsReload = YES;
+	ZSTileViewController *tileVC = [self.boardViewController getTileViewControllerAtRow:row col:col];
+	tileVC.needsReload = YES;
+	
+	// Keep track of the tile we just modified.
+	_lastModifiedTileViewController = tileVC;
 	
 	// Reselect the tile to update other error highlighting.
 	[self.boardViewController reselectTileView];
