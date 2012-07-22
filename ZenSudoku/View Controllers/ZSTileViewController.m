@@ -41,7 +41,7 @@ NSString * const kTileColorSimilarErrorGroup = @"#19A70404";
 NSString * const kTileColorOtherError = @"#19A70404";
 NSString * const kTileColorHighlightHintA = @"#4CF0F800";
 NSString * const kTileColorHighlightHintB = @"#4C632FD4";
-NSString * const kTileColorHighlightHintC = @"#4CD42F4A";
+NSString * const kTileColorHighlightHintC = @"#4C3365E2";
 NSString * const kTileColorHighlightHintD = @"#4C2FADD4";
 
 @interface ZSTileViewController () {

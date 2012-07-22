@@ -995,6 +995,7 @@
 				if (allPencilsInSameGroup && _fastGameBoard.totalTilesInGroupWithPencil[group][guess] > totalPencilsFound) {
 					ZSHintGeneratorEliminatePencilsBoxLineReduction *generator = [[ZSHintGeneratorEliminatePencilsBoxLineReduction alloc] init];
 					
+					generator.scope = ZSHintGeneratorTileScopeRow;
 					generator.targetPencil = (guess + 1);
 					
 					for (NSInteger i = 0; i < _fastGameBoard.size; ++i) {
@@ -1066,6 +1067,7 @@
 				if (allPencilsInSameGroup && _fastGameBoard.totalTilesInGroupWithPencil[group][guess] > totalPencilsFound) {
 					ZSHintGeneratorEliminatePencilsBoxLineReduction *generator = [[ZSHintGeneratorEliminatePencilsBoxLineReduction alloc] init];
 					
+					generator.scope = ZSHintGeneratorTileScopeCol;
 					generator.targetPencil = (guess + 1);
 					
 					for (NSInteger i = 0; i < _fastGameBoard.size; ++i) {
