@@ -121,7 +121,7 @@
 	ZSHintCard *card3 = [[ZSHintCard alloc] init];
 	NSString *mainGroupClause = subgroupExistsInSameRow ? @"row" : subgroupExistsInSameCol ? @"column" : @"";
 	NSString *andClause = (subgroupExistsInSameRow || subgroupExistsInSameCol) && subgroupExistsInSameGroup ? @" and " : @"";
-	NSString *groupClause = subgroupExistsInSameGroup ? @"group" : @"";
+	NSString *groupClause = subgroupExistsInSameGroup ? @"region" : @"";
 	card3.text = [NSString stringWithFormat:@"The possibilities that form the naked %@ can be eliminated from other tiles in the same %@%@%@.", subgroupName, mainGroupClause, andClause, groupClause];
 	
 	for (NSInteger i = 0; i < _totalGroupTiles; ++i) {

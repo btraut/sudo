@@ -30,12 +30,12 @@
 	NSMutableArray *hintCards = [NSMutableArray array];
 	
 	ZSHintCard *card1 = [[ZSHintCard alloc] init];
-	card1.text = [NSString stringWithFormat:@"Examine the tile at [%i, %i].", (_row + 1), (_col + 1)];
+	card1.text = [NSString stringWithFormat:@"Examine the highlighted tile. What is special about it?", (_row + 1), (_col + 1)];
 	[card1 addInstructionHighlightTileAtRow:_row col:_col highlightType:ZSTileHintHighlightTypeB];
 	[hintCards addObject:card1];
 	
 	ZSHintCard *card2 = [[ZSHintCard alloc] init];
-	card2.text = @"Think about which possibilities remain for this tile.";
+	card2.text = @"Think about which answers could possibly fit for this tile.";
 	[card2 addInstructionHighlightTileAtRow:_row col:_col highlightType:ZSTileHintHighlightTypeB];
 	[hintCards addObject:card2];
 	

@@ -103,7 +103,7 @@
 }
 
 - (NSArray *)generateHint {
-	NSString *groupName = (scope == ZSHintGeneratorTileScopeRow ? @"row" : (scope == ZSHintGeneratorTileScopeCol ? @"column" : @"group"));
+	NSString *groupName = (scope == ZSHintGeneratorTileScopeRow ? @"row" : (scope == ZSHintGeneratorTileScopeCol ? @"column" : @"region"));
 	
 	NSString *subgroupName;
 	NSString *possibilities;

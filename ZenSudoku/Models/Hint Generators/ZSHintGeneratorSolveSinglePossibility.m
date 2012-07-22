@@ -36,8 +36,8 @@
 	ZSHintCard *card3 = [[ZSHintCard alloc] init];
 	
 	if (_scope == ZSHintGeneratorTileScopeRow) {
-		card1.text = @"Check the highlighted row for any tiles with single possibilities.";
-		card2.text = [NSString stringWithFormat:@"The number %i can only be placed in one spot in this row.", _guess];
+		card1.text = @"Examine the highlighted row for a tile with a unique possibility.";
+		card2.text = [NSString stringWithFormat:@"The answer %i can only be placed in one spot in this row.", _guess];
 		card3.text = [NSString stringWithFormat:@"The highlighted tile is the only one in its row that can be a %i.", _guess];
 		
 		for (NSInteger i = 0; i < 9; ++i) {
@@ -51,8 +51,8 @@
 			}
 		}
 	} else if (_scope == ZSHintGeneratorTileScopeCol) {
-		card1.text = @"Check the highlighted column for any tiles with single possibilities.";
-		card2.text = [NSString stringWithFormat:@"The number %i can only be placed in one spot in this column.", _guess];
+		card1.text = @"Examine the highlighted column for a tile with a unique possibility.";
+		card2.text = [NSString stringWithFormat:@"The answer %i can only be placed in one spot in this column.", _guess];
 		card3.text = [NSString stringWithFormat:@"The highlighted tile is the only one in its column that can be a %i.", _guess];
 		
 		for (NSInteger i = 0; i < 9; ++i) {
@@ -66,9 +66,9 @@
 			}
 		}
 	} else {
-		card1.text = @"Check the highlighted group for any tiles with single possibilities.";
-		card2.text = [NSString stringWithFormat:@"The number %i can only be placed in one spot in this group.", _guess];
-		card3.text = [NSString stringWithFormat:@"The highlighted tile is the only one in its group that can be a %i.", _guess];
+		card1.text = @"Examine the highlighted region for a tile with a unique possibility.";
+		card2.text = [NSString stringWithFormat:@"The answer %i can only be placed in one spot in this region.", _guess];
+		card3.text = [NSString stringWithFormat:@"The highlighted tile is the only one in its region that can be a %i.", _guess];
 		
 		NSInteger groupTopRow = (_row / 3) * 3;
 		NSInteger groupLeftCol = (_col / 3) * 3;

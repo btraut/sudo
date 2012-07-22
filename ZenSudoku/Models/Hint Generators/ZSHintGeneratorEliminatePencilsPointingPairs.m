@@ -110,7 +110,7 @@
 	
 	// Step 2: Tiles form a pointing pair.
 	ZSHintCard *card2 = [[ZSHintCard alloc] init];
-	card2.text = [NSString stringWithFormat:@"The highlighted tiles form a pointing pair. They are the only tiles in their group with possibility %i and they are in the same %@.", targetPencil, scopeName];
+	card2.text = [NSString stringWithFormat:@"The highlighted tiles form a pointing pair. They are the only tiles in their region with possibility %i and they are in the same %@.", targetPencil, scopeName];
 	
 	for (NSInteger i = 0; i < _totalGroupTiles; ++i) {
 		ZSHintGeneratorTileInstruction *instruction = &_groupTiles[i];
