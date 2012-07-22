@@ -37,6 +37,8 @@
 
 @property (assign) BOOL allowsSelection;
 
+@property (assign) BOOL animateChanges;
+
 // Construction / Deconstruction
 - (id)initWithGame:(ZSGame *)game;
 - (void)resetWithGame:(ZSGame *)newGame;

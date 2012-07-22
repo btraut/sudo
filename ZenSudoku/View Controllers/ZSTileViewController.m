@@ -23,7 +23,7 @@ NSString * const kTextColorHighlightHintA = @"#FFA70404";
 NSString * const kTextColorHighlightHintB = @"#FF16BE3D";
 
 NSString * const kTextColorPencil = @"#FF2B2B2B";
-NSString * const kTextColorPencilHighlightHintA = @"#FFA70404";
+NSString * const kTextColorPencilHighlightHintA = @"#FFCE0000";
 NSString * const kTextColorPencilHighlightHintB = @"#FF16BE3D";
 
 NSString * const kTextShadowColorGuess = @"66FFFFFF";
@@ -39,7 +39,7 @@ NSString * const kTileColorDarkHighlightSimilarPencil = @"#205aa6fc";
 NSString * const kTileColorSimilarError = @"#66A70404";
 NSString * const kTileColorSimilarErrorGroup = @"#19A70404";
 NSString * const kTileColorOtherError = @"#19A70404";
-NSString * const kTileColorHighlightHintA = @"#4CD42FB3";
+NSString * const kTileColorHighlightHintA = @"#4CF0F800";
 NSString * const kTileColorHighlightHintB = @"#4C632FD4";
 NSString * const kTileColorHighlightHintC = @"#4CD42F4A";
 NSString * const kTileColorHighlightHintD = @"#4C2FADD4";
@@ -64,6 +64,7 @@ NSString * const kTileColorHighlightHintD = @"#4C2FADD4";
 @synthesize tile, touchDelegate;
 @synthesize ghostedValue, selected, highlightedSimilar, highlightedError, error;
 @synthesize highlightedHintType, highlightGuessHint, highlightPencilHints;
+@synthesize animateChanges;
 
 - (id)init {
 	self = [super init];
@@ -188,6 +189,26 @@ NSString * const kTileColorHighlightHintD = @"#4C2FADD4";
 #pragma mark - Sudoku Stuff
 
 - (void)reloadView {
+	BOOL waitToClearGuessText = NO;
+	
+	if (tile.guess > 0 || ghostedValue > 0) {
+		// Show the guess.
+		[self _setGuessHidden:NO animated:NO];
+		
+		// Set visibility on all the pencil views.
+		[self _changePencilsHiddenAnimated:NO];
+	} else {
+		// Hide the guess.
+		[self _setGuessHidden:YES animated:self.animateChanges];
+		
+		// Set visibility on all the pencil views.
+		[self _changePencilsHiddenAnimated:self.animateChanges];
+		
+		if (self.animateChanges) {
+			waitToClearGuessText = YES;
+		}
+	}
+	
 	NSInteger newValue = 0;
 	
 	if (ghostedValue) {
@@ -197,14 +218,11 @@ NSString * const kTileColorHighlightHintD = @"#4C2FADD4";
 	}
 	
 	if (newValue != _previousValue) {
-		guessView.text = [NSString stringWithFormat:@"%i", newValue];
-		_previousValue = newValue;
-	}
+		if (!waitToClearGuessText) {
+			guessView.text = [NSString stringWithFormat:@"%i", newValue];
+		}
 		
-	if (tile.guess > 0 || ghostedValue > 0) {
-		[self showGuess];
-	} else {
-		[self hideGuess];
+		_previousValue = newValue;
 	}
 	
 	// Set the proper text and background types.
@@ -398,25 +416,86 @@ NSString * const kTileColorHighlightHintD = @"#4C2FADD4";
 	}
 }
 
-- (void)showGuess {
-	// Show the guess.
-	guessView.hidden = NO;
-	
-	// Set visibility on all the pencil views.
-	for (NSInteger i = 0; i < tile.board.size; ++i) {
-		UILabel *pencilLabel = [pencilViews objectAtIndex:i];
-		pencilLabel.hidden = YES;
-	}		
+- (void)_setGuessHidden:(BOOL)hidden animated:(BOOL)animated {
+	if (animated) {
+		if (guessView.hidden && !hidden) {
+			guessView.alpha = 0;
+			guessView.hidden = NO;
+		}
+		
+		[UIView
+		 animateWithDuration:0.3f
+		 delay:0
+		 options:
+		 UIViewAnimationOptionCurveEaseOut |
+		 UIViewAnimationOptionOverrideInheritedDuration |
+		 UIViewAnimationOptionOverrideInheritedCurve
+		 animations:^{
+			 if (hidden) {
+				 guessView.alpha = 0;
+			 } else {
+				 guessView.alpha = 1;
+			 }
+		 }
+		 completion:^(BOOL finished){
+			 if (guessView.alpha == 0) {
+				 guessView.hidden = YES;
+				 guessView.alpha = 1;
+				 
+				 guessView.text = [NSString stringWithFormat:@"%i", _previousValue];
+			 }
+		 }];
+	} else {
+		guessView.hidden = hidden;
+	}
 }
 
-- (void)hideGuess {
-	// Hide the guess.
-	guessView.hidden = YES;
-	
-	// Set visibility on all the pencil views.
-	for (NSInteger i = 0; i < tile.board.size; ++i) {
-		UILabel *pencilLabel = [pencilViews objectAtIndex:i];
-		pencilLabel.hidden = ![tile getPencilForGuess:(i + 1)];
+- (void)_changePencilsHiddenAnimated:(BOOL)animated {
+	if (animated) {
+		// If a hidden pencil is becoming visible, we need to start by setting its alpha to 0 and then making it visible.
+		for (NSInteger i = 0; i < tile.board.size; ++i) {
+			UILabel *pencilLabel = [pencilViews objectAtIndex:i];
+			
+			if ([tile getPencilForGuess:(i + 1)] && pencilLabel.hidden) {
+				pencilLabel.alpha = 0;
+				pencilLabel.hidden = NO;
+			}
+		}
+		
+		[UIView
+		 animateWithDuration:0.3f
+		 delay:0
+		 options:
+			UIViewAnimationOptionCurveEaseOut |
+			UIViewAnimationOptionOverrideInheritedDuration |
+			UIViewAnimationOptionOverrideInheritedCurve
+		 animations:^{
+			 for (NSInteger i = 0; i < tile.board.size; ++i) {
+				 UILabel *pencilLabel = [pencilViews objectAtIndex:i];
+				 
+				 if (![tile getPencilForGuess:(i + 1)] && !pencilLabel.hidden) {
+					 pencilLabel.alpha = 0;
+				 } else if ([tile getPencilForGuess:(i + 1)] && pencilLabel.alpha == 0) {
+					 pencilLabel.alpha = 1;
+				 }
+			 }
+		 }
+		 completion:^(BOOL finished){
+			 // If a pencil is being hidden, we want to actually set its visibility to hidden and its alpha back to 1.
+			 for (NSInteger i = 0; i < tile.board.size; ++i) {
+				 UILabel *pencilLabel = [pencilViews objectAtIndex:i];
+				 
+				 if (pencilLabel.alpha == 0) {
+					 pencilLabel.hidden = YES;
+					 pencilLabel.alpha = 1;
+				 }
+			 }
+		 }];
+	} else {
+		for (NSInteger i = 0; i < tile.board.size; ++i) {
+			UILabel *pencilLabel = [pencilViews objectAtIndex:i];
+			pencilLabel.hidden = ![tile getPencilForGuess:(i + 1)];
+		}
 	}
 }
 

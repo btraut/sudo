@@ -36,9 +36,9 @@
 	ZSHintCard *card3 = [[ZSHintCard alloc] init];
 	
 	if (_scope == ZSHintGeneratorTileScopeRow) {
-		card1.text = @"Check this row for any tiles with single possibilities.";
+		card1.text = @"Check the highlighted row for any tiles with single possibilities.";
 		card2.text = [NSString stringWithFormat:@"The number %i can only be placed in one spot in this row.", _guess];
-		card3.text = [NSString stringWithFormat:@"The tile at [%i, %i] is the only tile in this row that can be a %i.", (_row + 1), (_col + 1), _guess];
+		card3.text = [NSString stringWithFormat:@"The highlighted tile is the only one in its row that can be a %i.", _guess];
 		
 		for (NSInteger i = 0; i < 9; ++i) {
 			[card1 addInstructionHighlightTileAtRow:_row col:i highlightType:ZSTileHintHighlightTypeB];
@@ -51,9 +51,9 @@
 			}
 		}
 	} else if (_scope == ZSHintGeneratorTileScopeCol) {
-		card1.text = @"Check this column for any tiles with single possibilities.";
+		card1.text = @"Check the highlighted column for any tiles with single possibilities.";
 		card2.text = [NSString stringWithFormat:@"The number %i can only be placed in one spot in this column.", _guess];
-		card3.text = [NSString stringWithFormat:@"The tile at [%i, %i] is the only tile in this column that can be a %i.", (_row + 1), (_col + 1), _guess];
+		card3.text = [NSString stringWithFormat:@"The highlighted tile is the only one in its column that can be a %i.", _guess];
 		
 		for (NSInteger i = 0; i < 9; ++i) {
 			[card1 addInstructionHighlightTileAtRow:i col:_col highlightType:ZSTileHintHighlightTypeB];
@@ -66,9 +66,9 @@
 			}
 		}
 	} else {
-		card1.text = @"Check this group for any tiles with single possibilities.";
+		card1.text = @"Check the highlighted group for any tiles with single possibilities.";
 		card2.text = [NSString stringWithFormat:@"The number %i can only be placed in one spot in this group.", _guess];
-		card3.text = [NSString stringWithFormat:@"The tile at [%i, %i] is the only tile in this group that can be a %i.", (_row + 1), (_col + 1), _guess];
+		card3.text = [NSString stringWithFormat:@"The highlighted tile is the only one in its group that can be a %i.", _guess];
 		
 		NSInteger groupTopRow = (_row / 3) * 3;
 		NSInteger groupLeftCol = (_col / 3) * 3;
@@ -95,7 +95,7 @@
 	[hintCards addObject:card3];
 	
 	ZSHintCard *card4 = [[ZSHintCard alloc] init];
-	card4.text = [NSString stringWithFormat:@"%i has been set at [%i, %i].", _guess, (_row + 1), (_col + 1)];
+	card4.text = [NSString stringWithFormat:@"%i has been set.", _guess];
 	[card4 addInstructionSetGuess:_guess forTileAtRow:_row col:_col];
 	[card4 addInstructionHighlightTileAtRow:_row col:_col highlightType:ZSTileHintHighlightTypeA];
 	[hintCards addObject:card4];

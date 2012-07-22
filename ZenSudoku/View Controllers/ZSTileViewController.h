@@ -88,6 +88,8 @@ typedef enum {
 @property (assign) ZSTileTextHintHighlightType highlightGuessHint;
 @property (assign) ZSTilePencilTextType *highlightPencilHints;
 
+@property (assign) BOOL animateChanges;
+
 - (id)initWithTile:(ZSTile *)newTile;
 - (void)reset;
 
@@ -95,9 +97,6 @@ typedef enum {
 
 - (void)reloadView;
 - (void)reloadTextAndBackgroundType;
-
-- (void)showGuess;
-- (void)hideGuess;
 
 @end
 

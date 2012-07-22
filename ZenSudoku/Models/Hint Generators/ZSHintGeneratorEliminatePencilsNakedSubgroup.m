@@ -134,11 +134,6 @@
 		[card3 addInstructionHighlightTileAtRow:instruction->row col:instruction->col highlightType:ZSTileHintHighlightTypeA];
 	}
 	
-	for (NSInteger i = 0; i < _totalPencilsToEliminate; ++i) {
-		ZSHintGeneratorTileInstruction *instruction = &_pencilsToEliminate[i];
-		[card3 addInstructionHighlightPencil:instruction->pencil forTileAtRow:instruction->row col:instruction->col highlightType:ZSTilePencilTextHintHighlightTypeA];
-	}
-	
 	[hintCards addObject:card3];
 	
 	// Step 4: Highlight pencils within influenced tiles.
@@ -180,6 +175,7 @@
 	
 	for (NSInteger i = 0; i < _totalPencilsToEliminate; ++i) {
 		ZSHintGeneratorTileInstruction *instruction = &_pencilsToEliminate[i];
+		[card5 addInstructionHighlightPencil:instruction->pencil forTileAtRow:instruction->row col:instruction->col highlightType:ZSTilePencilTextHintHighlightTypeA];
 		[card5 addInstructionRemovePencil:instruction->pencil forTileAtRow:instruction->row col:instruction->col];
 	}
 	

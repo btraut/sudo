@@ -33,6 +33,7 @@
 @synthesize lastTileTappedTime = _lastTileTappedTime;
 
 @synthesize allowsSelection;
+@synthesize animateChanges;
 
 #pragma mark - Construction / Deconstruction
 
@@ -129,7 +130,11 @@
 			ZSTileViewController *tileViewController = [self getTileViewControllerAtRow:row col:col];
 			
 			if (tileViewController.needsReload) {
+				tileViewController.animateChanges = self.animateChanges;
+				
 				[tileViewController reloadView];
+				
+				tileViewController.animateChanges = NO;
 			}
 		}
 	}

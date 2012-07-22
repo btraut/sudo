@@ -79,13 +79,18 @@
 	return nil;
 }
 
-- (void)carouselCurrentItemIndexDidChange:(iCarousel *)carousel {
+- (void)carouselDidEndScrollingAnimation:(iCarousel *)carousel {
 	if (!_ignoreCarouselChanges) {
+		BOOL previousDisableActions = [CATransaction disableActions];
+		[CATransaction setDisableActions:NO];
+		
 		_progressDots.selectedDot = carousel.currentItemIndex;
 		
 		_previousCard = _currentCard;
 		_currentCard = carousel.currentItemIndex;
 		[self _doHintCardActions];
+		
+		[CATransaction setDisableActions:previousDisableActions];
 	}
 }
 
@@ -140,8 +145,6 @@
 }
 
 - (void)_doHintCardActions {
-	
-	
 	if (_previousCard > _currentCard) {
 		ZSHintCard *previousCard = [_hintDeck objectAtIndex:_previousCard];
 		
@@ -190,13 +193,19 @@
 		tile.highlightedHintType = hintHighlightType;
 	}
 	
+	BOOL animateChanges = NO;
+	
 	if (_previousCard < _currentCard) {
-		for (NSDictionary *dict in currentCard.removePencils) {
-			NSInteger row = [[dict objectForKey:kDictionaryKeyTileRow] intValue];
-			NSInteger col = [[dict objectForKey:kDictionaryKeyTileCol] intValue];
-			NSInteger pencil = [[dict objectForKey:kDictionaryKeyTileValue] intValue];
+		if (currentCard.removePencils.count) {
+			for (NSDictionary *dict in currentCard.removePencils) {
+				NSInteger row = [[dict objectForKey:kDictionaryKeyTileRow] intValue];
+				NSInteger col = [[dict objectForKey:kDictionaryKeyTileCol] intValue];
+				NSInteger pencil = [[dict objectForKey:kDictionaryKeyTileValue] intValue];
+				
+				[_gameViewController.game setPencil:NO forPencilNumber:pencil forTileAtRow:row col:col];
+			}
 			
-			[_gameViewController.game setPencil:NO forPencilNumber:pencil forTileAtRow:row col:col];
+			animateChanges = YES;
 		}
 		
 		for (NSDictionary *dict in currentCard.addPencils) {
@@ -207,11 +216,15 @@
 			[_gameViewController.game setPencil:YES forPencilNumber:pencil forTileAtRow:row col:col];
 		}
 		
-		for (NSDictionary *dict in currentCard.removeGuess) {
-			NSInteger row = [[dict objectForKey:kDictionaryKeyTileRow] intValue];
-			NSInteger col = [[dict objectForKey:kDictionaryKeyTileCol] intValue];
+		if (currentCard.removeGuess.count) {
+			for (NSDictionary *dict in currentCard.removeGuess) {
+				NSInteger row = [[dict objectForKey:kDictionaryKeyTileRow] intValue];
+				NSInteger col = [[dict objectForKey:kDictionaryKeyTileCol] intValue];
+				
+				[_gameViewController.game clearGuessForTileAtRow:row col:col];
+			}
 			
-			[_gameViewController.game clearGuessForTileAtRow:row col:col];
+			animateChanges = YES;
 		}
 		
 		for (NSDictionary *dict in currentCard.setGuess) {
@@ -231,9 +244,13 @@
 		[_gameViewController.game stopGenericUndoStop];
 	}
 	
+	_gameViewController.boardViewController.animateChanges = animateChanges;
+	
 	// We can get away with just reloading the board here because we're gauranteed to have no selection
 	// and a new screenshot will be generated when the hints are dismissed.
 	[_gameViewController.boardViewController reloadView];
+	
+	_gameViewController.boardViewController.animateChanges = NO;
 }
 
 @end

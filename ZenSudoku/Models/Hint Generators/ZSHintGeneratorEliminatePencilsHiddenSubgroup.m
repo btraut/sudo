@@ -134,7 +134,7 @@
 	
 	// Step 2: Tiles form a hidden pair/triplet/quad.
 	ZSHintCard *card2 = [[ZSHintCard alloc] init];
-	card2.text = [NSString stringWithFormat:@"The highlighted tiles form a hidden %@ because they are the only tiles in their %@ that have possibilities %@.", subgroupName, groupName, possibilities];
+	card2.text = [NSString stringWithFormat:@"The highlighted tiles form a hidden %@. They are the only tiles in their %@ that have possibilities %@.", subgroupName, groupName, possibilities];
 	
 	for (NSInteger i = 0; i < _totalGroupTiles; ++i) {
 		ZSHintGeneratorTileInstruction *instruction = &_groupTiles[i];
@@ -187,6 +187,7 @@
 	
 	for (NSInteger i = 0; i < _totalPencilsToEliminate; ++i) {
 		ZSHintGeneratorTileInstruction *instruction = &_pencilsToEliminate[i];
+		[card4 addInstructionHighlightPencil:instruction->pencil forTileAtRow:instruction->row col:instruction->col highlightType:ZSTilePencilTextHintHighlightTypeA];
 		[card4 addInstructionRemovePencil:instruction->pencil forTileAtRow:instruction->row col:instruction->col];
 	}
 	
