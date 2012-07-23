@@ -40,8 +40,8 @@ NSString * const kTileColorSimilarError = @"#66A70404";
 NSString * const kTileColorSimilarErrorGroup = @"#19A70404";
 NSString * const kTileColorOtherError = @"#19A70404";
 NSString * const kTileColorHighlightHintA = @"#4CF0F800";
-NSString * const kTileColorHighlightHintB = @"#4C632FD4";
-NSString * const kTileColorHighlightHintC = @"#4C3365E2";
+NSString * const kTileColorHighlightHintB = @"#4C7542E2";
+NSString * const kTileColorHighlightHintC = @"#4C34C0E3";
 NSString * const kTileColorHighlightHintD = @"#4C2FADD4";
 
 @interface ZSTileViewController () {
@@ -212,13 +212,13 @@ NSString * const kTileColorHighlightHintD = @"#4C2FADD4";
 		[self _setGuessHidden:NO animated:NO];
 		
 		// Set visibility on all the pencil views.
-		[self _changePencilsHiddenAnimated:NO];
+		[self _changePencilsHidden:YES animated:NO];
 	} else {
 		// Hide the guess.
 		[self _setGuessHidden:YES animated:self.animateChanges];
 		
 		// Set visibility on all the pencil views.
-		[self _changePencilsHiddenAnimated:self.animateChanges];
+		[self _changePencilsHidden:NO animated:self.animateChanges];
 		
 		if (self.animateChanges) {
 			waitToClearGuessText = YES;
@@ -450,15 +450,17 @@ NSString * const kTileColorHighlightHintD = @"#4C2FADD4";
 	}
 }
 
-- (void)_changePencilsHiddenAnimated:(BOOL)animated {
+- (void)_changePencilsHidden:(BOOL)hidden animated:(BOOL)animated {
 	if (animated) {
-		// If a hidden pencil is becoming visible, we need to start by setting its alpha to 0 and then making it visible.
-		for (NSInteger i = 0; i < tile.board.size; ++i) {
-			UILabel *pencilLabel = [pencilViews objectAtIndex:i];
-			
-			if ([tile getPencilForGuess:(i + 1)] && pencilLabel.hidden) {
-				pencilLabel.alpha = 0;
-				pencilLabel.hidden = NO;
+		if (!hidden) {
+			// If a hidden pencil is becoming visible, we need to start by setting its alpha to 0 and then making it visible.
+			for (NSInteger i = 0; i < tile.board.size; ++i) {
+				UILabel *pencilLabel = [pencilViews objectAtIndex:i];
+				
+				if ([tile getPencilForGuess:(i + 1)] && pencilLabel.hidden) {
+					pencilLabel.alpha = 0;
+					pencilLabel.hidden = NO;
+				}
 			}
 		}
 		
@@ -473,7 +475,9 @@ NSString * const kTileColorHighlightHintD = @"#4C2FADD4";
 			 for (NSInteger i = 0; i < tile.board.size; ++i) {
 				 UILabel *pencilLabel = [pencilViews objectAtIndex:i];
 				 
-				 if (![tile getPencilForGuess:(i + 1)] && !pencilLabel.hidden) {
+				 if (hidden && !pencilLabel.hidden) {
+					 pencilLabel.alpha = 0;
+				 } else if (![tile getPencilForGuess:(i + 1)] && !pencilLabel.hidden) {
 					 pencilLabel.alpha = 0;
 				 } else if ([tile getPencilForGuess:(i + 1)] && pencilLabel.alpha == 0) {
 					 pencilLabel.alpha = 1;
@@ -494,7 +498,12 @@ NSString * const kTileColorHighlightHintD = @"#4C2FADD4";
 	} else {
 		for (NSInteger i = 0; i < tile.board.size; ++i) {
 			UILabel *pencilLabel = [pencilViews objectAtIndex:i];
-			pencilLabel.hidden = ![tile getPencilForGuess:(i + 1)];
+			
+			if (hidden) {
+				pencilLabel.hidden = YES;
+			} else {
+				pencilLabel.hidden = ![tile getPencilForGuess:(i + 1)];
+			}
 		}
 	}
 }

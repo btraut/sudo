@@ -49,8 +49,8 @@
 		[self _freeTilesAndInstructions];
 	}
 	
-	_XWingTiles = malloc(sizeof(ZSHintGeneratorTileInstruction) * 3);
-	_pencilsToEliminate = malloc(sizeof(ZSHintGeneratorTileInstruction) * 6);
+	_XWingTiles = malloc(sizeof(ZSHintGeneratorTileInstruction) * 16);
+	_pencilsToEliminate = malloc(sizeof(ZSHintGeneratorTileInstruction) * 81);
 	
 	[self resetTilesAndInstructions];
 }

@@ -68,7 +68,7 @@ NSString * const kDBPuzzleDefinitionGroupMapKey = @"kDBPuzzleDefinitionGroupMapK
 	
 	// Pick a specific puzzle (debug purposes).
 	BOOL forcePuzzleById = NO;
-	NSInteger puzzleId = 16241;
+	NSInteger puzzleId = 21105;
 	
 	// Fetch a puzzle.
 	FMResultSet *result;
