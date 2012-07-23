@@ -108,7 +108,7 @@
 	
 	[hintCards addObject:card1];
 	
-	// Step 2: Tiles form a pointing pair.
+	// Step 2: Tiles form a box line reduction.
 	ZSHintCard *card2 = [[ZSHintCard alloc] init];
 	card2.text = [NSString stringWithFormat:@"The highlighted tiles form a box line reduction. They are the only tiles in their %@ with possibility %i, and they share a region.", scopeName, targetPencil];
 	

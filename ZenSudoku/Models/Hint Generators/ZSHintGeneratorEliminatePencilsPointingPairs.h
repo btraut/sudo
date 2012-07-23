@@ -9,10 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "ZSHintGenerator.h"
 
-@interface ZSHintGeneratorEliminatePencilsPointingPairs : NSObject <ZSHintGeneratorUtility> {
-	ZSHintGeneratorTileScope scope;
-	NSInteger targetPencil;
-}
+@interface ZSHintGeneratorEliminatePencilsPointingPairs : NSObject <ZSHintGeneratorUtility>
 
 @property (assign) ZSHintGeneratorTileScope scope;
 @property (assign) NSInteger targetPencil;

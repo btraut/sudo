@@ -70,6 +70,7 @@
 		8494BE6C14FAACCC00010233 /* Board@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8494BE6A14FAACCC00010233 /* Board@2x.png */; };
 		8494BE7114FB117100010233 /* Pencil@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8494BE6F14FB117100010233 /* Pencil@2x.png */; };
 		8494BE7214FB117100010233 /* PencilSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8494BE7014FB117100010233 /* PencilSelected@2x.png */; };
+		84958EC015BC986500D80321 /* ZSHintGeneratorEliminatePencilsXWing.m in Sources */ = {isa = PBXBuildFile; fileRef = 84958EBF15BC986500D80321 /* ZSHintGeneratorEliminatePencilsXWing.m */; };
 		84992960155BA8B900D82D34 /* ZSHintGeneratorSolveOnlyChoice.m in Sources */ = {isa = PBXBuildFile; fileRef = 8499295F155BA8B900D82D34 /* ZSHintGeneratorSolveOnlyChoice.m */; };
 		84992961155BA8B900D82D34 /* ZSHintGeneratorSolveOnlyChoice.m in Sources */ = {isa = PBXBuildFile; fileRef = 8499295F155BA8B900D82D34 /* ZSHintGeneratorSolveOnlyChoice.m */; };
 		84992964155F0C9700D82D34 /* ZSHintGeneratorSolveSinglePossibility.m in Sources */ = {isa = PBXBuildFile; fileRef = 84992963155F0C9700D82D34 /* ZSHintGeneratorSolveSinglePossibility.m */; };
@@ -234,6 +235,8 @@
 		8494BE6A14FAACCC00010233 /* Board@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Board@2x.png"; path = "Resources/Images/Board@2x.png"; sourceTree = "<group>"; };
 		8494BE6F14FB117100010233 /* Pencil@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Pencil@2x.png"; path = "Resources/Images/Pencil@2x.png"; sourceTree = "<group>"; };
 		8494BE7014FB117100010233 /* PencilSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "PencilSelected@2x.png"; path = "Resources/Images/PencilSelected@2x.png"; sourceTree = "<group>"; };
+		84958EBE15BC986400D80321 /* ZSHintGeneratorEliminatePencilsXWing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSHintGeneratorEliminatePencilsXWing.h; path = "ZenSudoku/Models/Hint Generators/ZSHintGeneratorEliminatePencilsXWing.h"; sourceTree = SOURCE_ROOT; };
+		84958EBF15BC986500D80321 /* ZSHintGeneratorEliminatePencilsXWing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSHintGeneratorEliminatePencilsXWing.m; path = "ZenSudoku/Models/Hint Generators/ZSHintGeneratorEliminatePencilsXWing.m"; sourceTree = SOURCE_ROOT; };
 		8499295E155BA8B900D82D34 /* ZSHintGeneratorSolveOnlyChoice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSHintGeneratorSolveOnlyChoice.h; path = "ZenSudoku/Models/Hint Generators/ZSHintGeneratorSolveOnlyChoice.h"; sourceTree = SOURCE_ROOT; };
 		8499295F155BA8B900D82D34 /* ZSHintGeneratorSolveOnlyChoice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSHintGeneratorSolveOnlyChoice.m; path = "ZenSudoku/Models/Hint Generators/ZSHintGeneratorSolveOnlyChoice.m"; sourceTree = SOURCE_ROOT; };
 		84992962155F0C9700D82D34 /* ZSHintGeneratorSolveSinglePossibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSHintGeneratorSolveSinglePossibility.h; path = "ZenSudoku/Models/Hint Generators/ZSHintGeneratorSolveSinglePossibility.h"; sourceTree = SOURCE_ROOT; };
@@ -424,6 +427,8 @@
 				84D1CB131571829E0027230B /* ZSHintGeneratorEliminatePencilsPointingPairs.m */,
 				84D1CB151571A5270027230B /* ZSHintGeneratorEliminatePencilsBoxLineReduction.h */,
 				84D1CB161571A5280027230B /* ZSHintGeneratorEliminatePencilsBoxLineReduction.m */,
+				84958EBE15BC986400D80321 /* ZSHintGeneratorEliminatePencilsXWing.h */,
+				84958EBF15BC986500D80321 /* ZSHintGeneratorEliminatePencilsXWing.m */,
 			);
 			name = "Logic Technique Hint Generators";
 			path = "Sudoku Solving Utilities";
@@ -1007,6 +1012,7 @@
 				84D54E8B15AECADB003B1705 /* ZSPanBetweenSubviewsGestureRecognizer.m in Sources */,
 				84D54E9C15B41595003B1705 /* ZSRibbonViewController.m in Sources */,
 				84BE033115B6B18B00156895 /* UIHintButtonViewController.m in Sources */,
+				84958EC015BC986500D80321 /* ZSHintGeneratorEliminatePencilsXWing.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

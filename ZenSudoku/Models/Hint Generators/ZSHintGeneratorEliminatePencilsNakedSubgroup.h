@@ -9,13 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "ZSHintGenerator.h"
 
-@interface ZSHintGeneratorEliminatePencilsNakedSubgroup : NSObject <ZSHintGeneratorUtility> {
-	BOOL subgroupExistsInSameRow;
-	BOOL subgroupExistsInSameCol;
-	BOOL subgroupExistsInSameGroup;
-	
-	NSInteger totalPencilsToEliminate;
-}
+@interface ZSHintGeneratorEliminatePencilsNakedSubgroup : NSObject <ZSHintGeneratorUtility>
 
 @property (assign) BOOL subgroupExistsInSameRow;
 @property (assign) BOOL subgroupExistsInSameCol;

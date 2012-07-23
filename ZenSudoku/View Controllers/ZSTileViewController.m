@@ -191,6 +191,22 @@ NSString * const kTileColorHighlightHintD = @"#4C2FADD4";
 - (void)reloadView {
 	BOOL waitToClearGuessText = NO;
 	
+	NSInteger newValue = 0;
+	
+	if (ghostedValue) {
+		newValue = ghostedValue;
+	} else if (tile.guess) {
+		newValue = tile.guess;
+	}
+	
+	if (newValue != _previousValue) {
+		if (!waitToClearGuessText) {
+			guessView.text = [NSString stringWithFormat:@"%i", newValue];
+		}
+		
+		_previousValue = newValue;
+	}
+	
 	if (tile.guess > 0 || ghostedValue > 0) {
 		// Show the guess.
 		[self _setGuessHidden:NO animated:NO];
@@ -207,22 +223,6 @@ NSString * const kTileColorHighlightHintD = @"#4C2FADD4";
 		if (self.animateChanges) {
 			waitToClearGuessText = YES;
 		}
-	}
-	
-	NSInteger newValue = 0;
-	
-	if (ghostedValue) {
-		newValue = ghostedValue;
-	} else if (tile.guess) {
-		newValue = tile.guess;
-	}
-	
-	if (newValue != _previousValue) {
-		if (!waitToClearGuessText) {
-			guessView.text = [NSString stringWithFormat:@"%i", newValue];
-		}
-		
-		_previousValue = newValue;
 	}
 	
 	// Set the proper text and background types.

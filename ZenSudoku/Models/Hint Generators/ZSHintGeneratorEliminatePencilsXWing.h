@@ -1,5 +1,5 @@
 //
-//  ZSHintGeneratorEliminatePencilsHiddenSubgroup.h
+//  ZSHintGeneratorEliminatePencilsXWing.h
 //  ZenSudoku
 //
 //  Created by Brent Traut on 4/30/12.
@@ -9,17 +9,15 @@
 #import <Foundation/Foundation.h>
 #import "ZSHintGenerator.h"
 
-@interface ZSHintGeneratorEliminatePencilsHiddenSubgroup : NSObject <ZSHintGeneratorUtility>
+@interface ZSHintGeneratorEliminatePencilsXWing : NSObject <ZSHintGeneratorUtility>
 
 @property (assign) ZSHintGeneratorTileScope scope;
-
-- (id)initWithSubgroupSize:(NSInteger)size;
+@property (assign) NSInteger targetPencil;
+@property (assign) NSInteger size;
 
 - (void)resetTilesAndInstructions;
 
-- (void)addSubgroupPencil:(NSInteger)pencil;
-- (void)addGroupTile:(ZSHintGeneratorTileInstruction)tile;
-- (void)addSubgroupTile:(ZSHintGeneratorTileInstruction)tile;
+- (void)addXWingTile:(ZSHintGeneratorTileInstruction)tile;
 - (void)addPencilToEliminate:(ZSHintGeneratorTileInstruction)tile;
 
 - (NSArray *)generateHint;
