@@ -1426,15 +1426,15 @@
 				if (totalPencilsEliminated) {
 					ZSHintGeneratorEliminatePencilsXWing *generator = [[ZSHintGeneratorEliminatePencilsXWing alloc] init];
 					
-					generator.scope = ZSHintGeneratorTileScopeRow;
+					generator.scope = ZSHintGeneratorTileScopeCol;
 					generator.size = size;
 					generator.targetPencil = guess + 1;
 					
 					for (NSInteger i = 0; i < size; ++i) {
-						NSInteger XWingTileRow = slotMatches[currentColIndexes[i]].matchIndex;
+						NSInteger XWingTileCol = slotMatches[currentColIndexes[i]].matchIndex;
 						
 						for (NSInteger slotIndex = 0; slotIndex < size; ++slotIndex) {
-							NSInteger XWingTileCol = slotsInColGroup[slotIndex];
+							NSInteger XWingTileRow = slotsInColGroup[slotIndex];
 							
 							if (_fastGameBoard.grid[XWingTileRow][XWingTileCol].pencils[guess]) {
 								ZSHintGeneratorTileInstruction XWingTile;
