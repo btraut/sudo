@@ -1016,7 +1016,7 @@
 						
 						// If the row tile also exists within the group, add it.
 						if (_fastGameBoard.groups[group][i]->row == row) {
-							if (!_fastGameBoard.groups[group][i]->guess) {
+							if (!_fastGameBoard.groups[group][i]->guess && _fastGameBoard.groups[group][i]->pencils[guess]) {
 								ZSHintGeneratorTileInstruction boxLineReductionTile;
 								boxLineReductionTile.row = _fastGameBoard.groups[group][i]->row;
 								boxLineReductionTile.col = _fastGameBoard.groups[group][i]->col;
