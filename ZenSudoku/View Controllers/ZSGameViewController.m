@@ -272,11 +272,6 @@ typedef struct {
 	// This is now the active game.
 	self.active = YES;
 	
-	// Debug
-	if (game.difficulty == ZSGameDifficultyEasy) {
-		[self solveMostOfThePuzzle];
-	}
-	
 	// If the game is already solved, shut off input.
 	if ([game isSolved]) {
 		allowsInput = NO;
