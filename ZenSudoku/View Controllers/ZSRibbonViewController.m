@@ -47,7 +47,7 @@
 	
 	_ribbonTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideRibbon)];
 	
-	[overlay addGestureRecognizer:_upSwipeGestureRecognizer];
+	[self.view addGestureRecognizer:_upSwipeGestureRecognizer];
 	[overlay addGestureRecognizer:_ribbonTapGestureRecognizer];
 	
 	// Build the ribbon.
