@@ -155,7 +155,7 @@
 	 delay:0
 	 options:UIViewAnimationOptionCurveEaseOut
 	 animations:^{
-		 _ribbonView.frame = CGRectMake(53, -3, _ribbonView.frame.size.width, _ribbonView.frame.size.height);
+		 _ribbonView.frame = CGRectMake(_ribbonView.frame.origin.x, -3, _ribbonView.frame.size.width, _ribbonView.frame.size.height);
 	 }
 	 completion:NULL];
 }
@@ -172,7 +172,7 @@
 	 delay:0
 	 options:UIViewAnimationOptionCurveEaseOut
 	 animations:^{
-		 _ribbonView.frame = CGRectMake(53, -329, _ribbonView.frame.size.width, _ribbonView.frame.size.height);
+		 _ribbonView.frame = CGRectMake(_ribbonView.frame.origin.x, -329, _ribbonView.frame.size.width, _ribbonView.frame.size.height);
 	 }
 	 completion:^(BOOL finished){
 		 [self.delegate hideRibbonAnimationDidFinish];

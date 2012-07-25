@@ -22,6 +22,7 @@
 #import "UIHintButtonViewController.h"
 
 #import "TestFlight.h"
+#import "Flurry.h"
 
 typedef struct {
 	NSInteger row;
@@ -237,7 +238,7 @@ typedef struct {
 	undoButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	
 	[undoButton addTarget:self action:@selector(undoButtonWasTouched) forControlEvents:UIControlEventTouchUpInside];
-	undoButton.frame = CGRectMake(79, 412, 35, 35);
+	undoButton.frame = CGRectMake(79, 412, 36, 37);
 	
 	[undoButton setBackgroundImage:[UIImage imageNamed:@"Undo"] forState:UIControlStateNormal];
 	[undoButton setBackgroundImage:[UIImage imageNamed:@"UndoHighlighted"] forState:UIControlStateHighlighted];
@@ -248,7 +249,7 @@ typedef struct {
 	autoPencilButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	
 	[autoPencilButton addTarget:self action:@selector(autoPencilButtonWasTouched) forControlEvents:UIControlEventTouchUpInside];
-	autoPencilButton.frame = CGRectMake(142, 412, 35, 35);
+	autoPencilButton.frame = CGRectMake(142, 412, 36, 37);
 	
 	[autoPencilButton setBackgroundImage:[UIImage imageNamed:@"AutoPencil"] forState:UIControlStateNormal];
 	[autoPencilButton setBackgroundImage:[UIImage imageNamed:@"AutoPencilHighlighted"] forState:UIControlStateHighlighted];
@@ -268,6 +269,7 @@ typedef struct {
 - (void)viewWasPromotedToFront {
 	// TestFlight Checkpoint
 	[TestFlight passCheckpoint:kTestFlightCheckPointStartedNewPuzzle];
+	[Flurry logEvent:kTestFlightCheckPointStartedNewPuzzle];
 	
 	// This is now the active game.
 	self.active = YES;
@@ -367,6 +369,7 @@ typedef struct {
 - (void)_difficultyButtonWasPressed:(UIGestureRecognizer *)gestureRecognizer {
 	// TestFlight Checkpoint
 	[TestFlight passCheckpoint:kTestFlightCheckPointOpenedRibbon];
+	[Flurry logEvent:kTestFlightCheckPointOpenedRibbon];
 	
 	[self.difficultyButtonDelegate difficultyButtonWasPressedWithViewController:self];
 }
@@ -590,6 +593,7 @@ typedef struct {
 - (void)autoPencilButtonWasTouched {
 	// TestFlight Checkpoint
 	[TestFlight passCheckpoint:kTestFlightCheckPointUsedAutoPencil];
+	[Flurry logEvent:kTestFlightCheckPointUsedAutoPencil];
 	
 	[self setAutoPencils];
 	
@@ -599,6 +603,7 @@ typedef struct {
 - (void)undoButtonWasTouched {
 	// TestFlight Checkpoint
 	[TestFlight passCheckpoint:kTestFlightCheckPointUsedUndo];
+	[Flurry logEvent:kTestFlightCheckPointUsedUndo];
 	
 	// Reset pencil changes.
 	_totalPencilChangesSinceLastGuess = 0;
@@ -655,6 +660,7 @@ typedef struct {
 - (void)hintButtonWasTouched {
 	// TestFlight Checkpoint
 	[TestFlight passCheckpoint:kTestFlightCheckPointUsedAHint];
+	[Flurry logEvent:kTestFlightCheckPointUsedAHint];
 	
 	// Force an update immediately if one is needed.
 	[self _updateHintDeck];
@@ -738,6 +744,7 @@ typedef struct {
 - (void)gameWasSolved {
 	// TestFlight Checkpoint
 	[TestFlight passCheckpoint:kTestFlightCheckPointSolvedPuzzle];
+	[Flurry logEvent:kTestFlightCheckPointSolvedPuzzle];
 	
 	// Stop the game timer.
 	[game stopGameTimer];

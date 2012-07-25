@@ -13,6 +13,7 @@
 #import "ZSGame.h"
 
 #import "TestFlight.h"
+#import "Flurry.h"
 
 NSString * const kTestFlightTeamToken = @"b838f7b1003025e596ee5b134d349769_NDgyOTkyMDEyLTAxLTEzIDA1OjAyOjMzLjM4ODA4NA";
 NSString * const kTestFlightCheckPointStartedNewPuzzle = @"kTestFlightCheckPointStartedNewPuzzle";
@@ -46,6 +47,9 @@ NSString * const kPreventScreenDimmingOptionKey = @"kPreventScreenDimmingOptionK
 @synthesize navigationController = _navigationController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+	// Initialize Flurry.
+	[Flurry startSession:@"RKJTR5RVTPM98RTJ4GPH"];
+	
 	// Tell TestFlight that we used the app.
 	[TestFlight takeOff:kTestFlightTeamToken];
 	

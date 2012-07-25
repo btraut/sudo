@@ -20,7 +20,7 @@
 @synthesize pulsing = _pulsing;
 
 - (void)loadView {
-	self.view = [[UIView alloc] initWithFrame:CGRectMake(205, 412, 35, 35)];
+	self.view = [[UIView alloc] initWithFrame:CGRectMake(205, 412, 36, 37)];
 }
 
 - (void)viewDidLoad {
@@ -29,7 +29,7 @@
 	[self.view addSubview:_background];
 	
 	self.button = [UIButton buttonWithType:UIButtonTypeCustom];
-	self.button.frame = CGRectMake(0, 0, 35, 35);
+	self.button.frame = CGRectMake(0, 0, 36, 37);
 	[self.button setBackgroundImage:[UIImage imageNamed:@"Hints"] forState:UIControlStateNormal];
 	[self.button setBackgroundImage:[UIImage imageNamed:@"HintsHighlighted"] forState:UIControlStateHighlighted];
 	[self.view addSubview:self.button];

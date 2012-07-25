@@ -11,6 +11,8 @@
 		840216EB1538EAAD00B16131 /* release_notes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 840216E71538EAAD00B16131 /* release_notes.txt */; };
 		840216ED1538F11400B16131 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 840216E51538EAAD00B16131 /* libTestFlight.a */; };
 		840216EF1538F15B00B16131 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 840216EE1538F15B00B16131 /* libz.dylib */; };
+		840E032415BFD22700F113D9 /* libFlurry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 840E032315BFD22700F113D9 /* libFlurry.a */; };
+		840E032615BFD75F00F113D9 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 840E032515BFD75F00F113D9 /* SystemConfiguration.framework */; };
 		841F854714C2651700DFFABC /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 841F854614C2651600DFFABC /* MessageUI.framework */; };
 		841F854A14C40F5600DFFABC /* ZSStatisticsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841F854914C40F5500DFFABC /* ZSStatisticsController.m */; };
 		841F854E14C4287700DFFABC /* ZSStatisticsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841F854C14C4287600DFFABC /* ZSStatisticsViewController.m */; };
@@ -157,6 +159,9 @@
 		840216E71538EAAD00B16131 /* release_notes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes.txt; sourceTree = "<group>"; };
 		840216E81538EAAD00B16131 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		840216EE1538F15B00B16131 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		840E032215BFD22700F113D9 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
+		840E032315BFD22700F113D9 /* libFlurry.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry.a; sourceTree = "<group>"; };
+		840E032515BFD75F00F113D9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		841F854614C2651600DFFABC /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		841F854814C40F5500DFFABC /* ZSStatisticsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSStatisticsController.h; path = "Model Controllers/ZSStatisticsController.h"; sourceTree = "<group>"; };
 		841F854914C40F5500DFFABC /* ZSStatisticsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSStatisticsController.m; path = "Model Controllers/ZSStatisticsController.m"; sourceTree = "<group>"; };
@@ -352,6 +357,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				840E032615BFD75F00F113D9 /* SystemConfiguration.framework in Frameworks */,
 				84A8FB1D15A6A1FB00D802C8 /* CoreText.framework in Frameworks */,
 				8492B76114C911FF0093B7AC /* libsqlite3.0.dylib in Frameworks */,
 				841F854714C2651700DFFABC /* MessageUI.framework in Frameworks */,
@@ -364,6 +370,7 @@
 				843947E41589D30C00463720 /* GLKit.framework in Frameworks */,
 				840216ED1538F11400B16131 /* libTestFlight.a in Frameworks */,
 				840216EF1538F15B00B16131 /* libz.dylib in Frameworks */,
+				840E032415BFD22700F113D9 /* libFlurry.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -390,6 +397,16 @@
 			);
 			name = TestFlightSDK1.0;
 			path = External/TestFlightSDK1.0;
+			sourceTree = "<group>";
+		};
+		840E032115BFD22700F113D9 /* Flurry */ = {
+			isa = PBXGroup;
+			children = (
+				840E032215BFD22700F113D9 /* Flurry.h */,
+				840E032315BFD22700F113D9 /* libFlurry.a */,
+			);
+			name = Flurry;
+			path = External/Flurry;
 			sourceTree = "<group>";
 		};
 		8426A79614ED16A3006DAD1C /* FMDB */ = {
@@ -437,6 +454,7 @@
 		8449D95B14833649003F6FB3 /* External */ = {
 			isa = PBXGroup;
 			children = (
+				840E032115BFD22700F113D9 /* Flurry */,
 				84A8FB1115A6A06400D802C8 /* MTLabel */,
 				84D2032E15A64CF400BA9CCF /* ProgressDots */,
 				84D2032515A3B02D00BA9CCF /* iCarousel */,
@@ -687,6 +705,7 @@
 		84D55012147F1C4A00A7934E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				840E032515BFD75F00F113D9 /* SystemConfiguration.framework */,
 				84A8FB1C15A6A1FB00D802C8 /* CoreText.framework */,
 				843947E31589D30C00463720 /* GLKit.framework */,
 				845ABB231587ED5B006D2616 /* QuartzCore.framework */,
@@ -1084,6 +1103,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/ZenSudoku/External/TestFlightSDK1.0\"",
+					"\"$(SRCROOT)/../../../../Downloads/Flurry iPhone SDK v4/Flurry\"",
+					"\"$(SRCROOT)/ZenSudoku/External/Flurry\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1173,6 +1194,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/ZenSudoku/External/TestFlightSDK1.0\"",
+					"\"$(SRCROOT)/../../../../Downloads/Flurry iPhone SDK v4/Flurry\"",
+					"\"$(SRCROOT)/ZenSudoku/External/Flurry\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1197,6 +1220,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/ZenSudoku/External/TestFlightSDK1.0\"",
+					"\"$(SRCROOT)/../../../../Downloads/Flurry iPhone SDK v4/Flurry\"",
+					"\"$(SRCROOT)/ZenSudoku/External/Flurry\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
