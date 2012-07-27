@@ -1,5 +1,5 @@
 //
-//  ZSHintGeneratorFixIncorrectGuess.h
+//  ZSHintGeneratorFixIncorrectGuesses.h
 //  ZenSudoku
 //
 //  Created by Brent Traut on 4/30/12.
@@ -9,9 +9,11 @@
 #import <Foundation/Foundation.h>
 #import "ZSHintGenerator.h"
 
-@interface ZSHintGeneratorFixIncorrectGuess : NSObject <ZSHintGeneratorUtility>
+@interface ZSHintGeneratorFixIncorrectGuesses : NSObject <ZSHintGeneratorUtility>
 
-- (void)setIncorrectTileRow:(NSInteger)row col:(NSInteger)col;
+- (void)resetTilesAndInstructions;
+
+- (void)addIncorrectGuess:(ZSHintGeneratorTileInstruction)tile;
 
 - (NSArray *)generateHint;
 

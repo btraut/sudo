@@ -11,7 +11,7 @@
 #import "ZSFastGameBoard.h"
 #import "ZSGame.h"
 
-#import "ZSHintGeneratorFixIncorrectGuess.h"
+#import "ZSHintGeneratorFixIncorrectGuesses.h"
 #import "ZSHintGeneratorFixMissingPencil.h"
 #import "ZSHintGeneratorNoHint.h"
 #import "ZSHintGeneratorSolveOnlyChoice.h"
@@ -225,18 +225,30 @@
 #pragma mark - Logic Techniques
 
 - (NSArray *)fixIncorrectGuesses {
+	ZSHintGeneratorFixIncorrectGuesses *generator = [[ZSHintGeneratorFixIncorrectGuesses alloc] init];
+	
+	NSInteger totalIncorrect = 0;
+	
 	// Iterate over all the tiles on the board.
 	for (NSInteger row = 0; row < _fastGameBoard.size; ++row) {
 		for (NSInteger col = 0; col < _fastGameBoard.size; ++col) {
 			if (_fastGameBoard.grid[row][col].guess && _fastGameBoard.grid[row][col].guess != _fastGameBoard.grid[row][col].answer) {
-				ZSHintGeneratorFixIncorrectGuess *generator = [[ZSHintGeneratorFixIncorrectGuess alloc] init];
-				[generator setIncorrectTileRow:row col:col];
-				return [generator generateHint];
+				++totalIncorrect;
+				
+				ZSHintGeneratorTileInstruction instruction;
+				instruction.row = row;
+				instruction.col = col;
+				instruction.pencil = 0;
+				[generator addIncorrectGuess:instruction];
 			}
 		}
 	}
 	
-	return nil;
+	if (totalIncorrect == 0) {
+		return nil;
+	}
+	
+	return [generator generateHint];
 }
 
 - (NSArray *)fixMissingPencils {

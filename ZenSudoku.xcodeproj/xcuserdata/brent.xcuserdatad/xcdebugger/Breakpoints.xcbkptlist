@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "ZenSudoku/Models/ZSHintGenerator.m"
-         timestampString = "365043478.271407"
+         timestampString = "365051661.084292"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1461"
-         endingLineNumber = "1461"
+         startingLineNumber = "1473"
+         endingLineNumber = "1473"
          landmarkName = "-eliminatePencilsFinnedXWingOfSize:"
          landmarkType = "5">
       </FileBreakpoint>

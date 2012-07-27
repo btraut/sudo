@@ -29,7 +29,7 @@
 		8428AD3D154A52F700BA8EE0 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8428AD3B154A52F700BA8EE0 /* Default@2x.png */; };
 		8428AD3F154AA62600BA8EE0 /* HintPaper.png in Resources */ = {isa = PBXBuildFile; fileRef = 8428AD3E154AA62600BA8EE0 /* HintPaper.png */; };
 		8428AD42154AB8FE00BA8EE0 /* ZSHintCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 8428AD41154AB8FE00BA8EE0 /* ZSHintCard.m */; };
-		8428AD4B154F2D4700BA8EE0 /* ZSHintGeneratorFixIncorrectGuess.m in Sources */ = {isa = PBXBuildFile; fileRef = 8428AD4A154F2D4700BA8EE0 /* ZSHintGeneratorFixIncorrectGuess.m */; };
+		8428AD4B154F2D4700BA8EE0 /* ZSHintGeneratorFixIncorrectGuesses.m in Sources */ = {isa = PBXBuildFile; fileRef = 8428AD4A154F2D4700BA8EE0 /* ZSHintGeneratorFixIncorrectGuesses.m */; };
 		8428AD4E154F30A300BA8EE0 /* ZSHintGeneratorNoHint.m in Sources */ = {isa = PBXBuildFile; fileRef = 8428AD4D154F30A300BA8EE0 /* ZSHintGeneratorNoHint.m */; };
 		8428AD51154F36A200BA8EE0 /* ZSHintGeneratorFixMissingPencil.m in Sources */ = {isa = PBXBuildFile; fileRef = 8428AD50154F36A200BA8EE0 /* ZSHintGeneratorFixMissingPencil.m */; };
 		843947E41589D30C00463720 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 843947E31589D30C00463720 /* GLKit.framework */; };
@@ -188,8 +188,8 @@
 		8428AD3E154AA62600BA8EE0 /* HintPaper.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = HintPaper.png; path = Resources/Images/HintPaper.png; sourceTree = "<group>"; };
 		8428AD40154AB8FE00BA8EE0 /* ZSHintCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSHintCard.h; path = Models/ZSHintCard.h; sourceTree = "<group>"; };
 		8428AD41154AB8FE00BA8EE0 /* ZSHintCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSHintCard.m; path = Models/ZSHintCard.m; sourceTree = "<group>"; };
-		8428AD49154F2D4700BA8EE0 /* ZSHintGeneratorFixIncorrectGuess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSHintGeneratorFixIncorrectGuess.h; path = "ZenSudoku/Models/Hint Generators/ZSHintGeneratorFixIncorrectGuess.h"; sourceTree = SOURCE_ROOT; };
-		8428AD4A154F2D4700BA8EE0 /* ZSHintGeneratorFixIncorrectGuess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSHintGeneratorFixIncorrectGuess.m; path = "ZenSudoku/Models/Hint Generators/ZSHintGeneratorFixIncorrectGuess.m"; sourceTree = SOURCE_ROOT; };
+		8428AD49154F2D4700BA8EE0 /* ZSHintGeneratorFixIncorrectGuesses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSHintGeneratorFixIncorrectGuesses.h; path = "ZenSudoku/Models/Hint Generators/ZSHintGeneratorFixIncorrectGuesses.h"; sourceTree = SOURCE_ROOT; };
+		8428AD4A154F2D4700BA8EE0 /* ZSHintGeneratorFixIncorrectGuesses.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSHintGeneratorFixIncorrectGuesses.m; path = "ZenSudoku/Models/Hint Generators/ZSHintGeneratorFixIncorrectGuesses.m"; sourceTree = SOURCE_ROOT; };
 		8428AD4C154F30A300BA8EE0 /* ZSHintGeneratorNoHint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSHintGeneratorNoHint.h; path = "ZenSudoku/Models/Hint Generators/ZSHintGeneratorNoHint.h"; sourceTree = SOURCE_ROOT; };
 		8428AD4D154F30A300BA8EE0 /* ZSHintGeneratorNoHint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSHintGeneratorNoHint.m; path = "ZenSudoku/Models/Hint Generators/ZSHintGeneratorNoHint.m"; sourceTree = SOURCE_ROOT; };
 		8428AD4F154F36A200BA8EE0 /* ZSHintGeneratorFixMissingPencil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSHintGeneratorFixMissingPencil.h; path = "ZenSudoku/Models/Hint Generators/ZSHintGeneratorFixMissingPencil.h"; sourceTree = SOURCE_ROOT; };
@@ -429,8 +429,8 @@
 		8428AD22154A2C2D00BA8EE0 /* Logic Technique Hint Generators */ = {
 			isa = PBXGroup;
 			children = (
-				8428AD49154F2D4700BA8EE0 /* ZSHintGeneratorFixIncorrectGuess.h */,
-				8428AD4A154F2D4700BA8EE0 /* ZSHintGeneratorFixIncorrectGuess.m */,
+				8428AD49154F2D4700BA8EE0 /* ZSHintGeneratorFixIncorrectGuesses.h */,
+				8428AD4A154F2D4700BA8EE0 /* ZSHintGeneratorFixIncorrectGuesses.m */,
 				8428AD4F154F36A200BA8EE0 /* ZSHintGeneratorFixMissingPencil.h */,
 				8428AD50154F36A200BA8EE0 /* ZSHintGeneratorFixMissingPencil.m */,
 				8428AD4C154F30A300BA8EE0 /* ZSHintGeneratorNoHint.h */,
@@ -1012,7 +1012,7 @@
 				8428AD2D154A2C2D00BA8EE0 /* ZSHintGenerator.m in Sources */,
 				8428AD36154A48F700BA8EE0 /* ZSHintViewController.m in Sources */,
 				8428AD42154AB8FE00BA8EE0 /* ZSHintCard.m in Sources */,
-				8428AD4B154F2D4700BA8EE0 /* ZSHintGeneratorFixIncorrectGuess.m in Sources */,
+				8428AD4B154F2D4700BA8EE0 /* ZSHintGeneratorFixIncorrectGuesses.m in Sources */,
 				8428AD4E154F30A300BA8EE0 /* ZSHintGeneratorNoHint.m in Sources */,
 				8428AD51154F36A200BA8EE0 /* ZSHintGeneratorFixMissingPencil.m in Sources */,
 				84992960155BA8B900D82D34 /* ZSHintGeneratorSolveOnlyChoice.m in Sources */,
