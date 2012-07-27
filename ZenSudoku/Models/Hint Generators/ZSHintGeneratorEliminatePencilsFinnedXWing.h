@@ -19,6 +19,7 @@
 
 - (void)addFinnedXWingTile:(ZSHintGeneratorTileInstruction)tile;
 - (void)addFinTile:(ZSHintGeneratorTileInstruction)tile;
+- (void)addFinGroupTile:(ZSHintGeneratorTileInstruction)tile;
 - (void)addPencilToEliminate:(ZSHintGeneratorTileInstruction)tile;
 
 - (NSArray *)generateHint;

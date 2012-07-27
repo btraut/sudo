@@ -1687,6 +1687,15 @@
 							}
 						}
 						
+						// Add fin group tiles.
+						for (NSInteger i = 0; i < _fastGameBoard.size; ++i) {
+							ZSHintGeneratorTileInstruction finnedXWingTile;
+							finnedXWingTile.row = _fastGameBoard.groups[firstDeviantPencilGroupId][i]->row;
+							finnedXWingTile.col = _fastGameBoard.groups[firstDeviantPencilGroupId][i]->col;
+							finnedXWingTile.pencil = 0;
+							[generator addFinGroupTile:finnedXWingTile];
+						}
+						
 						// Add the pencils to eliminate.
 						for (NSInteger i = 0; i < _fastGameBoard.size; ++i) {
 							for (NSInteger j = 0; j < size; ++j) {
@@ -1972,6 +1981,15 @@
 									[generator addFinTile:finnedXWingTile];
 								}
 							}
+						}
+						
+						// Add fin group tiles.
+						for (NSInteger i = 0; i < _fastGameBoard.size; ++i) {
+							ZSHintGeneratorTileInstruction finnedXWingTile;
+							finnedXWingTile.row = _fastGameBoard.groups[firstDeviantPencilGroupId][i]->row;
+							finnedXWingTile.col = _fastGameBoard.groups[firstDeviantPencilGroupId][i]->col;
+							finnedXWingTile.pencil = 0;
+							[generator addFinGroupTile:finnedXWingTile];
 						}
 						
 						// Add the pencils to eliminate.

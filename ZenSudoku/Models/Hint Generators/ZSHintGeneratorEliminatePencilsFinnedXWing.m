@@ -15,10 +15,12 @@
 	
 	ZSHintGeneratorTileInstruction *_finnedXWingTiles;
 	ZSHintGeneratorTileInstruction *_finTiles;
+	ZSHintGeneratorTileInstruction *_finGroupTiles;
 	ZSHintGeneratorTileInstruction *_pencilsToEliminate;
 	
 	NSInteger _totalFinnedXWingTiles;
 	NSInteger _totalFinTiles;
+	NSInteger _totalFinGroupTiles;
 	NSInteger _totalPencilsToEliminate;
 }
 
@@ -44,6 +46,7 @@
 - (void)resetTilesAndInstructions {
 	_totalFinnedXWingTiles = 0;
 	_totalFinTiles = 0;
+	_totalFinGroupTiles = 0;
 	_totalPencilsToEliminate = 0;
 }
 
@@ -54,6 +57,7 @@
 	
 	_finnedXWingTiles = malloc(sizeof(ZSHintGeneratorTileInstruction) * 16);
 	_finTiles = malloc(sizeof(ZSHintGeneratorTileInstruction) * 16);
+	_finGroupTiles = malloc(sizeof(ZSHintGeneratorTileInstruction) * 9);
 	_pencilsToEliminate = malloc(sizeof(ZSHintGeneratorTileInstruction) * 81);
 	
 	[self resetTilesAndInstructions];
@@ -62,6 +66,7 @@
 - (void)_freeTilesAndInstructions {
 	free(_pencilsToEliminate);
 	free(_finTiles);
+	free(_finGroupTiles);
 	free(_finnedXWingTiles);
 }
 
@@ -77,6 +82,10 @@
 
 - (void)addFinTile:(ZSHintGeneratorTileInstruction)tile {
 	_finTiles[_totalFinTiles++] = tile;
+}
+
+- (void)addFinGroupTile:(ZSHintGeneratorTileInstruction)tile {
+	_finGroupTiles[_totalFinGroupTiles++] = tile;
 }
 
 - (void)addPencilToEliminate:(ZSHintGeneratorTileInstruction)tile {
@@ -236,8 +245,8 @@
 		[card5 addInstructionHighlightTileAtRow:instruction->row col:instruction->col highlightType:ZSTileHintHighlightTypeA];
 	}
 	
-	for (NSInteger i = 0; i < _totalFinTiles; ++i) {
-		ZSHintGeneratorTileInstruction *instruction = &_finTiles[i];
+	for (NSInteger i = 0; i < _totalFinGroupTiles; ++i) {
+		ZSHintGeneratorTileInstruction *instruction = &_finGroupTiles[i];
 		[card5 addInstructionHighlightTileAtRow:instruction->row col:instruction->col highlightType:ZSTileHintHighlightTypeD];
 	}
 	
