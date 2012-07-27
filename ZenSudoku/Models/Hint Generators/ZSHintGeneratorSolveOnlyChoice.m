@@ -30,7 +30,7 @@
 	NSMutableArray *hintCards = [NSMutableArray array];
 	
 	ZSHintCard *card1 = [[ZSHintCard alloc] init];
-	card1.text = [NSString stringWithFormat:@"Examine the highlighted tile. What is special about it?", (_row + 1), (_col + 1)];
+	card1.text = @"Examine the highlighted tile. What is special about it?";
 	[card1 addInstructionHighlightTileAtRow:_row col:_col highlightType:ZSTileHintHighlightTypeB];
 	[hintCards addObject:card1];
 	

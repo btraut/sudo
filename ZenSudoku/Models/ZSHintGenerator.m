@@ -21,11 +21,10 @@
 #import "ZSHintGeneratorEliminatePencilsPointingPairs.h"
 #import "ZSHintGeneratorEliminatePencilsBoxLineReduction.h"
 #import "ZSHintGeneratorEliminatePencilsXWing.h"
+#import "ZSHintGeneratorEliminatePencilsFinnedXWing.h"
 
 
 @interface ZSHintGenerator () {
-	
-@private
 	ZSFastGameBoard *_fastGameBoard;
 	ZSFastGameBoard *_scratchBoard;
 	
@@ -35,51 +34,6 @@
 	ZSChainMapResult **_chainMap;
 	NSInteger *_chainPencils;
 }
-
-// Logic Techniques
-- (NSArray *)fixIncorrectGuesses;
-
-- (NSArray *)solveOnlyChoice;
-- (NSArray *)solveSinglePossibility;
-
-- (NSArray *)fixMissingPencils;
- 
-/*
-- (NSArray *)eliminatePencilsHiddenSubgroupForSize:(NSInteger)size;
-- (NSArray *)eliminatePencilsNakedSubgroupForSize:(NSInteger)size;
-- (NSArray *)eliminatePencilsPointingPairs;
-- (NSArray *)eliminatePencilsBoxLineReduction;
-- (NSArray *)eliminatePencilsXWingOfSize:(NSInteger)size;
-- (NSArray *)eliminatePencilsXWingRowsOfSize:(NSInteger)size;
-- (NSArray *)eliminatePencilsXWingColsOfSize:(NSInteger)size;
-- (NSArray *)eliminatePencilsFinnedXWingOfSize:(NSInteger)size;
-- (NSArray *)eliminatePencilsFinnedXWingRowsOfSize:(NSInteger)size;
-- (NSArray *)eliminatePencilsFinnedXWingColsOfSize:(NSInteger)size;
-- (NSArray *)eliminatePencilsYWingUseChains:(BOOL)useChains;
-- (NSArray *)eliminatePencilsYWingWithTile1:(ZSTileStub *)tile1 tile2:(ZSTileStub *)tile2;
-- (NSArray *)eliminatePencilsRemotePairs;
-- (NSArray *)eliminatePencilsAvoidableRectangles;
-*/
-
-// Logic Technique Helpers
-- (NSInteger)initPencilMap:(NSInteger *)pencilMap forTileSet:(ZSTileStub **)set;
-- (void)setFirstCombinationInArray:(NSInteger *)comboArray ofLength:(NSInteger)arrayLength totalItems:(NSInteger)itemCount;
-- (BOOL)setNextCombinationInArray:(NSInteger *)comboArray ofLength:(NSInteger)arrayLength totalItems:(NSInteger)itemCount;
-
-// Clue Mask Handlers
-- (void)initClueMask;
-- (void)deallocClueMask;
-- (void)clearClueMask;
-- (void)copyClueMaskFromGameBoard;
-- (void)copyClueMaskFromString:(NSString *)guessesString;
-- (void)setClueProvidedInPuzzle:(BOOL)clueProvidedInPuzzle forRow:(NSInteger)row col:(NSInteger)col;
-
-// Chain Map Handlers
-- (void)initChainMap;
-- (void)deallocChainMap;
-- (void)clearChainMap;
-- (void)updateChainMapForTile:(ZSTileStub *)tile;
-- (void)updateChainMapForTile:(ZSTileStub *)tile totalPencils:(NSInteger)totalPencils currentLinkOn:(BOOL)currentLinkOn;
 
 @end
 
@@ -224,7 +178,6 @@
 		return hintCards;
 	}
 	
-	/*
 	// Finned X-Wing
 	hintCards = [self eliminatePencilsFinnedXWingOfSize:2];
 	
@@ -232,6 +185,7 @@
 		return hintCards;
 	}
 	
+	/*
 	// Remote Pairs
 	hintCards = [self eliminatePencilsRemotePairs];
 	
@@ -245,6 +199,7 @@
 	if (hintCards) {
 		return hintCards;
 	}
+	 */
 	
 	// Finned Swordfish
 	hintCards = [self eliminatePencilsFinnedXWingOfSize:3];
@@ -252,7 +207,13 @@
 	if (hintCards) {
 		return hintCards;
 	}
-	*/
+	
+	// Finned Jellyfish
+	hintCards = [self eliminatePencilsFinnedXWingOfSize:4];
+	
+	if (hintCards) {
+		return hintCards;
+	}
 	
 	// Can't solve!!
 	ZSHintGeneratorNoHint *generator = [[ZSHintGeneratorNoHint alloc] init];
@@ -1496,18 +1457,27 @@
 	return hintCards;
 }
 
-/*
-
 - (NSArray *)eliminatePencilsFinnedXWingOfSize:(NSInteger)size {
-	NSInteger pencilsEliminated = 0;
+	NSArray *hintCards = nil;
 	
-	pencilsEliminated += [self eliminatePencilsFinnedXWingRowsOfSize:size];
-	pencilsEliminated += [self eliminatePencilsFinnedXWingColsOfSize:size];
+	hintCards = [self eliminatePencilsFinnedXWingRowsOfSize:size];
 	
-	return pencilsEliminated;
+	if (hintCards) {
+		return hintCards;
+	}
+	
+	hintCards = [self eliminatePencilsFinnedXWingColsOfSize:size];
+	
+	if (hintCards) {
+		return hintCards;
+	}
+	
+	return hintCards;
 }
 
 - (NSArray *)eliminatePencilsFinnedXWingRowsOfSize:(NSInteger)size {
+	NSArray *hintCards = nil;
+	
 	NSInteger totalPencilsEliminated = 0;
 	
 	// Initialize the slot matches.
@@ -1674,14 +1644,108 @@
 							
 							// Assuming we've found a tile that 
 							if (_fastGameBoard.groups[firstDeviantPencilGroupId][i]->pencils[guess]) {
-								[_fastGameBoard setPencil:NO forPencilNumber:(guess + 1) forTileAtRow:_fastGameBoard.groups[firstDeviantPencilGroupId][i]->row col:col];
 								++totalPencilsEliminated;
 							}
 						}
 					}
+					
+					if (totalPencilsEliminated) {
+						ZSHintGeneratorEliminatePencilsFinnedXWing *generator = [[ZSHintGeneratorEliminatePencilsFinnedXWing alloc] init];
+						
+						// Set up the basic settings.
+						generator.scope = ZSHintGeneratorTileScopeRow;
+						generator.size = size;
+						generator.targetPencil = guess + 1;
+						
+						// Add X-Wing tiles.
+						for (NSInteger i = 0; i < (size - 1); ++i) {
+							for (NSInteger j = 0; j < slotMatches[currentRowIndexes[i]].totalSlotIndexes; ++j) {
+								ZSHintGeneratorTileInstruction finnedXWingTile;
+								finnedXWingTile.row = slotMatches[currentRowIndexes[i]].matchIndex;
+								finnedXWingTile.col = slotMatches[currentRowIndexes[i]].slotIndexes[j];
+								finnedXWingTile.pencil = 0;
+								[generator addFinnedXWingTile:finnedXWingTile];
+							}
+						}
+						
+						// Add fin tiles.
+						for (NSInteger col = 0; col < _fastGameBoard.size; ++col) {
+							if (_fastGameBoard.grid[row][col].pencils[guess]) {
+								if (slotExistsInRowGroup[col]) {
+									ZSHintGeneratorTileInstruction finnedXWingTile;
+									finnedXWingTile.row = row;
+									finnedXWingTile.col = col;
+									finnedXWingTile.pencil = 0;
+									[generator addFinnedXWingTile:finnedXWingTile];
+								} else {
+									ZSHintGeneratorTileInstruction finnedXWingTile;
+									finnedXWingTile.row = row;
+									finnedXWingTile.col = col;
+									finnedXWingTile.pencil = 0;
+									[generator addFinTile:finnedXWingTile];
+								}
+							}
+						}
+						
+						// Add the pencils to eliminate.
+						for (NSInteger i = 0; i < _fastGameBoard.size; ++i) {
+							for (NSInteger j = 0; j < size; ++j) {
+								NSInteger col = slotsInRowGroup[j];
+								
+								// If the current tile is not in a slot column, skip it.
+								if (_fastGameBoard.groups[firstDeviantPencilGroupId][i]->col != col) {
+									continue;
+								}
+								
+								// Make sure we're not eliminating tiles from the final row of the X-Wing group.
+								if (_fastGameBoard.groups[firstDeviantPencilGroupId][i]->row == row) {
+									continue;
+								}
+								
+								// Make sure we're not eliminating tiles from any of the other rows in the X-Wing group.
+								BOOL currentTileRowExistsInXWingRowGroup = NO;
+								
+								for (NSInteger k = 0; k < (size - 1); ++k) {
+									if (_fastGameBoard.groups[firstDeviantPencilGroupId][i]->row == slotMatches[currentRowIndexes[k]].matchIndex) {
+										currentTileRowExistsInXWingRowGroup = YES;
+									}
+								}
+								
+								if (currentTileRowExistsInXWingRowGroup) {
+									continue;
+								}
+								
+								// Assuming we've found a tile that
+								if (_fastGameBoard.groups[firstDeviantPencilGroupId][i]->pencils[guess]) {
+									ZSHintGeneratorTileInstruction finnedXWingTile;
+									finnedXWingTile.row = _fastGameBoard.groups[firstDeviantPencilGroupId][i]->row;
+									finnedXWingTile.col = col;
+									finnedXWingTile.pencil = (guess + 1);
+									[generator addPencilToEliminate:finnedXWingTile];
+								}
+							}
+						}
+						
+						hintCards = [generator generateHint];
+					}
+				}
+				
+				// If we successfully eliminated tiles using an X-Wing, we can stop here.
+				if (totalPencilsEliminated) {
+					break;
 				}
 			}
+			
+			// If we successfully eliminated tiles using an X-Wing, we can stop here.
+			if (totalPencilsEliminated) {
+				break;
+			}
 		} while ([self setNextCombinationInArray:currentRowIndexes ofLength:(size - 1) totalItems:totalRowMatches]);
+		
+		// If we successfully eliminated tiles using an X-Wing, we can stop here.
+		if (totalPencilsEliminated) {
+			break;
+		}
 	}
 	
 	free(rowExistsInRowGroup);
@@ -1695,10 +1759,12 @@
 	
 	free(slotMatches);
 	
-	return totalPencilsEliminated;
+	return hintCards;
 }
 
 - (NSArray *)eliminatePencilsFinnedXWingColsOfSize:(NSInteger)size {
+	NSArray *hintCards = nil;
+	
 	NSInteger totalPencilsEliminated = 0;
 	
 	// Initialize the slot matches.
@@ -1865,14 +1931,108 @@
 							
 							// Assuming we've found a tile that 
 							if (_fastGameBoard.groups[firstDeviantPencilGroupId][i]->pencils[guess]) {
-								[_fastGameBoard setPencil:NO forPencilNumber:(guess + 1) forTileAtRow:row col:_fastGameBoard.groups[firstDeviantPencilGroupId][i]->col];
 								++totalPencilsEliminated;
 							}
 						}
 					}
+					
+					if (totalPencilsEliminated) {
+						ZSHintGeneratorEliminatePencilsFinnedXWing *generator = [[ZSHintGeneratorEliminatePencilsFinnedXWing alloc] init];
+						
+						// Set up the basic settings.
+						generator.scope = ZSHintGeneratorTileScopeCol;
+						generator.size = size;
+						generator.targetPencil = guess + 1;
+						
+						// Add all X-Wing tiles.
+						for (NSInteger i = 0; i < (size - 1); ++i) {
+							for (NSInteger j = 0; j < slotMatches[currentColIndexes[i]].totalSlotIndexes; ++j) {
+								ZSHintGeneratorTileInstruction finnedXWingTile;
+								finnedXWingTile.row = slotMatches[currentColIndexes[i]].slotIndexes[j];
+								finnedXWingTile.col = slotMatches[currentColIndexes[i]].matchIndex;
+								finnedXWingTile.pencil = 0;
+								[generator addFinnedXWingTile:finnedXWingTile];
+							}
+						}
+						
+						// Add fin tiles.
+						for (NSInteger row = 0; row < _fastGameBoard.size; ++row) {
+							if (_fastGameBoard.grid[row][col].pencils[guess]) {
+								if (slotExistsInColGroup[row]) {
+									ZSHintGeneratorTileInstruction finnedXWingTile;
+									finnedXWingTile.row = row;
+									finnedXWingTile.col = col;
+									finnedXWingTile.pencil = 0;
+									[generator addFinnedXWingTile:finnedXWingTile];
+								} else {
+									ZSHintGeneratorTileInstruction finnedXWingTile;
+									finnedXWingTile.row = row;
+									finnedXWingTile.col = col;
+									finnedXWingTile.pencil = 0;
+									[generator addFinTile:finnedXWingTile];
+								}
+							}
+						}
+						
+						// Add the pencils to eliminate.
+						for (NSInteger i = 0; i < _fastGameBoard.size; ++i) {
+							for (NSInteger j = 0; j < size; ++j) {
+								NSInteger row = slotsInColGroup[j];
+								
+								// If the current tile is not in a slot row, skip it.
+								if (_fastGameBoard.groups[firstDeviantPencilGroupId][i]->row != row) {
+									continue;
+								}
+								
+								// Make sure we're not eliminating tiles from the final col of the X-Wing group.
+								if (_fastGameBoard.groups[firstDeviantPencilGroupId][i]->col == col) {
+									continue;
+								}
+								
+								// Make sure we're not eliminating tiles from any of the other cols in the X-Wing group.
+								BOOL currentTileColExistsInXWingColGroup = NO;
+								
+								for (NSInteger k = 0; k < (size - 1); ++k) {
+									if (_fastGameBoard.groups[firstDeviantPencilGroupId][i]->col == slotMatches[currentColIndexes[k]].matchIndex) {
+										currentTileColExistsInXWingColGroup = YES;
+									}
+								}
+								
+								if (currentTileColExistsInXWingColGroup) {
+									continue;
+								}
+								
+								// Assuming we've found a tile that
+								if (_fastGameBoard.groups[firstDeviantPencilGroupId][i]->pencils[guess]) {
+									ZSHintGeneratorTileInstruction finnedXWingTile;
+									finnedXWingTile.row = row;
+									finnedXWingTile.col = _fastGameBoard.groups[firstDeviantPencilGroupId][i]->col;
+									finnedXWingTile.pencil = (guess + 1);
+									[generator addPencilToEliminate:finnedXWingTile];
+								}
+							}
+						}
+						
+						hintCards = [generator generateHint];
+					}
+				}
+				
+				// If we successfully eliminated tiles using an X-Wing, we can stop here.
+				if (totalPencilsEliminated) {
+					break;
 				}
 			}
+			
+			// If we successfully eliminated tiles using an X-Wing, we can stop here.
+			if (totalPencilsEliminated) {
+				break;
+			}
 		} while ([self setNextCombinationInArray:currentColIndexes ofLength:(size - 1) totalItems:totalColMatches]);
+		
+		// If we successfully eliminated tiles using an X-Wing, we can stop here.
+		if (totalPencilsEliminated) {
+			break;
+		}
 	}
 	
 	free(colExistsInColGroup);
@@ -1886,9 +2046,10 @@
 	
 	free(slotMatches);
 	
-	return totalPencilsEliminated;
+	return hintCards;
 }
 
+/*
 - (NSArray *)eliminatePencilsYWingUseChains:(BOOL)useChains {
 	NSInteger totalPencilsEliminated = 0;
 	

@@ -75,6 +75,7 @@
 }
 
 - (NSArray *)generateHint {
+	NSString *aAnTechniqueName = (self.size == 2 ? @"an" : @"an");
 	NSString *techniqueName = (self.size == 2 ? @"X-Wing" : (self.size == 3 ? @"Swordfish" : @"Jellyfish"));
 	NSString *scopeName = (scope == ZSHintGeneratorTileScopeRow ? @"row" : @"column");
 	NSString *oppositeScopeName = (scope == ZSHintGeneratorTileScopeRow ? @"column" : @"row");
@@ -98,7 +99,7 @@
 	
 	NSString *collectionOfRowsColsString = (self.size == 2 ? @"both" : (self.size == 3 ? @"all three" : @"all four"));
 	NSString *numberOfSpotsString = (self.size == 2 ? @"two" : (self.size == 3 ? @"two or three" : @"two, three, or four"));
-	card2.text = [NSString stringWithFormat:@"The possibility %i exists in the same spots in %@ %@s, and only in those %@ spots. This forms an %@ for %i.", self.targetPencil, collectionOfRowsColsString, scopeName, numberOfSpotsString, techniqueName, self.targetPencil];
+	card2.text = [NSString stringWithFormat:@"The possibility %i exists in the same spots in %@ %@s, and only in those %@ spots. This forms %@ %@ for %i.", self.targetPencil, collectionOfRowsColsString, scopeName, numberOfSpotsString, aAnTechniqueName, techniqueName, self.targetPencil];
 	
 	for (NSInteger i = 0; i < _totalXWingTiles; ++i) {
 		for (NSInteger j = 0; j < 9; ++j) {
@@ -217,7 +218,9 @@
 	// Step 6: Eliminate the pencils.
 	ZSHintCard *card6 = [[ZSHintCard alloc] init];
 	
-	card6.text = [NSString stringWithFormat:@"%i %@ have been eliminated.", _totalPencilsToEliminate, pencilsString];
+	NSString *hasHaveString = (_totalPencilsToEliminate == 1 ? @"has" : @"have");
+	
+	card6.text = [NSString stringWithFormat:@"%i %@ %@ been eliminated.", _totalPencilsToEliminate, pencilsString, hasHaveString];
 	
 	for (NSInteger i = 0; i < _totalXWingTiles; ++i) {
 		for (NSInteger j = 0; j < 9; ++j) {

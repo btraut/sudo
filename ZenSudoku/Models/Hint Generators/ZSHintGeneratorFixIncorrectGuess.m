@@ -32,12 +32,12 @@
 	[hintCards addObject:card1];
 	
 	ZSHintCard *card2 = [[ZSHintCard alloc] init];
-	card2.text = [NSString stringWithFormat:@"The guess highlighted is incorrect. Continue to clear it.", (_row + 1), (_col + 1)];
+	card2.text = @"The guess highlighted is incorrect. Continue to clear it.";
 	[card2 addInstructionHighlightTileAtRow:_row col:_col highlightType:ZSTileHintHighlightTypeA];
 	[hintCards addObject:card2];
 	
 	ZSHintCard *card3 = [[ZSHintCard alloc] init];
-	card3.text = [NSString stringWithFormat:@"The incorrect guess has been cleared. Good luck!"];
+	card3.text = @"The incorrect guess has been cleared. Good luck!";
 	[card3 addInstructionRemoveGuessForTileAtRow:_row col:_col];
 	[hintCards addObject:card3];
 	

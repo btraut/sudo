@@ -150,6 +150,7 @@
 		84EE86281494ADEA004C0A16 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D55013147F1C4A00A7934E /* UIKit.framework */; };
 		84EE86291494ADEA004C0A16 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D55015147F1C4A00A7934E /* Foundation.framework */; };
 		84EE862F1494ADEA004C0A16 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84EE862D1494ADEA004C0A16 /* InfoPlist.strings */; };
+		84EEAA2315C20874006C35B0 /* ZSHintGeneratorEliminatePencilsFinnedXWing.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EEAA2215C20874006C35B0 /* ZSHintGeneratorEliminatePencilsFinnedXWing.m */; };
 		84F9EFFE1495CC81003DD297 /* ZSBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F9EFFD1495CC81003DD297 /* ZSBoard.m */; };
 /* End PBXBuildFile section */
 
@@ -348,6 +349,8 @@
 		84EE862C1494ADEA004C0A16 /* ZenSudokuLogicTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ZenSudokuLogicTests-Info.plist"; sourceTree = "<group>"; };
 		84EE862E1494ADEA004C0A16 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		84EE86331494ADEA004C0A16 /* ZenSudokuLogicTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ZenSudokuLogicTests-Prefix.pch"; sourceTree = "<group>"; };
+		84EEAA2115C20874006C35B0 /* ZSHintGeneratorEliminatePencilsFinnedXWing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSHintGeneratorEliminatePencilsFinnedXWing.h; path = "ZenSudoku/Models/Hint Generators/ZSHintGeneratorEliminatePencilsFinnedXWing.h"; sourceTree = SOURCE_ROOT; };
+		84EEAA2215C20874006C35B0 /* ZSHintGeneratorEliminatePencilsFinnedXWing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSHintGeneratorEliminatePencilsFinnedXWing.m; path = "ZenSudoku/Models/Hint Generators/ZSHintGeneratorEliminatePencilsFinnedXWing.m"; sourceTree = SOURCE_ROOT; };
 		84F9EFFC1495CC81003DD297 /* ZSBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSBoard.h; path = Models/ZSBoard.h; sourceTree = "<group>"; };
 		84F9EFFD1495CC81003DD297 /* ZSBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSBoard.m; path = Models/ZSBoard.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -446,6 +449,8 @@
 				84D1CB161571A5280027230B /* ZSHintGeneratorEliminatePencilsBoxLineReduction.m */,
 				84958EBE15BC986400D80321 /* ZSHintGeneratorEliminatePencilsXWing.h */,
 				84958EBF15BC986500D80321 /* ZSHintGeneratorEliminatePencilsXWing.m */,
+				84EEAA2115C20874006C35B0 /* ZSHintGeneratorEliminatePencilsFinnedXWing.h */,
+				84EEAA2215C20874006C35B0 /* ZSHintGeneratorEliminatePencilsFinnedXWing.m */,
 			);
 			name = "Logic Technique Hint Generators";
 			path = "Sudoku Solving Utilities";
@@ -849,7 +854,7 @@
 		84D55006147F1C4A00A7934E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0430;
+				LastUpgradeCheck = 0440;
 			};
 			buildConfigurationList = 84D55009147F1C4A00A7934E /* Build configuration list for PBXProject "ZenSudoku" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1032,6 +1037,7 @@
 				84D54E9C15B41595003B1705 /* ZSRibbonViewController.m in Sources */,
 				84BE033115B6B18B00156895 /* UIHintButtonViewController.m in Sources */,
 				84958EC015BC986500D80321 /* ZSHintGeneratorEliminatePencilsXWing.m in Sources */,
+				84EEAA2315C20874006C35B0 /* ZSHintGeneratorEliminatePencilsFinnedXWing.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1103,7 +1109,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/ZenSudoku/External/TestFlightSDK1.0\"",
-					"\"$(SRCROOT)/../../../../Downloads/Flurry iPhone SDK v4/Flurry\"",
 					"\"$(SRCROOT)/ZenSudoku/External/Flurry\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1194,7 +1199,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/ZenSudoku/External/TestFlightSDK1.0\"",
-					"\"$(SRCROOT)/../../../../Downloads/Flurry iPhone SDK v4/Flurry\"",
 					"\"$(SRCROOT)/ZenSudoku/External/Flurry\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1220,7 +1224,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/ZenSudoku/External/TestFlightSDK1.0\"",
-					"\"$(SRCROOT)/../../../../Downloads/Flurry iPhone SDK v4/Flurry\"",
 					"\"$(SRCROOT)/ZenSudoku/External/Flurry\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
