@@ -1,20 +1,20 @@
 //
-//  UIHintButtonViewController.m
+//  ZSHintButtonViewController.m
 //  ZenSudoku
 //
 //  Created by Brent Traut on 7/18/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "UIHintButtonViewController.h"
+#import "ZSHintButtonViewController.h"
 
-@interface UIHintButtonViewController () {
+@interface ZSHintButtonViewController () {
 	UIImageView *_background;
 }
 
 @end
 
-@implementation UIHintButtonViewController
+@implementation ZSHintButtonViewController
 
 @synthesize button;
 @synthesize pulsing = _pulsing;
@@ -74,7 +74,7 @@
 	 delay:0
 	 options:UIViewAnimationOptionCurveEaseOut
 	 animations:^{
-		 _background.alpha = 1;
+		 _background.alpha = 0.5f;
 	 }
 	 completion:^(BOOL finished){
 		 [self _fadeOut];

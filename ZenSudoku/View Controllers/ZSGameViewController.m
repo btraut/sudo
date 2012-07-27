@@ -19,7 +19,7 @@
 #import "ZSHintCard.h"
 #import "ZSTile.h"
 #import "UIColor+ColorWithHex.h"
-#import "UIHintButtonViewController.h"
+#import "ZSHintButtonViewController.h"
 
 #import "TestFlight.h"
 #import "Flurry.h"
@@ -257,7 +257,7 @@ typedef struct {
 	[self.innerView addSubview:autoPencilButton];
 	
 	// Build the hints button.
-	hintButtonViewController = [[UIHintButtonViewController alloc] init];
+	hintButtonViewController = [[ZSHintButtonViewController alloc] init];
 	[self.innerView addSubview:hintButtonViewController.view];
 	[hintButtonViewController.button addTarget:self action:@selector(hintButtonWasTouched) forControlEvents:UIControlEventTouchUpInside];
 	

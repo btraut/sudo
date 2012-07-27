@@ -1,5 +1,5 @@
 //
-//  UIHintButtonViewController.h
+//  ZSHintButtonViewController.h
 //  ZenSudoku
 //
 //  Created by Brent Traut on 7/18/12.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UIHintButtonViewController : UIViewController
+@interface ZSHintButtonViewController : UIViewController
 
 @property (strong) UIButton *button;
 
