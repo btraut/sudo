@@ -22,6 +22,11 @@
 #import "ZSHintGeneratorEliminatePencilsBoxLineReduction.h"
 #import "ZSHintGeneratorEliminatePencilsXWing.h"
 #import "ZSHintGeneratorEliminatePencilsFinnedXWing.h"
+#import "ZSHintGeneratorEliminatePencilsYWing.h"
+#import "ZSHintGeneratorEliminatePencilsChainedYWing.h"
+#import "ZSHintGeneratorEliminatePencilsRemotePairs.h"
+#import "ZSHintGeneratorEliminatePencilsAvoidableRectangles.h"
+#import "ZSHintGeneratorEliminatePencilsSinglesChains.h"
 
 
 @interface ZSHintGenerator () {
@@ -185,6 +190,13 @@
 		return hintCards;
 	}
 	
+	// Y-Wing
+	hintCards = [self eliminatePencilsYWingUseChains:NO];
+	
+	if (hintCards) {
+		return hintCards;
+	}
+	
 	/*
 	// Remote Pairs
 	hintCards = [self eliminatePencilsRemotePairs];
@@ -199,7 +211,18 @@
 	if (hintCards) {
 		return hintCards;
 	}
-	 */
+	*/
+	
+	/*
+	// Chained Y-Wing
+	pencilsEliminated = [self eliminatePencilsYWingUseChains:YES];
+	
+	if (pencilsEliminated) {
+		[self elevateDifficulty:ZSGameDifficultyInsane];
+		totalPencilsEliminatedUsingChainedYWing += pencilsEliminated;
+		continue;
+	}
+	*/
 	
 	// Finned Swordfish
 	hintCards = [self eliminatePencilsFinnedXWingOfSize:3];
@@ -2079,9 +2102,8 @@
 	return hintCards;
 }
 
-/*
 - (NSArray *)eliminatePencilsYWingUseChains:(BOOL)useChains {
-	NSInteger totalPencilsEliminated = 0;
+	NSArray *hintCards = nil;
 	
 	ZSTileList tileList;
 
@@ -2219,25 +2241,39 @@
 		
 		// We have a proper Y-Wing group! For each proper pivot, eliminate pencil marks.
 		if (tile1Influences == 2) {
-			totalPencilsEliminated += [self eliminatePencilsYWingWithTile1:tile2 tile2:tile3];
+			hintCards = [self eliminatePencilsYWingWithTile1:tile2 tile2:tile3 hinge:tile1 usingChainMap:NO];
+		}
+		
+		if (hintCards) {
+			break;
 		}
 		
 		if (tile2Influences == 2) {
-			totalPencilsEliminated += [self eliminatePencilsYWingWithTile1:tile1 tile2:tile3];
+			hintCards = [self eliminatePencilsYWingWithTile1:tile1 tile2:tile3 hinge:tile2 usingChainMap:NO];
+		}
+		
+		if (hintCards) {
+			break;
 		}
 		
 		if (tile3Influences == 2) {
-			totalPencilsEliminated += [self eliminatePencilsYWingWithTile1:tile1 tile2:tile2];
+			hintCards = [self eliminatePencilsYWingWithTile1:tile1 tile2:tile2 hinge:tile3 usingChainMap:NO];
+		}
+		
+		if (hintCards) {
+			break;
 		}
 	} while ([self setNextCombinationInArray:yWingGroupIndexes ofLength:3 totalItems:tileList.totalTiles]);
 	
 	free(pencilMap);
 	free(tileList.tiles);
 	
-	return totalPencilsEliminated;
+	return hintCards;
 }
 
-- (NSArray *)eliminatePencilsYWingWithTile1:(ZSTileStub *)tile1 tile2:(ZSTileStub *)tile2 {
+- (NSArray *)eliminatePencilsYWingWithTile1:(ZSTileStub *)tile1 tile2:(ZSTileStub *)tile2 hinge:(ZSTileStub *)hinge usingChainMap:(BOOL)usingChainMap {
+	NSArray *hintCards = nil;
+	
 	NSInteger totalPencilsEliminated = 0;
 	
 	// It's possible that we've eliminated pencils by the time we've gotten here. Make sure all 3 candidates still have 2 pencils each.
@@ -2264,17 +2300,75 @@
 		}
 		
 		if (tileList.tiles[i]->pencils[commonPencil]) {
-			[_fastGameBoard setPencil:NO forPencilNumber:(commonPencil + 1) forTileAtRow:tileList.tiles[i]->row col:tileList.tiles[i]->col];
 			++totalPencilsEliminated;
+		}
+	}
+	
+	if (totalPencilsEliminated) {
+		if (usingChainMap) {
+			// Use chained y-wing generator.
+		} else {
+			ZSHintGeneratorEliminatePencilsYWing *generator = [[ZSHintGeneratorEliminatePencilsYWing alloc] init];
+			
+			ZSHintGeneratorTileInstruction hingeInstruction;
+			hingeInstruction.row = hinge->row;
+			hingeInstruction.col = hinge->col;
+			hingeInstruction.pencil = 0;
+			generator.hingeTile = hingeInstruction;
+			
+			BOOL alreadyFoundFirstPencil = NO;
+			
+			for (NSInteger i = 0; i < _fastGameBoard.size; ++i) {
+				if (_fastGameBoard.rows[hinge->row][hinge->col]->pencils[i]) {
+					if (alreadyFoundFirstPencil) {
+						generator.hingePencil2 = i + 1;
+					} else {
+						generator.hingePencil1 = i + 1;
+						alreadyFoundFirstPencil = YES;
+					}
+				}
+			}
+			
+			ZSHintGeneratorTileInstruction pincer1Instruction;
+			pincer1Instruction.row = tile1->row;
+			pincer1Instruction.col = tile1->col;
+			pincer1Instruction.pencil = 0;
+			generator.pincer1 = pincer1Instruction;
+			
+			ZSHintGeneratorTileInstruction pincer2Instruction;
+			pincer2Instruction.row = tile2->row;
+			pincer2Instruction.col = tile2->col;
+			pincer2Instruction.pencil = 0;
+			generator.pincer2 = pincer2Instruction;
+			
+			generator.targetPencil = (commonPencil + 1);
+			
+			for (NSInteger i = 0; i < tileList.totalTiles; ++i) {
+				if (tileList.tiles[i] == tile1 || tileList.tiles[i] == tile2) {
+					continue;
+				}
+				
+				if (tileList.tiles[i]->pencils[commonPencil]) {
+					ZSHintGeneratorTileInstruction eliminateInstruction;
+					eliminateInstruction.row = tileList.tiles[i]->row;
+					eliminateInstruction.col = tileList.tiles[i]->col;
+					eliminateInstruction.pencil = (commonPencil + 1);
+					[generator addPencilToEliminate:eliminateInstruction];
+				}
+			}
+			
+			hintCards = [generator generateHint];
 		}
 	}
 	
 	free(tileList.tiles);
 	
-	return totalPencilsEliminated;
+	return hintCards;
 }
 
 - (NSArray *)eliminatePencilsRemotePairs {
+	NSArray *hintCards = nil;
+	
 	NSInteger totalPencilsEliminated = 0;
 	
 	BOOL **investigatedTiles = malloc(_fastGameBoard.size * sizeof(BOOL *));
@@ -2287,17 +2381,19 @@
 		}
 	}
 	
-	// Find all the cols that contain 2 tiles with the current pencil mark and put them in a slot match object.
+	// Loop over all the tiles and look for those with only two pencils.
 	for (NSInteger row = 0; row < _fastGameBoard.size; ++row) {
 		for (NSInteger col = 0; col < _fastGameBoard.size; ++col) {
 			ZSTileStub *currentTile = &_fastGameBoard.grid[row][col];
 			
+			// Skip any tiles that have already been part of a chain.
 			if (investigatedTiles[row][col]) {
 				continue;
 			}
 			
 			investigatedTiles[row][col] = YES;
 			
+			// Only tiles with exactly 2 pencils can be part of remote pairs. If this one is, 
 			if (currentTile->totalPencils == 2) {
 				NSInteger firstPencil = 0;
 				NSInteger secondPencil = 0;
@@ -2356,9 +2452,10 @@
 	
 	free(investigatedTiles);
 	
-	return totalPencilsEliminated;
+	return hintCards;
 }
 
+/*
 - (NSArray *)eliminatePencilsAvoidableRectangles {
 	NSInteger totalPencilsEliminated = 0;
 	
@@ -2595,6 +2692,7 @@
 	
 	NSInteger totalPencils = 0;
 	
+	// The start of the chain was passed to us in this method. Now we need to note which pencil marks are present in that tile.
 	for (NSInteger guess = 0; guess < _fastGameBoard.size; ++guess) {
 		if (tile->pencils[guess]) {
 			_chainPencils[totalPencils] = guess;
@@ -2602,6 +2700,7 @@
 		}
 	}
 	
+	// Mark the tile as the start of the chain.
 	_chainMap[tile->row][tile->col] = ZSChainMapResultLinkedOn;
 	
 	[self updateChainMapForTile:tile totalPencils:totalPencils currentLinkOn:YES];
