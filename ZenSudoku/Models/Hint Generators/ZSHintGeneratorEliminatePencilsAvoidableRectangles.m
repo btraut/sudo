@@ -37,7 +37,7 @@
 	// Step 2
 	ZSHintCard *card2 = [[ZSHintCard alloc] init];
 	
-	card2.text = [NSString stringWithFormat:@"First, it's important to note that each Sudoku puzzle only has one unique solution."];
+	card2.text = [NSString stringWithFormat:@"First, it's important to note that each Sudoku puzzle has only one unique solution."];
 	
 	[card2 addInstructionHighlightTileAtRow:hingeTile.row col:hingeTile.col highlightType:ZSTileHintHighlightTypeA];
 	[card2 addInstructionHighlightTileAtRow:pincer1.row col:pincer1.col highlightType:ZSTileHintHighlightTypeA];
@@ -61,7 +61,7 @@
 	// Step 4
 	ZSHintCard *card4 = [[ZSHintCard alloc] init];
 	
-	card4.text = [NSString stringWithFormat:@"Once the puzzle was solved, it would then be possible to swap the %is and %is and the puzzle would still be valid.", self.impossibleAnswer, self.diagonalAnswer];
+	card4.text = [NSString stringWithFormat:@"Once the puzzle was solved, it would then be possible to swap the %is and %is, and the puzzle would still be valid.", self.impossibleAnswer, self.diagonalAnswer];
 	
 	[card4 addInstructionHighlightTileAtRow:hingeTile.row col:hingeTile.col highlightType:ZSTileHintHighlightTypeA];
 	[card4 addInstructionHighlightTileAtRow:pincer1.row col:pincer1.col highlightType:ZSTileHintHighlightTypeA];
