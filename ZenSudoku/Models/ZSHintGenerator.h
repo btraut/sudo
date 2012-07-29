@@ -60,6 +60,9 @@ typedef struct {
 
 - (void)copyGameStateFromGameBoard:(ZSBoard *)board;
 
+- (void)clearClueMask;
+- (void)copyClueMaskFromGameBoard:(ZSBoard *)board;
+
 - (NSArray *)generateHint;
 
 @end

@@ -105,6 +105,7 @@ typedef struct {
 		game.stateChangeDelegate = self;
 		
 		hintGenerator = [[ZSHintGenerator alloc] initWithSize:game.board.size];
+		[hintGenerator copyClueMaskFromGameBoard:self.game.board];
 		
 		animateCornerWhenPromoted = YES;
 		
@@ -131,6 +132,9 @@ typedef struct {
 - (void)resetWithGame:(ZSGame *)newGame {
 	self.game = newGame;
 	newGame.stateChangeDelegate = self;
+	
+	[hintGenerator clearClueMask];
+	[hintGenerator copyClueMaskFromGameBoard:self.game.board];
 	
 	self.allowsInput = YES;
 	

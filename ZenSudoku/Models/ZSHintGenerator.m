@@ -10,6 +10,8 @@
 
 #import "ZSFastGameBoard.h"
 #import "ZSGame.h"
+#import "ZSBoard.h"
+#import "ZSTile.h"
 
 #import "ZSHintGeneratorFixIncorrectGuesses.h"
 #import "ZSHintGeneratorFixMissingPencil.h"
@@ -204,14 +206,12 @@
 		return hintCards;
 	}
 	
-	/*
 	// Avoidable Rectangles
 	hintCards = [self eliminatePencilsAvoidableRectangles];
 	
 	if (hintCards) {
 		return hintCards;
 	}
-	*/
 	
 	/*
 	// Chained Y-Wing
@@ -2497,8 +2497,18 @@
 					}
 					
 					hintCards = [generator generateHint];
+					
+					break;
 				}
 			}
+			
+			if (totalPencilsEliminated) {
+				break;
+			}
+		}
+		
+		if (totalPencilsEliminated) {
+			break;
 		}
 	}
 	
@@ -2511,40 +2521,48 @@
 	return hintCards;
 }
 
-/*
 - (NSArray *)eliminatePencilsAvoidableRectangles {
-	NSInteger totalPencilsEliminated = 0;
+	NSArray *hintCards = nil;
 	
+	// Iterate over all tiles.
 	for (NSInteger row = 0; row < _fastGameBoard.size; ++row) {
 		for (NSInteger col = 0; col < _fastGameBoard.size; ++col) {
 			ZSTileStub *currentTile = &_fastGameBoard.grid[row][col];
 			
+			// Only choose tiles that has a guess set by the user.
 			if (currentTile->guess && !_clueIsProvidedInPuzzle[row][col]) {
+				// Iterate over all guesses.
 				for (NSInteger guess = 0; guess < _fastGameBoard.size; ++guess) {
+					// Because we're looking for another non-diagonal corner of the rectangle, skip over guesses that match the chosen tile's.
 					if (currentTile->guess == (guess + 1)) {
 						continue;
 					}
 					
+					// If the chosen tile shares a row and column each with one guess matching our second chosen guess, we have 3 corners of the rectangle.
 					if (_fastGameBoard.totalTilesInRowWithAnswer[row][guess] == 1 && _fastGameBoard.totalTilesInColWithAnswer[col][guess] == 1) {
 						NSInteger otherRowIndex = 0;
 						NSInteger otherColIndex = 0;
 						
+						// Determine the other column that makes up the rectangle.
 						for (otherColIndex = 0; otherColIndex < _fastGameBoard.size; ++otherColIndex) {
 							if (_fastGameBoard.grid[row][otherColIndex].guess == (guess + 1)) {
 								break;
 							}
 						}
 						
+						// Determine the other row that makes up the rectangle.
 						for (otherRowIndex = 0; otherRowIndex < _fastGameBoard.size; ++otherRowIndex) {
 							if (_fastGameBoard.grid[otherRowIndex][col].guess == (guess + 1)) {
 								break;
 							}
 						}
 						
+						// All 3 corners with guesses must be set by the user.
 						if (_clueIsProvidedInPuzzle[row][otherColIndex] || _clueIsProvidedInPuzzle[otherRowIndex][col]) {
 							continue;
 						}
 						
+						// Now we need to keep track of how many groups the rectangle spans. It must span only two groups.
 						NSInteger rectangleCornersInTargetTilesGroup = 0;
 						
 						if (_fastGameBoard.grid[row][otherColIndex].groupId == currentTile->groupId) {
@@ -2555,28 +2573,53 @@
 							++rectangleCornersInTargetTilesGroup;
 						}
 						
+						// If rectangleCornersInTargetTilesGroup, it means the rectangle spans 4 groups instead of 2.
 						if (rectangleCornersInTargetTilesGroup != 1) {
 							continue;
 						}
 						
 						if (_fastGameBoard.grid[otherRowIndex][otherColIndex].pencils[(currentTile->guess - 1)]) {
 							[_fastGameBoard setPencil:NO forPencilNumber:currentTile->guess forTileAtRow:otherRowIndex col:otherColIndex];
-							++totalPencilsEliminated;
-						}
-						
-						if (_fastGameBoard.grid[otherRowIndex][otherColIndex].pencils[guess]) {
-							[_fastGameBoard setPencil:NO forPencilNumber:(guess + 1) forTileAtRow:otherRowIndex col:otherColIndex];
-							++totalPencilsEliminated;
+							
+							ZSHintGeneratorEliminatePencilsAvoidableRectangles *generator = [[ZSHintGeneratorEliminatePencilsAvoidableRectangles alloc] init];
+							
+							ZSHintGeneratorTileInstruction hingeInstruction;
+							hingeInstruction.row = currentTile->row;
+							hingeInstruction.col = currentTile->col;
+							hingeInstruction.pencil = 0;
+							generator.hingeTile = hingeInstruction;
+							
+							ZSHintGeneratorTileInstruction pincer1Instruction;
+							pincer1Instruction.row = otherRowIndex;
+							pincer1Instruction.col = currentTile->col;
+							pincer1Instruction.pencil = 0;
+							generator.pincer1 = pincer1Instruction;
+							
+							ZSHintGeneratorTileInstruction pincer2Instruction;
+							pincer2Instruction.row = currentTile->row;
+							pincer2Instruction.col = otherColIndex;
+							pincer2Instruction.pencil = 0;
+							generator.pincer2 = pincer2Instruction;
+							
+							ZSHintGeneratorTileInstruction eliminateInstruction;
+							eliminateInstruction.row = otherRowIndex;
+							eliminateInstruction.col = otherColIndex;
+							eliminateInstruction.pencil = currentTile->guess;
+							generator.eliminateInstruction = eliminateInstruction;
+							
+							generator.impossibleAnswer = currentTile->guess;
+							generator.diagonalAnswer = _fastGameBoard.grid[otherRowIndex][currentTile->col].guess;
+							
+							hintCards = [generator generateHint];
 						}
 					}
 				}
 			}
 		}
 	}
-	
-	return totalPencilsEliminated;
+ 
+	return hintCards;
 }
-*/
 
 #pragma mark - Logic Technique Helpers
 
@@ -2657,10 +2700,10 @@
 	}
 }
 
-- (void)copyClueMaskFromGameBoard {
+- (void)copyClueMaskFromGameBoard:(ZSBoard *)board {
 	for (NSInteger row = 0; row < _fastGameBoard.size; ++row) {
 		for (NSInteger col = 0; col < _fastGameBoard.size; ++col) {
-			_clueIsProvidedInPuzzle[row][col] = (_fastGameBoard.grid[row][col].guess) == 0 ? NO : YES;
+			_clueIsProvidedInPuzzle[row][col] = [board getTileAtRow:row col:col].locked;
 		}
 	}
 }
