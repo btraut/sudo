@@ -18,6 +18,8 @@
 @property (assign) NSInteger hingePencil2;
 @property (assign) NSInteger targetPencil;
 
+- (void)resetTilesAndInstructions;
+
 - (void)addPencilToEliminate:(ZSHintGeneratorTileInstruction)tile;
 
 - (NSArray *)generateHint;

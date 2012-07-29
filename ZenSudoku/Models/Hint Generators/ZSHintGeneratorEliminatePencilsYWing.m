@@ -155,10 +155,6 @@
 	for (NSInteger i = 0; i < _totalPencilsToEliminate; ++i) {
 		ZSHintGeneratorTileInstruction *instruction = &_pencilsToEliminate[i];
 		[card6 addInstructionHighlightTileAtRow:instruction->row col:instruction->col highlightType:ZSTileHintHighlightTypeB];
-	}
-	
-	for (NSInteger i = 0; i < _totalPencilsToEliminate; ++i) {
-		ZSHintGeneratorTileInstruction *instruction = &_pencilsToEliminate[i];
 		[card6 addInstructionHighlightPencil:instruction->pencil forTileAtRow:instruction->row col:instruction->col highlightType:ZSTilePencilTextHintHighlightTypeA];
 		[card6 addInstructionRemovePencil:instruction->pencil forTileAtRow:instruction->row col:instruction->col];
 	}

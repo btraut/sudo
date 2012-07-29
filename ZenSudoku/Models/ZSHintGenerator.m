@@ -197,7 +197,6 @@
 		return hintCards;
 	}
 	
-	/*
 	// Remote Pairs
 	hintCards = [self eliminatePencilsRemotePairs];
 	
@@ -205,6 +204,7 @@
 		return hintCards;
 	}
 	
+	/*
 	// Avoidable Rectangles
 	hintCards = [self eliminatePencilsAvoidableRectangles];
 	
@@ -2421,12 +2421,10 @@
 							case ZSChainMapResultRelatedConflicted:
 								
 								if (targetTile->pencils[firstPencil]) {
-									[_fastGameBoard setPencil:NO forPencilNumber:(firstPencil + 1) forTileAtRow:targetTile->row col:targetTile->col];
 									++totalPencilsEliminated;
 								}
 								
 								if (targetTile->pencils[secondPencil]) {
-									[_fastGameBoard setPencil:NO forPencilNumber:(secondPencil + 1) forTileAtRow:targetTile->row col:targetTile->col];
 									++totalPencilsEliminated;
 								}
 								
@@ -2441,6 +2439,64 @@
 								break;
 						}
 					}
+				}
+
+				if (totalPencilsEliminated) {
+					ZSHintGeneratorEliminatePencilsRemotePairs *generator = [[ZSHintGeneratorEliminatePencilsRemotePairs alloc] init];
+					
+					generator.chainPencil1 = (firstPencil + 1);
+					generator.chainPencil2 = (secondPencil + 1);
+					
+					for (NSInteger chainMapRow = 0; chainMapRow < _fastGameBoard.size; ++chainMapRow) {
+						for (NSInteger chainMapCol = 0; chainMapCol < _fastGameBoard.size; ++chainMapCol) {
+							ZSTileStub *targetTile = &_fastGameBoard.grid[chainMapRow][chainMapCol];
+							
+							switch (_chainMap[chainMapRow][chainMapCol]) {
+								case ZSChainMapResultRelatedConflicted:
+									
+									if (targetTile->pencils[firstPencil]) {
+										ZSHintGeneratorTileInstruction eliminateInstruction;
+										eliminateInstruction.row = targetTile->row;
+										eliminateInstruction.col = targetTile->col;
+										eliminateInstruction.pencil = (firstPencil + 1);
+										[generator addPencilToEliminate:eliminateInstruction];
+									}
+									
+									if (targetTile->pencils[secondPencil]) {
+										ZSHintGeneratorTileInstruction eliminateInstruction;
+										eliminateInstruction.row = targetTile->row;
+										eliminateInstruction.col = targetTile->col;
+										eliminateInstruction.pencil = (secondPencil + 1);
+										[generator addPencilToEliminate:eliminateInstruction];
+									}
+									
+									break;
+
+								case ZSChainMapResultLinkedOn: {
+									ZSHintGeneratorTileInstruction evenInstruction;
+									evenInstruction.row = targetTile->row;
+									evenInstruction.col = targetTile->col;
+									evenInstruction.pencil = 0;
+									[generator addEvenChainLink:evenInstruction];
+								}
+									break;
+								
+								case ZSChainMapResultLinkedOff: {
+									ZSHintGeneratorTileInstruction oddInstruction;
+									oddInstruction.row = targetTile->row;
+									oddInstruction.col = targetTile->col;
+									oddInstruction.pencil = 0;
+									[generator addOddChainLink:oddInstruction];
+								}
+									break;
+								
+								default:
+									break;
+							}
+						}
+					}
+					
+					hintCards = [generator generateHint];
 				}
 			}
 		}
