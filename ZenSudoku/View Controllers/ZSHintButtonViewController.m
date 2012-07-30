@@ -24,15 +24,17 @@
 }
 
 - (void)viewDidLoad {
+	UIImage *hintsImage = [UIImage imageNamed:@"Hints"];
+	
+	self.button = [UIButton buttonWithType:UIButtonTypeCustom];
+	self.button.frame = CGRectMake(0, 0, hintsImage.size.width, hintsImage.size.height);
+	[self.button setBackgroundImage:hintsImage forState:UIControlStateNormal];
+	[self.button setBackgroundImage:[UIImage imageNamed:@"HintsHighlighted"] forState:UIControlStateHighlighted];
+	[self.view addSubview:self.button];
+	
 	_background = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HintsBackground"]];
 	_background.alpha = 0;
 	[self.view addSubview:_background];
-	
-	self.button = [UIButton buttonWithType:UIButtonTypeCustom];
-	self.button.frame = CGRectMake(0, 0, 36, 37);
-	[self.button setBackgroundImage:[UIImage imageNamed:@"Hints"] forState:UIControlStateNormal];
-	[self.button setBackgroundImage:[UIImage imageNamed:@"HintsHighlighted"] forState:UIControlStateHighlighted];
-	[self.view addSubview:self.button];
 }
 
 - (void)startPulsing {
@@ -74,7 +76,7 @@
 	 delay:0
 	 options:UIViewAnimationOptionCurveEaseOut
 	 animations:^{
-		 _background.alpha = 0.5f;
+		 _background.alpha = 1.0f;
 	 }
 	 completion:^(BOOL finished){
 		 [self _fadeOut];

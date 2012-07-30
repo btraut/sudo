@@ -241,10 +241,12 @@ typedef struct {
 	// Build the undo button.
 	undoButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	
-	[undoButton addTarget:self action:@selector(undoButtonWasTouched) forControlEvents:UIControlEventTouchUpInside];
-	undoButton.frame = CGRectMake(79, 412, 36, 37);
+	UIImage *undoButtonImage = [UIImage imageNamed:@"Undo"];
 	
-	[undoButton setBackgroundImage:[UIImage imageNamed:@"Undo"] forState:UIControlStateNormal];
+	[undoButton addTarget:self action:@selector(undoButtonWasTouched) forControlEvents:UIControlEventTouchUpInside];
+	undoButton.frame = CGRectMake(79, 412, undoButtonImage.size.width, undoButtonImage.size.height);
+	
+	[undoButton setBackgroundImage:undoButtonImage forState:UIControlStateNormal];
 	[undoButton setBackgroundImage:[UIImage imageNamed:@"UndoHighlighted"] forState:UIControlStateHighlighted];
 	
 	[self.innerView addSubview:undoButton];
@@ -252,10 +254,12 @@ typedef struct {
 	// Build the autopencil button.
 	autoPencilButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	
-	[autoPencilButton addTarget:self action:@selector(autoPencilButtonWasTouched) forControlEvents:UIControlEventTouchUpInside];
-	autoPencilButton.frame = CGRectMake(142, 412, 36, 37);
+	UIImage *autoPencilImage = [UIImage imageNamed:@"AutoPencil"];
 	
-	[autoPencilButton setBackgroundImage:[UIImage imageNamed:@"AutoPencil"] forState:UIControlStateNormal];
+	[autoPencilButton addTarget:self action:@selector(autoPencilButtonWasTouched) forControlEvents:UIControlEventTouchUpInside];
+	autoPencilButton.frame = CGRectMake(142, 412, autoPencilImage.size.width, autoPencilImage.size.height);
+	
+	[autoPencilButton setBackgroundImage:autoPencilImage forState:UIControlStateNormal];
 	[autoPencilButton setBackgroundImage:[UIImage imageNamed:@"AutoPencilHighlighted"] forState:UIControlStateHighlighted];
 	
 	[self.innerView addSubview:autoPencilButton];
