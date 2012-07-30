@@ -87,7 +87,7 @@
 	// Step 2
 	ZSHintCard *card2 = [[ZSHintCard alloc] init];
 	
-	card2.text = [NSString stringWithFormat:@"These tiles form a Y-Wing. The tile with possibilities %i and %i is called the \"hinge\" and the other two are called \"pincers\".", self.hingePencil1, self.hingePencil2];
+	card2.text = [NSString stringWithFormat:@"These tiles form a Y-Wing. The tile with possibilities %i and %i is called the “hinge” and the other two are called “pincers”.", self.hingePencil1, self.hingePencil2];
 	
 	[card2 addInstructionHighlightTileAtRow:hingeTile.row col:hingeTile.col	highlightType:ZSTileHintHighlightTypeD];
 	[card2 addInstructionHighlightTileAtRow:pincer1.row col:pincer1.col	highlightType:ZSTileHintHighlightTypeA];

@@ -143,7 +143,7 @@
 	// Step 4
 	ZSHintCard *card4 = [[ZSHintCard alloc] init];
 	
-	card4.text = [NSString stringWithFormat:@"If, instead, the yellow tile is a %i, each \"link\" in the chain is reversed.", self.chainPencil2];
+	card4.text = [NSString stringWithFormat:@"If, instead, the yellow tile is a %i, each “link” in the chain is reversed.", self.chainPencil2];
 	
 	for (NSInteger i = 0; i < _totalEvenChainLinks; ++i) {
 		ZSHintGeneratorTileInstruction *instruction = &_evenChainLinks[i];

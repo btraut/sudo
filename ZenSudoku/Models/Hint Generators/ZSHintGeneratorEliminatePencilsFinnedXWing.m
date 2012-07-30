@@ -218,7 +218,7 @@
 	// Step 5
 	ZSHintCard *card5 = [[ZSHintCard alloc] init];
 	
-	card5.text = [NSString stringWithFormat:@"When these maligned possibilities all exist within the same region, that region is called the \"fin\" and forms a Finned %@.", techniqueName];
+	card5.text = [NSString stringWithFormat:@"When these maligned possibilities all exist within the same region, that region is called the “fin” and forms a Finned %@.", techniqueName];
 	
 	for (NSInteger i = 0; i < _totalFinnedXWingTiles; ++i) {
 		for (NSInteger j = 0; j < 9; ++j) {
