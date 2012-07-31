@@ -20,7 +20,7 @@
 @synthesize pulsing = _pulsing;
 
 - (void)loadView {
-	self.view = [[UIView alloc] initWithFrame:CGRectMake(205, 412, 36, 37)];
+	self.view = [[UIView alloc] initWithFrame:CGRectMake(200, 409, 36, 37)];
 }
 
 - (void)viewDidLoad {

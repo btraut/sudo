@@ -28,8 +28,6 @@
 #import "ZSHintGeneratorEliminatePencilsChainedYWing.h"
 #import "ZSHintGeneratorEliminatePencilsRemotePairs.h"
 #import "ZSHintGeneratorEliminatePencilsAvoidableRectangles.h"
-#import "ZSHintGeneratorEliminatePencilsSinglesChains.h"
-
 
 @interface ZSHintGenerator () {
 	ZSFastGameBoard *_fastGameBoard;
@@ -185,15 +183,15 @@
 		return hintCards;
 	}
 	
-	// Finned X-Wing
-	hintCards = [self eliminatePencilsFinnedXWingOfSize:2];
+	// Y-Wing
+	hintCards = [self eliminatePencilsYWingUseChains:NO];
 	
 	if (hintCards) {
 		return hintCards;
 	}
 	
-	// Y-Wing
-	hintCards = [self eliminatePencilsYWingUseChains:NO];
+	// Finned X-Wing
+	hintCards = [self eliminatePencilsFinnedXWingOfSize:2];
 	
 	if (hintCards) {
 		return hintCards;
@@ -215,12 +213,10 @@
 	
 	/*
 	// Chained Y-Wing
-	pencilsEliminated = [self eliminatePencilsYWingUseChains:YES];
-	
-	if (pencilsEliminated) {
-		[self elevateDifficulty:ZSGameDifficultyInsane];
-		totalPencilsEliminatedUsingChainedYWing += pencilsEliminated;
-		continue;
+	hintCards = [self eliminatePencilsYWingUseChains:YES];
+
+	if (hintCards) {
+		return hintCards;
 	}
 	*/
 	
@@ -239,8 +235,7 @@
 	}
 	
 	// Can't solve!!
-	ZSHintGeneratorNoHint *generator = [[ZSHintGeneratorNoHint alloc] init];
-	hintCards = [generator generateHint];
+	hintCards = [self eliminatePencilNoHint];
 	
 	return hintCards;
 }
@@ -2142,6 +2137,47 @@
 			continue;
 		}
 		
+		// Map the pencils in all the tiles.
+		for (NSInteger guess = 0; guess < _fastGameBoard.size; ++guess) {
+			pencilMap[guess] = (tile1->pencils[guess] || tile2->pencils[guess] || tile3->pencils[guess]);
+		}
+		
+		// Count the pencils in all the tiles.
+		NSInteger totalPencilsInGroup = 0;
+		
+		for (NSInteger guess = 0; guess < _fastGameBoard.size; ++guess) {
+			if (pencilMap[guess]) {
+				++totalPencilsInGroup;
+			}
+		}
+		
+		if (totalPencilsInGroup != 3) {
+			continue;
+		}
+		
+		// Make sure all 3 tiles have different pencil marks (AB, AC, and BC).
+		BOOL tile1SameAsTile2 = YES;
+		BOOL tile1SameAsTile3 = YES;
+		BOOL tile2SameAsTile3 = YES;
+		
+		for (NSInteger guess = 0; guess < _fastGameBoard.size; ++guess) {
+			if (tile1->pencils[guess] && !tile2->pencils[guess]) {
+				tile1SameAsTile2 = NO;
+			}
+			
+			if (tile1->pencils[guess] && !tile3->pencils[guess]) {
+				tile1SameAsTile3 = NO;
+			}
+			
+			if (tile2->pencils[guess] && !tile3->pencils[guess]) {
+				tile2SameAsTile3 = NO;
+			}
+		}
+		
+		if (tile1SameAsTile2 || tile1SameAsTile3 || tile2SameAsTile3) {
+			continue;
+		}
+		
 		// Check which tiles influence each other. This will help determine which (if any) is the pivot.
 		NSInteger tile1Influences = 0;
 		NSInteger tile2Influences = 0;
@@ -2198,50 +2234,9 @@
 			continue;
 		}
 		
-		// Map the pencils in all the tiles.
-		for (NSInteger guess = 0; guess < _fastGameBoard.size; ++guess) {
-			pencilMap[guess] = (tile1->pencils[guess] || tile2->pencils[guess] || tile3->pencils[guess]);
-		}
-		
-		// Count the pencils in all the tiles.
-		NSInteger totalPencilsInGroup = 0;
-		
-		for (NSInteger guess = 0; guess < _fastGameBoard.size; ++guess) {
-			if (pencilMap[guess]) {
-				++totalPencilsInGroup;
-			}
-		}
-		
-		if (totalPencilsInGroup != 3) {
-			continue;
-		}
-		
-		// Make sure all 3 tiles have different pencil marks (AB, AC, and BC).
-		BOOL tile1SameAsTile2 = YES;
-		BOOL tile1SameAsTile3 = YES;
-		BOOL tile2SameAsTile3 = YES;
-		
-		for (NSInteger guess = 0; guess < _fastGameBoard.size; ++guess) {
-			if (tile1->pencils[guess] && !tile2->pencils[guess]) {
-				tile1SameAsTile2 = NO;
-			}
-			
-			if (tile1->pencils[guess] && !tile3->pencils[guess]) {
-				tile1SameAsTile3 = NO;
-			}
-			
-			if (tile2->pencils[guess] && !tile3->pencils[guess]) {
-				tile2SameAsTile3 = NO;
-			}
-		}
-		
-		if (tile1SameAsTile2 || tile1SameAsTile3 || tile2SameAsTile3) {
-			continue;
-		}
-		
 		// We have a proper Y-Wing group! For each proper pivot, eliminate pencil marks.
 		if (tile1Influences == 2) {
-			hintCards = [self eliminatePencilsYWingWithTile1:tile2 tile2:tile3 hinge:tile1 usingChainMap:NO];
+			hintCards = [self eliminatePencilsYWingWithTile1:tile2 tile2:tile3 hinge:tile1 usingChainMap:useChains];
 		}
 		
 		if (hintCards) {
@@ -2249,7 +2244,7 @@
 		}
 		
 		if (tile2Influences == 2) {
-			hintCards = [self eliminatePencilsYWingWithTile1:tile1 tile2:tile3 hinge:tile2 usingChainMap:NO];
+			hintCards = [self eliminatePencilsYWingWithTile1:tile1 tile2:tile3 hinge:tile2 usingChainMap:useChains];
 		}
 		
 		if (hintCards) {
@@ -2257,7 +2252,7 @@
 		}
 		
 		if (tile3Influences == 2) {
-			hintCards = [self eliminatePencilsYWingWithTile1:tile1 tile2:tile2 hinge:tile3 usingChainMap:NO];
+			hintCards = [self eliminatePencilsYWingWithTile1:tile1 tile2:tile2 hinge:tile3 usingChainMap:useChains];
 		}
 		
 		if (hintCards) {
@@ -2306,7 +2301,56 @@
 	
 	if (totalPencilsEliminated) {
 		if (usingChainMap) {
-			// Use chained y-wing generator.
+			ZSHintGeneratorEliminatePencilsChainedYWing *generator = [[ZSHintGeneratorEliminatePencilsChainedYWing alloc] init];
+			
+			ZSHintGeneratorTileInstruction hingeInstruction;
+			hingeInstruction.row = hinge->row;
+			hingeInstruction.col = hinge->col;
+			hingeInstruction.pencil = 0;
+			generator.hingeTile = hingeInstruction;
+			
+			BOOL alreadyFoundFirstPencil = NO;
+			
+			for (NSInteger i = 0; i < _fastGameBoard.size; ++i) {
+				if (_fastGameBoard.rows[hinge->row][hinge->col]->pencils[i]) {
+					if (alreadyFoundFirstPencil) {
+						generator.hingePencil2 = i + 1;
+					} else {
+						generator.hingePencil1 = i + 1;
+						alreadyFoundFirstPencil = YES;
+					}
+				}
+			}
+			
+			ZSHintGeneratorTileInstruction pincer1Instruction;
+			pincer1Instruction.row = tile1->row;
+			pincer1Instruction.col = tile1->col;
+			pincer1Instruction.pencil = 0;
+			generator.pincer1 = pincer1Instruction;
+			
+			ZSHintGeneratorTileInstruction pincer2Instruction;
+			pincer2Instruction.row = tile2->row;
+			pincer2Instruction.col = tile2->col;
+			pincer2Instruction.pencil = 0;
+			generator.pincer2 = pincer2Instruction;
+			
+			generator.targetPencil = (commonPencil + 1);
+			
+			for (NSInteger i = 0; i < tileList.totalTiles; ++i) {
+				if (tileList.tiles[i] == tile1 || tileList.tiles[i] == tile2) {
+					continue;
+				}
+				
+				if (tileList.tiles[i]->pencils[commonPencil]) {
+					ZSHintGeneratorTileInstruction eliminateInstruction;
+					eliminateInstruction.row = tileList.tiles[i]->row;
+					eliminateInstruction.col = tileList.tiles[i]->col;
+					eliminateInstruction.pencil = (commonPencil + 1);
+					[generator addPencilToEliminate:eliminateInstruction];
+				}
+			}
+			
+			hintCards = [generator generateHint];
 		} else {
 			ZSHintGeneratorEliminatePencilsYWing *generator = [[ZSHintGeneratorEliminatePencilsYWing alloc] init];
 			
@@ -2619,6 +2663,64 @@
 	}
  
 	return hintCards;
+}
+
+- (NSArray *)eliminatePencilNoHint {
+	ZSHintGeneratorNoHint *generator = [[ZSHintGeneratorNoHint alloc] init];
+	
+	NSInteger totalPencils = 0;
+	
+	for (NSInteger row = 0; row < _fastGameBoard.size; ++row) {
+		for (NSInteger col = 0; col < _fastGameBoard.size; ++col) {
+			if (_fastGameBoard.grid[row][col].guess) {
+				continue;
+			}
+			
+			for (NSInteger pencil = 0; pencil < _fastGameBoard.size; ++pencil) {
+				if (pencil == _fastGameBoard.grid[row][col].answer) {
+					continue;
+				}
+				
+				if (_fastGameBoard.grid[row][col].pencils[pencil]) {
+					++totalPencils;
+				}
+			}
+		}
+	}
+	
+	NSInteger randomPencil = arc4random() % totalPencils;
+	NSInteger currentPencil = 0;
+	BOOL pencilFound = NO;
+	
+	for (NSInteger row = 0; !pencilFound && row < _fastGameBoard.size; ++row) {
+		for (NSInteger col = 0; !pencilFound && col < _fastGameBoard.size; ++col) {
+			if (_fastGameBoard.grid[row][col].guess) {
+				continue;
+			}
+			
+			for (NSInteger pencil = 0; !pencilFound && pencil < _fastGameBoard.size; ++pencil) {
+				if (pencil + 1 == _fastGameBoard.grid[row][col].answer) {
+					continue;
+				}
+				
+				if (_fastGameBoard.grid[row][col].pencils[pencil]) {
+					if (randomPencil == currentPencil) {
+						ZSHintGeneratorTileInstruction eliminateInstruction;
+						eliminateInstruction.row = row;
+						eliminateInstruction.col = col;
+						eliminateInstruction.pencil = (pencil + 1);
+						generator.randomEliminateInstruction = eliminateInstruction;
+						
+						pencilFound = YES;
+					}
+
+					++currentPencil;
+				}
+			}
+		}
+	}
+	
+	return [generator generateHint];
 }
 
 #pragma mark - Logic Technique Helpers

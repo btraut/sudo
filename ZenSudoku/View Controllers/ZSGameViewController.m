@@ -244,7 +244,7 @@ typedef struct {
 	UIImage *undoButtonImage = [UIImage imageNamed:@"Undo"];
 	
 	[undoButton addTarget:self action:@selector(undoButtonWasTouched) forControlEvents:UIControlEventTouchUpInside];
-	undoButton.frame = CGRectMake(79, 412, undoButtonImage.size.width, undoButtonImage.size.height);
+	undoButton.frame = CGRectMake(80, 409, undoButtonImage.size.width, undoButtonImage.size.height);
 	
 	[undoButton setBackgroundImage:undoButtonImage forState:UIControlStateNormal];
 	[undoButton setBackgroundImage:[UIImage imageNamed:@"UndoHighlighted"] forState:UIControlStateHighlighted];
@@ -257,7 +257,7 @@ typedef struct {
 	UIImage *autoPencilImage = [UIImage imageNamed:@"AutoPencil"];
 	
 	[autoPencilButton addTarget:self action:@selector(autoPencilButtonWasTouched) forControlEvents:UIControlEventTouchUpInside];
-	autoPencilButton.frame = CGRectMake(142, 412, autoPencilImage.size.width, autoPencilImage.size.height);
+	autoPencilButton.frame = CGRectMake(140, 409, autoPencilImage.size.width, autoPencilImage.size.height);
 	
 	[autoPencilButton setBackgroundImage:autoPencilImage forState:UIControlStateNormal];
 	[autoPencilButton setBackgroundImage:[UIImage imageNamed:@"AutoPencilHighlighted"] forState:UIControlStateHighlighted];

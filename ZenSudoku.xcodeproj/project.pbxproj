@@ -155,7 +155,6 @@
 		84EEAA2915C3D935006C35B0 /* ZSHintGeneratorEliminatePencilsChainedYWing.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EEAA2815C3D935006C35B0 /* ZSHintGeneratorEliminatePencilsChainedYWing.m */; };
 		84EEAA2F15C3D95A006C35B0 /* ZSHintGeneratorEliminatePencilsAvoidableRectangles.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EEAA2E15C3D959006C35B0 /* ZSHintGeneratorEliminatePencilsAvoidableRectangles.m */; };
 		84EEAA3215C3D968006C35B0 /* ZSHintGeneratorEliminatePencilsRemotePairs.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EEAA3115C3D968006C35B0 /* ZSHintGeneratorEliminatePencilsRemotePairs.m */; };
-		84EEAA3515C3D98B006C35B0 /* ZSHintGeneratorEliminatePencilsSinglesChains.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EEAA3415C3D98B006C35B0 /* ZSHintGeneratorEliminatePencilsSinglesChains.m */; };
 		84F9EFFE1495CC81003DD297 /* ZSBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F9EFFD1495CC81003DD297 /* ZSBoard.m */; };
 /* End PBXBuildFile section */
 
@@ -364,8 +363,6 @@
 		84EEAA2E15C3D959006C35B0 /* ZSHintGeneratorEliminatePencilsAvoidableRectangles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSHintGeneratorEliminatePencilsAvoidableRectangles.m; path = "ZenSudoku/Models/Hint Generators/ZSHintGeneratorEliminatePencilsAvoidableRectangles.m"; sourceTree = SOURCE_ROOT; };
 		84EEAA3015C3D967006C35B0 /* ZSHintGeneratorEliminatePencilsRemotePairs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSHintGeneratorEliminatePencilsRemotePairs.h; path = "ZenSudoku/Models/Hint Generators/ZSHintGeneratorEliminatePencilsRemotePairs.h"; sourceTree = SOURCE_ROOT; };
 		84EEAA3115C3D968006C35B0 /* ZSHintGeneratorEliminatePencilsRemotePairs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSHintGeneratorEliminatePencilsRemotePairs.m; path = "ZenSudoku/Models/Hint Generators/ZSHintGeneratorEliminatePencilsRemotePairs.m"; sourceTree = SOURCE_ROOT; };
-		84EEAA3315C3D98A006C35B0 /* ZSHintGeneratorEliminatePencilsSinglesChains.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSHintGeneratorEliminatePencilsSinglesChains.h; path = "ZenSudoku/Models/Hint Generators/ZSHintGeneratorEliminatePencilsSinglesChains.h"; sourceTree = SOURCE_ROOT; };
-		84EEAA3415C3D98B006C35B0 /* ZSHintGeneratorEliminatePencilsSinglesChains.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSHintGeneratorEliminatePencilsSinglesChains.m; path = "ZenSudoku/Models/Hint Generators/ZSHintGeneratorEliminatePencilsSinglesChains.m"; sourceTree = SOURCE_ROOT; };
 		84F9EFFC1495CC81003DD297 /* ZSBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSBoard.h; path = Models/ZSBoard.h; sourceTree = "<group>"; };
 		84F9EFFD1495CC81003DD297 /* ZSBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSBoard.m; path = Models/ZSBoard.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -474,8 +471,6 @@
 				84EEAA2E15C3D959006C35B0 /* ZSHintGeneratorEliminatePencilsAvoidableRectangles.m */,
 				84EEAA3015C3D967006C35B0 /* ZSHintGeneratorEliminatePencilsRemotePairs.h */,
 				84EEAA3115C3D968006C35B0 /* ZSHintGeneratorEliminatePencilsRemotePairs.m */,
-				84EEAA3315C3D98A006C35B0 /* ZSHintGeneratorEliminatePencilsSinglesChains.h */,
-				84EEAA3415C3D98B006C35B0 /* ZSHintGeneratorEliminatePencilsSinglesChains.m */,
 			);
 			name = "Logic Technique Hint Generators";
 			path = "Sudoku Solving Utilities";
@@ -1067,7 +1062,6 @@
 				84EEAA2915C3D935006C35B0 /* ZSHintGeneratorEliminatePencilsChainedYWing.m in Sources */,
 				84EEAA2F15C3D95A006C35B0 /* ZSHintGeneratorEliminatePencilsAvoidableRectangles.m in Sources */,
 				84EEAA3215C3D968006C35B0 /* ZSHintGeneratorEliminatePencilsRemotePairs.m in Sources */,
-				84EEAA3515C3D98B006C35B0 /* ZSHintGeneratorEliminatePencilsSinglesChains.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

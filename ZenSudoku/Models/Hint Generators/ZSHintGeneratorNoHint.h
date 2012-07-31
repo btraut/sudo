@@ -14,7 +14,7 @@
 
 @interface ZSHintGeneratorNoHint : NSObject <ZSHintGeneratorUtility>
 
-- (void)setGameBoard:(ZSBoard *)board;
+@property (assign) ZSHintGeneratorTileInstruction randomEliminateInstruction;
 
 - (NSArray *)generateHint;
 

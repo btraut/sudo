@@ -199,11 +199,6 @@ NSString * const kTileColorHighlightHintD = @"#4CFFAE00";
 		newValue = tile.guess;
 	}
 	
-	if (newValue != _previousValue && ghostedValue) {
-		guessView.text = [NSString stringWithFormat:@"%i", newValue];
-		_previousValue = newValue;
-	}
-	
 	if (tile.guess > 0 || ghostedValue > 0) {
 		// Show the guess.
 		[self _setGuessHidden:NO animated:NO];
@@ -217,12 +212,12 @@ NSString * const kTileColorHighlightHintD = @"#4CFFAE00";
 		// Set visibility on all the pencil views.
 		[self _changePencilsHidden:NO animated:self.animateChanges];
 		
-		if (self.animateChanges) {
+		if (self.animateChanges && !ghostedValue) {
 			waitToClearGuessText = YES;
 		}
 	}
 	
-	if (newValue != _previousValue && !ghostedValue) {
+	if (newValue != _previousValue) {
 		if (!waitToClearGuessText) {
 			guessView.text = [NSString stringWithFormat:@"%i", newValue];
 		}

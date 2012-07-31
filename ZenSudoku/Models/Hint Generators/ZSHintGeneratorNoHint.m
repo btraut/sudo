@@ -9,34 +9,44 @@
 #import "ZSHintGeneratorNoHint.h"
 
 #import "ZSHintCard.h"
-#import "ZSBoard.h"
-
-@interface ZSHintGeneratorNoHint () {
-	ZSBoard *_board;
-}
-
-- (void)_sendGameBoardToDevelopers;
-
-@end
 
 @implementation ZSHintGeneratorNoHint
 
-- (void)setGameBoard:(ZSBoard *)board {
-	_board = board;
-}
-
-- (void)_sendGameBoardToDevelopers {
-	// Todo: Implement!
-}
+@synthesize randomEliminateInstruction;
 
 - (NSArray *)generateHint {
-	[self _sendGameBoardToDevelopers];
-	
 	NSMutableArray *hintCards = [NSMutableArray array];
 	
 	ZSHintCard *card1 = [[ZSHintCard alloc] init];
-	card1.text = @"Oh no! We've run out of hints! This puzzle will automatically be sent to the developers of Sudo so that more hints can be made.";
+	card1.text = @"Oh no! This puzzle is really tough! sudo has run out of hints.";
 	[hintCards addObject:card1];
+	
+	ZSHintCard *card2 = [[ZSHintCard alloc] init];
+	card2.text = @"The use of logic techniques and shortcuts works on most puzzles, but others are simply too hard for most humans to solve without guessing.";
+	[hintCards addObject:card2];
+	
+	ZSHintCard *card3 = [[ZSHintCard alloc] init];
+	card3.text = @"For these puzzles, even computers are forced to guess. They then check to see if the puzzle is valid and backtrack if not.";
+	[hintCards addObject:card3];
+	
+	ZSHintCard *card4 = [[ZSHintCard alloc] init];
+	card4.text = @"This method works well for computers because they can make guesses and backtrack very quickly.";
+	[hintCards addObject:card4];
+	
+	ZSHintCard *card5 = [[ZSHintCard alloc] init];
+	card5.text = @"As a consolation, sudo can eliminate a random possibility from the board to help you continue.";
+	[hintCards addObject:card5];
+	
+	// Step 6 actually does some work.
+	ZSHintCard *card6 = [[ZSHintCard alloc] init];
+	
+	card6.text = [NSString stringWithFormat:@"%i has been eliminated from the highlighted tile. Good luck!", self.randomEliminateInstruction.pencil];
+	
+	[card6 addInstructionHighlightTileAtRow:self.randomEliminateInstruction.row col:self.randomEliminateInstruction.col highlightType:ZSTileHintHighlightTypeA];
+	[card6 addInstructionHighlightPencil:self.randomEliminateInstruction.pencil forTileAtRow:self.randomEliminateInstruction.row col:self.randomEliminateInstruction.col highlightType:ZSTilePencilTextHintHighlightTypeA];
+	[card6 addInstructionRemovePencil:self.randomEliminateInstruction.pencil forTileAtRow:self.randomEliminateInstruction.row col:self.randomEliminateInstruction.col];
+	
+	[hintCards addObject:card6];
 	
 	return hintCards;
 }
