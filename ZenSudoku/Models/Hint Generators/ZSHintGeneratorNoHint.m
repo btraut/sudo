@@ -18,7 +18,7 @@
 	NSMutableArray *hintCards = [NSMutableArray array];
 	
 	ZSHintCard *card1 = [[ZSHintCard alloc] init];
-	card1.text = @"Oh no! This puzzle is really tough! sudo has run out of hints.";
+	card1.text = @"Oh no! This puzzle is really tough! Sudo has run out of hints.";
 	[hintCards addObject:card1];
 	
 	ZSHintCard *card2 = [[ZSHintCard alloc] init];
@@ -34,7 +34,7 @@
 	[hintCards addObject:card4];
 	
 	ZSHintCard *card5 = [[ZSHintCard alloc] init];
-	card5.text = @"As a consolation, sudo can eliminate a random possibility from the board to help you continue.";
+	card5.text = @"As a consolation, Sudo can eliminate a random possibility from the board to help you continue.";
 	[hintCards addObject:card5];
 	
 	// Step 6 actually does some work.

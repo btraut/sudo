@@ -122,7 +122,7 @@
 	
 	NSString *tilesString = (_totalPencilsToEliminate == 1 ? @"tile" : @"tiles");
 	
-	card5.text = [NSString stringWithFormat:@"We can eliminate %i as a possibility in %i such %@.", self.targetPencil, _totalPencilsToEliminate, tilesString];
+	card5.text = [NSString stringWithFormat:@"You can eliminate %i as a possibility in %i such %@.", self.targetPencil, _totalPencilsToEliminate, tilesString];
 	
 	[card5 addInstructionHighlightTileAtRow:hingeTile.row col:hingeTile.col	highlightType:ZSTileHintHighlightTypeD];
 	[card5 addInstructionHighlightTileAtRow:pincer1.row col:pincer1.col	highlightType:ZSTileHintHighlightTypeA];

@@ -426,9 +426,7 @@
 		84A8FB2215AB7C7A00D802C8 /* ZSSplashPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSSplashPageViewController.m; path = "View Controllers/ZSSplashPageViewController.m"; sourceTree = "<group>"; };
 		84A8FB2415AB8DCE00D802C8 /* SplashPage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SplashPage.png; path = Resources/Images/SplashPage.png; sourceTree = "<group>"; };
 		84A8FB2515AB8DCE00D802C8 /* SplashPage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SplashPage@2x.png"; path = "Resources/Images/SplashPage@2x.png"; sourceTree = "<group>"; };
-		84AC00C015C8BBC000E5AA6E /* sudo free.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "sudo free.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		84AC00C215C8BBC500E5AA6E /* sudo free-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "sudo free-Info.plist"; path = "/Users/brent/Dropbox/Development/Sudoku/ZenSudoku/sudo free-Info.plist"; sourceTree = "<absolute>"; };
-		84AC00C415C8C34A00E5AA6E /* sudo free-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "sudo free-Prefix.pch"; sourceTree = "<group>"; };
+		84AC00C015C8BBC000E5AA6E /* Sudo Free.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sudo Free.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		84AC00C615C8CAC900E5AA6E /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		84AC00C715C8CAC900E5AA6E /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		84AC00CC15C8CB8500E5AA6E /* SplashPage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SplashPage.png; sourceTree = "<group>"; };
@@ -490,7 +488,7 @@
 		84D54E9615B4139D003B1705 /* Ribbon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Ribbon@2x.png"; path = "Resources/Images/Ribbon@2x.png"; sourceTree = "<group>"; };
 		84D54E9A15B41590003B1705 /* ZSRibbonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSRibbonViewController.h; path = "View Controllers/ZSRibbonViewController.h"; sourceTree = "<group>"; };
 		84D54E9B15B41593003B1705 /* ZSRibbonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSRibbonViewController.m; path = "View Controllers/ZSRibbonViewController.m"; sourceTree = "<group>"; };
-		84D5500F147F1C4A00A7934E /* Sudo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sudo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		84D5500F147F1C4A00A7934E /* Sudoasdf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sudoasdf.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84D55013147F1C4A00A7934E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		84D55015147F1C4A00A7934E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		84D55017147F1C4A00A7934E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -909,9 +907,9 @@
 		84D55010147F1C4A00A7934E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				84D5500F147F1C4A00A7934E /* Sudo.app */,
+				84D5500F147F1C4A00A7934E /* Sudoasdf.app */,
 				84EE86261494ADEA004C0A16 /* ZenSudokuLogicTests.octest */,
-				84AC00C015C8BBC000E5AA6E /* sudo free.app */,
+				84AC00C015C8BBC000E5AA6E /* Sudo Free.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -955,12 +953,10 @@
 		84D5501A147F1C4A00A7934E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				84AC00C215C8BBC500E5AA6E /* sudo free-Info.plist */,
 				84D5501B147F1C4A00A7934E /* sudo-Info.plist */,
 				84D5501C147F1C4A00A7934E /* InfoPlist.strings */,
 				84D5501F147F1C4A00A7934E /* main.m */,
 				84D55021147F1C4A00A7934E /* sudo-Prefix.pch */,
-				84AC00C415C8C34A00E5AA6E /* sudo free-Prefix.pch */,
 				84BE033B15B77E9700156895 /* Settings.bundle */,
 			);
 			name = "Supporting Files";
@@ -1038,7 +1034,7 @@
 			);
 			name = "Sudo Free";
 			productName = ZenSudoku;
-			productReference = 84AC00C015C8BBC000E5AA6E /* sudo free.app */;
+			productReference = 84AC00C015C8BBC000E5AA6E /* Sudo Free.app */;
 			productType = "com.apple.product-type.application";
 		};
 		84D5500E147F1C4A00A7934E /* Sudo */ = {
@@ -1055,7 +1051,7 @@
 			);
 			name = Sudo;
 			productName = ZenSudoku;
-			productReference = 84D5500F147F1C4A00A7934E /* Sudo.app */;
+			productReference = 84D5500F147F1C4A00A7934E /* Sudoasdf.app */;
 			productType = "com.apple.product-type.application";
 		};
 		84EE86251494ADEA004C0A16 /* ZenSudokuLogicTests */ = {
@@ -1521,19 +1517,19 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "ZenSudoku/sudo free-Prefix.pch";
+				GCC_PREFIX_HEADER = "ZenSudoku/sudo-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					FREEVERSION,
 				);
-				INFOPLIST_FILE = "ZenSudoku/sudo free-Info.plist";
+				INFOPLIST_FILE = "ZenSudoku/sudo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/ZenSudoku/External/TestFlightSDK1.0\"",
 					"\"$(SRCROOT)/ZenSudoku/External/Flurry\"",
 				);
-				PRODUCT_NAME = "sudo free";
+				PRODUCT_NAME = "Sudo Free";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -1550,16 +1546,16 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "ZenSudoku/sudo free-Prefix.pch";
+				GCC_PREFIX_HEADER = "ZenSudoku/sudo-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = FREEVERSION;
-				INFOPLIST_FILE = "ZenSudoku/sudo free-Info.plist";
+				INFOPLIST_FILE = "ZenSudoku/sudo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/ZenSudoku/External/TestFlightSDK1.0\"",
 					"\"$(SRCROOT)/ZenSudoku/External/Flurry\"",
 				);
-				PRODUCT_NAME = "sudo free";
+				PRODUCT_NAME = "Sudo Free";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1574,16 +1570,16 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Negative Ion, Inc.";
 				COPY_PHASE_STRIP = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "ZenSudoku/sudo free-Prefix.pch";
+				GCC_PREFIX_HEADER = "ZenSudoku/sudo-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = FREEVERSION;
-				INFOPLIST_FILE = "ZenSudoku/sudo free-Info.plist";
+				INFOPLIST_FILE = "ZenSudoku/sudo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/ZenSudoku/External/TestFlightSDK1.0\"",
 					"\"$(SRCROOT)/ZenSudoku/External/Flurry\"",
 				);
-				PRODUCT_NAME = "sudo free";
+				PRODUCT_NAME = "Sudo Free";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = 1;

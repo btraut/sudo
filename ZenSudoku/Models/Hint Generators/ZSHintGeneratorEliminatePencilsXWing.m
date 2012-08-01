@@ -181,7 +181,7 @@
 	ZSHintCard *card5 = [[ZSHintCard alloc] init];
 	
 	NSString *pencilsString = (_totalPencilsToEliminate == 1 ? @"pencil" : @"pencils");
-	card5.text = [NSString stringWithFormat:@"This means %i can't exist anywhere else in the %@ %@s influenced by the %@. We can eliminate %i %@.", self.targetPencil, numberOfRowsColsString, oppositeScopeName, techniqueName, _totalPencilsToEliminate, pencilsString];
+	card5.text = [NSString stringWithFormat:@"This means %i can't exist anywhere else in the %@ %@s influenced by the %@. You can eliminate %i %@.", self.targetPencil, numberOfRowsColsString, oppositeScopeName, techniqueName, _totalPencilsToEliminate, pencilsString];
 	
 	for (NSInteger i = 0; i < _totalXWingTiles; ++i) {
 		for (NSInteger j = 0; j < 9; ++j) {

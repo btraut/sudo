@@ -255,7 +255,7 @@
 	// Step 6
 	ZSHintCard *card6 = [[ZSHintCard alloc] init];
 	
-	card6.text = [NSString stringWithFormat:@"Like the %@, we can eliminate pencils in the intersecting %@s, but they must exist within the fin region.", techniqueName, oppositeScopeName];
+	card6.text = [NSString stringWithFormat:@"Like the %@, you can eliminate pencils in the intersecting %@s, but they must exist within the fin region.", techniqueName, oppositeScopeName];
 	
 	for (NSInteger i = 0; i < _totalFinnedXWingTiles; ++i) {
 		for (NSInteger j = 0; j < 9; ++j) {
