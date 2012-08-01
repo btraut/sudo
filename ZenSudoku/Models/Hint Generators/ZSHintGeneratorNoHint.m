@@ -26,7 +26,7 @@
 	[hintCards addObject:card2];
 	
 	ZSHintCard *card3 = [[ZSHintCard alloc] init];
-	card3.text = @"For these puzzles, even computers are forced to guess. They then check to see if the puzzle is valid and backtrack if not.";
+	card3.text = @"For these puzzles, even computers are forced to guess, then check to see if the puzzle is valid, and backtrack if not.";
 	[hintCards addObject:card3];
 	
 	ZSHintCard *card4 = [[ZSHintCard alloc] init];

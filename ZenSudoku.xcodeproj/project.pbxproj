@@ -101,6 +101,153 @@
 		84A8FB2315AB7C7A00D802C8 /* ZSSplashPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A8FB2215AB7C7A00D802C8 /* ZSSplashPageViewController.m */; };
 		84A8FB2615AB8DCE00D802C8 /* SplashPage.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A8FB2415AB8DCE00D802C8 /* SplashPage.png */; };
 		84A8FB2715AB8DCE00D802C8 /* SplashPage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A8FB2515AB8DCE00D802C8 /* SplashPage@2x.png */; };
+		84AC002B15C8BBC000E5AA6E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D5501F147F1C4A00A7934E /* main.m */; };
+		84AC002C15C8BBC000E5AA6E /* ZSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D55023147F1C4A00A7934E /* ZSAppDelegate.m */; };
+		84AC002D15C8BBC000E5AA6E /* ZSGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D55068147F3D7400A7934E /* ZSGameViewController.m */; };
+		84AC002E15C8BBC000E5AA6E /* ZSBoardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC26C71480950F00E966A5 /* ZSBoardViewController.m */; };
+		84AC002F15C8BBC000E5AA6E /* ZSTileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC26CC1480986900E966A5 /* ZSTileViewController.m */; };
+		84AC003015C8BBC000E5AA6E /* ZSGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC26DC1480D9C700E966A5 /* ZSGame.m */; };
+		84AC003115C8BBC000E5AA6E /* ZSTile.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC26DF1480DDBA00E966A5 /* ZSTile.m */; };
+		84AC003215C8BBC000E5AA6E /* ZSGameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC26E31480EB7D00E966A5 /* ZSGameController.m */; };
+		84AC003315C8BBC000E5AA6E /* ZSAnswerOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8449D9561481D77D003F6FB3 /* ZSAnswerOptionsViewController.m */; };
+		84AC003415C8BBC000E5AA6E /* ZSAnswerOptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8449D9591481E518003F6FB3 /* ZSAnswerOptionViewController.m */; };
+		84AC003515C8BBC000E5AA6E /* ZSHistoryEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B300F3148AF6FD00E568CE /* ZSHistoryEntry.m */; };
+		84AC003615C8BBC000E5AA6E /* ZSBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F9EFFD1495CC81003DD297 /* ZSBoard.m */; };
+		84AC003715C8BBC000E5AA6E /* ZSStatisticsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841F854914C40F5500DFFABC /* ZSStatisticsController.m */; };
+		84AC003815C8BBC000E5AA6E /* ZSStatisticsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841F854C14C4287600DFFABC /* ZSStatisticsViewController.m */; };
+		84AC003915C8BBC000E5AA6E /* ZSPuzzleFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 8492B77314CD69B10093B7AC /* ZSPuzzleFetcher.m */; };
+		84AC003A15C8BBC000E5AA6E /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 8426A79814ED16A3006DAD1C /* FMDatabase.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		84AC003B15C8BBC000E5AA6E /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8426A79A14ED16A3006DAD1C /* FMDatabaseAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		84AC003C15C8BBC000E5AA6E /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 8426A79C14ED16A3006DAD1C /* FMResultSet.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		84AC003D15C8BBC000E5AA6E /* UIColor+ColorWithHex.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC6B401508B35F00C2F192 /* UIColor+ColorWithHex.m */; };
+		84AC003E15C8BBC000E5AA6E /* ZSGameBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A0975E1549DDE40082C9D0 /* ZSGameBookViewController.m */; };
+		84AC003F15C8BBC000E5AA6E /* ZSFastGameBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 8428AD24154A2C2D00BA8EE0 /* ZSFastGameBoard.m */; };
+		84AC004015C8BBC000E5AA6E /* ZSHintGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8428AD28154A2C2D00BA8EE0 /* ZSHintGenerator.m */; };
+		84AC004115C8BBC000E5AA6E /* ZSHintViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8428AD34154A48F700BA8EE0 /* ZSHintViewController.m */; };
+		84AC004215C8BBC000E5AA6E /* ZSHintCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 8428AD41154AB8FE00BA8EE0 /* ZSHintCard.m */; };
+		84AC004315C8BBC000E5AA6E /* ZSHintGeneratorFixIncorrectGuesses.m in Sources */ = {isa = PBXBuildFile; fileRef = 8428AD4A154F2D4700BA8EE0 /* ZSHintGeneratorFixIncorrectGuesses.m */; };
+		84AC004415C8BBC000E5AA6E /* ZSHintGeneratorNoHint.m in Sources */ = {isa = PBXBuildFile; fileRef = 8428AD4D154F30A300BA8EE0 /* ZSHintGeneratorNoHint.m */; };
+		84AC004515C8BBC000E5AA6E /* ZSHintGeneratorFixMissingPencil.m in Sources */ = {isa = PBXBuildFile; fileRef = 8428AD50154F36A200BA8EE0 /* ZSHintGeneratorFixMissingPencil.m */; };
+		84AC004615C8BBC000E5AA6E /* ZSHintGeneratorSolveOnlyChoice.m in Sources */ = {isa = PBXBuildFile; fileRef = 8499295F155BA8B900D82D34 /* ZSHintGeneratorSolveOnlyChoice.m */; };
+		84AC004715C8BBC000E5AA6E /* ZSHintGeneratorSolveSinglePossibility.m in Sources */ = {isa = PBXBuildFile; fileRef = 84992963155F0C9700D82D34 /* ZSHintGeneratorSolveSinglePossibility.m */; };
+		84AC004815C8BBC000E5AA6E /* ZSHintGeneratorEliminatePencilsNakedSubgroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D1CB08156EE5A60027230B /* ZSHintGeneratorEliminatePencilsNakedSubgroup.m */; };
+		84AC004915C8BBC000E5AA6E /* ZSHintGeneratorEliminatePencilsHiddenSubgroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D1CB1015703CB00027230B /* ZSHintGeneratorEliminatePencilsHiddenSubgroup.m */; };
+		84AC004A15C8BBC000E5AA6E /* ZSHintGeneratorEliminatePencilsPointingPairs.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D1CB131571829E0027230B /* ZSHintGeneratorEliminatePencilsPointingPairs.m */; };
+		84AC004B15C8BBC000E5AA6E /* ZSHintGeneratorEliminatePencilsBoxLineReduction.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D1CB161571A5280027230B /* ZSHintGeneratorEliminatePencilsBoxLineReduction.m */; };
+		84AC004C15C8BBC000E5AA6E /* ZSFoldedCornerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 845ABB171587E50B006D2616 /* ZSFoldedCornerView.m */; };
+		84AC004D15C8BBC000E5AA6E /* ZSFoldedCornerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 843947E71589D74C00463720 /* ZSFoldedCornerViewController.m */; };
+		84AC004E15C8BBC000E5AA6E /* ZSGLSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 843947EA1589DB8900463720 /* ZSGLSprite.m */; };
+		84AC004F15C8BBC000E5AA6E /* ZSGLShape.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B11540158B394800983B3A /* ZSGLShape.m */; };
+		84AC005015C8BBC000E5AA6E /* ZSAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B11558158F274D00983B3A /* ZSAnimation.m */; };
+		84AC005115C8BBC000E5AA6E /* ZSPointAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B1155B158F36B900983B3A /* ZSPointAnimation.m */; };
+		84AC005215C8BBC000E5AA6E /* ZSFoldedCornerPlusButtonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8463D8E51595239100AED0B4 /* ZSFoldedCornerPlusButtonViewController.m */; };
+		84AC005315C8BBC000E5AA6E /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D2032715A3B02D00BA9CCF /* iCarousel.m */; };
+		84AC005415C8BBC000E5AA6E /* ProgressDots.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D2033015A64D4400BA9CCF /* ProgressDots.m */; };
+		84AC005515C8BBC000E5AA6E /* MTLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A8FB1315A6A06400D802C8 /* MTLabel.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		84AC005615C8BBC000E5AA6E /* ZSFoldedPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A8FB1F15AB738800D802C8 /* ZSFoldedPageViewController.m */; };
+		84AC005715C8BBC000E5AA6E /* ZSSplashPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A8FB2215AB7C7A00D802C8 /* ZSSplashPageViewController.m */; };
+		84AC005815C8BBC000E5AA6E /* ZSPanBetweenSubviewsGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D54E8A15AECADB003B1705 /* ZSPanBetweenSubviewsGestureRecognizer.m */; };
+		84AC005915C8BBC000E5AA6E /* ZSRibbonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D54E9B15B41593003B1705 /* ZSRibbonViewController.m */; };
+		84AC005A15C8BBC000E5AA6E /* ZSHintButtonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BE033015B6B18B00156895 /* ZSHintButtonViewController.m */; };
+		84AC005B15C8BBC000E5AA6E /* ZSHintGeneratorEliminatePencilsXWing.m in Sources */ = {isa = PBXBuildFile; fileRef = 84958EBF15BC986500D80321 /* ZSHintGeneratorEliminatePencilsXWing.m */; };
+		84AC005C15C8BBC000E5AA6E /* ZSHintGeneratorEliminatePencilsFinnedXWing.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EEAA2215C20874006C35B0 /* ZSHintGeneratorEliminatePencilsFinnedXWing.m */; };
+		84AC005D15C8BBC000E5AA6E /* ZSHintGeneratorEliminatePencilsYWing.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EEAA2515C3D91C006C35B0 /* ZSHintGeneratorEliminatePencilsYWing.m */; };
+		84AC005E15C8BBC000E5AA6E /* ZSHintGeneratorEliminatePencilsChainedYWing.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EEAA2815C3D935006C35B0 /* ZSHintGeneratorEliminatePencilsChainedYWing.m */; };
+		84AC005F15C8BBC000E5AA6E /* ZSHintGeneratorEliminatePencilsAvoidableRectangles.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EEAA2E15C3D959006C35B0 /* ZSHintGeneratorEliminatePencilsAvoidableRectangles.m */; };
+		84AC006015C8BBC000E5AA6E /* ZSHintGeneratorEliminatePencilsRemotePairs.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EEAA3115C3D968006C35B0 /* ZSHintGeneratorEliminatePencilsRemotePairs.m */; };
+		84AC006215C8BBC000E5AA6E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 840E032515BFD75F00F113D9 /* SystemConfiguration.framework */; };
+		84AC006315C8BBC000E5AA6E /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A8FB1C15A6A1FB00D802C8 /* CoreText.framework */; };
+		84AC006415C8BBC000E5AA6E /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8492B76014C911FF0093B7AC /* libsqlite3.0.dylib */; };
+		84AC006515C8BBC000E5AA6E /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 841F854614C2651600DFFABC /* MessageUI.framework */; };
+		84AC006615C8BBC000E5AA6E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D55013147F1C4A00A7934E /* UIKit.framework */; };
+		84AC006715C8BBC000E5AA6E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D55015147F1C4A00A7934E /* Foundation.framework */; };
+		84AC006815C8BBC000E5AA6E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D55017147F1C4A00A7934E /* CoreGraphics.framework */; };
+		84AC006915C8BBC000E5AA6E /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 849B69BD14F24D6100870F09 /* GameKit.framework */; };
+		84AC006A15C8BBC000E5AA6E /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845ABB191587EBFA006D2616 /* OpenGLES.framework */; };
+		84AC006B15C8BBC000E5AA6E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845ABB231587ED5B006D2616 /* QuartzCore.framework */; };
+		84AC006C15C8BBC000E5AA6E /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 843947E31589D30C00463720 /* GLKit.framework */; };
+		84AC006D15C8BBC000E5AA6E /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 840216E51538EAAD00B16131 /* libTestFlight.a */; };
+		84AC006E15C8BBC000E5AA6E /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 840216EE1538F15B00B16131 /* libz.dylib */; };
+		84AC006F15C8BBC000E5AA6E /* libFlurry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 840E032315BFD22700F113D9 /* libFlurry.a */; };
+		84AC007115C8BBC000E5AA6E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84D5501C147F1C4A00A7934E /* InfoPlist.strings */; };
+		84AC007215C8BBC000E5AA6E /* Sudoku.db3 in Resources */ = {isa = PBXBuildFile; fileRef = 8492B78714CEBDC80093B7AC /* Sudoku.db3 */; };
+		84AC007315C8BBC000E5AA6E /* ReklameScript-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 849B69D514F263AB00870F09 /* ReklameScript-Black.ttf */; };
+		84AC007415C8BBC000E5AA6E /* ReklameScript-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 849B69D614F263AB00870F09 /* ReklameScript-Bold.ttf */; };
+		84AC007515C8BBC000E5AA6E /* ReklameScript-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 849B69D714F263AB00870F09 /* ReklameScript-Medium.ttf */; };
+		84AC007615C8BBC000E5AA6E /* ReklameScript-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 849B69D814F263AB00870F09 /* ReklameScript-Regular.ttf */; };
+		84AC007715C8BBC000E5AA6E /* PaperBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 849B69EE14F2666400870F09 /* PaperBackground.png */; };
+		84AC007815C8BBC000E5AA6E /* PaperBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 849B69EF14F2666400870F09 /* PaperBackground@2x.png */; };
+		84AC007915C8BBC000E5AA6E /* Board.png in Resources */ = {isa = PBXBuildFile; fileRef = 8494BE6914FAACCC00010233 /* Board.png */; };
+		84AC007A15C8BBC000E5AA6E /* Board@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8494BE6A14FAACCC00010233 /* Board@2x.png */; };
+		84AC007B15C8BBC000E5AA6E /* Pencil@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8494BE6F14FB117100010233 /* Pencil@2x.png */; };
+		84AC007C15C8BBC000E5AA6E /* PencilSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8494BE7014FB117100010233 /* PencilSelected@2x.png */; };
+		84AC007D15C8BBC000E5AA6E /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 840216E61538EAAD00B16131 /* README.txt */; };
+		84AC007E15C8BBC000E5AA6E /* release_notes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 840216E71538EAAD00B16131 /* release_notes.txt */; };
+		84AC007F15C8BBC000E5AA6E /* AutoPencil.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A0974A1548B22D0082C9D0 /* AutoPencil.png */; };
+		84AC008015C8BBC000E5AA6E /* AutoPencil@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A0974B1548B22D0082C9D0 /* AutoPencil@2x.png */; };
+		84AC008115C8BBC000E5AA6E /* AutoPencilHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A0974C1548B22D0082C9D0 /* AutoPencilHighlighted.png */; };
+		84AC008215C8BBC000E5AA6E /* AutoPencilHighlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A0974D1548B22D0082C9D0 /* AutoPencilHighlighted@2x.png */; };
+		84AC008315C8BBC000E5AA6E /* Hints.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A0974E1548B22D0082C9D0 /* Hints.png */; };
+		84AC008415C8BBC000E5AA6E /* Hints@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A0974F1548B22D0082C9D0 /* Hints@2x.png */; };
+		84AC008515C8BBC000E5AA6E /* HintsHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A097501548B22D0082C9D0 /* HintsHighlighted.png */; };
+		84AC008615C8BBC000E5AA6E /* HintsHighlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A097511548B22D0082C9D0 /* HintsHighlighted@2x.png */; };
+		84AC008715C8BBC000E5AA6E /* HintPaper@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8428AD38154A498200BA8EE0 /* HintPaper@2x.png */; };
+		84AC008A15C8BBC000E5AA6E /* HintPaper.png in Resources */ = {isa = PBXBuildFile; fileRef = 8428AD3E154AA62600BA8EE0 /* HintPaper.png */; };
+		84AC008B15C8BBC000E5AA6E /* BlueAnswerOptionSelection.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B0B1CA15777F1900A99510 /* BlueAnswerOptionSelection.png */; };
+		84AC008C15C8BBC000E5AA6E /* BlueAnswerOptionSelection@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B0B1CB15777F1900A99510 /* BlueAnswerOptionSelection@2x.png */; };
+		84AC008D15C8BBC000E5AA6E /* BackwardsPage.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B0B1D3157D859300A99510 /* BackwardsPage.png */; };
+		84AC008E15C8BBC000E5AA6E /* BackwardsPage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B0B1D4157D859300A99510 /* BackwardsPage@2x.png */; };
+		84AC008F15C8BBC000E5AA6E /* ForwardsPage.png in Resources */ = {isa = PBXBuildFile; fileRef = 8472508B15829D1F0073D113 /* ForwardsPage.png */; };
+		84AC009015C8BBC000E5AA6E /* ForwardsPage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8472508C15829D1F0073D113 /* ForwardsPage@2x.png */; };
+		84AC009115C8BBC000E5AA6E /* PageCurl.png in Resources */ = {isa = PBXBuildFile; fileRef = 8472508F15829D330073D113 /* PageCurl.png */; };
+		84AC009215C8BBC000E5AA6E /* PageCurl@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8472509015829D330073D113 /* PageCurl@2x.png */; };
+		84AC009315C8BBC000E5AA6E /* PageCurlGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 84C092E11582D38F005799F8 /* PageCurlGradient.png */; };
+		84AC009415C8BBC000E5AA6E /* PageCurlGradient@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84C092E21582D38F005799F8 /* PageCurlGradient@2x.png */; };
+		84AC009515C8BBC000E5AA6E /* ShadowBlobStraightOpaque@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8463D8D51593B15F00AED0B4 /* ShadowBlobStraightOpaque@2x.png */; };
+		84AC009615C8BBC000E5AA6E /* ShadowBlobStraightOpaque.png in Resources */ = {isa = PBXBuildFile; fileRef = 8463D8DA15947F3D00AED0B4 /* ShadowBlobStraightOpaque.png */; };
+		84AC009715C8BBC000E5AA6E /* ShadowBlobStraight.png in Resources */ = {isa = PBXBuildFile; fileRef = 8463D8DD15947F9700AED0B4 /* ShadowBlobStraight.png */; };
+		84AC009815C8BBC000E5AA6E /* ShadowBlobStraight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8463D8DE15947F9700AED0B4 /* ShadowBlobStraight@2x.png */; };
+		84AC009915C8BBC000E5AA6E /* Plus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8463D8E71595666A00AED0B4 /* Plus@2x.png */; };
+		84AC009A15C8BBC000E5AA6E /* Plus.png in Resources */ = {isa = PBXBuildFile; fileRef = 8463D8E91595815300AED0B4 /* Plus.png */; };
+		84AC009B15C8BBC000E5AA6E /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 8463D8EC15959B2400AED0B4 /* Icon-72.png */; };
+		84AC009C15C8BBC000E5AA6E /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8463D8ED15959B2400AED0B4 /* Icon-72@2x.png */; };
+		84AC009D15C8BBC000E5AA6E /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 8463D8EE15959B2400AED0B4 /* Icon-Small-50.png */; };
+		84AC009E15C8BBC000E5AA6E /* Icon-Small-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8463D8EF15959B2400AED0B4 /* Icon-Small-50@2x.png */; };
+		84AC009F15C8BBC000E5AA6E /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 8463D8F015959B2400AED0B4 /* Icon-Small.png */; };
+		84AC00A015C8BBC000E5AA6E /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8463D8F115959B2400AED0B4 /* Icon-Small@2x.png */; };
+		84AC00A115C8BBC000E5AA6E /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8463D8F215959B2400AED0B4 /* Icon.png */; };
+		84AC00A215C8BBC000E5AA6E /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8463D8F315959B2400AED0B4 /* Icon@2x.png */; };
+		84AC00A315C8BBC000E5AA6E /* iTunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = 8463D8F415959B2400AED0B4 /* iTunesArtwork.png */; };
+		84AC00A415C8BBC000E5AA6E /* iTunesArtwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8463D8F515959B2400AED0B4 /* iTunesArtwork@2x.png */; };
+		84AC00A515C8BBC000E5AA6E /* Undo.png in Resources */ = {isa = PBXBuildFile; fileRef = 8463D90015986B8600AED0B4 /* Undo.png */; };
+		84AC00A615C8BBC000E5AA6E /* Undo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8463D90115986B8900AED0B4 /* Undo@2x.png */; };
+		84AC00A715C8BBC000E5AA6E /* UndoHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 8463D90215986B8B00AED0B4 /* UndoHighlighted.png */; };
+		84AC00A815C8BBC000E5AA6E /* UndoHighlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8463D90315986B8C00AED0B4 /* UndoHighlighted@2x.png */; };
+		84AC00A915C8BBC000E5AA6E /* BackwardsTranslucentPage.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A509F415A21D99002C9C70 /* BackwardsTranslucentPage.png */; };
+		84AC00AA15C8BBC000E5AA6E /* BackwardsTranslucentPage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A509F515A21D99002C9C70 /* BackwardsTranslucentPage@2x.png */; };
+		84AC00AB15C8BBC000E5AA6E /* IndexCard.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D2032A15A3C67F00BA9CCF /* IndexCard.png */; };
+		84AC00AC15C8BBC000E5AA6E /* IndexCard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D2032B15A3C67F00BA9CCF /* IndexCard@2x.png */; };
+		84AC00AD15C8BBC000E5AA6E /* DarkBlueDot.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D2033215A6553E00BA9CCF /* DarkBlueDot.png */; };
+		84AC00AE15C8BBC000E5AA6E /* DarkBlueDot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D2033315A6553E00BA9CCF /* DarkBlueDot@2x.png */; };
+		84AC00AF15C8BBC000E5AA6E /* LightBlueDot.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D2033415A6553E00BA9CCF /* LightBlueDot.png */; };
+		84AC00B015C8BBC000E5AA6E /* LightBlueDot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D2033515A6553E00BA9CCF /* LightBlueDot@2x.png */; };
+		84AC00B315C8BBC000E5AA6E /* PaperBackgroundWithBoard.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D54E8D15AFE8D4003B1705 /* PaperBackgroundWithBoard.png */; };
+		84AC00B415C8BBC000E5AA6E /* PaperBackgroundWithBoard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D54E8E15AFE8D4003B1705 /* PaperBackgroundWithBoard@2x.png */; };
+		84AC00B515C8BBC000E5AA6E /* Ribbon.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D54E9515B4139D003B1705 /* Ribbon.png */; };
+		84AC00B615C8BBC000E5AA6E /* Ribbon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D54E9615B4139D003B1705 /* Ribbon@2x.png */; };
+		84AC00B715C8BBC000E5AA6E /* TapToChangeDifficultyNotice.png in Resources */ = {isa = PBXBuildFile; fileRef = 842311E315B628B500221E19 /* TapToChangeDifficultyNotice.png */; };
+		84AC00B815C8BBC000E5AA6E /* TapToChangeDifficultyNotice@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 842311E415B628B500221E19 /* TapToChangeDifficultyNotice@2x.png */; };
+		84AC00B915C8BBC000E5AA6E /* HintsBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 84BE033315B6B48C00156895 /* HintsBackground.png */; };
+		84AC00BA15C8BBC000E5AA6E /* HintsBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84BE033415B6B48C00156895 /* HintsBackground@2x.png */; };
+		84AC00BB15C8BBC000E5AA6E /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 84BE033B15B77E9700156895 /* Settings.bundle */; };
+		84AC00C815C8CAC900E5AA6E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 84AC00C615C8CAC900E5AA6E /* Default.png */; };
+		84AC00C915C8CAC900E5AA6E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 84AC00C615C8CAC900E5AA6E /* Default.png */; };
+		84AC00CA15C8CAC900E5AA6E /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84AC00C715C8CAC900E5AA6E /* Default@2x.png */; };
+		84AC00CB15C8CAC900E5AA6E /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84AC00C715C8CAC900E5AA6E /* Default@2x.png */; };
+		84AC00CE15C8CB8500E5AA6E /* SplashPage.png in Resources */ = {isa = PBXBuildFile; fileRef = 84AC00CC15C8CB8500E5AA6E /* SplashPage.png */; };
+		84AC00CF15C8CB8500E5AA6E /* SplashPage.png in Resources */ = {isa = PBXBuildFile; fileRef = 84AC00CC15C8CB8500E5AA6E /* SplashPage.png */; };
+		84AC00D015C8CB8500E5AA6E /* SplashPage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84AC00CD15C8CB8500E5AA6E /* SplashPage@2x.png */; };
+		84AC00D115C8CB8500E5AA6E /* SplashPage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84AC00CD15C8CB8500E5AA6E /* SplashPage@2x.png */; };
 		84AC26C91480950F00E966A5 /* ZSBoardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC26C71480950F00E966A5 /* ZSBoardViewController.m */; };
 		84AC26CE1480986900E966A5 /* ZSTileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC26CC1480986900E966A5 /* ZSTileViewController.m */; };
 		84AC26DD1480D9C700E966A5 /* ZSGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC26DC1480D9C700E966A5 /* ZSGame.m */; };
@@ -279,6 +426,13 @@
 		84A8FB2215AB7C7A00D802C8 /* ZSSplashPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSSplashPageViewController.m; path = "View Controllers/ZSSplashPageViewController.m"; sourceTree = "<group>"; };
 		84A8FB2415AB8DCE00D802C8 /* SplashPage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SplashPage.png; path = Resources/Images/SplashPage.png; sourceTree = "<group>"; };
 		84A8FB2515AB8DCE00D802C8 /* SplashPage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SplashPage@2x.png"; path = "Resources/Images/SplashPage@2x.png"; sourceTree = "<group>"; };
+		84AC00C015C8BBC000E5AA6E /* sudo free.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "sudo free.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		84AC00C215C8BBC500E5AA6E /* sudo free-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "sudo free-Info.plist"; path = "/Users/brent/Dropbox/Development/Sudoku/ZenSudoku/sudo free-Info.plist"; sourceTree = "<absolute>"; };
+		84AC00C415C8C34A00E5AA6E /* sudo free-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "sudo free-Prefix.pch"; sourceTree = "<group>"; };
+		84AC00C615C8CAC900E5AA6E /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		84AC00C715C8CAC900E5AA6E /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		84AC00CC15C8CB8500E5AA6E /* SplashPage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SplashPage.png; sourceTree = "<group>"; };
+		84AC00CD15C8CB8500E5AA6E /* SplashPage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SplashPage@2x.png"; sourceTree = "<group>"; };
 		84AC26C61480950F00E966A5 /* ZSBoardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSBoardViewController.h; path = "View Controllers/ZSBoardViewController.h"; sourceTree = "<group>"; };
 		84AC26C71480950F00E966A5 /* ZSBoardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSBoardViewController.m; path = "View Controllers/ZSBoardViewController.m"; sourceTree = "<group>"; };
 		84AC26CB1480986900E966A5 /* ZSTileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSTileViewController.h; path = "View Controllers/ZSTileViewController.h"; sourceTree = "<group>"; };
@@ -340,10 +494,10 @@
 		84D55013147F1C4A00A7934E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		84D55015147F1C4A00A7934E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		84D55017147F1C4A00A7934E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		84D5501B147F1C4A00A7934E /* ZenSudoku-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ZenSudoku-Info.plist"; sourceTree = "<group>"; };
+		84D5501B147F1C4A00A7934E /* sudo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "sudo-Info.plist"; sourceTree = "<group>"; };
 		84D5501D147F1C4A00A7934E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		84D5501F147F1C4A00A7934E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		84D55021147F1C4A00A7934E /* ZenSudoku-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ZenSudoku-Prefix.pch"; sourceTree = "<group>"; };
+		84D55021147F1C4A00A7934E /* sudo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "sudo-Prefix.pch"; sourceTree = "<group>"; };
 		84D55022147F1C4A00A7934E /* ZSAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSAppDelegate.h; sourceTree = "<group>"; };
 		84D55023147F1C4A00A7934E /* ZSAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSAppDelegate.m; sourceTree = "<group>"; };
 		84D5503A147F1C4B00A7934E /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -368,6 +522,27 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		84AC006115C8BBC000E5AA6E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84AC006215C8BBC000E5AA6E /* SystemConfiguration.framework in Frameworks */,
+				84AC006315C8BBC000E5AA6E /* CoreText.framework in Frameworks */,
+				84AC006415C8BBC000E5AA6E /* libsqlite3.0.dylib in Frameworks */,
+				84AC006515C8BBC000E5AA6E /* MessageUI.framework in Frameworks */,
+				84AC006615C8BBC000E5AA6E /* UIKit.framework in Frameworks */,
+				84AC006715C8BBC000E5AA6E /* Foundation.framework in Frameworks */,
+				84AC006815C8BBC000E5AA6E /* CoreGraphics.framework in Frameworks */,
+				84AC006915C8BBC000E5AA6E /* GameKit.framework in Frameworks */,
+				84AC006A15C8BBC000E5AA6E /* OpenGLES.framework in Frameworks */,
+				84AC006B15C8BBC000E5AA6E /* QuartzCore.framework in Frameworks */,
+				84AC006C15C8BBC000E5AA6E /* GLKit.framework in Frameworks */,
+				84AC006D15C8BBC000E5AA6E /* libTestFlight.a in Frameworks */,
+				84AC006E15C8BBC000E5AA6E /* libz.dylib in Frameworks */,
+				84AC006F15C8BBC000E5AA6E /* libFlurry.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		84D5500C147F1C4A00A7934E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -590,6 +765,18 @@
 			path = External/MTLabel;
 			sourceTree = "<group>";
 		};
+		84AC00C515C8CAC800E5AA6E /* Free */ = {
+			isa = PBXGroup;
+			children = (
+				84AC00C615C8CAC900E5AA6E /* Default.png */,
+				84AC00C715C8CAC900E5AA6E /* Default@2x.png */,
+				84AC00CC15C8CB8500E5AA6E /* SplashPage.png */,
+				84AC00CD15C8CB8500E5AA6E /* SplashPage@2x.png */,
+			);
+			name = Free;
+			path = Resources/Images/Free;
+			sourceTree = "<group>";
+		};
 		84AC26C21480834B00E966A5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -603,6 +790,7 @@
 		84AC26C31480835600E966A5 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				84AC00C515C8CAC800E5AA6E /* Free */,
 				8463D8EB15959B2300AED0B4 /* Icons */,
 				8472509315829D3A0073D113 /* Global Page Parts */,
 				8494BE6914FAACCC00010233 /* Board.png */,
@@ -723,6 +911,7 @@
 			children = (
 				84D5500F147F1C4A00A7934E /* sudo.app */,
 				84EE86261494ADEA004C0A16 /* ZenSudokuLogicTests.octest */,
+				84AC00C015C8BBC000E5AA6E /* sudo free.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -766,10 +955,12 @@
 		84D5501A147F1C4A00A7934E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				84D5501B147F1C4A00A7934E /* ZenSudoku-Info.plist */,
+				84AC00C215C8BBC500E5AA6E /* sudo free-Info.plist */,
+				84D5501B147F1C4A00A7934E /* sudo-Info.plist */,
 				84D5501C147F1C4A00A7934E /* InfoPlist.strings */,
 				84D5501F147F1C4A00A7934E /* main.m */,
-				84D55021147F1C4A00A7934E /* ZenSudoku-Prefix.pch */,
+				84D55021147F1C4A00A7934E /* sudo-Prefix.pch */,
+				84AC00C415C8C34A00E5AA6E /* sudo free-Prefix.pch */,
 				84BE033B15B77E9700156895 /* Settings.bundle */,
 			);
 			name = "Supporting Files";
@@ -833,6 +1024,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		84AC002915C8BBC000E5AA6E /* sudo free */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 84AC00BC15C8BBC000E5AA6E /* Build configuration list for PBXNativeTarget "sudo free" */;
+			buildPhases = (
+				84AC002A15C8BBC000E5AA6E /* Sources */,
+				84AC006115C8BBC000E5AA6E /* Frameworks */,
+				84AC007015C8BBC000E5AA6E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "sudo free";
+			productName = ZenSudoku;
+			productReference = 84AC00C015C8BBC000E5AA6E /* sudo free.app */;
+			productType = "com.apple.product-type.application";
+		};
 		84D5500E147F1C4A00A7934E /* sudo */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 84D5504B147F1C4B00A7934E /* Build configuration list for PBXNativeTarget "sudo" */;
@@ -889,12 +1097,95 @@
 			projectRoot = "";
 			targets = (
 				84D5500E147F1C4A00A7934E /* sudo */,
+				84AC002915C8BBC000E5AA6E /* sudo free */,
 				84EE86251494ADEA004C0A16 /* ZenSudokuLogicTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		84AC007015C8BBC000E5AA6E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84AC007115C8BBC000E5AA6E /* InfoPlist.strings in Resources */,
+				84AC007215C8BBC000E5AA6E /* Sudoku.db3 in Resources */,
+				84AC007315C8BBC000E5AA6E /* ReklameScript-Black.ttf in Resources */,
+				84AC007415C8BBC000E5AA6E /* ReklameScript-Bold.ttf in Resources */,
+				84AC007515C8BBC000E5AA6E /* ReklameScript-Medium.ttf in Resources */,
+				84AC007615C8BBC000E5AA6E /* ReklameScript-Regular.ttf in Resources */,
+				84AC007715C8BBC000E5AA6E /* PaperBackground.png in Resources */,
+				84AC007815C8BBC000E5AA6E /* PaperBackground@2x.png in Resources */,
+				84AC007915C8BBC000E5AA6E /* Board.png in Resources */,
+				84AC007A15C8BBC000E5AA6E /* Board@2x.png in Resources */,
+				84AC007B15C8BBC000E5AA6E /* Pencil@2x.png in Resources */,
+				84AC007C15C8BBC000E5AA6E /* PencilSelected@2x.png in Resources */,
+				84AC007D15C8BBC000E5AA6E /* README.txt in Resources */,
+				84AC007E15C8BBC000E5AA6E /* release_notes.txt in Resources */,
+				84AC007F15C8BBC000E5AA6E /* AutoPencil.png in Resources */,
+				84AC008015C8BBC000E5AA6E /* AutoPencil@2x.png in Resources */,
+				84AC008115C8BBC000E5AA6E /* AutoPencilHighlighted.png in Resources */,
+				84AC008215C8BBC000E5AA6E /* AutoPencilHighlighted@2x.png in Resources */,
+				84AC008315C8BBC000E5AA6E /* Hints.png in Resources */,
+				84AC008415C8BBC000E5AA6E /* Hints@2x.png in Resources */,
+				84AC008515C8BBC000E5AA6E /* HintsHighlighted.png in Resources */,
+				84AC008615C8BBC000E5AA6E /* HintsHighlighted@2x.png in Resources */,
+				84AC008715C8BBC000E5AA6E /* HintPaper@2x.png in Resources */,
+				84AC008A15C8BBC000E5AA6E /* HintPaper.png in Resources */,
+				84AC008B15C8BBC000E5AA6E /* BlueAnswerOptionSelection.png in Resources */,
+				84AC008C15C8BBC000E5AA6E /* BlueAnswerOptionSelection@2x.png in Resources */,
+				84AC008D15C8BBC000E5AA6E /* BackwardsPage.png in Resources */,
+				84AC008E15C8BBC000E5AA6E /* BackwardsPage@2x.png in Resources */,
+				84AC008F15C8BBC000E5AA6E /* ForwardsPage.png in Resources */,
+				84AC009015C8BBC000E5AA6E /* ForwardsPage@2x.png in Resources */,
+				84AC009115C8BBC000E5AA6E /* PageCurl.png in Resources */,
+				84AC009215C8BBC000E5AA6E /* PageCurl@2x.png in Resources */,
+				84AC009315C8BBC000E5AA6E /* PageCurlGradient.png in Resources */,
+				84AC009415C8BBC000E5AA6E /* PageCurlGradient@2x.png in Resources */,
+				84AC009515C8BBC000E5AA6E /* ShadowBlobStraightOpaque@2x.png in Resources */,
+				84AC009615C8BBC000E5AA6E /* ShadowBlobStraightOpaque.png in Resources */,
+				84AC009715C8BBC000E5AA6E /* ShadowBlobStraight.png in Resources */,
+				84AC009815C8BBC000E5AA6E /* ShadowBlobStraight@2x.png in Resources */,
+				84AC009915C8BBC000E5AA6E /* Plus@2x.png in Resources */,
+				84AC009A15C8BBC000E5AA6E /* Plus.png in Resources */,
+				84AC009B15C8BBC000E5AA6E /* Icon-72.png in Resources */,
+				84AC009C15C8BBC000E5AA6E /* Icon-72@2x.png in Resources */,
+				84AC009D15C8BBC000E5AA6E /* Icon-Small-50.png in Resources */,
+				84AC009E15C8BBC000E5AA6E /* Icon-Small-50@2x.png in Resources */,
+				84AC009F15C8BBC000E5AA6E /* Icon-Small.png in Resources */,
+				84AC00A015C8BBC000E5AA6E /* Icon-Small@2x.png in Resources */,
+				84AC00A115C8BBC000E5AA6E /* Icon.png in Resources */,
+				84AC00A215C8BBC000E5AA6E /* Icon@2x.png in Resources */,
+				84AC00A315C8BBC000E5AA6E /* iTunesArtwork.png in Resources */,
+				84AC00A415C8BBC000E5AA6E /* iTunesArtwork@2x.png in Resources */,
+				84AC00A515C8BBC000E5AA6E /* Undo.png in Resources */,
+				84AC00A615C8BBC000E5AA6E /* Undo@2x.png in Resources */,
+				84AC00A715C8BBC000E5AA6E /* UndoHighlighted.png in Resources */,
+				84AC00A815C8BBC000E5AA6E /* UndoHighlighted@2x.png in Resources */,
+				84AC00A915C8BBC000E5AA6E /* BackwardsTranslucentPage.png in Resources */,
+				84AC00AA15C8BBC000E5AA6E /* BackwardsTranslucentPage@2x.png in Resources */,
+				84AC00AB15C8BBC000E5AA6E /* IndexCard.png in Resources */,
+				84AC00AC15C8BBC000E5AA6E /* IndexCard@2x.png in Resources */,
+				84AC00AD15C8BBC000E5AA6E /* DarkBlueDot.png in Resources */,
+				84AC00AE15C8BBC000E5AA6E /* DarkBlueDot@2x.png in Resources */,
+				84AC00AF15C8BBC000E5AA6E /* LightBlueDot.png in Resources */,
+				84AC00B015C8BBC000E5AA6E /* LightBlueDot@2x.png in Resources */,
+				84AC00B315C8BBC000E5AA6E /* PaperBackgroundWithBoard.png in Resources */,
+				84AC00B415C8BBC000E5AA6E /* PaperBackgroundWithBoard@2x.png in Resources */,
+				84AC00B515C8BBC000E5AA6E /* Ribbon.png in Resources */,
+				84AC00B615C8BBC000E5AA6E /* Ribbon@2x.png in Resources */,
+				84AC00B715C8BBC000E5AA6E /* TapToChangeDifficultyNotice.png in Resources */,
+				84AC00B815C8BBC000E5AA6E /* TapToChangeDifficultyNotice@2x.png in Resources */,
+				84AC00B915C8BBC000E5AA6E /* HintsBackground.png in Resources */,
+				84AC00BA15C8BBC000E5AA6E /* HintsBackground@2x.png in Resources */,
+				84AC00BB15C8BBC000E5AA6E /* Settings.bundle in Resources */,
+				84AC00C815C8CAC900E5AA6E /* Default.png in Resources */,
+				84AC00CA15C8CAC900E5AA6E /* Default@2x.png in Resources */,
+				84AC00CE15C8CB8500E5AA6E /* SplashPage.png in Resources */,
+				84AC00D015C8CB8500E5AA6E /* SplashPage@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		84D5500D147F1C4A00A7934E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -982,6 +1273,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				84EE862F1494ADEA004C0A16 /* InfoPlist.strings in Resources */,
+				84AC00C915C8CAC900E5AA6E /* Default.png in Resources */,
+				84AC00CB15C8CAC900E5AA6E /* Default@2x.png in Resources */,
+				84AC00CF15C8CB8500E5AA6E /* SplashPage.png in Resources */,
+				84AC00D115C8CB8500E5AA6E /* SplashPage@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1004,6 +1299,67 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		84AC002A15C8BBC000E5AA6E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84AC002B15C8BBC000E5AA6E /* main.m in Sources */,
+				84AC002C15C8BBC000E5AA6E /* ZSAppDelegate.m in Sources */,
+				84AC002D15C8BBC000E5AA6E /* ZSGameViewController.m in Sources */,
+				84AC002E15C8BBC000E5AA6E /* ZSBoardViewController.m in Sources */,
+				84AC002F15C8BBC000E5AA6E /* ZSTileViewController.m in Sources */,
+				84AC003015C8BBC000E5AA6E /* ZSGame.m in Sources */,
+				84AC003115C8BBC000E5AA6E /* ZSTile.m in Sources */,
+				84AC003215C8BBC000E5AA6E /* ZSGameController.m in Sources */,
+				84AC003315C8BBC000E5AA6E /* ZSAnswerOptionsViewController.m in Sources */,
+				84AC003415C8BBC000E5AA6E /* ZSAnswerOptionViewController.m in Sources */,
+				84AC003515C8BBC000E5AA6E /* ZSHistoryEntry.m in Sources */,
+				84AC003615C8BBC000E5AA6E /* ZSBoard.m in Sources */,
+				84AC003715C8BBC000E5AA6E /* ZSStatisticsController.m in Sources */,
+				84AC003815C8BBC000E5AA6E /* ZSStatisticsViewController.m in Sources */,
+				84AC003915C8BBC000E5AA6E /* ZSPuzzleFetcher.m in Sources */,
+				84AC003A15C8BBC000E5AA6E /* FMDatabase.m in Sources */,
+				84AC003B15C8BBC000E5AA6E /* FMDatabaseAdditions.m in Sources */,
+				84AC003C15C8BBC000E5AA6E /* FMResultSet.m in Sources */,
+				84AC003D15C8BBC000E5AA6E /* UIColor+ColorWithHex.m in Sources */,
+				84AC003E15C8BBC000E5AA6E /* ZSGameBookViewController.m in Sources */,
+				84AC003F15C8BBC000E5AA6E /* ZSFastGameBoard.m in Sources */,
+				84AC004015C8BBC000E5AA6E /* ZSHintGenerator.m in Sources */,
+				84AC004115C8BBC000E5AA6E /* ZSHintViewController.m in Sources */,
+				84AC004215C8BBC000E5AA6E /* ZSHintCard.m in Sources */,
+				84AC004315C8BBC000E5AA6E /* ZSHintGeneratorFixIncorrectGuesses.m in Sources */,
+				84AC004415C8BBC000E5AA6E /* ZSHintGeneratorNoHint.m in Sources */,
+				84AC004515C8BBC000E5AA6E /* ZSHintGeneratorFixMissingPencil.m in Sources */,
+				84AC004615C8BBC000E5AA6E /* ZSHintGeneratorSolveOnlyChoice.m in Sources */,
+				84AC004715C8BBC000E5AA6E /* ZSHintGeneratorSolveSinglePossibility.m in Sources */,
+				84AC004815C8BBC000E5AA6E /* ZSHintGeneratorEliminatePencilsNakedSubgroup.m in Sources */,
+				84AC004915C8BBC000E5AA6E /* ZSHintGeneratorEliminatePencilsHiddenSubgroup.m in Sources */,
+				84AC004A15C8BBC000E5AA6E /* ZSHintGeneratorEliminatePencilsPointingPairs.m in Sources */,
+				84AC004B15C8BBC000E5AA6E /* ZSHintGeneratorEliminatePencilsBoxLineReduction.m in Sources */,
+				84AC004C15C8BBC000E5AA6E /* ZSFoldedCornerView.m in Sources */,
+				84AC004D15C8BBC000E5AA6E /* ZSFoldedCornerViewController.m in Sources */,
+				84AC004E15C8BBC000E5AA6E /* ZSGLSprite.m in Sources */,
+				84AC004F15C8BBC000E5AA6E /* ZSGLShape.m in Sources */,
+				84AC005015C8BBC000E5AA6E /* ZSAnimation.m in Sources */,
+				84AC005115C8BBC000E5AA6E /* ZSPointAnimation.m in Sources */,
+				84AC005215C8BBC000E5AA6E /* ZSFoldedCornerPlusButtonViewController.m in Sources */,
+				84AC005315C8BBC000E5AA6E /* iCarousel.m in Sources */,
+				84AC005415C8BBC000E5AA6E /* ProgressDots.m in Sources */,
+				84AC005515C8BBC000E5AA6E /* MTLabel.m in Sources */,
+				84AC005615C8BBC000E5AA6E /* ZSFoldedPageViewController.m in Sources */,
+				84AC005715C8BBC000E5AA6E /* ZSSplashPageViewController.m in Sources */,
+				84AC005815C8BBC000E5AA6E /* ZSPanBetweenSubviewsGestureRecognizer.m in Sources */,
+				84AC005915C8BBC000E5AA6E /* ZSRibbonViewController.m in Sources */,
+				84AC005A15C8BBC000E5AA6E /* ZSHintButtonViewController.m in Sources */,
+				84AC005B15C8BBC000E5AA6E /* ZSHintGeneratorEliminatePencilsXWing.m in Sources */,
+				84AC005C15C8BBC000E5AA6E /* ZSHintGeneratorEliminatePencilsFinnedXWing.m in Sources */,
+				84AC005D15C8BBC000E5AA6E /* ZSHintGeneratorEliminatePencilsYWing.m in Sources */,
+				84AC005E15C8BBC000E5AA6E /* ZSHintGeneratorEliminatePencilsChainedYWing.m in Sources */,
+				84AC005F15C8BBC000E5AA6E /* ZSHintGeneratorEliminatePencilsAvoidableRectangles.m in Sources */,
+				84AC006015C8BBC000E5AA6E /* ZSHintGeneratorEliminatePencilsRemotePairs.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		84D5500B147F1C4A00A7934E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1127,8 +1483,8 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Negative Ion, Inc.";
 				COPY_PHASE_STRIP = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "ZenSudoku/ZenSudoku-Prefix.pch";
-				INFOPLIST_FILE = "ZenSudoku/ZenSudoku-Info.plist";
+				GCC_PREFIX_HEADER = "ZenSudoku/sudo-Prefix.pch";
+				INFOPLIST_FILE = "ZenSudoku/sudo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1157,6 +1513,81 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
+			};
+			name = "Ad Hoc";
+		};
+		84AC00BD15C8BBC000E5AA6E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ZenSudoku/sudo free-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					FREEVERSION,
+				);
+				INFOPLIST_FILE = "ZenSudoku/sudo free-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/ZenSudoku/External/TestFlightSDK1.0\"",
+					"\"$(SRCROOT)/ZenSudoku/External/Flurry\"",
+				);
+				PRODUCT_NAME = "sudo free";
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		84AC00BE15C8BBC000E5AA6E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					armv6,
+					armv7,
+				);
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ZenSudoku/sudo free-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = FREEVERSION;
+				INFOPLIST_FILE = "ZenSudoku/sudo free-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/ZenSudoku/External/TestFlightSDK1.0\"",
+					"\"$(SRCROOT)/ZenSudoku/External/Flurry\"",
+				);
+				PRODUCT_NAME = "sudo free";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				TARGETED_DEVICE_FAMILY = 1;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		84AC00BF15C8BBC000E5AA6E /* Ad Hoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Negative Ion, Inc.";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Negative Ion, Inc.";
+				COPY_PHASE_STRIP = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ZenSudoku/sudo free-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = FREEVERSION;
+				INFOPLIST_FILE = "ZenSudoku/sudo free-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/ZenSudoku/External/TestFlightSDK1.0\"",
+					"\"$(SRCROOT)/ZenSudoku/External/Flurry\"",
+				);
+				PRODUCT_NAME = "sudo free";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				TARGETED_DEVICE_FAMILY = 1;
+				WRAPPER_EXTENSION = app;
 			};
 			name = "Ad Hoc";
 		};
@@ -1217,8 +1648,8 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "ZenSudoku/ZenSudoku-Prefix.pch";
-				INFOPLIST_FILE = "ZenSudoku/ZenSudoku-Info.plist";
+				GCC_PREFIX_HEADER = "ZenSudoku/sudo-Prefix.pch";
+				INFOPLIST_FILE = "ZenSudoku/sudo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1242,8 +1673,8 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "ZenSudoku/ZenSudoku-Prefix.pch";
-				INFOPLIST_FILE = "ZenSudoku/ZenSudoku-Info.plist";
+				GCC_PREFIX_HEADER = "ZenSudoku/sudo-Prefix.pch";
+				INFOPLIST_FILE = "ZenSudoku/sudo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1295,6 +1726,16 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		84AC00BC15C8BBC000E5AA6E /* Build configuration list for PBXNativeTarget "sudo free" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				84AC00BD15C8BBC000E5AA6E /* Debug */,
+				84AC00BE15C8BBC000E5AA6E /* Release */,
+				84AC00BF15C8BBC000E5AA6E /* Ad Hoc */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		84D55009147F1C4A00A7934E /* Build configuration list for PBXProject "ZenSudoku" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -100,6 +100,9 @@
 	[_moderateButton addTarget:self action:@selector(_difficultyButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
 	[_ribbonView addSubview:_moderateButton];
 	
+#ifdef FREEVERSION
+	
+#else
 	_challengingButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	[_challengingButton addTarget:self action:@selector(_difficultyButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
 	_challengingButton.tag = ZSGameDifficultyChallenging;
@@ -141,6 +144,7 @@
 	[_insaneButton setTitle:@" Insane " forState:UIControlStateNormal];
 	[_insaneButton addTarget:self action:@selector(_difficultyButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
 	[_ribbonView addSubview:_insaneButton];
+#endif
 }
 
 - (void)showRibbon {
