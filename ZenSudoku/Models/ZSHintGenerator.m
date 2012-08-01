@@ -13,6 +13,9 @@
 #import "ZSBoard.h"
 #import "ZSTile.h"
 
+#import "ZSAppDelegate.h"
+#import "Flurry.h"
+
 #import "ZSHintGeneratorFixIncorrectGuesses.h"
 #import "ZSHintGeneratorFixMissingPencil.h"
 #import "ZSHintGeneratorNoHint.h"
@@ -236,6 +239,7 @@
 	
 	// Can't solve!!
 	hintCards = [self eliminatePencilNoHint];
+	[Flurry logEvent:kAnalyticsCheckpointNoHintAvailable];
 	
 	return hintCards;
 }

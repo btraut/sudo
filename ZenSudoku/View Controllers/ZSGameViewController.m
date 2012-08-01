@@ -21,7 +21,6 @@
 #import "UIColor+ColorWithHex.h"
 #import "ZSHintButtonViewController.h"
 
-#import "TestFlight.h"
 #import "Flurry.h"
 
 typedef struct {
@@ -275,9 +274,8 @@ typedef struct {
 }
 
 - (void)viewWasPromotedToFront {
-	// TestFlight Checkpoint
-	[TestFlight passCheckpoint:kTestFlightCheckPointStartedNewPuzzle];
-	[Flurry logEvent:kTestFlightCheckPointStartedNewPuzzle];
+	// Analytics Checkpoint
+	[Flurry logEvent:kAnalyticsCheckpointStartedNewPuzzle withParameters:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:self.game.difficulty], @"difficulty", nil]];
 	
 	// This is now the active game.
 	self.active = YES;
@@ -375,9 +373,8 @@ typedef struct {
 }
 
 - (void)_difficultyButtonWasPressed:(UIGestureRecognizer *)gestureRecognizer {
-	// TestFlight Checkpoint
-	[TestFlight passCheckpoint:kTestFlightCheckPointOpenedRibbon];
-	[Flurry logEvent:kTestFlightCheckPointOpenedRibbon];
+	// Analytics Checkpoint
+	[Flurry logEvent:kAnalyticsCheckpointOpenedRibbon];
 	
 	[self.difficultyButtonDelegate difficultyButtonWasPressedWithViewController:self];
 }
@@ -599,9 +596,8 @@ typedef struct {
 }
 
 - (void)autoPencilButtonWasTouched {
-	// TestFlight Checkpoint
-	[TestFlight passCheckpoint:kTestFlightCheckPointUsedAutoPencil];
-	[Flurry logEvent:kTestFlightCheckPointUsedAutoPencil];
+	// Analytics Checkpoint
+	[Flurry logEvent:kAnalyticsCheckpointUsedAutoPencil];
 	
 	[self setAutoPencils];
 	
@@ -609,9 +605,8 @@ typedef struct {
 }
 
 - (void)undoButtonWasTouched {
-	// TestFlight Checkpoint
-	[TestFlight passCheckpoint:kTestFlightCheckPointUsedUndo];
-	[Flurry logEvent:kTestFlightCheckPointUsedUndo];
+	// Analytics Checkpoint
+	[Flurry logEvent:kAnalyticsCheckpointUsedUndo];
 	
 	// Reset pencil changes.
 	_totalPencilChangesSinceLastGuess = 0;
@@ -666,9 +661,8 @@ typedef struct {
 }
 
 - (void)hintButtonWasTouched {
-	// TestFlight Checkpoint
-	[TestFlight passCheckpoint:kTestFlightCheckPointUsedAHint];
-	[Flurry logEvent:kTestFlightCheckPointUsedAHint];
+	// Analytics Checkpoint
+	[Flurry logEvent:kAnalyticsCheckpointUsedAHint];
 	
 	// Force an update immediately if one is needed.
 	[self _updateHintDeck];
@@ -750,9 +744,8 @@ typedef struct {
 }
 
 - (void)gameWasSolved {
-	// TestFlight Checkpoint
-	[TestFlight passCheckpoint:kTestFlightCheckPointSolvedPuzzle];
-	[Flurry logEvent:kTestFlightCheckPointSolvedPuzzle];
+	// Analytics Checkpoint
+	[Flurry logEvent:kAnalyticsCheckpointSolvedPuzzle withParameters:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:self.game.difficulty], @"difficulty", nil]];
 	
 	// Stop the game timer.
 	[game stopGameTimer];

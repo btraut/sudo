@@ -21,15 +21,17 @@
 
 @end
 
-// Test Flight Params
+// Analytics Params
 
 extern NSString * const kTestFlightTeamToken;
-extern NSString * const kTestFlightCheckPointStartedNewPuzzle;
-extern NSString * const kTestFlightCheckPointSolvedPuzzle;
-extern NSString * const kTestFlightCheckPointUsedUndo;
-extern NSString * const kTestFlightCheckPointUsedAutoPencil;
-extern NSString * const kTestFlightCheckPointUsedAHint;
-extern NSString * const kTestFlightCheckPointOpenedRibbon;
+
+extern NSString * const kAnalyticsCheckpointStartedNewPuzzle;
+extern NSString * const kAnalyticsCheckpointSolvedPuzzle;
+extern NSString * const kAnalyticsCheckpointUsedUndo;
+extern NSString * const kAnalyticsCheckpointUsedAutoPencil;
+extern NSString * const kAnalyticsCheckpointUsedAHint;
+extern NSString * const kAnalyticsCheckpointNoHintAvailable;
+extern NSString * const kAnalyticsCheckpointOpenedRibbon;
 
 // Preference Keys
 

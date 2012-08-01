@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "84AC002915C8BBC000E5AA6E"
-               BuildableName = "sudo copy.app"
-               BlueprintName = "sudo free"
+               BuildableName = "sudo free.app"
+               BlueprintName = "Sudo Free"
                ReferencedContainer = "container:ZenSudoku.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -33,8 +33,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "84AC002915C8BBC000E5AA6E"
-            BuildableName = "sudo copy.app"
-            BlueprintName = "sudo free"
+            BuildableName = "sudo free.app"
+            BlueprintName = "Sudo Free"
             ReferencedContainer = "container:ZenSudoku.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -52,8 +52,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "84AC002915C8BBC000E5AA6E"
-            BuildableName = "sudo copy.app"
-            BlueprintName = "sudo free"
+            BuildableName = "sudo free.app"
+            BlueprintName = "Sudo Free"
             ReferencedContainer = "container:ZenSudoku.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -70,8 +70,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "84AC002915C8BBC000E5AA6E"
-            BuildableName = "sudo copy.app"
-            BlueprintName = "sudo free"
+            BuildableName = "sudo free.app"
+            BlueprintName = "Sudo Free"
             ReferencedContainer = "container:ZenSudoku.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

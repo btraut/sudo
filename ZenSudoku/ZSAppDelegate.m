@@ -16,12 +16,14 @@
 #import "Flurry.h"
 
 NSString * const kTestFlightTeamToken = @"b838f7b1003025e596ee5b134d349769_NDgyOTkyMDEyLTAxLTEzIDA1OjAyOjMzLjM4ODA4NA";
-NSString * const kTestFlightCheckPointStartedNewPuzzle = @"kTestFlightCheckPointStartedNewPuzzle";
-NSString * const kTestFlightCheckPointSolvedPuzzle = @"kTestFlightCheckPointSolvedPuzzle";
-NSString * const kTestFlightCheckPointUsedUndo = @"kTestFlightCheckPointUsedUndo";
-NSString * const kTestFlightCheckPointUsedAutoPencil = @"kTestFlightCheckPointUsedAutoPencil";
-NSString * const kTestFlightCheckPointUsedAHint = @"kTestFlightCheckPointUsedAHint";
-NSString * const kTestFlightCheckPointOpenedRibbon = @"kTestFlightCheckPointOpenedRibbon";
+
+NSString * const kAnalyticsCheckpointStartedNewPuzzle = @"kAnalyticsCheckpointStartedNewPuzzle";
+NSString * const kAnalyticsCheckpointSolvedPuzzle = @"kAnalyticsCheckpointSolvedPuzzle";
+NSString * const kAnalyticsCheckpointUsedUndo = @"kAnalyticsCheckpointUsedUndo";
+NSString * const kAnalyticsCheckpointUsedAutoPencil = @"kAnalyticsCheckpointUsedAutoPencil";
+NSString * const kAnalyticsCheckpointUsedAHint = @"kAnalyticsCheckpointUsedAHint";
+NSString * const kAnalyticsCheckpointNoHintAvailable = @"kAnalyticsCheckpointNoHintAvailable";
+NSString * const kAnalyticsCheckpointOpenedRibbon = @"kAnalyticsCheckpointOpenedRibbon";
 
 NSString * const kLastUsedVersionKey = @"kLastUsedVersionKey";
 
