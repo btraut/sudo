@@ -59,6 +59,7 @@
 @property (readonly) NSInteger totalStrikes;
 @property (readonly) NSInteger totalUndos;
 @property (readonly) NSInteger totalRedos;
+@property (readonly) NSInteger totalHints;
 
 // Time
 @property (readonly) NSInteger totalTimePlayed;
@@ -75,7 +76,9 @@
 @property (readonly) NSInteger fastestGamePerDiabolical;
 @property (readonly) NSInteger fastestGamePerInsane;
 
-+ (id)sharedInstance;
+@property (readonly) BOOL lastGameWasTimeRecord;
+
++ (ZSStatisticsController *)sharedInstance;
 
 - (id)init;
 - (void)resetStats;
@@ -86,6 +89,7 @@
 - (void)strikeEntered;
 - (void)userUsedUndo;
 - (void)userUsedRedo;
+- (void)userUsedHint;
 - (void)timeElapsed:(NSInteger)seconds inGameWithDifficulty:(ZSGameDifficulty)difficulty;
 
 - (void)initWithDictionaryRepresentation:(NSDictionary *)dict;

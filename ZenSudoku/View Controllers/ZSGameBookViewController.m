@@ -15,12 +15,15 @@
 #import "ZSHintViewController.h"
 #import "ZSFoldedCornerViewController.h"
 #import "ZSAppDelegate.h"
+#import "ZSGameOverRibbonViewController.h"
+#import "ZSStatisticsController.h"
 
 @interface ZSGameBookViewController () {
 	UIImageView *_innerBook;
 	
 	ZSHintViewController *_hintViewController;
-	ZSRibbonViewController *_ribbonViewController;
+	ZSChangeDifficultyRibbonViewController *_changeDifficultyRibbonViewController;
+	ZSGameOverRibbonViewController *_gameOverRibbonViewController;
 	
 	ZSSplashPageViewController *_splashPageViewController;
 	
@@ -69,6 +72,7 @@
 	self.currentGameViewController.hintDelegate = self;
 	self.currentGameViewController.animationDelegate = self;
 	self.currentGameViewController.difficultyButtonDelegate = self;
+	self.currentGameViewController.majorGameStateChangeDelegate = self;
 	[_innerBook addSubview:self.currentGameViewController.view];
 	
 	if ([[[NSUserDefaults standardUserDefaults] objectForKey:kDisplayedTutorialNotices] boolValue]) {
@@ -87,6 +91,7 @@
 	self.nextGameViewController.hintDelegate = self;
 	self.nextGameViewController.animationDelegate = self;
 	self.nextGameViewController.difficultyButtonDelegate = self;
+	self.nextGameViewController.majorGameStateChangeDelegate = self;
 	[_innerBook insertSubview:self.nextGameViewController.view belowSubview:self.currentGameViewController.view];
 	
 	[self.nextGameViewController hideTapToChangeDifficultyNoticeAnimated:NO];
@@ -117,9 +122,12 @@
 	
 	_hintTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideHint)];
 	
-	// Create the ribbon.
-	_ribbonViewController = [[ZSRibbonViewController alloc] init];
-	_ribbonViewController.delegate = self;
+	// Create the ribbons.
+	_changeDifficultyRibbonViewController = [[ZSChangeDifficultyRibbonViewController alloc] init];
+	_changeDifficultyRibbonViewController.delegate = self;
+	
+	_gameOverRibbonViewController = [[ZSGameOverRibbonViewController alloc] init];
+	_gameOverRibbonViewController.delegate = self;
 	
 	// Start the background process timer.
 	_backgroundProcessTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(_backgroundProcessTimerDidAdvance:) userInfo:nil repeats:YES];
@@ -140,6 +148,7 @@
 		self.lastGameViewController.hintDelegate = self;
 		self.lastGameViewController.animationDelegate = self;
 		self.lastGameViewController.difficultyButtonDelegate = self;
+		self.lastGameViewController.majorGameStateChangeDelegate = self;
 	}
 
 	[_innerBook insertSubview:self.lastGameViewController.view belowSubview:self.nextGameViewController.view];
@@ -157,6 +166,9 @@
 	}
 	
 	_hintsShown = YES;
+	
+	++self.currentGameViewController.game.totalHints;
+	[[ZSStatisticsController sharedInstance] userUsedHint];
 	
 	self.currentGameViewController.foldedCornerViewController.view.userInteractionEnabled = NO;
 	
@@ -201,23 +213,54 @@
 	 completion:NULL];
 }
 
-- (void)showRibbon {
-	if (_ribbonViewController.shown) {
+- (void)showChangeDifficultyRibbon {
+	if (_changeDifficultyRibbonViewController.shown) {
 		return;
 	}
 	
-	[self.view addSubview:_ribbonViewController.view];
+	[self.view addSubview:_changeDifficultyRibbonViewController.view];
 	
-	_ribbonViewController.highlightedDifficulty = self.currentGameViewController.game.difficulty;
-	[_ribbonViewController showRibbon];
+	_changeDifficultyRibbonViewController.highlightedDifficulty = self.currentGameViewController.game.difficulty;
+	[_changeDifficultyRibbonViewController showRibbon];
 }
 
-- (void)hideRibbon {
-	if (!_ribbonViewController.shown) {
+- (void)hideChangeDifficultyRibbon {
+	if (!_changeDifficultyRibbonViewController.shown) {
 		return;
 	}
 	
-	[_ribbonViewController hideRibbon];
+	[_changeDifficultyRibbonViewController hideRibbon];
+}
+
+- (void)showGameOverRibbon {
+	if (_gameOverRibbonViewController.shown) {
+		return;
+	}
+	
+	[self.view addSubview:_gameOverRibbonViewController.view];
+	
+	_gameOverRibbonViewController.difficulty = self.currentGameViewController.game.difficulty;
+	_gameOverRibbonViewController.completionTime = self.currentGameViewController.game.timerCount;
+	_gameOverRibbonViewController.hintsUsed = self.currentGameViewController.game.totalHints;
+	_gameOverRibbonViewController.newRecord = [ZSStatisticsController sharedInstance].lastGameWasTimeRecord;
+	
+	switch (self.currentGameViewController.game.difficulty) {
+		case ZSGameDifficultyEasy: _gameOverRibbonViewController.puzzlesSolved = [ZSStatisticsController sharedInstance].gamesSolvedPerEasy; break;
+		case ZSGameDifficultyModerate: _gameOverRibbonViewController.puzzlesSolved = [ZSStatisticsController sharedInstance].gamesSolvedPerModerate; break;
+		case ZSGameDifficultyChallenging: _gameOverRibbonViewController.puzzlesSolved = [ZSStatisticsController sharedInstance].gamesSolvedPerChallenging; break;
+		case ZSGameDifficultyDiabolical: _gameOverRibbonViewController.puzzlesSolved = [ZSStatisticsController sharedInstance].gamesSolvedPerDiabolical; break;
+		case ZSGameDifficultyInsane: _gameOverRibbonViewController.puzzlesSolved = [ZSStatisticsController sharedInstance].gamesSolvedPerInsane; break;
+	}
+	
+	[_gameOverRibbonViewController showRibbon];
+}
+
+- (void)hideGameOverRibbon {
+	if (!_gameOverRibbonViewController.shown) {
+		return;
+	}
+	
+	[_gameOverRibbonViewController hideRibbon];
 }
 
 - (void)_backgroundProcessTimerDidAdvance:(NSTimer *)timer {
@@ -312,7 +355,7 @@
 	[self hideHint];
 }
 
-#pragma mark - ZSRibbonViewControllerDelegate Implementation
+#pragma mark - ZSChangeDifficultyRibbonViewControllerDelegate Implementation
 
 - (void)difficultyWasSelected:(ZSGameDifficulty)difficulty {
 	if (difficulty != self.nextGameViewController.game.difficulty) {
@@ -329,8 +372,11 @@
 }
 
 - (void)hideRibbonAnimationDidFinish {
-	[_ribbonViewController.view removeFromSuperview];
+	// Both ribbons call the same delegate, so we'll just remove them both.
+	[_gameOverRibbonViewController.view removeFromSuperview];
+	[_changeDifficultyRibbonViewController.view removeFromSuperview];
 	
+	// If the user picked a new difficulty, turn the page.
 	if (_shouldTurnPageAfterRibbonCloses) {
 		_shouldTurnPageAfterRibbonCloses = NO;
 		
@@ -341,10 +387,21 @@
 #pragma mark - ZSDifficultyButtonViewControllerDelegate Implementation
 
 - (void)difficultyButtonWasPressedWithViewController:(ZSGameViewController *)viewController {
-	[self showRibbon];
+	[self showChangeDifficultyRibbon];
 	
 	_gamesInARowWithNoAction = 0;
 	[self _setHiddenOnTapToChangeDifficultyNotices];
 }
+
+#pragma mark - ZSMajorGameStateChangeDelegate Implementation
+
+- (void)gameWasSolvedWithViewController:(ZSGameViewController *)viewController {
+	if (_hintsShown) {
+		[self hideHint];
+	}
+	
+	[self showGameOverRibbon];
+}
+
 
 @end

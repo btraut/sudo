@@ -11,7 +11,7 @@
 #import "ZSGame.h"
 #import "ZSGameViewController.h"
 #import "ZSSplashPageViewController.h"
-#import "ZSRibbonViewController.h"
+#import "ZSChangeDifficultyRibbonViewController.h"
 
 @class ZSHintViewController;
 
@@ -19,8 +19,9 @@
 	ZSHintDelegate,
 	ZSFoldedPageViewControllerAnimationDelegate,
 	ZSFoldedPageAndPlusButtonViewControllerAnimationDelegate,
-	ZSRibbonViewControllerDelegate,
-	ZSDifficultyButtonViewControllerDelegate
+	ZSChangeDifficultyRibbonViewControllerDelegate,
+	ZSDifficultyButtonViewControllerDelegate,
+	ZSMajorGameStateChangeDelegate
 >
 
 @property (strong) ZSGameViewController *currentGameViewController;
@@ -35,7 +36,7 @@
 - (void)showHint;
 - (void)hideHint;
 
-- (void)showRibbon;
-- (void)hideRibbon;
+- (void)showChangeDifficultyRibbon;
+- (void)hideChangeDifficultyRibbon;
 
 @end

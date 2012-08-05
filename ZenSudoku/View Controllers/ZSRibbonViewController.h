@@ -12,18 +12,18 @@
 
 @protocol ZSRibbonViewControllerDelegate <NSObject>
 
-- (void)difficultyWasSelected:(ZSGameDifficulty)difficulty;
 - (void)hideRibbonAnimationDidFinish;
 
 @end
 
-@interface ZSRibbonViewController : UIViewController
-
-@property (weak) id<ZSRibbonViewControllerDelegate> delegate;
+@interface ZSRibbonViewController : UIViewController {
+	UILabel *titleLabel;
+	UIImageView *ribbonView;
+}
 
 @property (assign, readonly) BOOL shown;
 
-@property (nonatomic, assign, setter = setHighlightedDifficulty:) ZSGameDifficulty highlightedDifficulty;
+@property (weak) id<ZSRibbonViewControllerDelegate> delegate;
 
 - (void)showRibbon;
 - (void)hideRibbon;

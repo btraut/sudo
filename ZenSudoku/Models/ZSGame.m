@@ -34,6 +34,7 @@ NSString * const kDictionaryRepresentationGameTilesKey = @"kDictionaryRepresenta
 
 NSString * const kDictionaryRepresentationGameTimerCountKey = @"kDictionaryRepresentationGameTimerCountKey";
 NSString * const kDictionaryRepresentationGameTotalStrikesKey = @"kDictionaryRepresentationGameTotalStrikesKey";
+NSString * const kDictionaryRepresentationGameTotalHintsKey = @"kDictionaryRepresentationGameTotalHintsKey";
 
 NSString * const kDictionaryRepresentationGameUndoStackKey = @"kDictionaryRepresentationGameUndoStackKey";
 NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepresentationGameRedoStackKey";
@@ -58,6 +59,7 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 @synthesize stateChangeDelegate;
 @synthesize timerCount;
 @synthesize totalStrikes;
+@synthesize totalHints;
 
 #pragma mark - Initializing
 
@@ -155,6 +157,7 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 		// Set the game status data.
 		timerCount = [decoder decodeIntForKey:kDictionaryRepresentationGameTimerCountKey];
 		totalStrikes = [decoder decodeIntForKey:kDictionaryRepresentationGameTotalStrikesKey];
+		totalHints = [decoder decodeIntForKey:kDictionaryRepresentationGameTotalHintsKey];
 		
 		// Unpack history.
 		_undoStack = [decoder decodeObjectForKey:kDictionaryRepresentationGameUndoStackKey];
@@ -190,6 +193,7 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 	// Encode game status.
 	[encoder encodeInt:timerCount forKey:kDictionaryRepresentationGameTimerCountKey];
 	[encoder encodeInt:totalStrikes forKey:kDictionaryRepresentationGameTotalStrikesKey];
+	[encoder encodeInt:totalHints forKey:kDictionaryRepresentationGameTotalHintsKey];
 	
 	// Encode game history.
 	[encoder encodeObject:_undoStack forKey:kDictionaryRepresentationGameUndoStackKey];
@@ -253,11 +257,11 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 	
 	// If the game is over, notify the delegate of that as well.
 	if ([self isSolved]) {
-		// Notify the delegate.
-		[self.stateChangeDelegate gameWasSolved];
-		
 		// Notify statistics.
 		[[ZSStatisticsController sharedInstance] gameSolvedWithDifficulty:difficulty totalTime:timerCount];
+		
+		// Notify the delegate.
+		[self.stateChangeDelegate gameWasSolved];
 	}
 }
 

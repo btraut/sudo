@@ -81,8 +81,9 @@ typedef struct {
 @synthesize game;
 @synthesize active;
 @synthesize boardViewController, gameAnswerOptionsViewController;
-@synthesize pencilButton, penciling;
+@synthesize penciling;
 @synthesize allowsInput;
+@synthesize solved;
 @synthesize hintDelegate;
 @dynamic animationDelegate;
 @synthesize difficultyButtonDelegate;
@@ -111,6 +112,7 @@ typedef struct {
 		penciling = NO;
 		
 		allowsInput = YES;
+		solved = NO;
 		
 		_foldedCornerTouchCrossedTapThreshold = NO;
 		
@@ -136,6 +138,7 @@ typedef struct {
 	[hintGenerator copyClueMaskFromGameBoard:self.game.board];
 	
 	self.allowsInput = YES;
+	self.solved = NO;
 	
 	pencilButton.enabled = YES;
 	
@@ -282,7 +285,8 @@ typedef struct {
 	
 	// If the game is already solved, shut off input.
 	if ([game isSolved]) {
-		allowsInput = NO;
+		self.allowsInput = NO;
+		self.solved = YES;
 		
 		pencilButton.selected = NO;
 		pencilButton.enabled = NO;
@@ -292,13 +296,19 @@ typedef struct {
 		hintButtonViewController.button.enabled = NO;
 	} else {
 		// Start the game timer.
-		[game startGameTimer];
+		[self.game startGameTimer];
 		
 		// Update the hint deck.
 		self.needsHintDeckUpdate = YES;
 		
 		// Handle pulsing.
 		[self _evaluateHintButtonPulsing];
+		
+		// Debug
+		if (self.game.difficulty == ZSGameDifficultyEasy) {
+			[self solveMostOfThePuzzle];
+			[self setAutoPencils];
+		}
 	}
 	
 	// Update the folded corner image.
@@ -682,10 +692,12 @@ typedef struct {
 - (void)_updateHintDeck {
 	dispatch_group_async(_hintGenerationDispatchGroup, _hintGenerationDispatchQueue, ^{
 		if (self.needsHintDeckUpdate) {
-			self.needsHintDeckUpdate = NO;
-			
-			[hintGenerator copyGameStateFromGameBoard:game.board];
-			self.hintDeck = [hintGenerator generateHint];
+			if (!self.solved) {
+				self.needsHintDeckUpdate = NO;
+				
+				[hintGenerator copyGameStateFromGameBoard:game.board];
+				self.hintDeck = [hintGenerator generateHint];
+			}
 		}
 	});
 }
@@ -751,7 +763,8 @@ typedef struct {
 	[game stopGameTimer];
 	
 	// Prevent future input.
-	allowsInput = NO;
+	self.allowsInput = NO;
+	self.solved = YES;
 	
 	pencilButton.selected = NO;
 	pencilButton.enabled = NO;
@@ -768,17 +781,9 @@ typedef struct {
 	
 	self.needsScreenshotUpdate = YES;
 	
-	// Show a congratulatory alert.
-	NSInteger totalMinutes = game.timerCount / 60;
-	NSInteger remainingSeconds = game.timerCount - (totalMinutes * 60);
-	
-	NSString *minutes = totalMinutes == 1 ? @"" : @"s";
-	NSString *seconds = remainingSeconds == 1 ? @"" : @"s";
-	
-	NSString *dialogText = [NSString stringWithFormat:@"You solved the puzzle in %i minute%@ %i second%@. Great job!", totalMinutes, minutes, remainingSeconds, seconds];
-	
-	UIAlertView *completionAlert = [[UIAlertView alloc] initWithTitle:@"Puzzle Complete" message:dialogText delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-	[completionAlert show];
+	if ([self.majorGameStateChangeDelegate respondsToSelector: @selector(gameWasSolvedWithViewController:)]) {
+		[self.majorGameStateChangeDelegate gameWasSolvedWithViewController:self];
+	}
 }
 
 #pragma mark - ZSFoldedCornerViewControllerAnimationDelegate Implementation
@@ -822,7 +827,7 @@ typedef struct {
 
 - (void)gameAnswerOptionTouchEnteredWithGameAnswerOption:(ZSAnswerOption)gameAnswerOption {
 	// If we aren't allowing input, end here.
-	if (!allowsInput) {
+	if (!self.allowsInput) {
 		return;
 	}
 	
@@ -846,7 +851,7 @@ typedef struct {
 
 - (void)gameAnswerOptionTouchExitedWithGameAnswerOption:(ZSAnswerOption)gameAnswerOption {
 	// If we aren't allowing input, end here.
-	if (!allowsInput) {
+	if (!self.allowsInput) {
 		return;
 	}
 	
@@ -873,7 +878,7 @@ typedef struct {
 	ZSAnswerOptionViewController *gameAnswerOptionView = [gameAnswerOptionsViewController.gameAnswerOptionViewControllers objectAtIndex:gameAnswerOption];
 	
 	// If we aren't allowing input, end here.
-	if (!allowsInput) {
+	if (!self.allowsInput) {
 		return;
 	}
 	
@@ -929,7 +934,7 @@ typedef struct {
 
 - (void)tileWasTappedInRow:(NSInteger)row col:(NSInteger)col {
 	// If we aren't allowing input, end here.
-	if (!allowsInput) {
+	if (!self.allowsInput) {
 		return;
 	}
 	

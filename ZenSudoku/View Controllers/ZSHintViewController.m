@@ -118,7 +118,7 @@
 		label.backgroundColor = [UIColor clearColor];
 		label.shadowColor = [UIColor clearColor];
 		label.text = card.text;
-		label.font = [UIFont fontWithName:@"Helvetica Neue" size:16.0f];
+		label.font = [UIFont fontWithName:@"HelveticaNeue" size:16.0f];
 		label.fontColor = [UIColor colorWithHexString:@"#2e2e2e"];
 		label.lineHeight = 23.0f;
 		

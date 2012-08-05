@@ -29,6 +29,7 @@ NSString * const kTotalEnteredAnswersKey = @"kTotalEnteredAnswersKey";
 NSString * const kTotalStrikesKey = @"kTotalStrikesKey";
 NSString * const kTotalUndosKey = @"kTotalUndosKey";
 NSString * const kTotalRedosKey = @"kTotalRedosKey";
+NSString * const kTotalHintsKey = @"kTotalHintsKey";
 
 // Time
 NSString * const kTotalTimePlayedKey = @"kTotalTimePlayedKey";
@@ -49,9 +50,10 @@ NSString * const kFastestGamePerInsaneKey = @"kFastestGamePerInsaneKey";
 @implementation ZSStatisticsController
 
 @synthesize totalStartedGames, totalSolvedGames, gamesSolvedPerEasy, gamesSolvedPerModerate, gamesSolvedPerChallenging, gamesSolvedPerDiabolical, gamesSolvedPerInsane;
-@synthesize totalEnteredAnswers, totalStrikes, totalUndos, totalRedos;
+@synthesize totalEnteredAnswers, totalStrikes, totalUndos, totalRedos, totalHints;
 @synthesize totalTimePlayed, totalTimePlayedPerEasy, totalTimePlayedPerModerate, totalTimePlayedPerChallenging, totalTimePlayedPerDiabolical, totalTimePlayedPerInsane;
 @synthesize fastestGamePerEasy, fastestGamePerModerate, fastestGamePerChallenging, fastestGamePerDiabolical, fastestGamePerInsane;
+@synthesize lastGameWasTimeRecord;
 
 - (id)init {
 	self = [super init];
@@ -84,6 +86,7 @@ NSString * const kFastestGamePerInsaneKey = @"kFastestGamePerInsaneKey";
 	totalStrikes = 0;
 	totalUndos = 0;
 	totalRedos = 0;
+	totalHints = 0;
 	
 	// Time
 	totalTimePlayed = 0;
@@ -119,6 +122,7 @@ NSString * const kFastestGamePerInsaneKey = @"kFastestGamePerInsaneKey";
 	totalStrikes = [[dict objectForKey:kTotalStrikesKey] intValue];
 	totalUndos = [[dict objectForKey:kTotalUndosKey] intValue];
 	totalRedos = [[dict objectForKey:kTotalRedosKey] intValue];
+	totalHints = [[dict objectForKey:kTotalHintsKey] intValue];
 	
 	// Time
 	totalTimePlayed = [[dict objectForKey:kTotalTimePlayedKey] intValue];
@@ -154,6 +158,7 @@ NSString * const kFastestGamePerInsaneKey = @"kFastestGamePerInsaneKey";
 	[dict setObject:[NSNumber numberWithInt:totalStrikes] forKey:kTotalStrikesKey];
 	[dict setObject:[NSNumber numberWithInt:totalUndos] forKey:kTotalUndosKey];
 	[dict setObject:[NSNumber numberWithInt:totalRedos] forKey:kTotalRedosKey];
+	[dict setObject:[NSNumber numberWithInt:totalHints] forKey:kTotalHintsKey];
 	
 	// Time
 	[dict setObject:[NSNumber numberWithInt:totalTimePlayed] forKey:kTotalTimePlayedKey];
@@ -192,19 +197,39 @@ NSString * const kFastestGamePerInsaneKey = @"kFastestGamePerInsaneKey";
 		case ZSGameDifficultyInsane: ++gamesSolvedPerInsane; break;
 	}
 	
-	// Fastest Solved Per Difficulty
-	NSInteger *fastestGameTimePtr = nil;
+	NSInteger totalSolvedPerDifficulty = 0;
 	
 	switch (difficulty) {
-		case ZSGameDifficultyEasy: fastestGameTimePtr = &fastestGamePerEasy; break;
-		case ZSGameDifficultyModerate: fastestGameTimePtr = &fastestGamePerModerate; break;
-		case ZSGameDifficultyChallenging: fastestGameTimePtr = &fastestGamePerChallenging; break;
-		case ZSGameDifficultyDiabolical: fastestGameTimePtr = &fastestGamePerDiabolical; break;
-		case ZSGameDifficultyInsane: fastestGameTimePtr = &fastestGamePerInsane; break;
+		case ZSGameDifficultyEasy: totalSolvedPerDifficulty = gamesSolvedPerEasy; break;
+		case ZSGameDifficultyModerate: totalSolvedPerDifficulty = gamesSolvedPerModerate; break;
+		case ZSGameDifficultyChallenging: totalSolvedPerDifficulty = gamesSolvedPerChallenging; break;
+		case ZSGameDifficultyDiabolical: totalSolvedPerDifficulty = gamesSolvedPerDiabolical; break;
+		case ZSGameDifficultyInsane: totalSolvedPerDifficulty = gamesSolvedPerInsane; break;
 	}
 	
-	if (seconds < *fastestGameTimePtr) {
-		++(*fastestGameTimePtr);
+	// Fastest Solved Per Difficulty
+	NSInteger fastestGameTimePerDifficulty = 0;
+	
+	switch (difficulty) {
+		case ZSGameDifficultyEasy: fastestGameTimePerDifficulty = fastestGamePerEasy; break;
+		case ZSGameDifficultyModerate: fastestGameTimePerDifficulty = fastestGamePerModerate; break;
+		case ZSGameDifficultyChallenging: fastestGameTimePerDifficulty = fastestGamePerChallenging; break;
+		case ZSGameDifficultyDiabolical: fastestGameTimePerDifficulty = fastestGamePerDiabolical; break;
+		case ZSGameDifficultyInsane: fastestGameTimePerDifficulty = fastestGamePerInsane; break;
+	}
+	
+	if (seconds < fastestGameTimePerDifficulty || totalSolvedPerDifficulty == 1) {
+		switch (difficulty) {
+			case ZSGameDifficultyEasy: fastestGamePerEasy = seconds; break;
+			case ZSGameDifficultyModerate: fastestGamePerModerate = seconds; break;
+			case ZSGameDifficultyChallenging: fastestGamePerChallenging = seconds; break;
+			case ZSGameDifficultyDiabolical: fastestGamePerDiabolical = seconds; break;
+			case ZSGameDifficultyInsane: fastestGamePerInsane = seconds; break;
+		}
+		
+		lastGameWasTimeRecord = YES;
+	} else {
+		lastGameWasTimeRecord = NO;
 	}
 }
 
@@ -222,6 +247,10 @@ NSString * const kFastestGamePerInsaneKey = @"kFastestGamePerInsaneKey";
 
 - (void)userUsedRedo {
 	++totalRedos;
+}
+
+- (void)userUsedHint {
+	++totalHints;
 }
 
 - (void)timeElapsed:(NSInteger)seconds inGameWithDifficulty:(ZSGameDifficulty)difficulty {

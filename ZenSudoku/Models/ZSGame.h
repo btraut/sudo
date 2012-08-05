@@ -76,6 +76,7 @@ typedef enum {
 
 @property (assign, readonly) NSInteger timerCount;
 @property (assign, readonly) NSInteger totalStrikes;
+@property (assign) NSInteger totalHints;
 
 // Creation / Initialization
 

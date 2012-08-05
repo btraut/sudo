@@ -65,6 +65,12 @@
 		8472508E15829D1F0073D113 /* ForwardsPage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8472508C15829D1F0073D113 /* ForwardsPage@2x.png */; };
 		8472509115829D330073D113 /* PageCurl.png in Resources */ = {isa = PBXBuildFile; fileRef = 8472508F15829D330073D113 /* PageCurl.png */; };
 		8472509215829D330073D113 /* PageCurl@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8472509015829D330073D113 /* PageCurl@2x.png */; };
+		8485C6C715CDAF6D00A8294D /* ZSChangeDifficultyRibbonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8485C6C615CDAF6D00A8294D /* ZSChangeDifficultyRibbonViewController.m */; };
+		8485C6CB15CDB22C00A8294D /* ZSGameOverRibbonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8485C6CA15CDB22C00A8294D /* ZSGameOverRibbonViewController.m */; };
+		8485C6CE15CDCBAF00A8294D /* NewRecordArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 8485C6CC15CDCBAF00A8294D /* NewRecordArrow.png */; };
+		8485C6CF15CDCBAF00A8294D /* NewRecordArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8485C6CD15CDCBAF00A8294D /* NewRecordArrow@2x.png */; };
+		8485C6D215CDDA9600A8294D /* Stitching.png in Resources */ = {isa = PBXBuildFile; fileRef = 8485C6D015CDDA9600A8294D /* Stitching.png */; };
+		8485C6D315CDDA9600A8294D /* Stitching@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8485C6D115CDDA9600A8294D /* Stitching@2x.png */; };
 		8492B76114C911FF0093B7AC /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8492B76014C911FF0093B7AC /* libsqlite3.0.dylib */; };
 		8492B77414CD69B10093B7AC /* ZSPuzzleFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 8492B77314CD69B10093B7AC /* ZSPuzzleFetcher.m */; };
 		8492B78814CEBDC80093B7AC /* Sudoku.db3 in Resources */ = {isa = PBXBuildFile; fileRef = 8492B78714CEBDC80093B7AC /* Sudoku.db3 */; };
@@ -384,6 +390,14 @@
 		8472508C15829D1F0073D113 /* ForwardsPage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ForwardsPage@2x.png"; path = "Resources/Images/ForwardsPage@2x.png"; sourceTree = "<group>"; };
 		8472508F15829D330073D113 /* PageCurl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PageCurl.png; path = Resources/Images/PageCurl.png; sourceTree = "<group>"; };
 		8472509015829D330073D113 /* PageCurl@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "PageCurl@2x.png"; path = "Resources/Images/PageCurl@2x.png"; sourceTree = "<group>"; };
+		8485C6C515CDAF6D00A8294D /* ZSChangeDifficultyRibbonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSChangeDifficultyRibbonViewController.h; path = "View Controllers/ZSChangeDifficultyRibbonViewController.h"; sourceTree = "<group>"; };
+		8485C6C615CDAF6D00A8294D /* ZSChangeDifficultyRibbonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSChangeDifficultyRibbonViewController.m; path = "View Controllers/ZSChangeDifficultyRibbonViewController.m"; sourceTree = "<group>"; };
+		8485C6C915CDB22B00A8294D /* ZSGameOverRibbonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSGameOverRibbonViewController.h; path = "View Controllers/ZSGameOverRibbonViewController.h"; sourceTree = "<group>"; };
+		8485C6CA15CDB22C00A8294D /* ZSGameOverRibbonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSGameOverRibbonViewController.m; path = "View Controllers/ZSGameOverRibbonViewController.m"; sourceTree = "<group>"; };
+		8485C6CC15CDCBAF00A8294D /* NewRecordArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = NewRecordArrow.png; path = Resources/Images/NewRecordArrow.png; sourceTree = "<group>"; };
+		8485C6CD15CDCBAF00A8294D /* NewRecordArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "NewRecordArrow@2x.png"; path = "Resources/Images/NewRecordArrow@2x.png"; sourceTree = "<group>"; };
+		8485C6D015CDDA9600A8294D /* Stitching.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Stitching.png; path = Resources/Images/Stitching.png; sourceTree = "<group>"; };
+		8485C6D115CDDA9600A8294D /* Stitching@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Stitching@2x.png"; path = "Resources/Images/Stitching@2x.png"; sourceTree = "<group>"; };
 		8492B76014C911FF0093B7AC /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		8492B77214CD69B10093B7AC /* ZSPuzzleFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSPuzzleFetcher.h; path = "Model Controllers/ZSPuzzleFetcher.h"; sourceTree = "<group>"; };
 		8492B77314CD69B10093B7AC /* ZSPuzzleFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSPuzzleFetcher.m; path = "Model Controllers/ZSPuzzleFetcher.m"; sourceTree = "<group>"; };
@@ -488,7 +502,7 @@
 		84D54E9615B4139D003B1705 /* Ribbon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Ribbon@2x.png"; path = "Resources/Images/Ribbon@2x.png"; sourceTree = "<group>"; };
 		84D54E9A15B41590003B1705 /* ZSRibbonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSRibbonViewController.h; path = "View Controllers/ZSRibbonViewController.h"; sourceTree = "<group>"; };
 		84D54E9B15B41593003B1705 /* ZSRibbonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSRibbonViewController.m; path = "View Controllers/ZSRibbonViewController.m"; sourceTree = "<group>"; };
-		84D5500F147F1C4A00A7934E /* Sudoasdf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sudoasdf.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		84D5500F147F1C4A00A7934E /* Sudo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sudo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84D55013147F1C4A00A7934E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		84D55015147F1C4A00A7934E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		84D55017147F1C4A00A7934E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -808,6 +822,10 @@
 				84D54E9615B4139D003B1705 /* Ribbon@2x.png */,
 				842311E315B628B500221E19 /* TapToChangeDifficultyNotice.png */,
 				842311E415B628B500221E19 /* TapToChangeDifficultyNotice@2x.png */,
+				8485C6CC15CDCBAF00A8294D /* NewRecordArrow.png */,
+				8485C6CD15CDCBAF00A8294D /* NewRecordArrow@2x.png */,
+				8485C6D015CDDA9600A8294D /* Stitching.png */,
+				8485C6D115CDDA9600A8294D /* Stitching@2x.png */,
 				8428AD3A154A52F700BA8EE0 /* Default.png */,
 				8428AD3B154A52F700BA8EE0 /* Default@2x.png */,
 			);
@@ -907,7 +925,7 @@
 		84D55010147F1C4A00A7934E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				84D5500F147F1C4A00A7934E /* Sudoasdf.app */,
+				84D5500F147F1C4A00A7934E /* Sudo.app */,
 				84EE86261494ADEA004C0A16 /* ZenSudokuLogicTests.octest */,
 				84AC00C015C8BBC000E5AA6E /* Sudo Free.app */,
 			);
@@ -993,6 +1011,10 @@
 				84A8FB2215AB7C7A00D802C8 /* ZSSplashPageViewController.m */,
 				84D54E9A15B41590003B1705 /* ZSRibbonViewController.h */,
 				84D54E9B15B41593003B1705 /* ZSRibbonViewController.m */,
+				8485C6C515CDAF6D00A8294D /* ZSChangeDifficultyRibbonViewController.h */,
+				8485C6C615CDAF6D00A8294D /* ZSChangeDifficultyRibbonViewController.m */,
+				8485C6C915CDB22B00A8294D /* ZSGameOverRibbonViewController.h */,
+				8485C6CA15CDB22C00A8294D /* ZSGameOverRibbonViewController.m */,
 				84BE032F15B6B18B00156895 /* ZSHintButtonViewController.h */,
 				84BE033015B6B18B00156895 /* ZSHintButtonViewController.m */,
 			);
@@ -1051,7 +1073,7 @@
 			);
 			name = Sudo;
 			productName = ZenSudoku;
-			productReference = 84D5500F147F1C4A00A7934E /* Sudoasdf.app */;
+			productReference = 84D5500F147F1C4A00A7934E /* Sudo.app */;
 			productType = "com.apple.product-type.application";
 		};
 		84EE86251494ADEA004C0A16 /* ZenSudokuLogicTests */ = {
@@ -1261,6 +1283,10 @@
 				84BE033515B6B48C00156895 /* HintsBackground.png in Resources */,
 				84BE033615B6B48C00156895 /* HintsBackground@2x.png in Resources */,
 				84BE033C15B77E9700156895 /* Settings.bundle in Resources */,
+				8485C6CE15CDCBAF00A8294D /* NewRecordArrow.png in Resources */,
+				8485C6CF15CDCBAF00A8294D /* NewRecordArrow@2x.png in Resources */,
+				8485C6D215CDDA9600A8294D /* Stitching.png in Resources */,
+				8485C6D315CDDA9600A8294D /* Stitching@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1414,6 +1440,8 @@
 				84EEAA2915C3D935006C35B0 /* ZSHintGeneratorEliminatePencilsChainedYWing.m in Sources */,
 				84EEAA2F15C3D95A006C35B0 /* ZSHintGeneratorEliminatePencilsAvoidableRectangles.m in Sources */,
 				84EEAA3215C3D968006C35B0 /* ZSHintGeneratorEliminatePencilsRemotePairs.m in Sources */,
+				8485C6C715CDAF6D00A8294D /* ZSChangeDifficultyRibbonViewController.m in Sources */,
+				8485C6CB15CDB22C00A8294D /* ZSGameOverRibbonViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

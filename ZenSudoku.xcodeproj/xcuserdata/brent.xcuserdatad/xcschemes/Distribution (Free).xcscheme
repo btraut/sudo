@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "84D5500E147F1C4A00A7934E"
-               BuildableName = "Sudoasdf.app"
+               BuildableName = "Sudo.app"
                BlueprintName = "Sudo"
                ReferencedContainer = "container:ZenSudoku.xcodeproj">
             </BuildableReference>
@@ -80,7 +80,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "84D5500E147F1C4A00A7934E"
-            BuildableName = "Sudoasdf.app"
+            BuildableName = "Sudo.app"
             BlueprintName = "Sudo"
             ReferencedContainer = "container:ZenSudoku.xcodeproj">
          </BuildableReference>

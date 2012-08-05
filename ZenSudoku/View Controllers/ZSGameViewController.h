@@ -43,6 +43,12 @@
 
 @end
 
+@protocol ZSMajorGameStateChangeDelegate <NSObject>
+
+- (void)gameWasSolvedWithViewController:(ZSGameViewController *)viewController;
+
+@end
+
 @interface ZSGameViewController : ZSFoldedPageViewController <
 	ZSGameStateChangeDelegate,
 	ZSFoldedCornerViewControllerTouchDelegate,
@@ -51,20 +57,12 @@
 	ZSAnswerOptionsViewControllerTouchDelegate,
 	ZSBoardViewControllerTouchDelegate
 > {
-	ZSGame *game;
 	ZSHintGenerator *hintGenerator;
 	
-	ZSBoardViewController *boardViewController;
-	ZSAnswerOptionsViewController *gameAnswerOptionsViewController;
-	
 	UIButton *pencilButton;
-	BOOL penciling;
-	
 	UIButton *undoButton;
 	UIButton *autoPencilButton;
 	ZSHintButtonViewController *hintButtonViewController;
-	
-	BOOL allowsInput;
 }
 
 @property (strong) ZSGame *game;
@@ -74,14 +72,15 @@
 @property (strong, readonly) ZSBoardViewController *boardViewController;
 @property (strong, readonly) ZSAnswerOptionsViewController *gameAnswerOptionsViewController;
 
-@property (strong, readonly) UIButton *pencilButton;
 @property (assign) BOOL penciling;
 
 @property (assign) BOOL allowsInput;
+@property (assign) BOOL solved;
 
 @property (weak) id<ZSHintDelegate> hintDelegate;
 @property (weak) id<ZSFoldedPageAndPlusButtonViewControllerAnimationDelegate> animationDelegate;
 @property (weak) id<ZSDifficultyButtonViewControllerDelegate> difficultyButtonDelegate;
+@property (weak) id<ZSMajorGameStateChangeDelegate> majorGameStateChangeDelegate;
 
 @property (assign) BOOL animateCornerWhenPromoted;
 
