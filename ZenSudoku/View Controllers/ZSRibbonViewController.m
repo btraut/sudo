@@ -13,6 +13,8 @@
 @interface ZSRibbonViewController () {
 	UISwipeGestureRecognizer *_upSwipeGestureRecognizer;
 	UITapGestureRecognizer *_ribbonTapGestureRecognizer;
+	
+	UIView *_overlay;
 }
 
 @end
@@ -31,16 +33,13 @@
 	[super viewDidLoad];
 	
 	// Build the overlay.
-	UIView *overlay = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)];
-	[self.view addSubview:overlay];
+	_overlay = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)];
+	[self.view addSubview:_overlay];
 	
 	_upSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(hideRibbon)];
 	_upSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionUp;
 	
 	_ribbonTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideRibbon)];
-	
-	[self.view addGestureRecognizer:_upSwipeGestureRecognizer];
-	[overlay addGestureRecognizer:_ribbonTapGestureRecognizer];
 	
 	// Build the ribbon.
 	if (self.ribbonImage == nil) {
@@ -98,6 +97,9 @@
 	
 	_shown = NO;
 	
+	[self.view removeGestureRecognizer:_upSwipeGestureRecognizer];
+	[_overlay removeGestureRecognizer:_ribbonTapGestureRecognizer];
+	
 	[UIView
 	 animateWithDuration:0.4f
 	 delay:0
@@ -111,7 +113,8 @@
 }
 
 - (void)ribbonFinishedShowing {
-	
+	[self.view addGestureRecognizer:_upSwipeGestureRecognizer];
+	[_overlay addGestureRecognizer:_ribbonTapGestureRecognizer];
 }
 
 - (void)ribbonFinishedHiding {
