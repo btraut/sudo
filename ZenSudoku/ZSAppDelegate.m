@@ -125,14 +125,14 @@ NSString * const kPreventScreenDimmingOptionKey = @"kPreventScreenDimmingOptionK
 	[[NSUserDefaults standardUserDefaults] setObject:currentVersion forKey:kLastUsedVersionKey];
 	
 	// Debug - Reset settings.
-	[NSUserDefaults resetStandardUserDefaults];
+	// [NSUserDefaults resetStandardUserDefaults];
 	
 	// Debug - clear stats and re-save.
-	[[ZSStatisticsController sharedInstance] resetStats];
-	[[ZSStatisticsController sharedInstance] saveStats];
+	// [[ZSStatisticsController sharedInstance] resetStats];
+	// [[ZSStatisticsController sharedInstance] saveStats];
 	
 	// Debug - clear saved puzzle.
-	[[ZSGameController sharedInstance] clearSavedGame];
+	// [[ZSGameController sharedInstance] clearSavedGame];
 }
 
 - (void)setUserDefaults {
