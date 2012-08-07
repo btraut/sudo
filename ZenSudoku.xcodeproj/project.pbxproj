@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		840216EA1538EAAD00B16131 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 840216E61538EAAD00B16131 /* README.txt */; };
-		840216EB1538EAAD00B16131 /* release_notes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 840216E71538EAAD00B16131 /* release_notes.txt */; };
-		840216ED1538F11400B16131 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 840216E51538EAAD00B16131 /* libTestFlight.a */; };
 		840216EF1538F15B00B16131 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 840216EE1538F15B00B16131 /* libz.dylib */; };
 		840E032415BFD22700F113D9 /* libFlurry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 840E032315BFD22700F113D9 /* libFlurry.a */; };
 		840E032615BFD75F00F113D9 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 840E032515BFD75F00F113D9 /* SystemConfiguration.framework */; };
@@ -67,10 +64,23 @@
 		8472509215829D330073D113 /* PageCurl@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8472509015829D330073D113 /* PageCurl@2x.png */; };
 		8485C6C715CDAF6D00A8294D /* ZSChangeDifficultyRibbonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8485C6C615CDAF6D00A8294D /* ZSChangeDifficultyRibbonViewController.m */; };
 		8485C6CB15CDB22C00A8294D /* ZSGameOverRibbonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8485C6CA15CDB22C00A8294D /* ZSGameOverRibbonViewController.m */; };
-		8485C6CE15CDCBAF00A8294D /* NewRecordArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 8485C6CC15CDCBAF00A8294D /* NewRecordArrow.png */; };
-		8485C6CF15CDCBAF00A8294D /* NewRecordArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8485C6CD15CDCBAF00A8294D /* NewRecordArrow@2x.png */; };
 		8485C6D215CDDA9600A8294D /* Stitching.png in Resources */ = {isa = PBXBuildFile; fileRef = 8485C6D015CDDA9600A8294D /* Stitching.png */; };
 		8485C6D315CDDA9600A8294D /* Stitching@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8485C6D115CDDA9600A8294D /* Stitching@2x.png */; };
+		8485C6D815CF425600A8294D /* libFlurryAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8485C6D715CF425600A8294D /* libFlurryAds.a */; };
+		8485C6DB15CF481600A8294D /* ZSAdPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8485C6DA15CF481600A8294D /* ZSAdPageViewController.m */; };
+		8485C6DD15CFACE500A8294D /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8485C6DC15CFACE500A8294D /* MediaPlayer.framework */; };
+		8485C6E015D07CDB00A8294D /* Pencil.png in Resources */ = {isa = PBXBuildFile; fileRef = 8485C6DE15D07CDB00A8294D /* Pencil.png */; };
+		8485C6E115D07CDB00A8294D /* Pencil.png in Resources */ = {isa = PBXBuildFile; fileRef = 8485C6DE15D07CDB00A8294D /* Pencil.png */; };
+		8485C6E215D07CDB00A8294D /* PencilSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 8485C6DF15D07CDB00A8294D /* PencilSelected.png */; };
+		8485C6E315D07CDB00A8294D /* PencilSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 8485C6DF15D07CDB00A8294D /* PencilSelected.png */; };
+		8485C6E615D07DE700A8294D /* PersonalBestRight.png in Resources */ = {isa = PBXBuildFile; fileRef = 8485C6E415D07DE700A8294D /* PersonalBestRight.png */; };
+		8485C6E715D07DE700A8294D /* PersonalBestRight.png in Resources */ = {isa = PBXBuildFile; fileRef = 8485C6E415D07DE700A8294D /* PersonalBestRight.png */; };
+		8485C6E815D07DE700A8294D /* PersonalBestRight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8485C6E515D07DE700A8294D /* PersonalBestRight@2x.png */; };
+		8485C6E915D07DE700A8294D /* PersonalBestRight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8485C6E515D07DE700A8294D /* PersonalBestRight@2x.png */; };
+		8485C6EC15D098A100A8294D /* RibbonShort.png in Resources */ = {isa = PBXBuildFile; fileRef = 8485C6EA15D0989F00A8294D /* RibbonShort.png */; };
+		8485C6ED15D098A100A8294D /* RibbonShort.png in Resources */ = {isa = PBXBuildFile; fileRef = 8485C6EA15D0989F00A8294D /* RibbonShort.png */; };
+		8485C6EE15D098A100A8294D /* RibbonShort@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8485C6EB15D098A100A8294D /* RibbonShort@2x.png */; };
+		8485C6EF15D098A100A8294D /* RibbonShort@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8485C6EB15D098A100A8294D /* RibbonShort@2x.png */; };
 		8492B76114C911FF0093B7AC /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8492B76014C911FF0093B7AC /* libsqlite3.0.dylib */; };
 		8492B77414CD69B10093B7AC /* ZSPuzzleFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 8492B77314CD69B10093B7AC /* ZSPuzzleFetcher.m */; };
 		8492B78814CEBDC80093B7AC /* Sudoku.db3 in Resources */ = {isa = PBXBuildFile; fileRef = 8492B78714CEBDC80093B7AC /* Sudoku.db3 */; };
@@ -172,7 +182,6 @@
 		84AC006A15C8BBC000E5AA6E /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845ABB191587EBFA006D2616 /* OpenGLES.framework */; };
 		84AC006B15C8BBC000E5AA6E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845ABB231587ED5B006D2616 /* QuartzCore.framework */; };
 		84AC006C15C8BBC000E5AA6E /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 843947E31589D30C00463720 /* GLKit.framework */; };
-		84AC006D15C8BBC000E5AA6E /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 840216E51538EAAD00B16131 /* libTestFlight.a */; };
 		84AC006E15C8BBC000E5AA6E /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 840216EE1538F15B00B16131 /* libz.dylib */; };
 		84AC006F15C8BBC000E5AA6E /* libFlurry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 840E032315BFD22700F113D9 /* libFlurry.a */; };
 		84AC007115C8BBC000E5AA6E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84D5501C147F1C4A00A7934E /* InfoPlist.strings */; };
@@ -187,8 +196,6 @@
 		84AC007A15C8BBC000E5AA6E /* Board@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8494BE6A14FAACCC00010233 /* Board@2x.png */; };
 		84AC007B15C8BBC000E5AA6E /* Pencil@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8494BE6F14FB117100010233 /* Pencil@2x.png */; };
 		84AC007C15C8BBC000E5AA6E /* PencilSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8494BE7014FB117100010233 /* PencilSelected@2x.png */; };
-		84AC007D15C8BBC000E5AA6E /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 840216E61538EAAD00B16131 /* README.txt */; };
-		84AC007E15C8BBC000E5AA6E /* release_notes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 840216E71538EAAD00B16131 /* release_notes.txt */; };
 		84AC007F15C8BBC000E5AA6E /* AutoPencil.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A0974A1548B22D0082C9D0 /* AutoPencil.png */; };
 		84AC008015C8BBC000E5AA6E /* AutoPencil@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A0974B1548B22D0082C9D0 /* AutoPencil@2x.png */; };
 		84AC008115C8BBC000E5AA6E /* AutoPencilHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A0974C1548B22D0082C9D0 /* AutoPencilHighlighted.png */; };
@@ -312,10 +319,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		840216E51538EAAD00B16131 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
-		840216E61538EAAD00B16131 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
-		840216E71538EAAD00B16131 /* release_notes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes.txt; sourceTree = "<group>"; };
-		840216E81538EAAD00B16131 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		840216EE1538F15B00B16131 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		840E032215BFD22700F113D9 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
 		840E032315BFD22700F113D9 /* libFlurry.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry.a; sourceTree = "<group>"; };
@@ -394,10 +397,20 @@
 		8485C6C615CDAF6D00A8294D /* ZSChangeDifficultyRibbonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSChangeDifficultyRibbonViewController.m; path = "View Controllers/ZSChangeDifficultyRibbonViewController.m"; sourceTree = "<group>"; };
 		8485C6C915CDB22B00A8294D /* ZSGameOverRibbonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSGameOverRibbonViewController.h; path = "View Controllers/ZSGameOverRibbonViewController.h"; sourceTree = "<group>"; };
 		8485C6CA15CDB22C00A8294D /* ZSGameOverRibbonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSGameOverRibbonViewController.m; path = "View Controllers/ZSGameOverRibbonViewController.m"; sourceTree = "<group>"; };
-		8485C6CC15CDCBAF00A8294D /* NewRecordArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = NewRecordArrow.png; path = Resources/Images/NewRecordArrow.png; sourceTree = "<group>"; };
-		8485C6CD15CDCBAF00A8294D /* NewRecordArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "NewRecordArrow@2x.png"; path = "Resources/Images/NewRecordArrow@2x.png"; sourceTree = "<group>"; };
 		8485C6D015CDDA9600A8294D /* Stitching.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Stitching.png; path = Resources/Images/Stitching.png; sourceTree = "<group>"; };
 		8485C6D115CDDA9600A8294D /* Stitching@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Stitching@2x.png"; path = "Resources/Images/Stitching@2x.png"; sourceTree = "<group>"; };
+		8485C6D515CF425600A8294D /* FlurryAdDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryAdDelegate.h; sourceTree = "<group>"; };
+		8485C6D615CF425600A8294D /* FlurryAds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryAds.h; sourceTree = "<group>"; };
+		8485C6D715CF425600A8294D /* libFlurryAds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurryAds.a; sourceTree = "<group>"; };
+		8485C6D915CF481500A8294D /* ZSAdPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSAdPageViewController.h; path = "View Controllers/ZSAdPageViewController.h"; sourceTree = "<group>"; };
+		8485C6DA15CF481600A8294D /* ZSAdPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSAdPageViewController.m; path = "View Controllers/ZSAdPageViewController.m"; sourceTree = "<group>"; };
+		8485C6DC15CFACE500A8294D /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		8485C6DE15D07CDB00A8294D /* Pencil.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Pencil.png; path = Resources/Images/Pencil.png; sourceTree = "<group>"; };
+		8485C6DF15D07CDB00A8294D /* PencilSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PencilSelected.png; path = Resources/Images/PencilSelected.png; sourceTree = "<group>"; };
+		8485C6E415D07DE700A8294D /* PersonalBestRight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PersonalBestRight.png; path = Resources/Images/PersonalBestRight.png; sourceTree = "<group>"; };
+		8485C6E515D07DE700A8294D /* PersonalBestRight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "PersonalBestRight@2x.png"; path = "Resources/Images/PersonalBestRight@2x.png"; sourceTree = "<group>"; };
+		8485C6EA15D0989F00A8294D /* RibbonShort.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RibbonShort.png; path = Resources/Images/RibbonShort.png; sourceTree = "<group>"; };
+		8485C6EB15D098A100A8294D /* RibbonShort@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "RibbonShort@2x.png"; path = "Resources/Images/RibbonShort@2x.png"; sourceTree = "<group>"; };
 		8492B76014C911FF0093B7AC /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		8492B77214CD69B10093B7AC /* ZSPuzzleFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSPuzzleFetcher.h; path = "Model Controllers/ZSPuzzleFetcher.h"; sourceTree = "<group>"; };
 		8492B77314CD69B10093B7AC /* ZSPuzzleFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSPuzzleFetcher.m; path = "Model Controllers/ZSPuzzleFetcher.m"; sourceTree = "<group>"; };
@@ -549,7 +562,6 @@
 				84AC006A15C8BBC000E5AA6E /* OpenGLES.framework in Frameworks */,
 				84AC006B15C8BBC000E5AA6E /* QuartzCore.framework in Frameworks */,
 				84AC006C15C8BBC000E5AA6E /* GLKit.framework in Frameworks */,
-				84AC006D15C8BBC000E5AA6E /* libTestFlight.a in Frameworks */,
 				84AC006E15C8BBC000E5AA6E /* libz.dylib in Frameworks */,
 				84AC006F15C8BBC000E5AA6E /* libFlurry.a in Frameworks */,
 			);
@@ -559,6 +571,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8485C6DD15CFACE500A8294D /* MediaPlayer.framework in Frameworks */,
 				840E032615BFD75F00F113D9 /* SystemConfiguration.framework in Frameworks */,
 				84A8FB1D15A6A1FB00D802C8 /* CoreText.framework in Frameworks */,
 				8492B76114C911FF0093B7AC /* libsqlite3.0.dylib in Frameworks */,
@@ -570,9 +583,9 @@
 				845ABB1A1587EBFA006D2616 /* OpenGLES.framework in Frameworks */,
 				845ABB241587ED5B006D2616 /* QuartzCore.framework in Frameworks */,
 				843947E41589D30C00463720 /* GLKit.framework in Frameworks */,
-				840216ED1538F11400B16131 /* libTestFlight.a in Frameworks */,
 				840216EF1538F15B00B16131 /* libz.dylib in Frameworks */,
 				840E032415BFD22700F113D9 /* libFlurry.a in Frameworks */,
+				8485C6D815CF425600A8294D /* libFlurryAds.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -589,18 +602,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		840216E41538EAAD00B16131 /* TestFlightSDK1.0 */ = {
-			isa = PBXGroup;
-			children = (
-				840216E51538EAAD00B16131 /* libTestFlight.a */,
-				840216E61538EAAD00B16131 /* README.txt */,
-				840216E71538EAAD00B16131 /* release_notes.txt */,
-				840216E81538EAAD00B16131 /* TestFlight.h */,
-			);
-			name = TestFlightSDK1.0;
-			path = External/TestFlightSDK1.0;
-			sourceTree = "<group>";
-		};
 		840E032115BFD22700F113D9 /* Flurry */ = {
 			isa = PBXGroup;
 			children = (
@@ -666,13 +667,13 @@
 		8449D95B14833649003F6FB3 /* External */ = {
 			isa = PBXGroup;
 			children = (
+				8485C6D415CF425600A8294D /* FlurryAds */,
 				840E032115BFD22700F113D9 /* Flurry */,
 				84A8FB1115A6A06400D802C8 /* MTLabel */,
 				84D2032E15A64CF400BA9CCF /* ProgressDots */,
 				84D2032515A3B02D00BA9CCF /* iCarousel */,
 				84AC6B3D1508B2D000C2F192 /* UIColor+ColorWithHex */,
 				8426A79614ED16A3006DAD1C /* FMDB */,
-				840216E41538EAAD00B16131 /* TestFlightSDK1.0 */,
 			);
 			name = External;
 			sourceTree = "<group>";
@@ -741,10 +742,23 @@
 				8463D90315986B8C00AED0B4 /* UndoHighlighted@2x.png */,
 				84B0B1CA15777F1900A99510 /* BlueAnswerOptionSelection.png */,
 				84B0B1CB15777F1900A99510 /* BlueAnswerOptionSelection@2x.png */,
+				8485C6DE15D07CDB00A8294D /* Pencil.png */,
 				8494BE6F14FB117100010233 /* Pencil@2x.png */,
+				8485C6DF15D07CDB00A8294D /* PencilSelected.png */,
 				8494BE7014FB117100010233 /* PencilSelected@2x.png */,
 			);
 			name = "Bottom Buttons";
+			sourceTree = "<group>";
+		};
+		8485C6D415CF425600A8294D /* FlurryAds */ = {
+			isa = PBXGroup;
+			children = (
+				8485C6D515CF425600A8294D /* FlurryAdDelegate.h */,
+				8485C6D615CF425600A8294D /* FlurryAds.h */,
+				8485C6D715CF425600A8294D /* libFlurryAds.a */,
+			);
+			name = FlurryAds;
+			path = External/FlurryAds;
 			sourceTree = "<group>";
 		};
 		8492B78414CEAE7A0093B7AC /* Databases */ = {
@@ -820,10 +834,12 @@
 				84A8FB2515AB8DCE00D802C8 /* SplashPage@2x.png */,
 				84D54E9515B4139D003B1705 /* Ribbon.png */,
 				84D54E9615B4139D003B1705 /* Ribbon@2x.png */,
+				8485C6EA15D0989F00A8294D /* RibbonShort.png */,
+				8485C6EB15D098A100A8294D /* RibbonShort@2x.png */,
+				8485C6E415D07DE700A8294D /* PersonalBestRight.png */,
+				8485C6E515D07DE700A8294D /* PersonalBestRight@2x.png */,
 				842311E315B628B500221E19 /* TapToChangeDifficultyNotice.png */,
 				842311E415B628B500221E19 /* TapToChangeDifficultyNotice@2x.png */,
-				8485C6CC15CDCBAF00A8294D /* NewRecordArrow.png */,
-				8485C6CD15CDCBAF00A8294D /* NewRecordArrow@2x.png */,
 				8485C6D015CDDA9600A8294D /* Stitching.png */,
 				8485C6D115CDDA9600A8294D /* Stitching@2x.png */,
 				8428AD3A154A52F700BA8EE0 /* Default.png */,
@@ -935,6 +951,7 @@
 		84D55012147F1C4A00A7934E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8485C6DC15CFACE500A8294D /* MediaPlayer.framework */,
 				840E032515BFD75F00F113D9 /* SystemConfiguration.framework */,
 				84A8FB1C15A6A1FB00D802C8 /* CoreText.framework */,
 				843947E31589D30C00463720 /* GLKit.framework */,
@@ -1009,6 +1026,8 @@
 				84A8FB1F15AB738800D802C8 /* ZSFoldedPageViewController.m */,
 				84A8FB2115AB7C7A00D802C8 /* ZSSplashPageViewController.h */,
 				84A8FB2215AB7C7A00D802C8 /* ZSSplashPageViewController.m */,
+				8485C6D915CF481500A8294D /* ZSAdPageViewController.h */,
+				8485C6DA15CF481600A8294D /* ZSAdPageViewController.m */,
 				84D54E9A15B41590003B1705 /* ZSRibbonViewController.h */,
 				84D54E9B15B41593003B1705 /* ZSRibbonViewController.m */,
 				8485C6C515CDAF6D00A8294D /* ZSChangeDifficultyRibbonViewController.h */,
@@ -1138,8 +1157,6 @@
 				84AC007A15C8BBC000E5AA6E /* Board@2x.png in Resources */,
 				84AC007B15C8BBC000E5AA6E /* Pencil@2x.png in Resources */,
 				84AC007C15C8BBC000E5AA6E /* PencilSelected@2x.png in Resources */,
-				84AC007D15C8BBC000E5AA6E /* README.txt in Resources */,
-				84AC007E15C8BBC000E5AA6E /* release_notes.txt in Resources */,
 				84AC007F15C8BBC000E5AA6E /* AutoPencil.png in Resources */,
 				84AC008015C8BBC000E5AA6E /* AutoPencil@2x.png in Resources */,
 				84AC008115C8BBC000E5AA6E /* AutoPencilHighlighted.png in Resources */,
@@ -1201,6 +1218,12 @@
 				84AC00CA15C8CAC900E5AA6E /* Default@2x.png in Resources */,
 				84AC00CE15C8CB8500E5AA6E /* SplashPage.png in Resources */,
 				84AC00D015C8CB8500E5AA6E /* SplashPage@2x.png in Resources */,
+				8485C6E115D07CDB00A8294D /* Pencil.png in Resources */,
+				8485C6E315D07CDB00A8294D /* PencilSelected.png in Resources */,
+				8485C6E715D07DE700A8294D /* PersonalBestRight.png in Resources */,
+				8485C6E915D07DE700A8294D /* PersonalBestRight@2x.png in Resources */,
+				8485C6ED15D098A100A8294D /* RibbonShort.png in Resources */,
+				8485C6EF15D098A100A8294D /* RibbonShort@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1220,8 +1243,6 @@
 				8494BE6C14FAACCC00010233 /* Board@2x.png in Resources */,
 				8494BE7114FB117100010233 /* Pencil@2x.png in Resources */,
 				8494BE7214FB117100010233 /* PencilSelected@2x.png in Resources */,
-				840216EA1538EAAD00B16131 /* README.txt in Resources */,
-				840216EB1538EAAD00B16131 /* release_notes.txt in Resources */,
 				84A097521548B22D0082C9D0 /* AutoPencil.png in Resources */,
 				84A097531548B22D0082C9D0 /* AutoPencil@2x.png in Resources */,
 				84A097541548B22D0082C9D0 /* AutoPencilHighlighted.png in Resources */,
@@ -1283,10 +1304,14 @@
 				84BE033515B6B48C00156895 /* HintsBackground.png in Resources */,
 				84BE033615B6B48C00156895 /* HintsBackground@2x.png in Resources */,
 				84BE033C15B77E9700156895 /* Settings.bundle in Resources */,
-				8485C6CE15CDCBAF00A8294D /* NewRecordArrow.png in Resources */,
-				8485C6CF15CDCBAF00A8294D /* NewRecordArrow@2x.png in Resources */,
 				8485C6D215CDDA9600A8294D /* Stitching.png in Resources */,
 				8485C6D315CDDA9600A8294D /* Stitching@2x.png in Resources */,
+				8485C6E015D07CDB00A8294D /* Pencil.png in Resources */,
+				8485C6E215D07CDB00A8294D /* PencilSelected.png in Resources */,
+				8485C6E615D07DE700A8294D /* PersonalBestRight.png in Resources */,
+				8485C6E815D07DE700A8294D /* PersonalBestRight@2x.png in Resources */,
+				8485C6EC15D098A100A8294D /* RibbonShort.png in Resources */,
+				8485C6EE15D098A100A8294D /* RibbonShort@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1442,6 +1467,7 @@
 				84EEAA3215C3D968006C35B0 /* ZSHintGeneratorEliminatePencilsRemotePairs.m in Sources */,
 				8485C6C715CDAF6D00A8294D /* ZSChangeDifficultyRibbonViewController.m in Sources */,
 				8485C6CB15CDB22C00A8294D /* ZSGameOverRibbonViewController.m in Sources */,
+				8485C6DB15CF481600A8294D /* ZSAdPageViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1514,6 +1540,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/ZenSudoku/External/TestFlightSDK1.0\"",
 					"\"$(SRCROOT)/ZenSudoku/External/Flurry\"",
+					"\"$(SRCROOT)/ZenSudoku/External/FlurryAds\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1679,6 +1706,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/ZenSudoku/External/TestFlightSDK1.0\"",
 					"\"$(SRCROOT)/ZenSudoku/External/Flurry\"",
+					"\"$(SRCROOT)/ZenSudoku/External/FlurryAds\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1704,6 +1732,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/ZenSudoku/External/TestFlightSDK1.0\"",
 					"\"$(SRCROOT)/ZenSudoku/External/Flurry\"",
+					"\"$(SRCROOT)/ZenSudoku/External/FlurryAds\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

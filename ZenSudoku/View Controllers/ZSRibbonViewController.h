@@ -21,11 +21,16 @@
 	UIImageView *ribbonView;
 }
 
+@property (strong) UIImage *ribbonImage;
+
 @property (assign, readonly) BOOL shown;
 
 @property (weak) id<ZSRibbonViewControllerDelegate> delegate;
 
 - (void)showRibbon;
 - (void)hideRibbon;
+
+- (void)ribbonFinishedShowing;
+- (void)ribbonFinishedHiding;
 
 @end

@@ -76,6 +76,10 @@
 	[self updateScreenshotSynchronous:NO];
 }
 
+- (void)viewWasPromotedToFront {
+	// Available for override in subclasses.
+}
+
 - (void)applicationWillResignActive:(UIApplication *)application {
 	[self.foldedCornerViewController pauseAnimation];
 }

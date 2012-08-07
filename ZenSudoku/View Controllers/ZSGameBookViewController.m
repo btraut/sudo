@@ -8,15 +8,16 @@
 
 #import "ZSGameBookViewController.h"
 
-#import "ZSGameController.h"
-#import "ZSGame.h"
-#import "ZSGameViewController.h"
-#import "ZSBoardViewController.h"
-#import "ZSHintViewController.h"
-#import "ZSFoldedCornerViewController.h"
 #import "ZSAppDelegate.h"
-#import "ZSGameOverRibbonViewController.h"
 #import "ZSStatisticsController.h"
+#import "ZSGame.h"
+#import "ZSGameController.h"
+#import "ZSBoardViewController.h"
+#import "ZSFoldedCornerViewController.h"
+#import "ZSGameViewController.h"
+#import "ZSAdPageViewController.h"
+#import "ZSHintViewController.h"
+#import "ZSGameOverRibbonViewController.h"
 
 @interface ZSGameBookViewController () {
 	UIImageView *_innerBook;
@@ -26,6 +27,7 @@
 	ZSGameOverRibbonViewController *_gameOverRibbonViewController;
 	
 	ZSSplashPageViewController *_splashPageViewController;
+	ZSAdPageViewController *_adPageViewController;
 	
 	UISwipeGestureRecognizer *_downSwipeGestureRecognizer;
 	UITapGestureRecognizer *_hintTapGestureRecognizer;
@@ -102,6 +104,13 @@
 	_splashPageViewController.animationDelegate = self;
 	[_innerBook addSubview:_splashPageViewController.view];
 	
+#ifdef FREEVERSION
+	// Create the ad page view.
+	_adPageViewController = [[ZSAdPageViewController alloc] init];
+	_adPageViewController.animationDelegate = self;
+	[_innerBook insertSubview:_adPageViewController.view belowSubview:_splashPageViewController.view];
+#endif
+	
 	// Create the page curl gradient on the left.
 	UIImageView *pageCurlGradient = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"PageCurlGradient.png"]];
 	pageCurlGradient.frame = CGRectMake(0, 0, 17, 460);
@@ -127,11 +136,15 @@
 	_changeDifficultyRibbonViewController.delegate = self;
 	
 	_gameOverRibbonViewController = [[ZSGameOverRibbonViewController alloc] init];
+	_gameOverRibbonViewController.ribbonImage = [UIImage imageNamed:@"RibbonShort.png"];
 	_gameOverRibbonViewController.delegate = self;
 	
 	// Start the background process timer.
 	_backgroundProcessTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(_backgroundProcessTimerDidAdvance:) userInfo:nil repeats:YES];
 	_backgroundProcessTimerCount = 0;
+	
+	// Send the start notice to the top-most page.
+	[_splashPageViewController viewWasPromotedToFront];
 }
 
 - (void)_loadNewGame {
@@ -307,6 +320,32 @@
 	
 	self.currentGameViewController.animateCornerWhenPromoted = YES;
 	
+#ifdef FREEVERSION
+	if (viewController == _splashPageViewController) {
+		[_splashPageViewController.view removeFromSuperview];
+		_splashPageViewController = nil;
+		
+		[_adPageViewController viewWasPromotedToFront];
+	} else if (viewController == _adPageViewController) {
+		[_adPageViewController.view removeFromSuperview];
+		
+		[self.currentGameViewController viewWasPromotedToFront];
+	} else {
+		// Get the previous game out of the way.
+		[self.currentGameViewController.view removeFromSuperview];
+		
+		// Swap the next game view controller for the current. We'll recycle the old one so we don't need to reinitialize.
+		self.extraGameViewController = self.currentGameViewController;
+		
+		// Promote the other view controllers.
+		self.currentGameViewController = self.nextGameViewController;
+		self.nextGameViewController = self.lastGameViewController;
+		self.lastGameViewController = nil;
+		
+		// Fire up the new game.
+		[self.currentGameViewController viewWasPromotedToFront];
+	}
+#else
 	if (viewController == _splashPageViewController) {
 		[_splashPageViewController.view removeFromSuperview];
 		_splashPageViewController = nil;
@@ -327,6 +366,7 @@
 		// Fire up the new game.
 		[self.currentGameViewController viewWasPromotedToFront];
 	}
+#endif
 }
 
 #pragma mark - ZSFoldedPageAndPlusButtonViewControllerAnimationDelegate Implementation

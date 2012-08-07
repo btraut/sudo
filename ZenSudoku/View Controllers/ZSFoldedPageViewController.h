@@ -35,6 +35,8 @@
 @property (assign) BOOL needsScreenshotUpdate;
 @property (assign) BOOL forceScreenshotUpdateOnDrag;
 
+- (void)viewWasPromotedToFront;
+
 - (void)applicationWillResignActive:(UIApplication *)application;
 - (void)applicationDidBecomeActive:(UIApplication *)application;
 

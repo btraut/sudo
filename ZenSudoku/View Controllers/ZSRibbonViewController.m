@@ -19,6 +19,7 @@
 
 @implementation ZSRibbonViewController
 
+@synthesize ribbonImage;
 @synthesize shown = _shown;
 @synthesize delegate;
 
@@ -42,8 +43,12 @@
 	[overlay addGestureRecognizer:_ribbonTapGestureRecognizer];
 	
 	// Build the ribbon.
-	ribbonView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Ribbon.png"]];
-	ribbonView.frame = CGRectMake(61, -329, 198, 329);
+	if (self.ribbonImage == nil) {
+		self.ribbonImage = [UIImage imageNamed:@"Ribbon.png"];
+	}
+	
+	ribbonView = [[UIImageView alloc] initWithImage:self.ribbonImage];
+	ribbonView.frame = CGRectMake((320 - ribbonView.frame.size.width) / 2, -ribbonView.frame.size.height, ribbonView.frame.size.width, ribbonView.frame.size.height);
 	ribbonView.userInteractionEnabled = YES;
 	[self.view addSubview:ribbonView];
 	
@@ -81,7 +86,9 @@
 	 animations:^{
 		 ribbonView.frame = CGRectMake(ribbonView.frame.origin.x, -3, ribbonView.frame.size.width, ribbonView.frame.size.height);
 	 }
-	 completion:NULL];
+	 completion:^(BOOL finished){
+		 [self ribbonFinishedShowing];
+	 }];
 }
 
 - (void)hideRibbon {
@@ -96,11 +103,19 @@
 	 delay:0
 	 options:UIViewAnimationOptionCurveEaseOut
 	 animations:^{
-		 ribbonView.frame = CGRectMake(ribbonView.frame.origin.x, -329, ribbonView.frame.size.width, ribbonView.frame.size.height);
+		 ribbonView.frame = CGRectMake(ribbonView.frame.origin.x, -ribbonView.frame.size.height, ribbonView.frame.size.width, ribbonView.frame.size.height);
 	 }
 	 completion:^(BOOL finished){
-		 [self.delegate hideRibbonAnimationDidFinish];
+		 [self ribbonFinishedHiding];
 	 }];
+}
+
+- (void)ribbonFinishedShowing {
+	
+}
+
+- (void)ribbonFinishedHiding {
+	[self.delegate hideRibbonAnimationDidFinish];
 }
 
 @end

@@ -12,10 +12,10 @@
 #import "ZSStatisticsController.h"
 #import "ZSGame.h"
 
-#import "TestFlight.h"
 #import "Flurry.h"
+#import "FlurryAds.h"
 
-NSString * const kTestFlightTeamToken = @"b838f7b1003025e596ee5b134d349769_NDgyOTkyMDEyLTAxLTEzIDA1OjAyOjMzLjM4ODA4NA";
+NSString * const kFlurryAPIKey = @"RKJTR5RVTPM98RTJ4GPH";
 
 NSString * const kAnalyticsCheckpointStartedNewPuzzle = @"kAnalyticsCheckpointStartedNewPuzzle";
 NSString * const kAnalyticsCheckpointSolvedPuzzle = @"kAnalyticsCheckpointSolvedPuzzle";
@@ -49,22 +49,6 @@ NSString * const kPreventScreenDimmingOptionKey = @"kPreventScreenDimmingOptionK
 @synthesize navigationController = _navigationController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-	// Initialize Flurry.
-	[Flurry startSession:@"RKJTR5RVTPM98RTJ4GPH"];
-	
-	// Tell TestFlight that we used the app.
-	[TestFlight takeOff:kTestFlightTeamToken];
-	
-	[TestFlight setOptions:[NSDictionary dictionaryWithObjectsAndKeys:
-							[NSNumber numberWithBool:NO], @"logToConsole",
-							[NSNumber numberWithBool:NO], @"logToSTDERR",
-							nil]];
-	
-#ifndef RELEASE 
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-	[TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
-#endif
-	
 	// Set user defaults.
 	[self setUserDefaults];
 	
@@ -90,6 +74,12 @@ NSString * const kPreventScreenDimmingOptionKey = @"kPreventScreenDimmingOptionK
 	
 	// Hide the menu bar.
 	[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackOpaque animated:YES];
+	
+	// Initialize Flurry.
+	[Flurry startSession:kFlurryAPIKey];
+	[FlurryAds initialize:_window.rootViewController];
+	
+	[FlurryAds enableTestAds:YES];
 	
 	return YES;
 }

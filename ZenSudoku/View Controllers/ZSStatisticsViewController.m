@@ -10,8 +10,6 @@
 #import "ZSStatisticsController.h"
 #import "ZSAppDelegate.h"
 
-#import "TestFlight.h"
-
 @implementation ZSStatisticsViewController
 
 - (id)initWithStyle:(UITableViewStyle)style {

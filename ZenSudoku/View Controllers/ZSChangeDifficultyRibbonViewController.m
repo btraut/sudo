@@ -68,9 +68,7 @@
 	[_moderateButton addTarget:self action:@selector(_difficultyButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
 	[ribbonView addSubview:_moderateButton];
 	
-#ifdef FREEVERSION
-	
-#else
+#ifndef FREEVERSION
 	_challengingButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	[_challengingButton addTarget:self action:@selector(_difficultyButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
 	_challengingButton.tag = ZSGameDifficultyChallenging;

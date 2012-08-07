@@ -233,7 +233,7 @@ typedef struct {
 	pencilButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	
 	[pencilButton addTarget:self action:@selector(pencilButtonWasTouched) forControlEvents:UIControlEventTouchUpInside];
-	pencilButton.frame = CGRectMake(288, 371, 21.5f, 32.0f);
+	pencilButton.frame = CGRectMake(287, 371, 22, 32);
 	
 	[pencilButton setBackgroundImage:[UIImage imageNamed:@"Pencil"] forState:UIControlStateNormal];
 	[pencilButton setBackgroundImage:[UIImage imageNamed:@"PencilSelected"] forState:UIControlStateSelected];
@@ -280,6 +280,9 @@ typedef struct {
 	// Analytics Checkpoint
 	[Flurry logEvent:kAnalyticsCheckpointStartedNewPuzzle withParameters:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:self.game.difficulty], @"difficulty", nil]];
 	
+	// Start with calling super.
+	[super viewWasPromotedToFront];
+	
 	// This is now the active game.
 	self.active = YES;
 	
@@ -303,12 +306,6 @@ typedef struct {
 		
 		// Handle pulsing.
 		[self _evaluateHintButtonPulsing];
-		
-		// Debug
-		if (self.game.difficulty == ZSGameDifficultyEasy) {
-			[self solveMostOfThePuzzle];
-			[self setAutoPencils];
-		}
 	}
 	
 	// Update the folded corner image.

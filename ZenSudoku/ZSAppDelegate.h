@@ -23,7 +23,7 @@
 
 // Analytics Params
 
-extern NSString * const kTestFlightTeamToken;
+extern NSString * const kFlurryAPIKey;
 
 extern NSString * const kAnalyticsCheckpointStartedNewPuzzle;
 extern NSString * const kAnalyticsCheckpointSolvedPuzzle;

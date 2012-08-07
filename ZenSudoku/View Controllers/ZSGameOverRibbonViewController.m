@@ -53,7 +53,7 @@
 	UIColor *whiteTextShadowColor = [UIColor colorWithHexString:@"#7d1c0c"];
 	
 	UIFont *redFont = [UIFont fontWithName:@"HelveticaNeue-Medium" size:12.0f];
-	UIColor *redTextColor = [UIColor colorWithHexString:@"#69170a"];
+	UIColor *redTextColor = [UIColor colorWithHexString:@"#7d1c0c"];
 	
 	// "you just solved a"
 	_youJustSolvedALabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 64, 178, 20)];
@@ -65,7 +65,7 @@
 	[ribbonView addSubview:_youJustSolvedALabel];
 	
 	// "<difficulty>"
-	_difficultyLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 82, 178, 44)];
+	_difficultyLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 79, 178, 44)];
 	_difficultyLabel.backgroundColor = [UIColor clearColor];
 	_difficultyLabel.font = whiteFont;
 	_difficultyLabel.textColor = whiteTextColor;
@@ -75,7 +75,7 @@
 	[ribbonView addSubview:_difficultyLabel];
 	
 	// "puzzle in"
-	UILabel *puzzleInLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 128, 178, 20)];
+	UILabel *puzzleInLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 121, 178, 20)];
 	puzzleInLabel.backgroundColor = [UIColor clearColor];
 	puzzleInLabel.font = redFont;
 	puzzleInLabel.textColor = redTextColor;
@@ -84,7 +84,7 @@
 	[ribbonView addSubview:puzzleInLabel];
 	
 	// "<completion time>"
-	_completionTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 148, 178, 44)];
+	_completionTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 136, 178, 44)];
 	_completionTimeLabel.backgroundColor = [UIColor clearColor];
 	_completionTimeLabel.font = whiteFont;
 	_completionTimeLabel.textColor = whiteTextColor;
@@ -94,22 +94,11 @@
 	[ribbonView addSubview:_completionTimeLabel];
 	
 	// Create "New Record" arrow.
-	_newRecordArrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"NewRecordArrow.png"]];
-	_newRecordArrow.frame = CGRectMake(152, 160, _newRecordArrow.frame.size.width, _newRecordArrow.frame.size.height);
-	
-	MTLabel *newRecordLabel = [[MTLabel alloc] init];
-	newRecordLabel.frame = CGRectMake(15, -1, 34, 22);
-	newRecordLabel.backgroundColor = [UIColor clearColor];
-	newRecordLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:11.0f];
-	newRecordLabel.lineHeight = 10.0f;
-	newRecordLabel.numberOfLines = 2;
-	newRecordLabel.fontColor = whiteTextColor;
-	newRecordLabel.textAlignment = UITextAlignmentCenter;
-	newRecordLabel.text = @"new record!";
-	[_newRecordArrow addSubview:newRecordLabel];
+	_newRecordArrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"PersonalBestRight.png"]];
+	_newRecordArrow.frame = CGRectMake(164, 136, _newRecordArrow.frame.size.width, _newRecordArrow.frame.size.height);
 	
 	// "without using hints"
-	_totalHintsLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 194, 178, 20)];
+	_totalHintsLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 174, 178, 20)];
 	_totalHintsLabel.backgroundColor = [UIColor clearColor];
 	_totalHintsLabel.font = redFont;
 	_totalHintsLabel.textColor = redTextColor;
@@ -118,11 +107,11 @@
 	
 	// Create bottom stitching.
 	UIImageView *bottomStitching = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Stitching.png"]];
-	bottomStitching.frame = CGRectMake(20, 220, bottomStitching.frame.size.width, bottomStitching.frame.size.height);
+	bottomStitching.frame = CGRectMake(20, 199.5f, bottomStitching.frame.size.width, bottomStitching.frame.size.height);
 	[ribbonView addSubview:bottomStitching];
 	
 	// "in this difficulty,"
-	UILabel *inThisDifficultyLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 228, 178, 20)];
+	UILabel *inThisDifficultyLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 206, 178, 20)];
 	inThisDifficultyLabel.backgroundColor = [UIColor clearColor];
 	inThisDifficultyLabel.font = redFont;
 	inThisDifficultyLabel.textColor = redTextColor;
@@ -131,7 +120,7 @@
 	[ribbonView addSubview:inThisDifficultyLabel];
 	
 	// "you've solved"
-	UILabel *youveSolvedLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 241, 178, 20)];
+	UILabel *youveSolvedLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 219, 178, 20)];
 	youveSolvedLabel.backgroundColor = [UIColor clearColor];
 	youveSolvedLabel.font = redFont;
 	youveSolvedLabel.textColor = redTextColor;
@@ -140,7 +129,7 @@
 	[ribbonView addSubview:youveSolvedLabel];
 	
 	// "<total puzzles> puzzles!"
-	_totalPuzzlesLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 261, 178, 44)];
+	_totalPuzzlesLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 236, 178, 44)];
 	_totalPuzzlesLabel.backgroundColor = [UIColor clearColor];
 	_totalPuzzlesLabel.font = whiteFont;
 	_totalPuzzlesLabel.textColor = whiteTextColor;
@@ -174,27 +163,7 @@
 	
 	_completionTimeLabel.text = [self _formatedCompletionTime];
 	
-	[_completionTimeLabel sizeToFit];
-	
-	if (_completionTimeLabel.frame.size.width > 178) {
-		_completionTimeLabel.frame = CGRectMake(10, 148, 178, 44);
-	} else {
-		_completionTimeLabel.frame = CGRectMake(10 + (178 - _completionTimeLabel.frame.size.width) / 2, 148, _completionTimeLabel.frame.size.width, 44);
-	}
-	
-	if (self.newRecord) {
-		CGFloat rightSideOfCompletionTimeLabel = _completionTimeLabel.frame.origin.x + _completionTimeLabel.frame.size.width;
-		
-		if (rightSideOfCompletionTimeLabel < 152) {
-			_newRecordArrow.frame = CGRectMake(152, _newRecordArrow.frame.origin.y, _newRecordArrow.frame.size.width, _newRecordArrow.frame.size.height);
-		} else {
-			_newRecordArrow.frame = CGRectMake(rightSideOfCompletionTimeLabel + 4, _newRecordArrow.frame.origin.y, _newRecordArrow.frame.size.width, _newRecordArrow.frame.size.height);
-		}
-		
-		[ribbonView addSubview:_newRecordArrow];
-	} else {
-		[_newRecordArrow removeFromSuperview];
-	}
+	[_newRecordArrow removeFromSuperview];
 	
 	if (self.hintsUsed == 1) {
 		_totalHintsLabel.text = @"with only one hint";
@@ -263,6 +232,29 @@
 	}
 	
 	return timeString;
+}
+
+- (void)ribbonFinishedShowing {
+	[super ribbonFinishedShowing];
+	
+	if (self.newRecord) {
+		CGRect originalFrame = _newRecordArrow.frame;
+		
+		_newRecordArrow.alpha = 0;
+		_newRecordArrow.frame = CGRectMake(originalFrame.origin.x - originalFrame.size.width, originalFrame.origin.y - originalFrame.size.height, originalFrame.size.width * 3, originalFrame.size.height * 3);
+		
+		[ribbonView addSubview:_newRecordArrow];
+		
+		[UIView
+		 animateWithDuration:0.4f
+		 delay:0
+		 options:UIViewAnimationOptionCurveEaseOut
+		 animations:^{
+			 _newRecordArrow.frame = originalFrame;
+			 _newRecordArrow.alpha = 1;
+		 }
+		 completion:NULL];
+	}
 }
 
 @end
