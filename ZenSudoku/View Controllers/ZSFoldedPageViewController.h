@@ -35,7 +35,10 @@
 @property (assign) BOOL needsScreenshotUpdate;
 @property (assign) BOOL forceScreenshotUpdateOnDrag;
 
+@property (assign) BOOL animateCornerWhenPromoted;
+
 - (void)viewWasPromotedToFront;
+- (void)viewWasRemovedFromBook;
 
 - (void)applicationWillResignActive:(UIApplication *)application;
 - (void)applicationDidBecomeActive:(UIApplication *)application;

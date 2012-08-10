@@ -15,19 +15,23 @@
 #import "ZSBoardViewController.h"
 #import "ZSFoldedCornerViewController.h"
 #import "ZSGameViewController.h"
-#import "ZSAdPageViewController.h"
 #import "ZSHintViewController.h"
 #import "ZSGameOverRibbonViewController.h"
+
+#ifdef FREEVERSION
+#import "ZSAdPageViewController.h"
+#endif
 
 @interface ZSGameBookViewController () {
 	UIImageView *_innerBook;
 	
+	NSMutableArray *_pages;
+	
+	ZSGameViewController *_extraGameViewController;
+	
 	ZSHintViewController *_hintViewController;
 	ZSChangeDifficultyRibbonViewController *_changeDifficultyRibbonViewController;
 	ZSGameOverRibbonViewController *_gameOverRibbonViewController;
-	
-	ZSSplashPageViewController *_splashPageViewController;
-	ZSAdPageViewController *_adPageViewController;
 	
 	UISwipeGestureRecognizer *_downSwipeGestureRecognizer;
 	UITapGestureRecognizer *_hintTapGestureRecognizer;
@@ -40,13 +44,18 @@
 	BOOL _shouldTurnPageAfterRibbonCloses;
 	
 	NSInteger _gamesInARowWithNoAction;
+	
+	BOOL _preventedAdOnFirstScreen;
 }
 
 @end
 
 @implementation ZSGameBookViewController
 
-@synthesize currentGameViewController, nextGameViewController, lastGameViewController, extraGameViewController;
+@synthesize currentGameViewController = _currentGameViewController;
+@synthesize nextGameViewController = _nextGameViewController;
+@synthesize lastGameViewController = _lastGameViewController;
+
 @synthesize hintsShown = _hintsShown;
 @synthesize ribbonShown = _ribbonShown;
 
@@ -59,6 +68,15 @@
 	_innerBook.userInteractionEnabled = YES;
 	[self.view addSubview:_innerBook];
 	
+	// Create the list of pages.
+	_pages = [NSMutableArray array];
+	
+	// Create the splash page view.
+	ZSSplashPageViewController *splashPageViewController = [[ZSSplashPageViewController alloc] init];
+	splashPageViewController.foldedCornerVisibleOnLoad = YES;
+	splashPageViewController.animationDelegate = self;
+	[self _addPage:splashPageViewController];
+	
 	// Create the game view.
 	ZSGame *currentGame;
 	
@@ -70,46 +88,46 @@
 		currentGame = [[ZSGameController sharedInstance] fetchGameWithDifficulty:newGameDifficulty];
 	}
 	
-	self.currentGameViewController = [[ZSGameViewController alloc] initWithGame:currentGame];
-	self.currentGameViewController.hintDelegate = self;
-	self.currentGameViewController.animationDelegate = self;
-	self.currentGameViewController.difficultyButtonDelegate = self;
-	self.currentGameViewController.majorGameStateChangeDelegate = self;
-	[_innerBook addSubview:self.currentGameViewController.view];
+	_nextGameViewController = [[ZSGameViewController alloc] initWithGame:currentGame];
+	_nextGameViewController.hintDelegate = self;
+	_nextGameViewController.animationDelegate = self;
+	_nextGameViewController.difficultyButtonDelegate = self;
+	_nextGameViewController.majorGameStateChangeDelegate = self;
+	
+	[self _addPage:_nextGameViewController];
 	
 	if ([[[NSUserDefaults standardUserDefaults] objectForKey:kDisplayedTutorialNotices] boolValue]) {
-		[self.currentGameViewController hideTapToChangeDifficultyNoticeAnimated:NO];
+		[_nextGameViewController hideTapToChangeDifficultyNoticeAnimated:NO];
 	} else {
-		[self.currentGameViewController showTapToChangeDifficultyNoticeAnimated:NO];
+		[_nextGameViewController showTapToChangeDifficultyNoticeAnimated:NO];
 		
 		[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:kDisplayedTutorialNotices];
 	}
+	
+	_currentGameViewController = _nextGameViewController;
+	
+#ifdef FREEVERSION
+	// Create the ad page view.
+	ZSAdPageViewController *adPageViewController = [[ZSAdPageViewController alloc] init];
+	adPageViewController.animationDelegate = self;
+	adPageViewController.animateCornerWhenPromoted = NO;
+	adPageViewController.foldedCornerVisibleOnLoad = NO;
+	[self _addPage:adPageViewController];
+#endif
 	
 	// Load the page behind the current. Yet another page will be loaded when the current page is done animating.
 	ZSGameDifficulty newGameDifficulty = [[NSUserDefaults standardUserDefaults] integerForKey:kLastPlayedPuzzleDifficulty];
 	ZSGame *newGame = [[ZSGameController sharedInstance] fetchGameWithDifficulty:newGameDifficulty];
 	
-	self.nextGameViewController = [[ZSGameViewController alloc] initWithGame:newGame];
-	self.nextGameViewController.hintDelegate = self;
-	self.nextGameViewController.animationDelegate = self;
-	self.nextGameViewController.difficultyButtonDelegate = self;
-	self.nextGameViewController.majorGameStateChangeDelegate = self;
-	[_innerBook insertSubview:self.nextGameViewController.view belowSubview:self.currentGameViewController.view];
+	_nextGameViewController = [[ZSGameViewController alloc] initWithGame:newGame];
+	_nextGameViewController.hintDelegate = self;
+	_nextGameViewController.animationDelegate = self;
+	_nextGameViewController.difficultyButtonDelegate = self;
+	_nextGameViewController.majorGameStateChangeDelegate = self;
 	
-	[self.nextGameViewController hideTapToChangeDifficultyNoticeAnimated:NO];
+	[self _addPage:_nextGameViewController];
 	
-	// Create the splash page view.
-	_splashPageViewController = [[ZSSplashPageViewController alloc] init];
-	_splashPageViewController.foldedCornerVisibleOnLoad = YES;
-	_splashPageViewController.animationDelegate = self;
-	[_innerBook addSubview:_splashPageViewController.view];
-	
-#ifdef FREEVERSION
-	// Create the ad page view.
-	_adPageViewController = [[ZSAdPageViewController alloc] init];
-	_adPageViewController.animationDelegate = self;
-	[_innerBook insertSubview:_adPageViewController.view belowSubview:_splashPageViewController.view];
-#endif
+	[_nextGameViewController hideTapToChangeDifficultyNoticeAnimated:NO];
 	
 	// Create the page curl gradient on the left.
 	UIImageView *pageCurlGradient = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"PageCurlGradient.png"]];
@@ -142,34 +160,31 @@
 	// Start the background process timer.
 	_backgroundProcessTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(_backgroundProcessTimerDidAdvance:) userInfo:nil repeats:YES];
 	_backgroundProcessTimerCount = 0;
-	
-	// Send the start notice to the top-most page.
-	[_splashPageViewController viewWasPromotedToFront];
 }
 
 - (void)_loadNewGame {
 	ZSGameDifficulty newGameDifficulty = [[NSUserDefaults standardUserDefaults] integerForKey:kLastPlayedPuzzleDifficulty];
 	ZSGame *newGame = [[ZSGameController sharedInstance] fetchGameWithDifficulty:newGameDifficulty];
 	
-	if (self.extraGameViewController) {
-		self.lastGameViewController = self.extraGameViewController;
-		self.extraGameViewController = nil;
+	if (_extraGameViewController) {
+		_lastGameViewController = _extraGameViewController;
+		_extraGameViewController = nil;
 		
-		[self.lastGameViewController resetWithGame:newGame];
+		[_lastGameViewController resetWithGame:newGame];
 	} else {
-		self.lastGameViewController = [[ZSGameViewController alloc] initWithGame:newGame];
-		self.lastGameViewController.hintDelegate = self;
-		self.lastGameViewController.animationDelegate = self;
-		self.lastGameViewController.difficultyButtonDelegate = self;
-		self.lastGameViewController.majorGameStateChangeDelegate = self;
+		_lastGameViewController = [[ZSGameViewController alloc] initWithGame:newGame];
+		_lastGameViewController.hintDelegate = self;
+		_lastGameViewController.animationDelegate = self;
+		_lastGameViewController.difficultyButtonDelegate = self;
+		_lastGameViewController.majorGameStateChangeDelegate = self;
 	}
-
-	[_innerBook insertSubview:self.lastGameViewController.view belowSubview:self.nextGameViewController.view];
+	
+	[self _addPage:_lastGameViewController];
 	
 	if (_gamesInARowWithNoAction > 2) {
-		[self.lastGameViewController showTapToChangeDifficultyNoticeAnimated:NO];
+		[_lastGameViewController showTapToChangeDifficultyNoticeAnimated:NO];
 	} else {
-		[self.lastGameViewController hideTapToChangeDifficultyNoticeAnimated:NO];
+		[_lastGameViewController hideTapToChangeDifficultyNoticeAnimated:NO];
 	}
 }
 
@@ -309,6 +324,55 @@
 	}
 }
 
+#pragma mark - Page Management
+
+- (void)_addPage:(ZSFoldedPageViewController *)page {
+	if (_pages.count) {
+		ZSFoldedPageViewController *lastPage = [_pages lastObject];
+		[_innerBook insertSubview:page.view belowSubview:lastPage.view];
+	} else {
+		[_innerBook addSubview:page.view];
+	}
+	
+	[_pages addObject:page];
+	
+	if (_pages.count == 1) {
+		[page viewWasPromotedToFront];
+	}
+}
+
+- (void)_insertPage:(ZSFoldedPageViewController *)page atIndex:(NSInteger)index {
+	if (index > _pages.count) {
+		index = _pages.count;
+	}
+	
+	if (_pages.count) {
+		ZSFoldedPageViewController *nextPage = [_pages objectAtIndex:index];
+		[_innerBook insertSubview:page.view aboveSubview:nextPage.view];
+	} else {
+		[_innerBook addSubview:page.view];
+	}
+	
+	[_pages insertObject:page atIndex:index];
+	
+	if (_pages.count == 1) {
+		[page viewWasPromotedToFront];
+	}
+}
+
+- (void)_pageWasTurned {
+	ZSFoldedPageViewController *firstPage = [_pages objectAtIndex:0];
+	
+	[_pages removeObjectAtIndex:0];
+	[firstPage.view removeFromSuperview];
+	[firstPage viewWasRemovedFromBook];
+	
+	if (_pages.count) {
+		ZSFoldedPageViewController *nextPage = [_pages objectAtIndex:0];
+		[nextPage viewWasPromotedToFront];
+	}
+}
+
 #pragma mark - ZSFoldedPageViewControllerAnimationDelegate Implementation
 
 - (void)pageTurnAnimationDidFinishWithViewController:(ZSFoldedPageViewController *)viewController {
@@ -320,51 +384,28 @@
 	
 	self.currentGameViewController.animateCornerWhenPromoted = YES;
 	
-#ifdef FREEVERSION
-	if (viewController == _splashPageViewController) {
-		[_splashPageViewController.view removeFromSuperview];
-		_splashPageViewController = nil;
-		
-		[_adPageViewController viewWasPromotedToFront];
-	} else if (viewController == _adPageViewController) {
-		[_adPageViewController.view removeFromSuperview];
-		
-		[self.currentGameViewController viewWasPromotedToFront];
-	} else {
-		// Get the previous game out of the way.
-		[self.currentGameViewController.view removeFromSuperview];
-		
-		// Swap the next game view controller for the current. We'll recycle the old one so we don't need to reinitialize.
-		self.extraGameViewController = self.currentGameViewController;
-		
-		// Promote the other view controllers.
-		self.currentGameViewController = self.nextGameViewController;
-		self.nextGameViewController = self.lastGameViewController;
-		self.lastGameViewController = nil;
-		
-		// Fire up the new game.
-		[self.currentGameViewController viewWasPromotedToFront];
+	// If the page being removed is a game, we want to save the controller so we can reuse it later.
+	if ([viewController isKindOfClass:[ZSGameViewController class]]) {
+		// Shift our page bookkeeping forward.
+		_extraGameViewController = _currentGameViewController;
+		_currentGameViewController = _nextGameViewController;
+		_nextGameViewController = _lastGameViewController;
+		_lastGameViewController = nil;
 	}
-#else
-	if (viewController == _splashPageViewController) {
-		[_splashPageViewController.view removeFromSuperview];
-		_splashPageViewController = nil;
-		
-		[self.currentGameViewController viewWasPromotedToFront];
-	} else {
-		// Get the previous game out of the way.
-		[self.currentGameViewController.view removeFromSuperview];
-		
-		// Swap the next game view controller for the current. We'll recycle the old one so we don't need to reinitialize.
-		self.extraGameViewController = self.currentGameViewController;
-		
-		// Promote the other view controllers.
-		self.currentGameViewController = self.nextGameViewController;
-		self.nextGameViewController = self.lastGameViewController;
-		self.lastGameViewController = nil;
-		
-		// Fire up the new game.
-		[self.currentGameViewController viewWasPromotedToFront];
+	
+#ifdef FREEVERSION
+	ZSAdPageViewController *savedAdPageViewController = nil;
+	
+	if ([viewController isKindOfClass:[ZSAdPageViewController class]]) {
+		savedAdPageViewController = (ZSAdPageViewController *)viewController;
+	}
+#endif
+	
+	[self _pageWasTurned];
+	
+#ifdef FREEVERSION
+	if (savedAdPageViewController) {
+		[self _insertPage:savedAdPageViewController atIndex:1];
 	}
 #endif
 }

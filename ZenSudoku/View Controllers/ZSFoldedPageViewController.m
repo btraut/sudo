@@ -31,6 +31,7 @@
 @synthesize innerViewImage;
 @synthesize foldedCornerViewController;
 @synthesize foldedCornerVisibleOnLoad;
+@synthesize animateCornerWhenPromoted;
 
 @synthesize needsScreenshotUpdate;
 @synthesize forceScreenshotUpdateOnDrag;
@@ -46,6 +47,8 @@
 		_screenshotRenderDispatchGroup = dispatch_group_create();
 		
 		innerViewImage = [UIImage imageNamed:@"ForwardsPage.png"];
+		
+		animateCornerWhenPromoted = YES;
 	}
 	
 	return self;
@@ -77,7 +80,14 @@
 }
 
 - (void)viewWasPromotedToFront {
-	// Available for override in subclasses.
+	if (self.animateCornerWhenPromoted) {
+		[self.foldedCornerViewController resetToStartPosition];
+		[self.foldedCornerViewController animateStartFold];
+	}
+}
+
+- (void)viewWasRemovedFromBook {
+	
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

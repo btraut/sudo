@@ -9,6 +9,7 @@
 #import "ZSChangeDifficultyRibbonViewController.h"
 
 #import "UIColor+colorWithHex.h"
+#import "MTLabel.h"
 
 @interface ZSChangeDifficultyRibbonViewController ()
 
@@ -40,6 +41,75 @@
 	UIColor *textColor = [UIColor whiteColor];
 	UIColor *textColorHighlighted = [UIColor colorWithHexString:@"#7d1c0c"];
 	
+#ifdef FREEVERSION
+	// Build the difficulty buttons. The spaces in the titles are significant because the font gets clipped otherwise.
+	_easyButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	_easyButton.tag = ZSGameDifficultyEasy;
+	_easyButton.frame = CGRectMake(0, 66, 198, 44);
+	_easyButton.titleLabel.font = [UIFont fontWithName:@"ReklameScript-Regular" size:35.0f];
+	_easyButton.titleLabel.textAlignment = UITextAlignmentCenter;
+	_easyButton.titleLabel.shadowColor = shadowColor;
+	_easyButton.titleLabel.shadowOffset = CGSizeMake(0, -0.5f);
+	[_easyButton setTitleColor:textColorHighlighted forState:UIControlStateNormal];
+	[_easyButton setTitleColor:textColorHighlighted forState:UIControlStateHighlighted];
+	[_easyButton setTitle:@" Easy " forState:UIControlStateNormal];
+	[_easyButton addTarget:self action:@selector(_difficultyButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
+	[ribbonView addSubview:_easyButton];
+	
+	_moderateButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	[_moderateButton addTarget:self action:@selector(_difficultyButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
+	_moderateButton.tag = ZSGameDifficultyModerate;
+	_moderateButton.frame = CGRectMake(0, 110, 198, 44);
+	_moderateButton.titleLabel.font = [UIFont fontWithName:@"ReklameScript-Regular" size:35.0f];
+	_moderateButton.titleLabel.textAlignment = UITextAlignmentCenter;
+	_moderateButton.titleLabel.shadowColor = shadowColor;
+	_moderateButton.titleLabel.shadowOffset = CGSizeMake(0, -0.5f);
+	[_moderateButton setTitleColor:textColor forState:UIControlStateNormal];
+	[_moderateButton setTitleColor:textColorHighlighted forState:UIControlStateHighlighted];
+	[_moderateButton setTitle:@" Moderate " forState:UIControlStateNormal];
+	[_moderateButton addTarget:self action:@selector(_difficultyButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
+	[ribbonView addSubview:_moderateButton];
+	
+	// Create bottom stitching.
+	UIImageView *bottomStitching = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Stitching.png"]];
+	bottomStitching.frame = CGRectMake(20, 160, bottomStitching.frame.size.width, bottomStitching.frame.size.height);
+	[ribbonView addSubview:bottomStitching];
+	
+	// Create full version ad container.
+	UIView *adContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 164, 198, 150)];
+	[ribbonView addSubview:adContainer];
+	
+	UIFont *redFont = [UIFont fontWithName:@"ReklameScript-Regular" size:15.0f];
+	UIColor *redTextColor = [UIColor colorWithHexString:@"#7d1c0c"];
+	
+	// Create the top label.
+	MTLabel *topLabel = [[MTLabel alloc] initWithFrame:CGRectMake(18, 6, 162, 38)];
+	topLabel.backgroundColor = [UIColor clearColor];
+	topLabel.font = redFont;
+	topLabel.fontColor = redTextColor;
+	topLabel.lineHeight = 17.0f;
+	topLabel.textAlignment = UITextAlignmentCenter;
+	topLabel.text = @"Harder difficulties are now available in Sudo (ad-free premium version)!";
+	topLabel.numberOfLines = 2;
+	[adContainer addSubview:topLabel];
+	
+	// Create the icon.
+	UIImageView *icon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"IconWithShadow.png"]];
+	icon.center = CGPointMake(99, 82);
+	[adContainer addSubview:icon];
+	
+	// Create the bottom label.
+	MTLabel *bottomLabel = [[MTLabel alloc] initWithFrame:CGRectMake(18, 118, 162, 38)];
+	bottomLabel.backgroundColor = [UIColor clearColor];
+	bottomLabel.font = redFont;
+	bottomLabel.fontColor = redTextColor;
+	bottomLabel.lineHeight = 17.0f;
+	bottomLabel.textAlignment = UITextAlignmentCenter;
+	bottomLabel.text = @"Tap to learn more.";
+	bottomLabel.numberOfLines = 2;
+	[adContainer addSubview:bottomLabel];
+	
+#else
 	// Build the difficulty buttons. The spaces in the titles are significant because the font gets clipped otherwise.
 	_easyButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	_easyButton.tag = ZSGameDifficultyEasy;
@@ -68,7 +138,6 @@
 	[_moderateButton addTarget:self action:@selector(_difficultyButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
 	[ribbonView addSubview:_moderateButton];
 	
-#ifndef FREEVERSION
 	_challengingButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	[_challengingButton addTarget:self action:@selector(_difficultyButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
 	_challengingButton.tag = ZSGameDifficultyChallenging;

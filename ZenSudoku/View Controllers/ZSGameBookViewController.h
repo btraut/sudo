@@ -24,11 +24,9 @@
 	ZSMajorGameStateChangeDelegate
 >
 
-@property (strong) ZSGameViewController *currentGameViewController;
-@property (strong) ZSGameViewController *nextGameViewController;
-@property (strong) ZSGameViewController *lastGameViewController;
-
-@property (strong) ZSGameViewController *extraGameViewController;
+@property (strong, readonly) ZSGameViewController *currentGameViewController;
+@property (strong, readonly) ZSGameViewController *nextGameViewController;
+@property (strong, readonly) ZSGameViewController *lastGameViewController;
 
 @property (assign, readonly) BOOL hintsShown;
 @property (assign, readonly) BOOL ribbonShown;

@@ -8,6 +8,12 @@
 
 #import "ZSFoldedPageViewController.h"
 
-@interface ZSAdPageViewController : ZSFoldedPageViewController
+#import "IMAdDelegate.h"
+#import "IMAdView.h"
+#import "IMAdRequest.h"
+#import "IMAdError.h"
+#import "IMSDKUtil.h"
+
+@interface ZSAdPageViewController : ZSFoldedPageViewController <IMAdDelegate>
 
 @end

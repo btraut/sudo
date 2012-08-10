@@ -82,8 +82,6 @@
 @property (weak) id<ZSDifficultyButtonViewControllerDelegate> difficultyButtonDelegate;
 @property (weak) id<ZSMajorGameStateChangeDelegate> majorGameStateChangeDelegate;
 
-@property (assign) BOOL animateCornerWhenPromoted;
-
 @property (assign, readonly) BOOL actionWasMadeOnPuzzle;
 
 // Construction / Deconstruction

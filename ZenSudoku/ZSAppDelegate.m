@@ -13,7 +13,6 @@
 #import "ZSGame.h"
 
 #import "Flurry.h"
-#import "FlurryAds.h"
 
 NSString * const kFlurryAPIKey = @"RKJTR5RVTPM98RTJ4GPH";
 
@@ -77,9 +76,6 @@ NSString * const kPreventScreenDimmingOptionKey = @"kPreventScreenDimmingOptionK
 	
 	// Initialize Flurry.
 	[Flurry startSession:kFlurryAPIKey];
-	[FlurryAds initialize:_window.rootViewController];
-	
-	[FlurryAds enableTestAds:YES];
 	
 	return YES;
 }

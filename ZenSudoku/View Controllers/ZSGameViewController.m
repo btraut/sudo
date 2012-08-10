@@ -87,7 +87,6 @@ typedef struct {
 @synthesize hintDelegate;
 @dynamic animationDelegate;
 @synthesize difficultyButtonDelegate;
-@synthesize animateCornerWhenPromoted;
 @synthesize actionWasMadeOnPuzzle = _actionWasMadeOnPuzzle;
 
 @synthesize foldedCornerPlusButtonViewController = _foldedCornerPlusButtonViewController;
@@ -106,8 +105,6 @@ typedef struct {
 		
 		hintGenerator = [[ZSHintGenerator alloc] initWithSize:game.board.size];
 		[hintGenerator copyClueMaskFromGameBoard:self.game.board];
-		
-		animateCornerWhenPromoted = YES;
 		
 		penciling = NO;
 		
@@ -185,12 +182,13 @@ typedef struct {
 }
 
 - (void)viewDidLoad {
+	// Super duper!
 	[super viewDidLoad];
 	
 	// Build the plus button.
 	self.foldedCornerPlusButtonViewController = [[ZSFoldedCornerPlusButtonViewController alloc] init];
 	self.foldedCornerPlusButtonViewController.animationDelegate = self;
-	[self.view addSubview:self.foldedCornerPlusButtonViewController.view];
+	[self.view insertSubview:self.foldedCornerPlusButtonViewController.view aboveSubview:self.innerView];
 	[self.foldedCornerPlusButtonViewController setState:ZSFoldedCornerPlusButtonStateHidden animated:NO];
 	
 	// Set the plus button (delegate) on the folded corner.
@@ -206,8 +204,11 @@ typedef struct {
 	_difficultyButton.frame = CGRectMake(70, 12, 180, 36);
 	_difficultyButton.titleLabel.font = [UIFont fontWithName:@"ReklameScript-Medium" size:30.0f];
 	_difficultyButton.titleLabel.textAlignment = UITextAlignmentCenter;
+	_difficultyButton.titleLabel.shadowOffset = CGSizeMake(0, -0.5f);
 	[_difficultyButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 	[_difficultyButton setTitleColor:[UIColor colorWithHexString:@"#e2412c"] forState:UIControlStateHighlighted];
+	[_difficultyButton setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];
+	[_difficultyButton setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
 	[_difficultyButton addTarget:self action:@selector(_difficultyButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
 	[self.innerView addSubview:_difficultyButton];
 	
@@ -310,17 +311,6 @@ typedef struct {
 	
 	// Update the folded corner image.
 	self.needsScreenshotUpdate = YES;
-	
-	if (self.animateCornerWhenPromoted) {
-		[self.foldedCornerViewController resetToStartPosition];
-		[self.foldedCornerViewController animateStartFold];
-		
-		// Plus button will be animated when animateStartFold finishes.
-	} else {
-		[self.foldedCornerViewController resetToDefaultPosition];
-		
-		[self.foldedCornerPlusButtonViewController setState:ZSFoldedCornerPlusButtonStateNormal animated:NO];
-	}
 	
 	// Start the background process timer.
 	_backgroundProcessTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(_backgroundProcessTimerDidAdvance:) userInfo:nil repeats:YES];

@@ -540,13 +540,13 @@ typedef enum {
 	
 	CGPoint paperTipPoint = CGPointMake((width - _foldDefaultPoint.x) + (effectiveTouchPoint.x - _touchStartPoint.x), _foldDefaultPoint.y + (effectiveTouchPoint.y - _touchStartPoint.y));
 	
-	double touchLengthSquared = (paperTipPoint.x * paperTipPoint.x) + (paperTipPoint.y * paperTipPoint.y);
-	double maxLengthSquared = width * width;
+	double touchLengthFromTopLeftSquared = (paperTipPoint.x * paperTipPoint.x) + (paperTipPoint.y * paperTipPoint.y);
+	double maxLength = width;
 	
-	// If the paper isn't folded too much by the current touch point, calculate an effective fold point that would lie within the fold limits.
-	if (touchLengthSquared > maxLengthSquared) {
-		double touchLength = sqrt(touchLengthSquared);
-		double ratio = width / touchLength;
+	// If the paper isn't folded too much (or not enough) by the current touch point, calculate an effective fold point that would lie within the fold limits.
+	if (touchLengthFromTopLeftSquared > (maxLength * maxLength)) {
+		double touchLength = sqrt(touchLengthFromTopLeftSquared);
+		double ratio = maxLength / touchLength;
 		paperTipPoint.x = paperTipPoint.x * ratio;
 		paperTipPoint.y = paperTipPoint.y * ratio;
 	}
