@@ -139,8 +139,12 @@ NSString * const kPreventScreenDimmingOptionKey = @"kPreventScreenDimmingOptionK
 								 [NSNumber numberWithBool:NO], kDisplayedTutorialNotices,
 								 
 								 [NSData data], kPuzzleCacheKey,
-								 
+
+#ifdef FREEVERSION
+								 [NSNumber numberWithInt:ZSGameDifficultyEasy], kLastPlayedPuzzleDifficulty,
+#else
 								 [NSNumber numberWithInt:ZSGameDifficultyChallenging], kLastPlayedPuzzleDifficulty,
+#endif
 								 
 								 [NSNumber numberWithBool:NO], kClearTileSelectionAfterPickingAnswerOptionForAnswerKey,
 								 [NSNumber numberWithBool:NO], kClearTileSelectionAfterPickingAnswerOptionForPencilKey,

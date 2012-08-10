@@ -45,16 +45,6 @@
 	title.backgroundColor = [UIColor clearColor];
 	[self.innerView addSubview:title];
 	
-	// Create the down right arrow.
-	UIImageView *downRightArrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"DownRightArrow.png"]];
-	downRightArrow.frame = CGRectMake(39, 59, downRightArrow.frame.size.width, downRightArrow.frame.size.height);
-	[self.innerView addSubview:downRightArrow];
-	
-	// Create the down left arrow.
-	UIImageView *downLeftArrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"DownLeftArrow.png"]];
-	downLeftArrow.frame = CGRectMake(257, 62, downLeftArrow.frame.size.width, downLeftArrow.frame.size.height);
-	[self.innerView addSubview:downLeftArrow];
-	
 	// Create the ad placeholder.
 	self.adPlaceholder = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"AdXBox.png"]];
 	self.adPlaceholder.frame = CGRectMake(8, 105, self.adPlaceholder.frame.size.width, self.adPlaceholder.frame.size.height);

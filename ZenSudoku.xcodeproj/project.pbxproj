@@ -120,10 +120,6 @@
 		84A5F30115D4DCF300ACF40E /* AdBorder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A5F2F915D4DCF300ACF40E /* AdBorder@2x.png */; };
 		84A5F30215D4DCF300ACF40E /* AdXBox.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A5F2FA15D4DCF300ACF40E /* AdXBox.png */; };
 		84A5F30315D4DCF300ACF40E /* AdXBox@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A5F2FB15D4DCF300ACF40E /* AdXBox@2x.png */; };
-		84A5F30415D4DCF300ACF40E /* DownLeftArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A5F2FC15D4DCF300ACF40E /* DownLeftArrow.png */; };
-		84A5F30515D4DCF300ACF40E /* DownLeftArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A5F2FD15D4DCF300ACF40E /* DownLeftArrow@2x.png */; };
-		84A5F30615D4DCF300ACF40E /* DownRightArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A5F2FE15D4DCF300ACF40E /* DownRightArrow.png */; };
-		84A5F30715D4DCF300ACF40E /* DownRightArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A5F2FF15D4DCF300ACF40E /* DownRightArrow@2x.png */; };
 		84A5F30A15D4FB7F00ACF40E /* IconWithShadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A5F30815D4FB7F00ACF40E /* IconWithShadow.png */; };
 		84A5F30B15D4FB7F00ACF40E /* IconWithShadow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A5F30915D4FB7F00ACF40E /* IconWithShadow@2x.png */; };
 		84A8FB1515A6A06400D802C8 /* MTLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A8FB1315A6A06400D802C8 /* MTLabel.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -470,10 +466,6 @@
 		84A5F2F915D4DCF300ACF40E /* AdBorder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AdBorder@2x.png"; sourceTree = "<group>"; };
 		84A5F2FA15D4DCF300ACF40E /* AdXBox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AdXBox.png; sourceTree = "<group>"; };
 		84A5F2FB15D4DCF300ACF40E /* AdXBox@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AdXBox@2x.png"; sourceTree = "<group>"; };
-		84A5F2FC15D4DCF300ACF40E /* DownLeftArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DownLeftArrow.png; sourceTree = "<group>"; };
-		84A5F2FD15D4DCF300ACF40E /* DownLeftArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DownLeftArrow@2x.png"; sourceTree = "<group>"; };
-		84A5F2FE15D4DCF300ACF40E /* DownRightArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DownRightArrow.png; sourceTree = "<group>"; };
-		84A5F2FF15D4DCF300ACF40E /* DownRightArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DownRightArrow@2x.png"; sourceTree = "<group>"; };
 		84A5F30815D4FB7F00ACF40E /* IconWithShadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IconWithShadow.png; sourceTree = "<group>"; };
 		84A5F30915D4FB7F00ACF40E /* IconWithShadow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconWithShadow@2x.png"; sourceTree = "<group>"; };
 		84A8FB1215A6A06400D802C8 /* MTLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTLabel.h; sourceTree = "<group>"; };
@@ -840,10 +832,6 @@
 				84A5F2F915D4DCF300ACF40E /* AdBorder@2x.png */,
 				84A5F2FA15D4DCF300ACF40E /* AdXBox.png */,
 				84A5F2FB15D4DCF300ACF40E /* AdXBox@2x.png */,
-				84A5F2FC15D4DCF300ACF40E /* DownLeftArrow.png */,
-				84A5F2FD15D4DCF300ACF40E /* DownLeftArrow@2x.png */,
-				84A5F2FE15D4DCF300ACF40E /* DownRightArrow.png */,
-				84A5F2FF15D4DCF300ACF40E /* DownRightArrow@2x.png */,
 				84A5F30815D4FB7F00ACF40E /* IconWithShadow.png */,
 				84A5F30915D4FB7F00ACF40E /* IconWithShadow@2x.png */,
 			);
@@ -1280,10 +1268,6 @@
 				84A5F30115D4DCF300ACF40E /* AdBorder@2x.png in Resources */,
 				84A5F30215D4DCF300ACF40E /* AdXBox.png in Resources */,
 				84A5F30315D4DCF300ACF40E /* AdXBox@2x.png in Resources */,
-				84A5F30415D4DCF300ACF40E /* DownLeftArrow.png in Resources */,
-				84A5F30515D4DCF300ACF40E /* DownLeftArrow@2x.png in Resources */,
-				84A5F30615D4DCF300ACF40E /* DownRightArrow.png in Resources */,
-				84A5F30715D4DCF300ACF40E /* DownRightArrow@2x.png in Resources */,
 				84A5F30A15D4FB7F00ACF40E /* IconWithShadow.png in Resources */,
 				84A5F30B15D4FB7F00ACF40E /* IconWithShadow@2x.png in Resources */,
 			);
