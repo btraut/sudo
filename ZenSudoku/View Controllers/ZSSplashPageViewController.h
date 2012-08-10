@@ -10,4 +10,6 @@
 
 @interface ZSSplashPageViewController : ZSFoldedPageViewController
 
+- (void)dismiss;
+
 @end

@@ -71,6 +71,10 @@
 	foldedCornerViewController.touchDelegate = self;
 	foldedCornerViewController.animationDelegate = self;
 	[self.view addSubview:foldedCornerViewController.view];
+	
+	if (self.foldedCornerVisibleOnLoad) {
+		[foldedCornerViewController resetToDefaultPosition];
+	}	
 }
 
 - (void)viewDidAppear:(BOOL)animated {

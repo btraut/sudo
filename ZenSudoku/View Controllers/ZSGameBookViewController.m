@@ -29,6 +29,8 @@
 	
 	ZSGameViewController *_extraGameViewController;
 	
+	ZSSplashPageViewController *_splashPageViewController;
+	
 	ZSHintViewController *_hintViewController;
 	ZSChangeDifficultyRibbonViewController *_changeDifficultyRibbonViewController;
 	ZSGameOverRibbonViewController *_gameOverRibbonViewController;
@@ -72,10 +74,11 @@
 	_pages = [NSMutableArray array];
 	
 	// Create the splash page view.
-	ZSSplashPageViewController *splashPageViewController = [[ZSSplashPageViewController alloc] init];
-	splashPageViewController.foldedCornerVisibleOnLoad = YES;
-	splashPageViewController.animationDelegate = self;
-	[self _addPage:splashPageViewController];
+	_splashPageViewController = [[ZSSplashPageViewController alloc] init];
+	_splashPageViewController.foldedCornerVisibleOnLoad = YES;
+	_splashPageViewController.animateCornerWhenPromoted = NO;
+	_splashPageViewController.animationDelegate = self;
+	[self _addPage:_splashPageViewController];
 	
 	// Create the game view.
 	ZSGame *currentGame;
@@ -160,6 +163,12 @@
 	// Start the background process timer.
 	_backgroundProcessTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(_backgroundProcessTimerDidAdvance:) userInfo:nil repeats:YES];
 	_backgroundProcessTimerCount = 0;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+	[super viewDidAppear:animated];
+	
+	[_splashPageViewController dismiss];
 }
 
 - (void)_loadNewGame {

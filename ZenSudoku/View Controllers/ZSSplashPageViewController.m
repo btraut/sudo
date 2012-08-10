@@ -25,7 +25,7 @@
 	[self.foldedCornerViewController resetToDefaultPosition];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
+- (void)dismiss {
 	self.needsScreenshotUpdate = YES;
 	
 	[self turnPage];
