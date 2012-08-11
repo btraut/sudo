@@ -7,6 +7,20 @@
       buildImplicitDependencies = "YES">
       <BuildActionEntries>
          <BuildActionEntry
+            buildForTesting = "NO"
+            buildForRunning = "NO"
+            buildForProfiling = "YES"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "84D5500E147F1C4A00A7934E"
+               BuildableName = "Sudo.app"
+               BlueprintName = "Sudo"
+               ReferencedContainer = "container:ZenSudoku.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
             buildForTesting = "YES"
             buildForRunning = "YES"
             buildForProfiling = "YES"
@@ -14,9 +28,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "84D5500E147F1C4A00A7934E"
-               BuildableName = "Sudo.app"
-               BlueprintName = "Sudo"
+               BlueprintIdentifier = "84AC002915C8BBC000E5AA6E"
+               BuildableName = "Sudo Free.app"
+               BlueprintName = "Sudo Free"
                ReferencedContainer = "container:ZenSudoku.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -57,6 +71,7 @@
       buildConfiguration = "Ad Hoc"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
+      enableOpenGLFrameCaptureMode = "0"
       allowLocationSimulation = "YES">
       <BuildableProductRunnable>
          <BuildableReference
@@ -91,6 +106,7 @@
    </AnalyzeAction>
    <ArchiveAction
       buildConfiguration = "Release"
+      customArchiveName = "Sudo (Free)"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>
