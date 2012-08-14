@@ -56,19 +56,19 @@
 	[_easyButton addTarget:self action:@selector(_difficultyButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
 	[ribbonView addSubview:_easyButton];
 	
-	_moderateButton = [UIButton buttonWithType:UIButtonTypeCustom];
-	[_moderateButton addTarget:self action:@selector(_difficultyButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
-	_moderateButton.tag = ZSGameDifficultyModerate;
-	_moderateButton.frame = CGRectMake(0, 110, 198, 44);
-	_moderateButton.titleLabel.font = [UIFont fontWithName:@"ReklameScript-Regular" size:35.0f];
-	_moderateButton.titleLabel.textAlignment = UITextAlignmentCenter;
-	_moderateButton.titleLabel.shadowColor = shadowColor;
-	_moderateButton.titleLabel.shadowOffset = CGSizeMake(0, -0.5f);
-	[_moderateButton setTitleColor:textColor forState:UIControlStateNormal];
-	[_moderateButton setTitleColor:textColorHighlighted forState:UIControlStateHighlighted];
-	[_moderateButton setTitle:@" Moderate " forState:UIControlStateNormal];
-	[_moderateButton addTarget:self action:@selector(_difficultyButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
-	[ribbonView addSubview:_moderateButton];
+	_diabolicalButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	[_diabolicalButton addTarget:self action:@selector(_difficultyButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
+	_diabolicalButton.tag = ZSGameDifficultyDiabolical;
+	_diabolicalButton.frame = CGRectMake(0, 110, 198, 44);
+	_diabolicalButton.titleLabel.font = [UIFont fontWithName:@"ReklameScript-Regular" size:35.0f];
+	_diabolicalButton.titleLabel.textAlignment = UITextAlignmentCenter;
+	_diabolicalButton.titleLabel.shadowColor = shadowColor;
+	_diabolicalButton.titleLabel.shadowOffset = CGSizeMake(0, -0.5f);
+	[_diabolicalButton setTitleColor:textColor forState:UIControlStateNormal];
+	[_diabolicalButton setTitleColor:textColorHighlighted forState:UIControlStateHighlighted];
+	[_diabolicalButton setTitle:@" Diabolical " forState:UIControlStateNormal];
+	[_diabolicalButton addTarget:self action:@selector(_difficultyButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
+	[ribbonView addSubview:_diabolicalButton];
 	
 	// Create bottom stitching.
 	UIImageView *bottomStitching = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Stitching.png"]];
