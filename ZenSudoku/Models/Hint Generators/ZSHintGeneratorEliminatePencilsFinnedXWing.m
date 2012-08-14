@@ -176,12 +176,12 @@
 	// Step 4
 	ZSHintCard *card4 = [[ZSHintCard alloc] init];
 	
-	NSString *malignedPossibilitiesString = (_totalFinTiles == 1 ? @"one" : (_totalFinTiles == 2 ? @"two" : @"three"));
-	NSString *malignedPossibilitiesExistsString = (_totalFinTiles == 1 ? @"exists" : @"exist");
+	NSString *misalignedPossibilitiesString = (_totalFinTiles == 1 ? @"one" : (_totalFinTiles == 2 ? @"two" : @"three"));
+	NSString *misalignedPossibilitiesExistsString = (_totalFinTiles == 1 ? @"exists" : @"exist");
 	NSString *differentRowColString = (_totalFinTiles == 1 ? @"in a different" : @"in different");
 	NSString *oppositeScopePlural = (_totalFinTiles == 1 ? @"" : @"s");
 	
-	card4.text = [NSString stringWithFormat:@"This formation is not %@ %@ because %@ of the possibilities %@ %@ %@%@.", aAnTechniqueName, techniqueName, malignedPossibilitiesString, malignedPossibilitiesExistsString, differentRowColString, oppositeScopeName, oppositeScopePlural];
+	card4.text = [NSString stringWithFormat:@"This formation is not %@ %@ because %@ of the possibilities %@ %@ %@%@.", aAnTechniqueName, techniqueName, misalignedPossibilitiesString, misalignedPossibilitiesExistsString, differentRowColString, oppositeScopeName, oppositeScopePlural];
 	
 	for (NSInteger i = 0; i < _totalFinnedXWingTiles; ++i) {
 		for (NSInteger j = 0; j < 9; ++j) {
@@ -218,7 +218,7 @@
 	// Step 5
 	ZSHintCard *card5 = [[ZSHintCard alloc] init];
 	
-	card5.text = [NSString stringWithFormat:@"When these maligned possibilities all exist within the same region, that region is called the “fin” and forms a Finned %@.", techniqueName];
+	card5.text = [NSString stringWithFormat:@"When these misaligned possibilities all exist within the same region, that region is called the “fin” and forms a Finned %@.", techniqueName];
 	
 	for (NSInteger i = 0; i < _totalFinnedXWingTiles; ++i) {
 		for (NSInteger j = 0; j < 9; ++j) {

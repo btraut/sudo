@@ -81,16 +81,11 @@
 
 - (void)carouselDidEndScrollingAnimation:(iCarousel *)carousel {
 	if (!_ignoreCarouselChanges) {
-		BOOL previousDisableActions = [CATransaction disableActions];
-		[CATransaction setDisableActions:NO];
-		
 		_progressDots.selectedDot = carousel.currentItemIndex;
 		
 		_previousCard = _currentCard;
 		_currentCard = carousel.currentItemIndex;
 		[self _doHintCardActions];
-		
-		[CATransaction setDisableActions:previousDisableActions];
 	}
 }
 
