@@ -9,6 +9,7 @@
 #import "ZSFoldedPageViewController.h"
 
 #import <QuartzCore/QuartzCore.h>
+#import <AVFoundation/AVFoundation.h>
 
 @interface ZSFoldedPageViewController () {
 	CGPoint _foldStartPoint;
@@ -19,6 +20,10 @@
 	
 	BOOL _deferScreenshotUpdate;
 	BOOL _deferedScreenshotUpdateIsSychronous;
+	
+	AVAudioPlayer *_pageFlipAudioPlayer;
+	AVAudioPlayer *_pageFlipAudioPlayer2;
+	AVAudioPlayer *_pageFlipAudioPlayer3;
 }
 
 @end
@@ -72,9 +77,23 @@
 	foldedCornerViewController.animationDelegate = self;
 	[self.view addSubview:foldedCornerViewController.view];
 	
+	// Initialize the audio players.
+	NSString *soundFilePath = [[NSBundle mainBundle] pathForResource:@"PageFlip1" ofType:@"wav"];
+	NSURL *newURL = [[NSURL alloc] initFileURLWithPath: soundFilePath];
+	_pageFlipAudioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:newURL error:nil];
+	
+	NSString *soundFilePath2 = [[NSBundle mainBundle] pathForResource:@"PageFlip2" ofType:@"wav"];
+	NSURL *newURL2 = [[NSURL alloc] initFileURLWithPath: soundFilePath2];
+	_pageFlipAudioPlayer2 = [[AVAudioPlayer alloc] initWithContentsOfURL:newURL2 error:nil];
+	
+	NSString *soundFilePath3 = [[NSBundle mainBundle] pathForResource:@"PageFlip3" ofType:@"wav"];
+	NSURL *newURL3 = [[NSURL alloc] initFileURLWithPath: soundFilePath3];
+	_pageFlipAudioPlayer3 = [[AVAudioPlayer alloc] initWithContentsOfURL:newURL3 error:nil];
+	
+	// Reset to start.
 	if (self.foldedCornerVisibleOnLoad) {
 		[foldedCornerViewController resetToDefaultPosition];
-	}	
+	}
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -160,6 +179,8 @@
 	
 	[self setScreenshotVisible:YES];
 	
+	[self _playPageFlipSound];
+	
 	[self.foldedCornerViewController animatePageTurnSlower];
 	
 	self.innerView.hidden = YES;
@@ -167,6 +188,15 @@
 
 - (void)foldedCornerRestoredToDefaultPoint {
 	[self setScreenshotVisible:NO];
+}
+
+- (void)_playPageFlipSound {
+	switch (arc4random() % 3) {
+		default:
+		case 0: [_pageFlipAudioPlayer play]; break;
+		case 1: [_pageFlipAudioPlayer2 play]; break;
+		case 2: [_pageFlipAudioPlayer3 play]; break;
+	}
 }
 
 #pragma mark - ZSFoldedCornerViewControllerTouchDelegate Implementation
@@ -194,6 +224,7 @@
 - (void)foldedCornerViewController:(ZSFoldedCornerViewController *)viewController touchEndedWithFoldPoint:(CGPoint)foldPoint foldDimensions:(CGSize)foldDimensions {
 	if (_foldedCornerTouchCrossedTapThreshold) {
 		if (foldPoint.x > self.foldedCornerViewController.view.frame.size.width / 2) {
+			[self _playPageFlipSound];
 			[self.foldedCornerViewController animatePageTurn];
 		} else {
 			[self.foldedCornerViewController animateSendFoldBackToCorner];

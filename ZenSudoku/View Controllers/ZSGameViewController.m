@@ -204,7 +204,7 @@ typedef struct {
 	_difficultyButton.frame = CGRectMake(70, 12, 180, 36);
 	_difficultyButton.titleLabel.font = [UIFont fontWithName:@"ReklameScript-Medium" size:30.0f];
 	_difficultyButton.titleLabel.textAlignment = UITextAlignmentCenter;
-	_difficultyButton.titleLabel.shadowOffset = CGSizeMake(0, -0.5f);
+	_difficultyButton.titleLabel.shadowOffset = CGSizeMake(0, 0.5f);
 	[_difficultyButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 	[_difficultyButton setTitleColor:[UIColor colorWithHexString:@"#e2412c"] forState:UIControlStateHighlighted];
 	[_difficultyButton setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];
