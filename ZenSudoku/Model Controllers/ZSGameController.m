@@ -13,7 +13,11 @@
 
 #define UNARCHIVER_DATA_KEY @"data"
 
+#ifdef FREEVERSION
 #define CACHE_THRESHOLD 5
+#else
+#define CACHE_THRESHOLD 3
+#endif
 
 NSString * const kSavedGameFileName = @"SavedGame.plist";
 

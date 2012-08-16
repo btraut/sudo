@@ -70,7 +70,6 @@
 		8485C6F615D1C2A800A8294D /* Stitching@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8485C6D115CDDA9600A8294D /* Stitching@2x.png */; };
 		8492B76114C911FF0093B7AC /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8492B76014C911FF0093B7AC /* libsqlite3.0.dylib */; };
 		8492B77414CD69B10093B7AC /* ZSPuzzleFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 8492B77314CD69B10093B7AC /* ZSPuzzleFetcher.m */; };
-		8492B78814CEBDC80093B7AC /* Sudoku.db3 in Resources */ = {isa = PBXBuildFile; fileRef = 8492B78714CEBDC80093B7AC /* Sudoku.db3 */; };
 		8493F89F15D482A4008F0BD2 /* libInMobi_iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8493F89D15D482A4008F0BD2 /* libInMobi_iOS.a */; };
 		8493F8A215D482FE008F0BD2 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8493F8A115D482FE008F0BD2 /* Security.framework */; };
 		8493F8A415D48312008F0BD2 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8493F8A315D48312008F0BD2 /* AVFoundation.framework */; };
@@ -141,6 +140,10 @@
 		84A7269E15DC2A79008E00C1 /* RibbonLong@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A7269C15DC2A79008E00C1 /* RibbonLong@2x.png */; };
 		84A726A115DCAF23008E00C1 /* AppStoreButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A7269F15DCAF23008E00C1 /* AppStoreButton.png */; };
 		84A726A215DCAF23008E00C1 /* AppStoreButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A726A015DCAF23008E00C1 /* AppStoreButton@2x.png */; };
+		84A726A615DCBD56008E00C1 /* Puzzles.db3 in Resources */ = {isa = PBXBuildFile; fileRef = 84A726A515DCBD56008E00C1 /* Puzzles.db3 */; };
+		84A726A715DCBD56008E00C1 /* Puzzles.db3 in Resources */ = {isa = PBXBuildFile; fileRef = 84A726A515DCBD56008E00C1 /* Puzzles.db3 */; };
+		84A726A915DCBD5F008E00C1 /* Puzzles.db3 in Resources */ = {isa = PBXBuildFile; fileRef = 84A726A815DCBD5F008E00C1 /* Puzzles.db3 */; };
+		84A726AA15DCBD5F008E00C1 /* Puzzles.db3 in Resources */ = {isa = PBXBuildFile; fileRef = 84A726A815DCBD5F008E00C1 /* Puzzles.db3 */; };
 		84A8FB1515A6A06400D802C8 /* MTLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A8FB1315A6A06400D802C8 /* MTLabel.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		84A8FB1D15A6A1FB00D802C8 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A8FB1C15A6A1FB00D802C8 /* CoreText.framework */; };
 		84A8FB2015AB738800D802C8 /* ZSFoldedPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A8FB1F15AB738800D802C8 /* ZSFoldedPageViewController.m */; };
@@ -215,7 +218,6 @@
 		84AC006E15C8BBC000E5AA6E /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 840216EE1538F15B00B16131 /* libz.dylib */; };
 		84AC006F15C8BBC000E5AA6E /* libFlurry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 840E032315BFD22700F113D9 /* libFlurry.a */; };
 		84AC007115C8BBC000E5AA6E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84D5501C147F1C4A00A7934E /* InfoPlist.strings */; };
-		84AC007215C8BBC000E5AA6E /* Sudoku.db3 in Resources */ = {isa = PBXBuildFile; fileRef = 8492B78714CEBDC80093B7AC /* Sudoku.db3 */; };
 		84AC007315C8BBC000E5AA6E /* ReklameScript-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 849B69D514F263AB00870F09 /* ReklameScript-Black.ttf */; };
 		84AC007415C8BBC000E5AA6E /* ReklameScript-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 849B69D614F263AB00870F09 /* ReklameScript-Bold.ttf */; };
 		84AC007515C8BBC000E5AA6E /* ReklameScript-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 849B69D714F263AB00870F09 /* ReklameScript-Medium.ttf */; };
@@ -416,7 +418,6 @@
 		8492B76014C911FF0093B7AC /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		8492B77214CD69B10093B7AC /* ZSPuzzleFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSPuzzleFetcher.h; path = "Model Controllers/ZSPuzzleFetcher.h"; sourceTree = "<group>"; };
 		8492B77314CD69B10093B7AC /* ZSPuzzleFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSPuzzleFetcher.m; path = "Model Controllers/ZSPuzzleFetcher.m"; sourceTree = "<group>"; };
-		8492B78714CEBDC80093B7AC /* Sudoku.db3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Sudoku.db3; sourceTree = "<group>"; };
 		8493F89615D482A4008F0BD2 /* IMAdDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMAdDelegate.h; sourceTree = "<group>"; };
 		8493F89715D482A4008F0BD2 /* IMAdError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMAdError.h; sourceTree = "<group>"; };
 		8493F89815D482A4008F0BD2 /* IMAdInterstitial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMAdInterstitial.h; sourceTree = "<group>"; };
@@ -489,6 +490,8 @@
 		84A7269C15DC2A79008E00C1 /* RibbonLong@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "RibbonLong@2x.png"; path = "Resources/Images/Shared/RibbonLong@2x.png"; sourceTree = "<group>"; };
 		84A7269F15DCAF23008E00C1 /* AppStoreButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppStoreButton.png; sourceTree = "<group>"; };
 		84A726A015DCAF23008E00C1 /* AppStoreButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AppStoreButton@2x.png"; sourceTree = "<group>"; };
+		84A726A515DCBD56008E00C1 /* Puzzles.db3 */ = {isa = PBXFileReference; lastKnownFileType = file; name = Puzzles.db3; path = Resources/Databases/Free/Puzzles.db3; sourceTree = "<group>"; };
+		84A726A815DCBD5F008E00C1 /* Puzzles.db3 */ = {isa = PBXFileReference; lastKnownFileType = file; name = Puzzles.db3; path = Resources/Databases/Paid/Puzzles.db3; sourceTree = "<group>"; };
 		84A8FB1215A6A06400D802C8 /* MTLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTLabel.h; sourceTree = "<group>"; };
 		84A8FB1315A6A06400D802C8 /* MTLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTLabel.m; sourceTree = "<group>"; };
 		84A8FB1C15A6A1FB00D802C8 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
@@ -800,7 +803,8 @@
 		8492B78414CEAE7A0093B7AC /* Databases */ = {
 			isa = PBXGroup;
 			children = (
-				8492B78714CEBDC80093B7AC /* Sudoku.db3 */,
+				84A726A415DCBD43008E00C1 /* Free */,
+				84A726A315DCBD3C008E00C1 /* Paid */,
 			);
 			name = Databases;
 			sourceTree = "<group>";
@@ -918,6 +922,22 @@
 			);
 			name = AudioClips;
 			path = Resources/AudioClips;
+			sourceTree = "<group>";
+		};
+		84A726A315DCBD3C008E00C1 /* Paid */ = {
+			isa = PBXGroup;
+			children = (
+				84A726A815DCBD5F008E00C1 /* Puzzles.db3 */,
+			);
+			name = Paid;
+			sourceTree = "<group>";
+		};
+		84A726A415DCBD43008E00C1 /* Free */ = {
+			isa = PBXGroup;
+			children = (
+				84A726A515DCBD56008E00C1 /* Puzzles.db3 */,
+			);
+			name = Free;
 			sourceTree = "<group>";
 		};
 		84A8FB1115A6A06400D802C8 /* MTLabel */ = {
@@ -1272,7 +1292,6 @@
 				8485C6F515D1C2A800A8294D /* Stitching.png in Resources */,
 				8485C6F615D1C2A800A8294D /* Stitching@2x.png in Resources */,
 				84AC007115C8BBC000E5AA6E /* InfoPlist.strings in Resources */,
-				84AC007215C8BBC000E5AA6E /* Sudoku.db3 in Resources */,
 				84AC007315C8BBC000E5AA6E /* ReklameScript-Black.ttf in Resources */,
 				84AC007415C8BBC000E5AA6E /* ReklameScript-Bold.ttf in Resources */,
 				84AC007515C8BBC000E5AA6E /* ReklameScript-Medium.ttf in Resources */,
@@ -1360,6 +1379,7 @@
 				84A7269E15DC2A79008E00C1 /* RibbonLong@2x.png in Resources */,
 				84A726A115DCAF23008E00C1 /* AppStoreButton.png in Resources */,
 				84A726A215DCAF23008E00C1 /* AppStoreButton@2x.png in Resources */,
+				84A726A615DCBD56008E00C1 /* Puzzles.db3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1368,7 +1388,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				84D5501E147F1C4A00A7934E /* InfoPlist.strings in Resources */,
-				8492B78814CEBDC80093B7AC /* Sudoku.db3 in Resources */,
 				849B69D914F263AB00870F09 /* ReklameScript-Black.ttf in Resources */,
 				849B69DA14F263AB00870F09 /* ReklameScript-Bold.ttf in Resources */,
 				849B69DB14F263AB00870F09 /* ReklameScript-Medium.ttf in Resources */,
@@ -1449,6 +1468,7 @@
 				84A7269815DBAD53008E00C1 /* Icon@2x.png in Resources */,
 				84A7269915DBAD53008E00C1 /* iTunesArtwork.png in Resources */,
 				84A7269A15DBAD53008E00C1 /* iTunesArtwork@2x.png in Resources */,
+				84A726A915DCBD5F008E00C1 /* Puzzles.db3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1461,6 +1481,8 @@
 				84AC00CB15C8CAC900E5AA6E /* Default@2x.png in Resources */,
 				84AC00CF15C8CB8500E5AA6E /* SplashPage.png in Resources */,
 				84AC00D115C8CB8500E5AA6E /* SplashPage@2x.png in Resources */,
+				84A726A715DCBD56008E00C1 /* Puzzles.db3 in Resources */,
+				84A726AA15DCBD5F008E00C1 /* Puzzles.db3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

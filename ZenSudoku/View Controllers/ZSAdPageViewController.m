@@ -70,7 +70,7 @@
 	self.turnThePageNotice.font = [UIFont fontWithName:@"ReklameScript-Regular" size:15.0f];
 	self.turnThePageNotice.textAlignment = UITextAlignmentCenter;
 	self.turnThePageNotice.shadowColor = [UIColor whiteColor];
-	self.turnThePageNotice.shadowOffset = CGSizeMake(0, -0.5f);
+	self.turnThePageNotice.shadowOffset = CGSizeMake(0, 0.5f);
 	self.turnThePageNotice.backgroundColor = [UIColor clearColor];
 	[self.innerView addSubview:self.turnThePageNotice];
 	
