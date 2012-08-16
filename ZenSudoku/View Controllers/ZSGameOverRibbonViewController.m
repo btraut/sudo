@@ -41,6 +41,16 @@
 @synthesize hintsUsed;
 @synthesize puzzlesSolved;
 
+- (id)init {
+	self = [super init];
+	
+	if (self) {
+		self.ribbonImage = [UIImage imageNamed:@"RibbonShort.png"];
+	}
+	
+	return self;
+}
+
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	

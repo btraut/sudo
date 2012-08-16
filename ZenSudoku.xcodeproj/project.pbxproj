@@ -137,6 +137,10 @@
 		84A7269815DBAD53008E00C1 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A7268E15DBAD53008E00C1 /* Icon@2x.png */; };
 		84A7269915DBAD53008E00C1 /* iTunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A7268F15DBAD53008E00C1 /* iTunesArtwork.png */; };
 		84A7269A15DBAD53008E00C1 /* iTunesArtwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A7269015DBAD53008E00C1 /* iTunesArtwork@2x.png */; };
+		84A7269D15DC2A79008E00C1 /* RibbonLong.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A7269B15DC2A79008E00C1 /* RibbonLong.png */; };
+		84A7269E15DC2A79008E00C1 /* RibbonLong@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A7269C15DC2A79008E00C1 /* RibbonLong@2x.png */; };
+		84A726A115DCAF23008E00C1 /* AppStoreButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A7269F15DCAF23008E00C1 /* AppStoreButton.png */; };
+		84A726A215DCAF23008E00C1 /* AppStoreButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A726A015DCAF23008E00C1 /* AppStoreButton@2x.png */; };
 		84A8FB1515A6A06400D802C8 /* MTLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A8FB1315A6A06400D802C8 /* MTLabel.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		84A8FB1D15A6A1FB00D802C8 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A8FB1C15A6A1FB00D802C8 /* CoreText.framework */; };
 		84A8FB2015AB738800D802C8 /* ZSFoldedPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A8FB1F15AB738800D802C8 /* ZSFoldedPageViewController.m */; };
@@ -481,6 +485,10 @@
 		84A7268E15DBAD53008E00C1 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "ZenSudoku/Resources/Images/Paid/Icons/Icon@2x.png"; sourceTree = SOURCE_ROOT; };
 		84A7268F15DBAD53008E00C1 /* iTunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iTunesArtwork.png; path = ZenSudoku/Resources/Images/Paid/Icons/iTunesArtwork.png; sourceTree = SOURCE_ROOT; };
 		84A7269015DBAD53008E00C1 /* iTunesArtwork@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iTunesArtwork@2x.png"; path = "ZenSudoku/Resources/Images/Paid/Icons/iTunesArtwork@2x.png"; sourceTree = SOURCE_ROOT; };
+		84A7269B15DC2A79008E00C1 /* RibbonLong.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RibbonLong.png; path = Resources/Images/Shared/RibbonLong.png; sourceTree = "<group>"; };
+		84A7269C15DC2A79008E00C1 /* RibbonLong@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "RibbonLong@2x.png"; path = "Resources/Images/Shared/RibbonLong@2x.png"; sourceTree = "<group>"; };
+		84A7269F15DCAF23008E00C1 /* AppStoreButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppStoreButton.png; sourceTree = "<group>"; };
+		84A726A015DCAF23008E00C1 /* AppStoreButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AppStoreButton@2x.png"; sourceTree = "<group>"; };
 		84A8FB1215A6A06400D802C8 /* MTLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTLabel.h; sourceTree = "<group>"; };
 		84A8FB1315A6A06400D802C8 /* MTLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTLabel.m; sourceTree = "<group>"; };
 		84A8FB1C15A6A1FB00D802C8 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
@@ -870,6 +878,8 @@
 				84D54E9615B4139D003B1705 /* Ribbon@2x.png */,
 				8485C6EA15D0989F00A8294D /* RibbonShort.png */,
 				8485C6EB15D098A100A8294D /* RibbonShort@2x.png */,
+				84A7269B15DC2A79008E00C1 /* RibbonLong.png */,
+				84A7269C15DC2A79008E00C1 /* RibbonLong@2x.png */,
 				8485C6D015CDDA9600A8294D /* Stitching.png */,
 				8485C6D115CDDA9600A8294D /* Stitching@2x.png */,
 				8485C6E415D07DE700A8294D /* PersonalBestRight.png */,
@@ -932,6 +942,8 @@
 				84A5F2F915D4DCF300ACF40E /* AdBorder@2x.png */,
 				84A5F30815D4FB7F00ACF40E /* IconWithShadow.png */,
 				84A5F30915D4FB7F00ACF40E /* IconWithShadow@2x.png */,
+				84A7269F15DCAF23008E00C1 /* AppStoreButton.png */,
+				84A726A015DCAF23008E00C1 /* AppStoreButton@2x.png */,
 			);
 			name = Free;
 			path = Resources/Images/Free;
@@ -1344,6 +1356,10 @@
 				84A7265E15DBAABF008E00C1 /* PageFlip1.wav in Resources */,
 				84A7266015DBAABF008E00C1 /* PageFlip2.wav in Resources */,
 				84A7266215DBAABF008E00C1 /* PageFlip3.wav in Resources */,
+				84A7269D15DC2A79008E00C1 /* RibbonLong.png in Resources */,
+				84A7269E15DC2A79008E00C1 /* RibbonLong@2x.png in Resources */,
+				84A726A115DCAF23008E00C1 /* AppStoreButton.png in Resources */,
+				84A726A215DCAF23008E00C1 /* AppStoreButton@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,8 +8,8 @@
 
 #import "ZSChangeDifficultyRibbonViewController.h"
 
+#import "ZSAppDelegate.h"
 #import "UIColor+colorWithHex.h"
-#import "MTLabel.h"
 
 @interface ZSChangeDifficultyRibbonViewController ()
 
@@ -29,6 +29,19 @@
 
 @synthesize delegate;
 @synthesize highlightedDifficulty;
+
+- (id)init {
+	self = [super init];
+	
+	if (self) {
+#ifdef FREEVERSION
+		// The free version needs a little extra ribbon for the up-sell ad.
+		self.ribbonImage = [UIImage imageNamed:@"RibbonLong.png"];
+#endif
+	}
+	
+	return self;
+}
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
@@ -76,39 +89,63 @@
 	[ribbonView addSubview:bottomStitching];
 	
 	// Create full version ad container.
-	UIView *adContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 164, 198, 150)];
+	UIView *adContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 164, 198, 176)];
 	[ribbonView addSubview:adContainer];
 	
-	UIFont *redFont = [UIFont fontWithName:@"ReklameScript-Regular" size:15.0f];
+	UITapGestureRecognizer *singleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget: self action:@selector(_adContainerWasTapped)];
+	singleTapRecognizer.numberOfTapsRequired = 1;
+	[adContainer addGestureRecognizer:singleTapRecognizer];
+	
+	UIFont *redFont = [UIFont fontWithName:@"ReklameScript-Medium" size:15.0f];
 	UIColor *redTextColor = [UIColor colorWithHexString:@"#7d1c0c"];
 	
 	// Create the top label.
-	MTLabel *topLabel = [[MTLabel alloc] initWithFrame:CGRectMake(18, 6, 162, 38)];
+	UILabel *topLabel = [[UILabel alloc] initWithFrame:CGRectMake(28, 6, 140, 20)];
 	topLabel.backgroundColor = [UIColor clearColor];
 	topLabel.font = redFont;
-	topLabel.fontColor = redTextColor;
-	topLabel.lineHeight = 17.0f;
-	topLabel.textAlignment = UITextAlignmentCenter;
-	topLabel.text = @"Harder difficulties are now available in Sudo (ad-free premium version)!";
-	topLabel.numberOfLines = 2;
+	topLabel.textColor = redTextColor;
+	topLabel.textAlignment = UITextAlignmentLeft;
+	topLabel.text = @"✓ More difficulties";
 	[adContainer addSubview:topLabel];
+	
+	UILabel *topLabel2 = [[UILabel alloc] initWithFrame:CGRectMake(28, 24, 140, 20)];
+	topLabel2.backgroundColor = [UIColor clearColor];
+	topLabel2.font = redFont;
+	topLabel2.textColor = redTextColor;
+	topLabel2.textAlignment = UITextAlignmentLeft;
+	topLabel2.text = @"✓ Thousands of puzzles";
+	[adContainer addSubview:topLabel2];
+	
+	UILabel *topLabel3 = [[UILabel alloc] initWithFrame:CGRectMake(28, 42, 140, 20)];
+	topLabel3.backgroundColor = [UIColor clearColor];
+	topLabel3.font = redFont;
+	topLabel3.textColor = redTextColor;
+	topLabel3.textAlignment = UITextAlignmentLeft;
+	topLabel3.text = @"✓ No ads";
+	[adContainer addSubview:topLabel3];
 	
 	// Create the icon.
 	UIImageView *icon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"IconWithShadow.png"]];
-	icon.center = CGPointMake(99, 82);
+	icon.center = CGPointMake(99, 100);
 	[adContainer addSubview:icon];
 	
 	// Create the bottom label.
-	MTLabel *bottomLabel = [[MTLabel alloc] initWithFrame:CGRectMake(18, 118, 162, 38)];
+	UILabel *bottomLabel = [[UILabel alloc] initWithFrame:CGRectMake(18, 132, 162, 20)];
 	bottomLabel.backgroundColor = [UIColor clearColor];
-	bottomLabel.font = redFont;
-	bottomLabel.fontColor = redTextColor;
-	bottomLabel.lineHeight = 17.0f;
+	bottomLabel.font = [UIFont fontWithName:@"ReklameScript-Medium" size:17.0f];
+	bottomLabel.textColor = [UIColor whiteColor];
 	bottomLabel.textAlignment = UITextAlignmentCenter;
-	bottomLabel.text = @"Tap to learn more.";
-	bottomLabel.numberOfLines = 2;
+	bottomLabel.text = @"Sudo";
 	[adContainer addSubview:bottomLabel];
 	
+	// Create the bottom label.
+	UILabel *bottomLabel2 = [[UILabel alloc] initWithFrame:CGRectMake(18, 148, 162, 20)];
+	bottomLabel2.backgroundColor = [UIColor clearColor];
+	bottomLabel2.font = [UIFont fontWithName:@"ReklameScript-Regular" size:14.0f];
+	bottomLabel2.textColor = redTextColor;
+	bottomLabel2.textAlignment = UITextAlignmentCenter;
+	bottomLabel2.text = @"tap to visit app store";
+	[adContainer addSubview:bottomLabel2];
 #else
 	// Build the difficulty buttons. The spaces in the titles are significant because the font gets clipped otherwise.
 	_easyButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -180,6 +217,11 @@
 	[_insaneButton addTarget:self action:@selector(_difficultyButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
 	[ribbonView addSubview:_insaneButton];
 #endif
+}
+
+- (void)_adContainerWasTapped {
+	ZSAppDelegate *appDelegate = (ZSAppDelegate *)[[UIApplication sharedApplication] delegate];
+	[[UIApplication sharedApplication] openURL:appDelegate.iTunesURL];
 }
 
 - (void)_difficultyButtonWasPressed:(UIButton *)sender {

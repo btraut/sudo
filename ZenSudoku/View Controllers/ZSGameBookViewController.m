@@ -157,7 +157,6 @@
 	_changeDifficultyRibbonViewController.delegate = self;
 	
 	_gameOverRibbonViewController = [[ZSGameOverRibbonViewController alloc] init];
-	_gameOverRibbonViewController.ribbonImage = [UIImage imageNamed:@"RibbonShort.png"];
 	_gameOverRibbonViewController.delegate = self;
 	
 	// Start the background process timer.

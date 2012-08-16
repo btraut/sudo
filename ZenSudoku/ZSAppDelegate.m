@@ -46,6 +46,7 @@ NSString * const kPreventScreenDimmingOptionKey = @"kPreventScreenDimmingOptionK
 
 @synthesize window = _window;
 @synthesize navigationController = _navigationController;
+@synthesize iTunesURL = _iTunesURL;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 	// Set user defaults.
@@ -77,7 +78,25 @@ NSString * const kPreventScreenDimmingOptionKey = @"kPreventScreenDimmingOptionK
 	// Initialize Flurry.
 	[Flurry startSession:kFlurryAPIKey];
 	
+#ifdef FREEVERSION
+	// Look up the paid version app store URL.
+	self.iTunesURL = [NSURL URLWithString:@"http://sudoapp.com/store/"];
+	NSURLConnection *con = [[NSURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:self.iTunesURL] delegate:self];
+	[con start];
+#endif
+	
 	return YES;
+}
+
+- (NSURLRequest *)connection:(NSURLConnection *)connection willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)response {
+    self.iTunesURL = [response URL];
+    
+	if ([self.iTunesURL.host hasSuffix:@"itunes.apple.com"]) {
+        [connection cancel];
+        return nil;
+	} else {
+		return request;
+	}
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

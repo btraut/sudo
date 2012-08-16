@@ -8,9 +8,10 @@
 
 #import "ZSAdPageViewController.h"
 
+#import "ZSAppDelegate.h"
 #import "UIColor+ColorWithHex.h"
 
-#define TOTAL_FORCED_AD_DISPLAY_TIME 10
+#define TOTAL_FORCED_AD_DISPLAY_TIME 8
 
 @interface ZSAdPageViewController ()
 
@@ -78,8 +79,69 @@
 	hr.frame = CGRectMake(9, 346, hr.frame.size.width, hr.frame.size.height);
 	[self.innerView addSubview:hr];
 	
+	// Create full version ad container.
+	UIView *adContainer = [[UIView alloc] initWithFrame:CGRectMake(10, 352, 294, 100)];
+	adContainer.clipsToBounds = YES;
+	[self.innerView addSubview:adContainer];
+	
+	UITapGestureRecognizer *singleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget: self action:@selector(_adContainerWasTapped)];
+	singleTapRecognizer.numberOfTapsRequired = 1;
+	[adContainer addGestureRecognizer:singleTapRecognizer];
+	
+	// Create the icon.
+	UIImageView *icon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"IconWithShadow.png"]];
+	icon.center = CGPointMake(40, 43);
+	[adContainer addSubview:icon];
+	
+	UIFont *blackFont = [UIFont fontWithName:@"ReklameScript-Regular" size:15.0f];
+	UIColor *blackTextColor = [UIColor blackColor];
+	
+	// Create the top label.
+	UILabel *topLabel = [[UILabel alloc] initWithFrame:CGRectMake(82, 15, 140, 20)];
+	topLabel.backgroundColor = [UIColor clearColor];
+	topLabel.font = blackFont;
+	topLabel.textColor = blackTextColor;
+	topLabel.textAlignment = UITextAlignmentLeft;
+	topLabel.text = @"✓ More difficulties";
+	[adContainer addSubview:topLabel];
+	
+	UILabel *topLabel2 = [[UILabel alloc] initWithFrame:CGRectMake(82, 35, 140, 20)];
+	topLabel2.backgroundColor = [UIColor clearColor];
+	topLabel2.font = blackFont;
+	topLabel2.textColor = blackTextColor;
+	topLabel2.textAlignment = UITextAlignmentLeft;
+	topLabel2.text = @"✓ Thousands of puzzles";
+	[adContainer addSubview:topLabel2];
+	
+	UILabel *topLabel3 = [[UILabel alloc] initWithFrame:CGRectMake(82, 55, 140, 20)];
+	topLabel3.backgroundColor = [UIColor clearColor];
+	topLabel3.font = blackFont;
+	topLabel3.textColor = blackTextColor;
+	topLabel3.textAlignment = UITextAlignmentLeft;
+	topLabel3.text = @"✓ No ads";
+	[adContainer addSubview:topLabel3];
+	
+	// Create the bottom label.
+	UILabel *bottomLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 76, 80, 20)];
+	bottomLabel.backgroundColor = [UIColor clearColor];
+	bottomLabel.font = [UIFont fontWithName:@"ReklameScript-Medium" size:17.0f];
+	bottomLabel.textColor = blackTextColor;
+	bottomLabel.textAlignment = UITextAlignmentCenter;
+	bottomLabel.text = @"Sudo";
+	[adContainer addSubview:bottomLabel];
+	
+	// Create the app store button.
+	UIImageView *appStoreButton = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"AppStoreButton"]];
+	appStoreButton.center = CGPointMake(248, 46);
+	[adContainer addSubview:appStoreButton];
+	
 	// Start with the corner un-folded.
 	[self.foldedCornerViewController resetToStartPosition];
+}
+
+- (void)_adContainerWasTapped {
+	ZSAppDelegate *appDelegate = (ZSAppDelegate *)[[UIApplication sharedApplication] delegate];
+	[[UIApplication sharedApplication] openURL:appDelegate.iTunesURL];
 }
 
 - (void)viewWasPromotedToFront {
@@ -93,7 +155,10 @@
 	
 	IMAdRequest *request = [IMAdRequest request];
 	request.testMode = YES;
-	//[self.adView loadIMAdRequest:request];
+	[self.adView loadIMAdRequest:request];
+	
+	// Tell the user that the ad is loading.
+	self.innerAdText.text = @"Loading an ad…";
 	
 	// Set the timeout for folding down the page.
 	self.countdownTimerCount = TOTAL_FORCED_AD_DISPLAY_TIME;
@@ -115,6 +180,9 @@
 	}
 	
 	self.turnThePageNotice.text = @"";
+	
+	self.innerAdText.text = @"This space intentionally left blank.";
+	self.innerAdText.hidden = NO;
 	
 	[self.foldedCornerViewController resetToStartPosition];
 	[self setScreenshotVisible:NO];
@@ -153,11 +221,26 @@
 #pragma mark - IMAdDelegate Implementation
 
 - (void)adViewDidFinishRequest:(IMAdView *)adView {
-	
+	self.innerAdText.hidden = YES;
 }
 
 - (void)adView:(IMAdView *)view didFailRequestWithError:(IMAdError *)error {
-	
+	switch (error.code) {
+		default:
+		case kIMADInternalError:
+		case kIMADNetworkError:
+		case kIMADInvalidRequestError:
+			self.innerAdText.text = @"There was an error loading ads.";
+			break;
+			
+		case kIMAdRequestInProgressError:
+		case kIMAdClickInProgressError:
+			break;
+			
+		case kIMADNoFillError:
+			self.innerAdText.text = @"This space intentionally left blank.";
+			break;
+	}
 }
 
 @end
