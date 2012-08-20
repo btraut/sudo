@@ -9,7 +9,7 @@
 #import "ZSFoldedPageViewController.h"
 
 #import <QuartzCore/QuartzCore.h>
-#import <AVFoundation/AVFoundation.h>
+#import <AudioToolbox/AudioToolbox.h>
 
 @interface ZSFoldedPageViewController () {
 	CGPoint _foldStartPoint;
@@ -21,9 +21,9 @@
 	BOOL _deferScreenshotUpdate;
 	BOOL _deferedScreenshotUpdateIsSychronous;
 	
-	AVAudioPlayer *_pageFlipAudioPlayer;
-	AVAudioPlayer *_pageFlipAudioPlayer2;
-	AVAudioPlayer *_pageFlipAudioPlayer3;
+	SystemSoundID _pageFlipAudioPlayer;
+	SystemSoundID _pageFlipAudioPlayer2;
+	SystemSoundID _pageFlipAudioPlayer3;
 }
 
 @end
@@ -59,6 +59,12 @@
 	return self;
 }
 
+- (void)dealloc {
+    AudioServicesDisposeSystemSoundID(_pageFlipAudioPlayer);
+    AudioServicesDisposeSystemSoundID(_pageFlipAudioPlayer2);
+    AudioServicesDisposeSystemSoundID(_pageFlipAudioPlayer3);
+}
+
 - (void)loadView {
 	self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 314, 460)];
 }
@@ -78,17 +84,14 @@
 	[self.view addSubview:foldedCornerViewController.view];
 	
 	// Initialize the audio players.
-	NSString *soundFilePath = [[NSBundle mainBundle] pathForResource:@"PageFlip1" ofType:@"wav"];
-	NSURL *newURL = [[NSURL alloc] initFileURLWithPath: soundFilePath];
-	_pageFlipAudioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:newURL error:nil];
+	NSURL *newURL = [[NSBundle mainBundle] URLForResource: @"PageFlip1" withExtension: @"wav"];
+	AudioServicesCreateSystemSoundID((__bridge CFURLRef)newURL, &_pageFlipAudioPlayer);
 	
-	NSString *soundFilePath2 = [[NSBundle mainBundle] pathForResource:@"PageFlip2" ofType:@"wav"];
-	NSURL *newURL2 = [[NSURL alloc] initFileURLWithPath: soundFilePath2];
-	_pageFlipAudioPlayer2 = [[AVAudioPlayer alloc] initWithContentsOfURL:newURL2 error:nil];
+	NSURL *newURL2 = [[NSBundle mainBundle] URLForResource: @"PageFlip2" withExtension: @"wav"];
+	AudioServicesCreateSystemSoundID((__bridge CFURLRef)newURL2, &_pageFlipAudioPlayer2);
 	
-	NSString *soundFilePath3 = [[NSBundle mainBundle] pathForResource:@"PageFlip3" ofType:@"wav"];
-	NSURL *newURL3 = [[NSURL alloc] initFileURLWithPath: soundFilePath3];
-	_pageFlipAudioPlayer3 = [[AVAudioPlayer alloc] initWithContentsOfURL:newURL3 error:nil];
+	NSURL *newURL3 = [[NSBundle mainBundle] URLForResource: @"PageFlip3" withExtension: @"wav"];
+	AudioServicesCreateSystemSoundID((__bridge CFURLRef)newURL3, &_pageFlipAudioPlayer3);
 	
 	// Reset to start.
 	if (self.foldedCornerVisibleOnLoad) {
@@ -193,9 +196,9 @@
 - (void)_playPageFlipSound {
 	switch (arc4random() % 3) {
 		default:
-		case 0: [_pageFlipAudioPlayer play]; break;
-		case 1: [_pageFlipAudioPlayer2 play]; break;
-		case 2: [_pageFlipAudioPlayer3 play]; break;
+		case 0: AudioServicesPlaySystemSound(_pageFlipAudioPlayer); break;
+		case 1: AudioServicesPlaySystemSound(_pageFlipAudioPlayer2); break;
+		case 2: AudioServicesPlaySystemSound(_pageFlipAudioPlayer3); break;
 	}
 }
 

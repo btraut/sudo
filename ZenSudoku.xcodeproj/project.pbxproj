@@ -100,6 +100,8 @@
 		84A0975F1549DDE40082C9D0 /* ZSGameBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A0975E1549DDE40082C9D0 /* ZSGameBookViewController.m */; };
 		84A509F615A21D99002C9C70 /* BackwardsTranslucentPage.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A509F415A21D99002C9C70 /* BackwardsTranslucentPage.png */; };
 		84A509F715A21D99002C9C70 /* BackwardsTranslucentPage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A509F515A21D99002C9C70 /* BackwardsTranslucentPage@2x.png */; };
+		84A5492B15E2364E00280C2B /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A5492A15E2364E00280C2B /* AudioToolbox.framework */; };
+		84A5492C15E2365700280C2B /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A5492A15E2364E00280C2B /* AudioToolbox.framework */; };
 		84A5F2F215D4BB5500ACF40E /* libFlurry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 840E032315BFD22700F113D9 /* libFlurry.a */; };
 		84A5F2F315D4BBBD00ACF40E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 840E032515BFD75F00F113D9 /* SystemConfiguration.framework */; };
 		84A5F30015D4DCF300ACF40E /* AdBorder.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A5F2F815D4DCF300ACF40E /* AdBorder.png */; };
@@ -119,7 +121,6 @@
 		84A7264F15DB401F008E00C1 /* Ribbon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D54E9615B4139D003B1705 /* Ribbon@2x.png */; };
 		84A7265215DB417C008E00C1 /* HR.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A7265015DB417C008E00C1 /* HR.png */; };
 		84A7265315DB417C008E00C1 /* HR@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A7265115DB417C008E00C1 /* HR@2x.png */; };
-		84A7265815DBAAA1008E00C1 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8493F8A315D48312008F0BD2 /* AVFoundation.framework */; };
 		84A7265D15DBAABF008E00C1 /* PageFlip1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 84A7265A15DBAABF008E00C1 /* PageFlip1.wav */; };
 		84A7265E15DBAABF008E00C1 /* PageFlip1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 84A7265A15DBAABF008E00C1 /* PageFlip1.wav */; };
 		84A7265F15DBAABF008E00C1 /* PageFlip2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 84A7265B15DBAABF008E00C1 /* PageFlip2.wav */; };
@@ -457,6 +458,7 @@
 		84A0975E1549DDE40082C9D0 /* ZSGameBookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSGameBookViewController.m; path = "View Controllers/ZSGameBookViewController.m"; sourceTree = "<group>"; };
 		84A509F415A21D99002C9C70 /* BackwardsTranslucentPage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BackwardsTranslucentPage.png; path = Resources/Images/Shared/BackwardsTranslucentPage.png; sourceTree = "<group>"; };
 		84A509F515A21D99002C9C70 /* BackwardsTranslucentPage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BackwardsTranslucentPage@2x.png"; path = "Resources/Images/Shared/BackwardsTranslucentPage@2x.png"; sourceTree = "<group>"; };
+		84A5492A15E2364E00280C2B /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		84A5F2F815D4DCF300ACF40E /* AdBorder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AdBorder.png; sourceTree = "<group>"; };
 		84A5F2F915D4DCF300ACF40E /* AdBorder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AdBorder@2x.png"; sourceTree = "<group>"; };
 		84A5F30815D4FB7F00ACF40E /* IconWithShadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IconWithShadow.png; sourceTree = "<group>"; };
@@ -599,6 +601,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84A5492C15E2365700280C2B /* AudioToolbox.framework in Frameworks */,
 				8493F8A415D48312008F0BD2 /* AVFoundation.framework in Frameworks */,
 				8493F8A215D482FE008F0BD2 /* Security.framework in Frameworks */,
 				8485C6F115D1B66A00A8294D /* MediaPlayer.framework in Frameworks */,
@@ -623,7 +626,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84A7265815DBAAA1008E00C1 /* AVFoundation.framework in Frameworks */,
+				84A5492B15E2364E00280C2B /* AudioToolbox.framework in Frameworks */,
 				84A5F2F315D4BBBD00ACF40E /* SystemConfiguration.framework in Frameworks */,
 				84A8FB1D15A6A1FB00D802C8 /* CoreText.framework in Frameworks */,
 				8492B76114C911FF0093B7AC /* libsqlite3.0.dylib in Frameworks */,
@@ -1093,6 +1096,7 @@
 		84D55012147F1C4A00A7934E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				84A5492A15E2364E00280C2B /* AudioToolbox.framework */,
 				8493F8A315D48312008F0BD2 /* AVFoundation.framework */,
 				8493F8A115D482FE008F0BD2 /* Security.framework */,
 				8485C6DC15CFACE500A8294D /* MediaPlayer.framework */,
