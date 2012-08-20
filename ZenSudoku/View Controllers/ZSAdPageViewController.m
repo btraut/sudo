@@ -97,7 +97,7 @@
 	UIColor *blackTextColor = [UIColor blackColor];
 	
 	// Create the top label.
-	UILabel *topLabel = [[UILabel alloc] initWithFrame:CGRectMake(82, 15, 140, 20)];
+	UILabel *topLabel = [[UILabel alloc] initWithFrame:CGRectMake(82, 21, 140, 20)];
 	topLabel.backgroundColor = [UIColor clearColor];
 	topLabel.font = blackFont;
 	topLabel.textColor = blackTextColor;
@@ -105,7 +105,7 @@
 	topLabel.text = @"✓ More difficulties";
 	[adContainer addSubview:topLabel];
 	
-	UILabel *topLabel2 = [[UILabel alloc] initWithFrame:CGRectMake(82, 35, 140, 20)];
+	UILabel *topLabel2 = [[UILabel alloc] initWithFrame:CGRectMake(82, 41, 140, 20)];
 	topLabel2.backgroundColor = [UIColor clearColor];
 	topLabel2.font = blackFont;
 	topLabel2.textColor = blackTextColor;
@@ -113,7 +113,7 @@
 	topLabel2.text = @"✓ Thousands of puzzles";
 	[adContainer addSubview:topLabel2];
 	
-	UILabel *topLabel3 = [[UILabel alloc] initWithFrame:CGRectMake(82, 55, 140, 20)];
+	UILabel *topLabel3 = [[UILabel alloc] initWithFrame:CGRectMake(82, 61, 140, 20)];
 	topLabel3.backgroundColor = [UIColor clearColor];
 	topLabel3.font = blackFont;
 	topLabel3.textColor = blackTextColor;
@@ -132,7 +132,7 @@
 	
 	// Create the app store button.
 	UIImageView *appStoreButton = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"AppStoreButton"]];
-	appStoreButton.center = CGPointMake(248, 46);
+	appStoreButton.center = CGPointMake(248, 53);
 	[adContainer addSubview:appStoreButton];
 	
 	// Start with the corner un-folded.
@@ -218,9 +218,16 @@
 	}
 }
 
+- (void)startFoldAnimationDidFinishWithViewController:(ZSFoldedCornerViewController *)viewController {
+	[super startFoldAnimationDidFinishWithViewController:viewController];
+	
+	[self updateScreenshotSynchronous:NO];
+}
+
 #pragma mark - IMAdDelegate Implementation
 
 - (void)adViewDidFinishRequest:(IMAdView *)adView {
+	self.needsScreenshotUpdate = YES;
 	self.innerAdText.hidden = YES;
 }
 
@@ -230,6 +237,7 @@
 		case kIMADInternalError:
 		case kIMADNetworkError:
 		case kIMADInvalidRequestError:
+			self.needsScreenshotUpdate = YES;
 			self.innerAdText.text = @"There was an error loading ads.";
 			break;
 			
@@ -238,6 +246,7 @@
 			break;
 			
 		case kIMADNoFillError:
+			self.needsScreenshotUpdate = YES;
 			self.innerAdText.text = @"This space intentionally left blank.";
 			break;
 	}
