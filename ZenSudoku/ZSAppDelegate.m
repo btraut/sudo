@@ -61,6 +61,9 @@ NSString * const kPreventScreenDimmingOptionKey = @"kPreventScreenDimmingOptionK
 	// Load puzzles in from the defaults cache.
 	[[ZSGameController sharedInstance] populateCacheFromUserDefaults];
 	
+	// Populate the cache. If it is already full from the user defaults, this does nothing.
+	[[ZSGameController sharedInstance] populateCacheForAllDifficultiesSynchronous:YES];
+	
 	// Build the window.
     _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	

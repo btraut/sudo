@@ -19,7 +19,6 @@
 
 @end
 
-extern NSString * const kSQLiteDBFileName;
 extern NSString * const kSQLiteDBFileNameResource;
 extern NSString * const kSQLiteDBFileNameType;
 

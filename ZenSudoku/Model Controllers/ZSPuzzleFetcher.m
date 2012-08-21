@@ -11,8 +11,7 @@
 
 #import "FMDatabase.h"
 
-NSString * const kSQLiteDBFileName = @"Puzzles.db3";
-NSString * const kSQLiteDBFileNameResource = @"Sudoku";
+NSString * const kSQLiteDBFileNameResource = @"Puzzles";
 NSString * const kSQLiteDBFileNameType = @"db3";
 
 NSString * const kDBPuzzleDefinitionIdKey = @"kDBPuzzleDefinitionIdKey";
