@@ -296,7 +296,7 @@ typedef enum {
 	
 	[self pushUpdate];
 	
-	self.view.userInteractionEnabled = YES;
+	self.view.userInteractionEnabled = NO;
 	self.view.hidden = NO;
 	self.view.alpha = 1;
 }

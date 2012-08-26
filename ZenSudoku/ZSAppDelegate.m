@@ -102,7 +102,7 @@ NSString * const kPreventScreenDimmingOptionKey = @"kPreventScreenDimmingOptionK
 - (void)applicationWillResignActive:(UIApplication *)application {
 	ZSGameBookViewController *gameBookViewController = (ZSGameBookViewController *)_window.rootViewController;
 	
-	[gameBookViewController.currentGameViewController applicationWillResignActive:application];
+	[gameBookViewController applicationWillResignActive:application];
 	
 	// Save the game and statistics.
 	[[ZSGameController sharedInstance] saveGame:gameBookViewController.currentGameViewController.game];
@@ -123,7 +123,7 @@ NSString * const kPreventScreenDimmingOptionKey = @"kPreventScreenDimmingOptionK
 - (void)applicationDidBecomeActive:(UIApplication *)application {
 	ZSGameBookViewController *gameBookViewController = (ZSGameBookViewController *)_window.rootViewController;
 	
-	[gameBookViewController.currentGameViewController applicationDidBecomeActive:application];
+	[gameBookViewController applicationDidBecomeActive:application];
 	
 	// Handle screen dimming option.
 	BOOL disableIdleTimer = [[[NSUserDefaults standardUserDefaults] objectForKey:kPreventScreenDimmingOptionKey] boolValue];

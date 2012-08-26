@@ -170,6 +170,20 @@
 	[_splashPageViewController dismiss];
 }
 
+- (void)applicationWillResignActive:(UIApplication *)application {
+	if (_pages.count) {
+		ZSFoldedPageViewController *firstPage = [_pages objectAtIndex:0];
+		[firstPage applicationWillResignActive:application];
+	}
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+	if (_pages.count) {
+		ZSFoldedPageViewController *firstPage = [_pages objectAtIndex:0];
+		[firstPage applicationDidBecomeActive:application];
+	}
+}
+
 - (void)_loadNewGame {
 	ZSGameDifficulty newGameDifficulty = [[NSUserDefaults standardUserDefaults] integerForKey:kLastPlayedPuzzleDifficulty];
 	ZSGame *newGame = [[ZSGameController sharedInstance] fetchGameWithDifficulty:newGameDifficulty];

@@ -31,6 +31,9 @@
 @property (assign, readonly) BOOL hintsShown;
 @property (assign, readonly) BOOL ribbonShown;
 
+- (void)applicationWillResignActive:(UIApplication *)application;
+- (void)applicationDidBecomeActive:(UIApplication *)application;
+
 - (void)showHint;
 - (void)hideHint;
 
