@@ -96,18 +96,6 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 	return self;
 }
 
-- (id)initWithSize:(NSInteger)newSize answers:(NSInteger **)newAnswers groupMap:(NSInteger **)newGroupMap {
-	self = [self initWithSize:newSize];
-	
-	if (self) {
-		// Populate the tiles.
-		[board applyAnswersArray:newAnswers];
-		[board applyGroupMapArray:newGroupMap];
-	}
-	
-	return self;
-}
-
 - (void)notifyStatisticsOfNewGame {
 	[[ZSStatisticsController sharedInstance] gameStartedWithDifficulty:difficulty];
 }
@@ -182,7 +170,7 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 		NSMutableArray *tileColArray = [NSMutableArray array];
 		
 		for (NSInteger col = 0; col < board.size; col++) {
-			[tileColArray addObject:[self getTileAtRow:row col:col]];
+			[tileColArray addObject:[board getTileAtRow:row col:col]];
 		}
 		
 		[tileRowArray addObject:tileColArray];
@@ -200,14 +188,14 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 	[encoder encodeObject:_redoStack forKey:kDictionaryRepresentationGameRedoStackKey];
 }
 
-#pragma mark - NSCoder Methods
+#pragma mark - Tile Methods
 
 - (NSInteger)getGuessForTileAtRow:(NSInteger)row col:(NSInteger)col {
-	return [self getTileAtRow:row col:col].guess;
+	return [board getTileAtRow:row col:col].guess;
 }
 
 - (void)setGuess:(NSInteger)guess forTileAtRow:(NSInteger)row col:(NSInteger)col {
-	ZSTile *tile = [self getTileAtRow:row col:col];
+	ZSTile *tile = [board getTileAtRow:row col:col];
 	
 	if (tile.guess != guess) {
 		BOOL enterGuess = NO;
@@ -279,16 +267,8 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 	[self setGuess:0 forTileAtRow:row col:col];
 }
 
-- (BOOL)getLockedForTileAtRow:(NSInteger)row col:(NSInteger)col {
-	return [self getTileAtRow:row col:col].locked;
-}
-
-- (void)setLocked:(BOOL)locked forTileAtRow:(NSInteger)row col:(NSInteger)col {
-	[self getTileAtRow:row col:col].locked = locked;
-}
-
 - (BOOL)getPencilForPencilNumber:(NSInteger)pencilNumber forTileAtRow:(NSInteger)row col:(NSInteger)col {
-	ZSTile *tile = [self getTileAtRow:row col:col];
+	ZSTile *tile = [board getTileAtRow:row col:col];
 	return [tile getPencilForGuess:pencilNumber];
 }
 
@@ -305,87 +285,6 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 	[self setPencil:!previousValue forPencilNumber:pencilNumber forTileAtRow:row col:col];
 }
 
-- (NSInteger)getGroupIdForTileAtRow:(NSInteger)row col:(NSInteger)col {
-	return [self getTileAtRow:row col:col].groupId;
-}
-
-#pragma mark - Tile Methods
-
-- (ZSTile *)getTileAtRow:(NSInteger)row col:(NSInteger)col {
-	return [board getTileAtRow:row col:col];
-}
-
-- (NSArray *)getAllInfluencedTilesForTileAtRow:(NSInteger)targetRow col:(NSInteger)targetCol includeSelf:(BOOL)includeSelf {
-	ZSTile *targetTile = [self getTileAtRow:targetRow col:targetCol];
-	
-	NSMutableArray *influencedTiles = [NSMutableArray array];
-	
-	// Add the group tiles first. Optionally add self.
-	[influencedTiles addObjectsFromArray:[self getFamilySetForTileAtRow:targetRow col:targetCol includeSelf:includeSelf]];
-	
-	// Add the col tiles. Skip the ones in the same group (including self).
-	for (NSInteger row = 0; row < board.size; ++row) {
-		ZSTile *possibleInfluencedTile = [self getTileAtRow:row col:targetCol];
-		
-		if (possibleInfluencedTile.groupId != targetTile.groupId) {
-			[influencedTiles addObject:possibleInfluencedTile];
-		}
-	}
-	
-	// Add the row tiles. Skip the ones in the same group (including self).
-	for (NSInteger col = 0; col < board.size; ++col) {
-		ZSTile *possibleInfluencedTile = [self getTileAtRow:targetRow col:col];
-		
-		if (possibleInfluencedTile.groupId != targetTile.groupId) {
-			[influencedTiles addObject:possibleInfluencedTile];
-		}
-	}
-	
-	return influencedTiles;
-}
-
-- (NSArray *)getRowSetForTileAtRow:(NSInteger)targetRow col:(NSInteger)targetCol includeSelf:(BOOL)includeSelf {
-	NSMutableArray *set = [NSMutableArray array];
-	
-	for (NSInteger col = 0; col < board.size; ++col) {
-		if (includeSelf || col != targetCol) {
-			[set addObject:[self getTileAtRow:targetRow col:col]];
-		}
-	}
-	
-	return set;
-}
-
-- (NSArray *)getColSetForTileAtRow:(NSInteger)targetRow col:(NSInteger)targetCol includeSelf:(BOOL)includeSelf {
-	NSMutableArray *set = [NSMutableArray array];
-	
-	for (NSInteger row = 0; row < board.size; ++row) {
-		if (includeSelf || row != targetRow) {
-			[set addObject:[self getTileAtRow:row col:targetCol]];
-		}
-	}
-	
-	return set;
-}
-
-- (NSArray *)getFamilySetForTileAtRow:(NSInteger)targetRow col:(NSInteger)targetCol includeSelf:(BOOL)includeSelf {
-	NSMutableArray *set = [NSMutableArray array];
-	
-	NSInteger targetGroupId = [self getTileAtRow:targetRow col:targetCol].groupId;
-	
-	for (NSInteger row = 0; row < board.size; ++row) {
-		for (NSInteger col = 0; col < board.size; ++col) {
-			ZSTile *gameTile = [self getTileAtRow:row col:col];
-			
-			if (gameTile.groupId == targetGroupId && (includeSelf || !(row == targetRow && col == targetCol))) {
-				[set addObject:gameTile];
-			}
-		}
-	}
-	
-	return set;
-}
-
 #pragma mark - Misc Methods
 
 - (BOOL)allowsGuess:(NSInteger)guess {
@@ -393,7 +292,7 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 	
 	for (NSInteger row = 0; row < board.size; row++) {
 		for (NSInteger col = 0; col < board.size; col++) {
-			ZSTile *tile = [self getTileAtRow:row col:col];
+			ZSTile *tile = [board getTileAtRow:row col:col];
 			
 			if (tile.guess == guess) {
 				totalOfGuess++;
@@ -411,7 +310,7 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 - (BOOL)isSolved {
 	for (NSInteger row = 0; row < board.size; row++) {
 		for (NSInteger col = 0; col < board.size; col++) {
-			ZSTile *gameTile = [self getTileAtRow:row col:col];
+			ZSTile *gameTile = [board getTileAtRow:row col:col];
 			
 			if (!gameTile.guess || gameTile.guess != gameTile.answer) {
 				return NO;

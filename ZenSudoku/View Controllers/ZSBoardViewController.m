@@ -69,7 +69,7 @@
 	for (NSInteger row = 0; row < game.board.size; row++) {
 		for (NSInteger col = 0; col < game.board.size; col++) {
 			ZSTileViewController *tileViewController = [[tileViews objectAtIndex:row] objectAtIndex:col];
-			tileViewController.tile = [game getTileAtRow:row col:col];
+			tileViewController.tile = [game.board getTileAtRow:row col:col];
 			[tileViewController reset];
 		}
 	}
@@ -100,7 +100,7 @@
 		NSMutableArray *rowTiles = [NSMutableArray array];
 		
 		for (NSInteger col = 0; col < game.board.size; col++) {
-			ZSTileViewController *tileViewController = [[ZSTileViewController alloc] initWithTile:[game getTileAtRow:row col:col]];
+			ZSTileViewController *tileViewController = [[ZSTileViewController alloc] initWithTile:[game.board getTileAtRow:row col:col]];
 			tileViewController.view.frame = CGRectMake(xOffset, yOffset, tileViewController.view.frame.size.width, tileViewController.view.frame.size.height);
 			tileViewController.touchDelegate = self;
 			
@@ -250,7 +250,7 @@
 	if (tileView.tile.guess) {
 		BOOL selectedTileContainsErrors = NO;
 		
-		NSArray *rowSet = [game getRowSetForTileAtRow:tileView.tile.row col:tileView.tile.col includeSelf:NO];
+		NSArray *rowSet = [game.board getRowSetForTileAtRow:tileView.tile.row col:tileView.tile.col includeSelf:NO];
 		if ([self _getTotalTilesInSet:rowSet withGuess:tileView.tile.guess] > 0) {
 			selectedTileContainsErrors = YES;
 			
@@ -263,7 +263,7 @@
 			}
 		}
 		
-		NSArray *colSet = [game getColSetForTileAtRow:tileView.tile.row col:tileView.tile.col includeSelf:NO];
+		NSArray *colSet = [game.board getColSetForTileAtRow:tileView.tile.row col:tileView.tile.col includeSelf:NO];
 		if ([self _getTotalTilesInSet:colSet withGuess:tileView.tile.guess] > 0) {
 			selectedTileContainsErrors = YES;
 			
@@ -276,7 +276,7 @@
 			}
 		}
 		
-		NSArray *familySet = [game getFamilySetForTileAtRow:tileView.tile.row col:tileView.tile.col includeSelf:NO];
+		NSArray *familySet = [game.board getFamilySetForTileAtRow:tileView.tile.row col:tileView.tile.col includeSelf:NO];
 		if ([self _getTotalTilesInSet:familySet withGuess:tileView.tile.guess] > 0) {
 			selectedTileContainsErrors = YES;
 			

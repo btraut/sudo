@@ -22,7 +22,6 @@ typedef enum {
 @property (assign) NSInteger previousValue;
 @property (assign) NSInteger pencilNumber;
 
-+ (id)undoStop;
 + (id)undoDescriptionWithType:(ZSHistoryEntryType)newType tile:(ZSTile *)newTile previousValue:(NSInteger)newPreviousValue;
 - (id)initWithType:(ZSHistoryEntryType)newType tile:(ZSTile *)newTile previousValue:(NSInteger)newPreviousValue;
 - (id)initWithType:(ZSHistoryEntryType)newType row:(NSInteger)row col:(NSInteger)col previousValue:(NSInteger)newPreviousValue;

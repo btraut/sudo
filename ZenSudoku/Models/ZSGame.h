@@ -36,12 +36,6 @@ typedef enum {
 } ZSAnswerOption;
 
 typedef enum {
-	ZSTileAnswerOrderHybrid,
-	ZSTileAnswerOrderAnswerFirst,
-	ZSTileAnswerOrderTileFirst
-} ZSTileAnswerOrder;
-
-typedef enum {
 	ZSShowErrorsOptionNever,
 	ZSShowErrorsOptionLogical,
 	ZSShowErrorsOptionAlways
@@ -83,7 +77,6 @@ typedef enum {
 + (id)emptyStandard9x9Game;
 
 - (id)initWithSize:(NSInteger)size;
-- (id)initWithSize:(NSInteger)size answers:(NSInteger **)answers groupMap:(NSInteger **)groupMap;
 
 - (void)notifyStatisticsOfNewGame;
 
@@ -93,23 +86,12 @@ typedef enum {
 - (void)setGuess:(NSInteger)guess forTileAtRow:(NSInteger)row col:(NSInteger)col;
 - (void)clearGuessForTileAtRow:(NSInteger)row col:(NSInteger)col;
 
-- (BOOL)getLockedForTileAtRow:(NSInteger)row col:(NSInteger)col;
-- (void)setLocked:(BOOL)locked forTileAtRow:(NSInteger)row col:(NSInteger)col;
-
 - (BOOL)getPencilForPencilNumber:(NSInteger)pencilNumber forTileAtRow:(NSInteger)row col:(NSInteger)col;
 - (void)setPencil:(BOOL)isSet forPencilNumber:(NSInteger)pencilNumber forTileAtRow:(NSInteger)row col:(NSInteger)col;
 - (void)togglePencilForPencilNumber:(NSInteger)pencilNumber forTileAtRow:(NSInteger)row col:(NSInteger)col;
 
 - (void)guessDidChangeForTile:(ZSTile *)tile previousGuess:(NSInteger)previousGuess;
 - (void)pencilDidChangeForTile:(ZSTile *)tile pencilNumber:(NSInteger)pencilNumber previousSet:(NSInteger)previousSet;
-
-- (NSInteger)getGroupIdForTileAtRow:(NSInteger)row col:(NSInteger)col;
-
-- (ZSTile *)getTileAtRow:(NSInteger)row col:(NSInteger)col;
-- (NSArray *)getAllInfluencedTilesForTileAtRow:(NSInteger)row col:(NSInteger)col includeSelf:(BOOL)includeSelf;
-- (NSArray *)getRowSetForTileAtRow:(NSInteger)row col:(NSInteger)col includeSelf:(BOOL)includeSelf;
-- (NSArray *)getColSetForTileAtRow:(NSInteger)row col:(NSInteger)col includeSelf:(BOOL)includeSelf;
-- (NSArray *)getFamilySetForTileAtRow:(NSInteger)row col:(NSInteger)col includeSelf:(BOOL)includeSelf;
 
 // Misc Methods
 

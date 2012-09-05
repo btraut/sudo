@@ -528,7 +528,7 @@ typedef struct {
 	
 	for (NSInteger row = 0; row < game.board.size; ++row) {
 		for (NSInteger col = 0; col < game.board.size; ++col) {
-			ZSTile *tile = [game getTileAtRow:row col:col];
+			ZSTile *tile = [game.board getTileAtRow:row col:col];
 			
 			if (tile.guess) {
 				--totalUnsolved;
@@ -540,7 +540,7 @@ typedef struct {
 	
 	for (NSInteger row = 0; row < game.board.size && totalUnsolved > 2; ++row) {
 		for (NSInteger col = 0; col < game.board.size && totalUnsolved > 2; ++col) {
-			ZSTile *tile = [game getTileAtRow:row col:col];
+			ZSTile *tile = [game.board getTileAtRow:row col:col];
 			
 			if (!tile.guess) {
 				[game setGuess:tile.answer forTileAtRow:row col:col];
@@ -1077,7 +1077,7 @@ typedef struct {
 					BOOL foundError = NO;
 					
 					// Get all influenced tiles.
-					NSArray *influencedTiles = [game getAllInfluencedTilesForTileAtRow:row col:col includeSelf:NO];
+					NSArray *influencedTiles = [game.board getAllInfluencedTilesForTileAtRow:row col:col includeSelf:NO];
 					
 					// Loop over all influenced tiles and check if any others have the same guess as this one. If so, mark it as incorrect.
 					for (ZSTile *influencedTile in influencedTiles) {

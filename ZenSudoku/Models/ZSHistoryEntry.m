@@ -18,10 +18,6 @@ NSString * const kDictionaryRepresentationGameHistoryEntryPencilNumberKey = @"kD
 
 @synthesize type, row, col, previousValue, pencilNumber;
 
-+ (id)undoStop {
-	return [[self alloc] initWithType:ZSHistoryEntryTypeGuess tile:nil previousValue:0];
-}
-
 + (id)undoDescriptionWithType:(ZSHistoryEntryType)newType tile:(ZSTile *)newTile previousValue:(NSInteger)newPreviousValue {
 	return [[self alloc] initWithType:newType tile:newTile previousValue:newPreviousValue];
 }
