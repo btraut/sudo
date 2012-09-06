@@ -62,7 +62,7 @@ NSString * const kPreventScreenDimmingOptionKey = @"kPreventScreenDimmingOptionK
 	[[ZSGameController sharedInstance] populateCacheFromUserDefaults];
 	
 	// Populate the cache. If it is already full from the user defaults, this does nothing.
-	[[ZSGameController sharedInstance] populateCacheForAllDifficultiesSynchronous:YES];
+	// [[ZSGameController sharedInstance] populateCacheForAllDifficultiesSynchronous:YES];
 	
 	// Build the window.
     _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
