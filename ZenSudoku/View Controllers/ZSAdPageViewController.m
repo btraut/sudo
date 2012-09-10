@@ -148,13 +148,12 @@
 	[super viewWasPromotedToFront];
 	
 	// Create the ad.
-	self.adView = [[IMAdView alloc] initWithFrame:CGRectMake(1.5f, 2, 300, 250) imAppId:@"4028cba631d63df10131e1d4650600cd" imAdUnit:IM_UNIT_300x250 rootViewController:self];
+	self.adView = [[IMAdView alloc] initWithFrame:CGRectMake(1.5f, 2, 300, 250) imAppId:@"4028cbff39009b2401390d0b50220174" imAdUnit:IM_UNIT_300x250 rootViewController:self];
 	self.adView.delegate = self;
 	self.adView.animationType = kIMAnimationOff;
 	[self.adContainer addSubview:self.adView];
 	
 	IMAdRequest *request = [IMAdRequest request];
-	request.testMode = YES;
 	[self.adView loadIMAdRequest:request];
 	
 	// Tell the user that the ad is loading.

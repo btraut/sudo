@@ -17,7 +17,6 @@ NSString * const kDictionaryKeyHighlightType = @"kDictionaryKeyHighlightType";
 
 @synthesize text;
 @synthesize highlightPencils, highlightAnswers, highlightTiles, removePencils, addPencils, removeGuess, setGuess, setAutoPencil;
-@synthesize allowsLearn;
 
 - (id)init {
 	self = [super init];
