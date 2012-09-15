@@ -9,6 +9,7 @@
 #import "ZSFoldedCornerViewController.h"
 
 #import "ZSFoldedCornerPlusButtonViewController.h"
+#import "UIDevice+Resolutions.h"
 
 #import "ZSGLSprite.h"
 #import "ZSGLShape.h"
@@ -125,7 +126,8 @@ typedef enum {
 
 - (void)loadView {
 	// Create the GLKView.
-	ZSFoldedCornerView *view = [[ZSFoldedCornerView alloc] initWithFrame:CGRectMake(0, 0, 314, 460)];
+	UIDeviceResolution resolution = [UIDevice currentResolution];
+	ZSFoldedCornerView *view = [[ZSFoldedCornerView alloc] initWithFrame:CGRectMake(0, 0, 314, resolution == UIDevice_iPhoneTallerHiRes ? 548 : 460)];
 	view.delegate = self;
 	view.hitTestDelegate = self;
 	self.view = view;
@@ -164,18 +166,25 @@ typedef enum {
 	self.effect.transform.projectionMatrix = projectionMatrix;
 	
 	// Load the images.
-	self.backwardsPageImage = [UIImage imageNamed:@"BackwardsPage.png"];
+	UIDeviceResolution resolution = [UIDevice currentResolution];
 	
-	if ([UIScreen mainScreen].scale == 2.0) {
+	self.backwardsPageImage = [UIImage imageNamed:(resolution == UIDevice_iPhoneTallerHiRes ? @"BackwardsPage-Tall@2x.png" : @"BackwardsPage.png")];
+	
+	if (resolution == UIDevice_iPhoneStandardRes) {
+		self.backwardsPageSprite = [[ZSGLSprite alloc] initWithFile:@"BackwardsTranslucentPage.png" effect:self.effect];
+		self.backwardsTranslucentPageSprite = [[ZSGLSprite alloc] initWithFile:@"BackwardsTranslucentPage.png" effect:self.effect];
+		self.shadowBlobOpaqueSprite = [[ZSGLSprite alloc] initWithFile:@"ShadowBlobStraightOpaque.png" effect:self.effect];
+		self.shadowBlobSprite = [[ZSGLSprite alloc] initWithFile:@"ShadowBlobStraight.png" effect:self.effect];
+	} else if (resolution == UIDevice_iPhoneHiRes) {
 		self.backwardsPageSprite = [[ZSGLSprite alloc] initWithFile:@"BackwardsTranslucentPage@2x.png" effect:self.effect];
 		self.backwardsTranslucentPageSprite = [[ZSGLSprite alloc] initWithFile:@"BackwardsTranslucentPage@2x.png" effect:self.effect];
 		self.shadowBlobOpaqueSprite = [[ZSGLSprite alloc] initWithFile:@"ShadowBlobStraightOpaque@2x.png" effect:self.effect];
 		self.shadowBlobSprite = [[ZSGLSprite alloc] initWithFile:@"ShadowBlobStraight@2x.png" effect:self.effect];
 	} else {
-		self.backwardsPageSprite = [[ZSGLSprite alloc] initWithFile:@"BackwardsTranslucentPage.png" effect:self.effect];
-		self.backwardsTranslucentPageSprite = [[ZSGLSprite alloc] initWithFile:@"BackwardsTranslucentPage.png" effect:self.effect];
-		self.shadowBlobOpaqueSprite = [[ZSGLSprite alloc] initWithFile:@"ShadowBlobStraightOpaque.png" effect:self.effect];
-		self.shadowBlobSprite = [[ZSGLSprite alloc] initWithFile:@"ShadowBlobStraight.png" effect:self.effect];
+		self.backwardsPageSprite = [[ZSGLSprite alloc] initWithFile:@"BackwardsTranslucentPage-Tall@2x.png" effect:self.effect];
+		self.backwardsTranslucentPageSprite = [[ZSGLSprite alloc] initWithFile:@"BackwardsTranslucentPage-Tall@2x.png" effect:self.effect];
+		self.shadowBlobOpaqueSprite = [[ZSGLSprite alloc] initWithFile:@"ShadowBlobStraightOpaque@2x.png" effect:self.effect];
+		self.shadowBlobSprite = [[ZSGLSprite alloc] initWithFile:@"ShadowBlobStraight@2x.png" effect:self.effect];
 	}
 	
 	self.shadowBlobOpaqueSprite.overlay = YES;
@@ -354,8 +363,11 @@ typedef enum {
 		shadowStart.y = -H * sinPhi / 2;
 	}
 	
-	if (foldDimensions.height > 460) {
-		_foldOverflowBottomWidth = foldDimensions.width - 460 * tanPhi;
+	UIDeviceResolution resolution = [UIDevice currentResolution];
+	NSInteger pageHeight = resolution == UIDevice_iPhoneTallerHiRes ? 548 : 460;
+	
+	if (foldDimensions.height > pageHeight) {
+		_foldOverflowBottomWidth = foldDimensions.width - pageHeight * tanPhi;
 	} else {
 		_foldOverflowBottomWidth = 0;
 	}

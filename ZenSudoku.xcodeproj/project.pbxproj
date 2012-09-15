@@ -68,6 +68,26 @@
 		8485C6F415D1B6A200A8294D /* ZSGameOverRibbonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8485C6CA15CDB22C00A8294D /* ZSGameOverRibbonViewController.m */; };
 		8485C6F515D1C2A800A8294D /* Stitching.png in Resources */ = {isa = PBXBuildFile; fileRef = 8485C6D015CDDA9600A8294D /* Stitching.png */; };
 		8485C6F615D1C2A800A8294D /* Stitching@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8485C6D115CDDA9600A8294D /* Stitching@2x.png */; };
+		848A9BC6160448B700147642 /* Default-568@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 848A9BC5160448B700147642 /* Default-568@2x.png */; };
+		848A9BC8160448BD00147642 /* SplashPage-Tall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 848A9BC7160448BD00147642 /* SplashPage-Tall@2x.png */; };
+		848A9BCA160448DE00147642 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 848A9BC9160448DE00147642 /* Default-568h@2x.png */; };
+		848A9BCB160448EC00147642 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 848A9BC9160448DE00147642 /* Default-568h@2x.png */; };
+		848A9BCF16044AFE00147642 /* UIDevice+Resolutions.m in Sources */ = {isa = PBXBuildFile; fileRef = 848A9BCE16044AFE00147642 /* UIDevice+Resolutions.m */; };
+		848A9BD016044AFE00147642 /* UIDevice+Resolutions.m in Sources */ = {isa = PBXBuildFile; fileRef = 848A9BCE16044AFE00147642 /* UIDevice+Resolutions.m */; };
+		848A9BD416044EC400147642 /* BackwardsPage-Tall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 848A9BD116044EC400147642 /* BackwardsPage-Tall@2x.png */; };
+		848A9BD516044EC400147642 /* BackwardsPage-Tall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 848A9BD116044EC400147642 /* BackwardsPage-Tall@2x.png */; };
+		848A9BD616044EC400147642 /* BackwardsTranslucentPage-Tall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 848A9BD216044EC400147642 /* BackwardsTranslucentPage-Tall@2x.png */; };
+		848A9BD716044EC400147642 /* BackwardsTranslucentPage-Tall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 848A9BD216044EC400147642 /* BackwardsTranslucentPage-Tall@2x.png */; };
+		848A9BD816044EC400147642 /* ForwardsPage-Tall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 848A9BD316044EC400147642 /* ForwardsPage-Tall@2x.png */; };
+		848A9BD916044EC400147642 /* ForwardsPage-Tall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 848A9BD316044EC400147642 /* ForwardsPage-Tall@2x.png */; };
+		848A9BDB160456D500147642 /* PaperBackgroundWithBoard-Tall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 848A9BDA160456D500147642 /* PaperBackgroundWithBoard-Tall@2x.png */; };
+		848A9BDC160456D500147642 /* PaperBackgroundWithBoard-Tall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 848A9BDA160456D500147642 /* PaperBackgroundWithBoard-Tall@2x.png */; };
+		848A9BDE160456DE00147642 /* PaperBackground-Tall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 848A9BDD160456DE00147642 /* PaperBackground-Tall@2x.png */; };
+		848A9BDF160456DE00147642 /* PaperBackground-Tall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 848A9BDD160456DE00147642 /* PaperBackground-Tall@2x.png */; };
+		848A9BE116045D8500147642 /* PageCurlGradient-Tall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 848A9BE016045D8500147642 /* PageCurlGradient-Tall@2x.png */; };
+		848A9BE216045D8500147642 /* PageCurlGradient-Tall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 848A9BE016045D8500147642 /* PageCurlGradient-Tall@2x.png */; };
+		848A9BE416045D9100147642 /* PageCurl-Tall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 848A9BE316045D9100147642 /* PageCurl-Tall@2x.png */; };
+		848A9BE516045D9100147642 /* PageCurl-Tall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 848A9BE316045D9100147642 /* PageCurl-Tall@2x.png */; };
 		8492B76114C911FF0093B7AC /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8492B76014C911FF0093B7AC /* libsqlite3.0.dylib */; };
 		8492B77414CD69B10093B7AC /* ZSPuzzleFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 8492B77314CD69B10093B7AC /* ZSPuzzleFetcher.m */; };
 		8493F89F15D482A4008F0BD2 /* libInMobi_iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8493F89D15D482A4008F0BD2 /* libInMobi_iOS.a */; };
@@ -416,6 +436,18 @@
 		8485C6E515D07DE700A8294D /* PersonalBestRight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "PersonalBestRight@2x.png"; path = "Resources/Images/Shared/PersonalBestRight@2x.png"; sourceTree = "<group>"; };
 		8485C6EA15D0989F00A8294D /* RibbonShort.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RibbonShort.png; path = Resources/Images/Shared/RibbonShort.png; sourceTree = "<group>"; };
 		8485C6EB15D098A100A8294D /* RibbonShort@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "RibbonShort@2x.png"; path = "Resources/Images/Shared/RibbonShort@2x.png"; sourceTree = "<group>"; };
+		848A9BC5160448B700147642 /* Default-568@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568@2x.png"; path = "Resources/Images/Paid/Default-568@2x.png"; sourceTree = "<group>"; };
+		848A9BC7160448BD00147642 /* SplashPage-Tall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SplashPage-Tall@2x.png"; path = "Resources/Images/Paid/SplashPage-Tall@2x.png"; sourceTree = "<group>"; };
+		848A9BC9160448DE00147642 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		848A9BCD16044AFE00147642 /* UIDevice+Resolutions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+Resolutions.h"; sourceTree = "<group>"; };
+		848A9BCE16044AFE00147642 /* UIDevice+Resolutions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+Resolutions.m"; sourceTree = "<group>"; };
+		848A9BD116044EC400147642 /* BackwardsPage-Tall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BackwardsPage-Tall@2x.png"; path = "Resources/Images/Shared/BackwardsPage-Tall@2x.png"; sourceTree = "<group>"; };
+		848A9BD216044EC400147642 /* BackwardsTranslucentPage-Tall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BackwardsTranslucentPage-Tall@2x.png"; path = "Resources/Images/Shared/BackwardsTranslucentPage-Tall@2x.png"; sourceTree = "<group>"; };
+		848A9BD316044EC400147642 /* ForwardsPage-Tall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ForwardsPage-Tall@2x.png"; path = "Resources/Images/Shared/ForwardsPage-Tall@2x.png"; sourceTree = "<group>"; };
+		848A9BDA160456D500147642 /* PaperBackgroundWithBoard-Tall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "PaperBackgroundWithBoard-Tall@2x.png"; path = "Resources/Images/Shared/PaperBackgroundWithBoard-Tall@2x.png"; sourceTree = "<group>"; };
+		848A9BDD160456DE00147642 /* PaperBackground-Tall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "PaperBackground-Tall@2x.png"; path = "Resources/Images/Shared/PaperBackground-Tall@2x.png"; sourceTree = "<group>"; };
+		848A9BE016045D8500147642 /* PageCurlGradient-Tall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "PageCurlGradient-Tall@2x.png"; path = "Resources/Images/Shared/PageCurlGradient-Tall@2x.png"; sourceTree = "<group>"; };
+		848A9BE316045D9100147642 /* PageCurl-Tall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "PageCurl-Tall@2x.png"; path = "Resources/Images/Shared/PageCurl-Tall@2x.png"; sourceTree = "<group>"; };
 		8492B76014C911FF0093B7AC /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		8492B77214CD69B10093B7AC /* ZSPuzzleFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSPuzzleFetcher.h; path = "Model Controllers/ZSPuzzleFetcher.h"; sourceTree = "<group>"; };
 		8492B77314CD69B10093B7AC /* ZSPuzzleFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSPuzzleFetcher.m; path = "Model Controllers/ZSPuzzleFetcher.m"; sourceTree = "<group>"; };
@@ -720,6 +752,7 @@
 		8449D95B14833649003F6FB3 /* External */ = {
 			isa = PBXGroup;
 			children = (
+				848A9BCC16044AFE00147642 /* UIDevice+Resolutions */,
 				8493F89515D482A4008F0BD2 /* InMobi */,
 				840E032115BFD22700F113D9 /* Flurry */,
 				84A8FB1115A6A06400D802C8 /* MTLabel */,
@@ -754,18 +787,25 @@
 			children = (
 				8472508F15829D330073D113 /* PageCurl.png */,
 				8472509015829D330073D113 /* PageCurl@2x.png */,
+				848A9BE316045D9100147642 /* PageCurl-Tall@2x.png */,
 				84C092E11582D38F005799F8 /* PageCurlGradient.png */,
 				84C092E21582D38F005799F8 /* PageCurlGradient@2x.png */,
+				848A9BE016045D8500147642 /* PageCurlGradient-Tall@2x.png */,
 				849B69EE14F2666400870F09 /* PaperBackground.png */,
 				849B69EF14F2666400870F09 /* PaperBackground@2x.png */,
+				848A9BDD160456DE00147642 /* PaperBackground-Tall@2x.png */,
 				84D54E8D15AFE8D4003B1705 /* PaperBackgroundWithBoard.png */,
 				84D54E8E15AFE8D4003B1705 /* PaperBackgroundWithBoard@2x.png */,
+				848A9BDA160456D500147642 /* PaperBackgroundWithBoard-Tall@2x.png */,
 				84B0B1D3157D859300A99510 /* BackwardsPage.png */,
 				84B0B1D4157D859300A99510 /* BackwardsPage@2x.png */,
+				848A9BD116044EC400147642 /* BackwardsPage-Tall@2x.png */,
 				84A509F415A21D99002C9C70 /* BackwardsTranslucentPage.png */,
 				84A509F515A21D99002C9C70 /* BackwardsTranslucentPage@2x.png */,
+				848A9BD216044EC400147642 /* BackwardsTranslucentPage-Tall@2x.png */,
 				8472508B15829D1F0073D113 /* ForwardsPage.png */,
 				8472508C15829D1F0073D113 /* ForwardsPage@2x.png */,
+				848A9BD316044EC400147642 /* ForwardsPage-Tall@2x.png */,
 				8463D8DD15947F9700AED0B4 /* ShadowBlobStraight.png */,
 				8463D8DE15947F9700AED0B4 /* ShadowBlobStraight@2x.png */,
 				8463D8DA15947F3D00AED0B4 /* ShadowBlobStraightOpaque.png */,
@@ -801,6 +841,16 @@
 				8494BE7014FB117100010233 /* PencilSelected@2x.png */,
 			);
 			name = "Bottom Buttons";
+			sourceTree = "<group>";
+		};
+		848A9BCC16044AFE00147642 /* UIDevice+Resolutions */ = {
+			isa = PBXGroup;
+			children = (
+				848A9BCD16044AFE00147642 /* UIDevice+Resolutions.h */,
+				848A9BCE16044AFE00147642 /* UIDevice+Resolutions.m */,
+			);
+			name = "UIDevice+Resolutions";
+			path = "External/UIDevice+Resolutions";
 			sourceTree = "<group>";
 		};
 		8492B78414CEAE7A0093B7AC /* Databases */ = {
@@ -846,8 +896,10 @@
 				8463D8EB15959B2300AED0B4 /* Icons */,
 				8428AD3A154A52F700BA8EE0 /* Default.png */,
 				8428AD3B154A52F700BA8EE0 /* Default@2x.png */,
+				848A9BC5160448B700147642 /* Default-568@2x.png */,
 				84A8FB2415AB8DCE00D802C8 /* SplashPage.png */,
 				84A8FB2515AB8DCE00D802C8 /* SplashPage@2x.png */,
+				848A9BC7160448BD00147642 /* SplashPage-Tall@2x.png */,
 			);
 			name = Paid;
 			sourceTree = "<group>";
@@ -1076,6 +1128,7 @@
 		84D55004147F1C4A00A7934E = {
 			isa = PBXGroup;
 			children = (
+				848A9BC9160448DE00147642 /* Default-568h@2x.png */,
 				84D55019147F1C4A00A7934E /* ZenSudoku */,
 				84EE862A1494ADEA004C0A16 /* ZenSudokuLogicTests */,
 				84D55012147F1C4A00A7934E /* Frameworks */,
@@ -1267,7 +1320,7 @@
 		84D55006147F1C4A00A7934E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0440;
+				LastUpgradeCheck = 0450;
 			};
 			buildConfigurationList = 84D55009147F1C4A00A7934E /* Build configuration list for PBXProject "ZenSudoku" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1384,6 +1437,14 @@
 				84A5494815E2BD7D00280C2B /* Icon@2x.png in Resources */,
 				84A5494915E2BD7D00280C2B /* iTunesArtwork.png in Resources */,
 				84A5494A15E2BD7D00280C2B /* iTunesArtwork@2x.png in Resources */,
+				848A9BCA160448DE00147642 /* Default-568h@2x.png in Resources */,
+				848A9BD516044EC400147642 /* BackwardsPage-Tall@2x.png in Resources */,
+				848A9BD716044EC400147642 /* BackwardsTranslucentPage-Tall@2x.png in Resources */,
+				848A9BD916044EC400147642 /* ForwardsPage-Tall@2x.png in Resources */,
+				848A9BDC160456D500147642 /* PaperBackgroundWithBoard-Tall@2x.png in Resources */,
+				848A9BDF160456DE00147642 /* PaperBackground-Tall@2x.png in Resources */,
+				848A9BE216045D8500147642 /* PageCurlGradient-Tall@2x.png in Resources */,
+				848A9BE516045D9100147642 /* PageCurl-Tall@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1473,6 +1534,16 @@
 				84A7269915DBAD53008E00C1 /* iTunesArtwork.png in Resources */,
 				84A7269A15DBAD53008E00C1 /* iTunesArtwork@2x.png in Resources */,
 				84A726A915DCBD5F008E00C1 /* Puzzles.db3 in Resources */,
+				848A9BC6160448B700147642 /* Default-568@2x.png in Resources */,
+				848A9BC8160448BD00147642 /* SplashPage-Tall@2x.png in Resources */,
+				848A9BCB160448EC00147642 /* Default-568h@2x.png in Resources */,
+				848A9BD416044EC400147642 /* BackwardsPage-Tall@2x.png in Resources */,
+				848A9BD616044EC400147642 /* BackwardsTranslucentPage-Tall@2x.png in Resources */,
+				848A9BD816044EC400147642 /* ForwardsPage-Tall@2x.png in Resources */,
+				848A9BDB160456D500147642 /* PaperBackgroundWithBoard-Tall@2x.png in Resources */,
+				848A9BDE160456DE00147642 /* PaperBackground-Tall@2x.png in Resources */,
+				848A9BE116045D8500147642 /* PageCurlGradient-Tall@2x.png in Resources */,
+				848A9BE416045D9100147642 /* PageCurl-Tall@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1570,6 +1641,7 @@
 				8485C6F315D1B6A200A8294D /* ZSChangeDifficultyRibbonViewController.m in Sources */,
 				8485C6F215D1B6A200A8294D /* ZSAdPageViewController.m in Sources */,
 				8485C6F415D1B6A200A8294D /* ZSGameOverRibbonViewController.m in Sources */,
+				848A9BD016044AFE00147642 /* UIDevice+Resolutions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1633,6 +1705,7 @@
 				84EEAA3215C3D968006C35B0 /* ZSHintGeneratorEliminatePencilsRemotePairs.m in Sources */,
 				8485C6C715CDAF6D00A8294D /* ZSChangeDifficultyRibbonViewController.m in Sources */,
 				8485C6CB15CDB22C00A8294D /* ZSGameOverRibbonViewController.m in Sources */,
+				848A9BCF16044AFE00147642 /* UIDevice+Resolutions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

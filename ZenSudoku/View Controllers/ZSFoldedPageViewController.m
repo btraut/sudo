@@ -7,6 +7,7 @@
 //
 
 #import "ZSFoldedPageViewController.h"
+#import "UIDevice+Resolutions.h"
 
 #import <QuartzCore/QuartzCore.h>
 #import <AudioToolbox/AudioToolbox.h>
@@ -66,7 +67,8 @@
 }
 
 - (void)loadView {
-	self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 314, 460)];
+	UIDeviceResolution resolution = [UIDevice currentResolution];
+	self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 314, resolution == UIDevice_iPhoneTallerHiRes ? 548 : 460)];
 }
 
 - (void)viewDidLoad {

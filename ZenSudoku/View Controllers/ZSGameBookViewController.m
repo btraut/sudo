@@ -17,6 +17,7 @@
 #import "ZSGameViewController.h"
 #import "ZSHintViewController.h"
 #import "ZSGameOverRibbonViewController.h"
+#import "UIDevice+Resolutions.h"
 
 #ifdef FREEVERSION
 #import "ZSAdPageViewController.h"
@@ -64,9 +65,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
+	UIDeviceResolution resolution = [UIDevice currentResolution];
+	
 	// Create the inner part of the book (containing all pages).
-	_innerBook = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"PaperBackgroundWithBoard.png"]];
-	_innerBook.frame = CGRectMake(0, 0, 320, 460);
+	_innerBook = [[UIImageView alloc] initWithImage:[UIImage imageNamed:(resolution == UIDevice_iPhoneTallerHiRes ? @"PaperBackgroundWithBoard-Tall@2x.png" : @"PaperBackgroundWithBoard.png")]];
+	_innerBook.frame = CGRectMake(0, 0, 320, resolution == UIDevice_iPhoneTallerHiRes ? 548 : 460);
 	_innerBook.userInteractionEnabled = YES;
 	[self.view addSubview:_innerBook];
 	
@@ -133,13 +136,13 @@
 	[_nextGameViewController hideTapToChangeDifficultyNoticeAnimated:NO];
 	
 	// Create the page curl gradient on the left.
-	UIImageView *pageCurlGradient = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"PageCurlGradient.png"]];
-	pageCurlGradient.frame = CGRectMake(0, 0, 17, 460);
+	UIImageView *pageCurlGradient = [[UIImageView alloc] initWithImage:[UIImage imageNamed:(resolution == UIDevice_iPhoneTallerHiRes ? @"PageCurlGradient-Tall@2x.png" : @"PageCurlGradient.png")]];
+	pageCurlGradient.frame = CGRectMake(0, 0, 17, resolution == UIDevice_iPhoneTallerHiRes ? 548 : 460);
 	[_innerBook addSubview:pageCurlGradient];
 	
 	// Create the page curl on the left. This needs to go over the top of the folded corner.
-	UIImageView *pageCurl = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"PageCurl.png"]];
-	pageCurl.frame = CGRectMake(0, 0, 17, 460);
+	UIImageView *pageCurl = [[UIImageView alloc] initWithImage:[UIImage imageNamed:(resolution == UIDevice_iPhoneTallerHiRes ? @"PageCurl-Tall@2x.png" : @"PageCurl.png")]];
+	pageCurl.frame = CGRectMake(0, 0, 17, resolution == UIDevice_iPhoneTallerHiRes ? 548 : 460);
 	[_innerBook addSubview:pageCurl];
 	
 	// Create the hint.
@@ -230,8 +233,13 @@
 	 delay:0
 	 options:UIViewAnimationOptionCurveEaseOut
 	 animations:^{
-		 _hintViewController.view.frame = CGRectMake(-5, 339, _hintViewController.view.frame.size.width, _hintViewController.view.frame.size.height);
-		 _innerBook.frame = CGRectMake(0, -45, _innerBook.frame.size.width, _innerBook.frame.size.height);
+		 UIDeviceResolution resolution = [UIDevice currentResolution];
+		 
+		 if (resolution != UIDevice_iPhoneTallerHiRes) {
+			 _innerBook.frame = CGRectMake(0, -45, _innerBook.frame.size.width, _innerBook.frame.size.height);
+		 }
+		 
+		 _hintViewController.view.frame = CGRectMake(-5, _innerBook.frame.size.height - 141, _hintViewController.view.frame.size.width, _hintViewController.view.frame.size.height);
 	 }
 	 completion:NULL];
 }
@@ -257,8 +265,13 @@
 	 delay:0
 	 options:UIViewAnimationOptionCurveEaseOut
 	 animations:^{
+		 UIDeviceResolution resolution = [UIDevice currentResolution];
+		 
+		 if (resolution != UIDevice_iPhoneTallerHiRes) {
+			 _innerBook.frame = CGRectMake(0, 0, _innerBook.frame.size.width, _innerBook.frame.size.height);
+		 }
+		 
 		 _hintViewController.view.frame = CGRectMake(-5, _innerBook.frame.size.height, _hintViewController.view.frame.size.width, _hintViewController.view.frame.size.height);
-		 _innerBook.frame = CGRectMake(0, 0, _innerBook.frame.size.width, _innerBook.frame.size.height);
 	 }
 	 completion:NULL];
 }

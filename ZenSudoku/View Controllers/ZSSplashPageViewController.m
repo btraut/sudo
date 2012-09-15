@@ -7,6 +7,7 @@
 //
 
 #import "ZSSplashPageViewController.h"
+#import "UIDevice+Resolutions.h"
 
 @interface ZSSplashPageViewController ()
 
@@ -17,7 +18,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
-	UIImageView *splashImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"SplashPage.png"]];
+	UIDeviceResolution resolution = [UIDevice currentResolution];
+	
+	UIImageView *splashImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:(resolution == UIDevice_iPhoneTallerHiRes ? @"SplashPage-Tall@2x.png" : @"SplashPage.png")]];
 	splashImageView.frame = self.innerView.frame;
 	splashImageView.userInteractionEnabled = YES;
 	[self.innerView addSubview:splashImageView];

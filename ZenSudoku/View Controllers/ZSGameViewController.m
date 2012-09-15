@@ -20,6 +20,7 @@
 #import "ZSTile.h"
 #import "UIColor+ColorWithHex.h"
 #import "ZSHintButtonViewController.h"
+#import "UIDevice+Resolutions.h"
 
 #import "Flurry.h"
 
@@ -178,7 +179,8 @@ typedef struct {
 - (void)loadView {
 	[super loadView];
 	
-	self.view.frame = CGRectMake(0, 0, 314, 460);
+	UIDeviceResolution resolution = [UIDevice currentResolution];
+	self.view.frame = CGRectMake(0, 0, 314, resolution == UIDevice_iPhoneTallerHiRes ? 548 : 460);
 }
 
 - (void)viewDidLoad {
