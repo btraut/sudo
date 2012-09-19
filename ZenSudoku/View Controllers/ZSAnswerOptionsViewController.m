@@ -15,9 +15,6 @@
 #import "ZSBoard.h"
 #import "ZSPanBetweenSubviewsGestureRecognizer.h"
 
-#define DEFAULT_FRAME_HEIGHT 300
-#define DEFAULT_FRAME_WIDTH 31
-
 @interface ZSAnswerOptionsViewController () {
 	BOOL _answerOptionIsBeingTouched;
 	ZSAnswerOption _previousTouchedAnswerOption;
@@ -51,13 +48,17 @@
 #pragma mark - View Lifecycle
 
 - (void)loadView {
-	self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, DEFAULT_FRAME_HEIGHT, DEFAULT_FRAME_WIDTH)];
+	self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 31)];
 	self.view.userInteractionEnabled = YES;
 }
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	
+	[self _buildButtons];
+}
+
+- (void)_buildButtons {
 	// Create the gesture recognizer.
 	ZSPanBetweenSubviewsGestureRecognizer *panBetweenSubviewsGestureRecognizer = [[ZSPanBetweenSubviewsGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
 	[self.view addGestureRecognizer:panBetweenSubviewsGestureRecognizer];
@@ -79,7 +80,7 @@
 		
 		[panBetweenSubviewsGestureRecognizer addSubview:gameAnswerOptionViewController.view];
 		
-		xOffset += DEFAULT_FRAME_WIDTH;
+		xOffset += 31;
 	}
 	
 	gameAnswerOptionViewControllers = [NSArray arrayWithArray:buttons];
@@ -87,11 +88,6 @@
 
 - (void)viewDidUnload {
 	[super viewDidUnload];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-	// Return YES for supported orientations
-	return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 - (void)reloadView {

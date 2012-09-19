@@ -23,9 +23,6 @@ NSString * const kTextShadowColorAnswerOptionToggledOn = @"FFFFFFFF";
 NSString * const kTextShadowColorAnswerOptionToggledOff = @"77FFFFFF";
 
 @interface ZSAnswerOptionViewController () {
-	UILabel *_labelView;
-	UIImageView *_selectionView;
-	
 	BOOL _previousTouchWasInBounds;
 }
 
@@ -37,6 +34,8 @@ NSString * const kTextShadowColorAnswerOptionToggledOff = @"77FFFFFF";
 @synthesize gameAnswerOption;
 @synthesize selected, enabled, toggled;
 @synthesize delegate;
+@synthesize labelView;
+@synthesize selectionView;
 
 - (id)init {
 	self = [super init];
@@ -63,28 +62,36 @@ NSString * const kTextShadowColorAnswerOptionToggledOff = @"77FFFFFF";
 #pragma mark - View Lifecycle
 
 - (void)loadView {
-	_labelView = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 31, 31)];
-	_labelView.font = [UIFont fontWithName:@"ReklameScript-Regular" size:34.0f];
-	_labelView.textAlignment = UITextAlignmentCenter;
-	_labelView.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
-	_labelView.lineBreakMode = UILineBreakModeClip;
-	_labelView.textColor = [UIColor colorWithAlphaHexString:kTextColorAnswerOptionNormal];
-	_labelView.backgroundColor = [UIColor clearColor];
-	_labelView.shadowColor = [UIColor colorWithAlphaHexString:kTextShadowColorAnswerOptionNormal];
-	_labelView.shadowOffset = CGSizeMake(0, 1);
+	self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 31, 31)];
+	self.view.clipsToBounds = NO;
+}
+
+- (void)viewDidLoad {
+	[super viewDidLoad];
+	
+	[self _buildButton];
+}
+
+- (void)_buildButton {
+	self.labelView = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 31, 31)];
+	self.labelView.font = [UIFont fontWithName:@"ReklameScript-Regular" size:34.0f];
+	self.labelView.textAlignment = UITextAlignmentCenter;
+	self.labelView.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
+	self.labelView.lineBreakMode = UILineBreakModeClip;
+	self.labelView.textColor = [UIColor colorWithAlphaHexString:kTextColorAnswerOptionNormal];
+	self.labelView.backgroundColor = [UIColor clearColor];
+	self.labelView.shadowColor = [UIColor colorWithAlphaHexString:kTextShadowColorAnswerOptionNormal];
+	self.labelView.shadowOffset = CGSizeMake(0, 1);
 	[self setLabel];
 	
 	UIImage *selectionImage = [UIImage imageNamed:@"BlueAnswerOptionSelection"];
-	_selectionView = [[UIImageView alloc] initWithImage:selectionImage];
-	_selectionView.frame = CGRectMake(-4, -4, _selectionView.frame.size.width, _selectionView.frame.size.height);
-	_selectionView.alpha = 0.4f;
-	_selectionView.hidden = YES;
+	self.selectionView = [[UIImageView alloc] initWithImage:selectionImage];
+	self.selectionView.frame = CGRectMake(-4, -4, self.selectionView.frame.size.width, self.selectionView.frame.size.height);
+	self.selectionView.alpha = 0.4f;
+	self.selectionView.hidden = YES;
 	
-	self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 31, 31)];
-	self.view.clipsToBounds = NO;
-	
-	[self.view addSubview:_selectionView];
-	[self.view addSubview:_labelView];
+	[self.view addSubview:self.selectionView];
+	[self.view addSubview:self.labelView];
 }
 
 - (void)setLabel {
@@ -98,7 +105,7 @@ NSString * const kTextShadowColorAnswerOptionToggledOff = @"77FFFFFF";
 		case ZSAnswerOption7:
 		case ZSAnswerOption8:
 		case ZSAnswerOption9:
-			_labelView.text = [NSString stringWithFormat:@"%i", ((NSInteger)self.gameAnswerOption + 1)];
+			self.labelView.text = [NSString stringWithFormat:@"%i", ((NSInteger)self.gameAnswerOption + 1)];
 			break;
 		
 		default:
@@ -110,22 +117,22 @@ NSString * const kTextShadowColorAnswerOptionToggledOff = @"77FFFFFF";
 	if (self.enabled) {
 		if (self.gameAnswerOptionsViewController.gameViewController.penciling) {
 			if (toggled) {
-				_labelView.textColor = [UIColor colorWithAlphaHexString:kTextColorAnswerOptionToggledOn];
-				_labelView.shadowColor = [UIColor colorWithAlphaHexString:kTextShadowColorAnswerOptionToggledOn];
+				self.labelView.textColor = [UIColor colorWithAlphaHexString:kTextColorAnswerOptionToggledOn];
+				self.labelView.shadowColor = [UIColor colorWithAlphaHexString:kTextShadowColorAnswerOptionToggledOn];
 			} else {
-				_labelView.textColor = [UIColor colorWithAlphaHexString:kTextColorAnswerOptionToggledOff];
-				_labelView.shadowColor = [UIColor colorWithAlphaHexString:kTextShadowColorAnswerOptionToggledOff];
+				self.labelView.textColor = [UIColor colorWithAlphaHexString:kTextColorAnswerOptionToggledOff];
+				self.labelView.shadowColor = [UIColor colorWithAlphaHexString:kTextShadowColorAnswerOptionToggledOff];
 			}
 		} else {
-			_labelView.textColor = [UIColor colorWithAlphaHexString:kTextColorAnswerOptionNormal];
-			_labelView.shadowColor = [UIColor colorWithAlphaHexString:kTextShadowColorAnswerOptionNormal];
+			self.labelView.textColor = [UIColor colorWithAlphaHexString:kTextColorAnswerOptionNormal];
+			self.labelView.shadowColor = [UIColor colorWithAlphaHexString:kTextShadowColorAnswerOptionNormal];
 		}
 	} else {
-		_labelView.textColor = [UIColor colorWithAlphaHexString:kTextColorAnswerOptionDisabled];
-		_labelView.shadowColor = [UIColor colorWithAlphaHexString:kTextShadowColorAnswerOptionDisabled];
+		self.labelView.textColor = [UIColor colorWithAlphaHexString:kTextColorAnswerOptionDisabled];
+		self.labelView.shadowColor = [UIColor colorWithAlphaHexString:kTextShadowColorAnswerOptionDisabled];
 	}
 	
-	_selectionView.hidden = !selected;
+	self.selectionView.hidden = !selected;
 }
 
 #pragma mark - Touch Events

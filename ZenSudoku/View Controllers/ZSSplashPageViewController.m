@@ -21,11 +21,17 @@
 	UIDeviceResolution resolution = [UIDevice currentResolution];
 	
 	UIImageView *splashImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:(resolution == UIDevice_iPhoneTallerHiRes ? @"SplashPage-Tall@2x.png" : @"SplashPage.png")]];
-	splashImageView.frame = self.innerView.frame;
+	splashImageView.frame = CGRectMake(self.innerView.frame.origin.x, self.innerView.frame.origin.y, 320, self.innerView.frame.size.height);
 	splashImageView.userInteractionEnabled = YES;
 	[self.innerView addSubview:splashImageView];
 	
-	[self.foldedCornerViewController resetToDefaultPosition];
+	self.animateCornerWhenPromoted = NO;
+}
+
+- (void)viewWasPromotedToFront {
+	[super viewWasPromotedToFront];
+	
+	[self.foldedCornerViewController resetToStartPosition];
 }
 
 - (void)dismiss {

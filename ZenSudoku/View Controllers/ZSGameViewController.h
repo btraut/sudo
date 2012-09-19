@@ -16,6 +16,7 @@
 #import "ZSFoldedCornerViewController.h"
 #import "ZSFoldedCornerPlusButtonViewController.h"
 #import "ZSAnswerOptionsViewController.h"
+#import "ZSAnswerOptionsTallViewController.h"
 
 @class ZSTileViewController;
 @class ZSGameViewController;

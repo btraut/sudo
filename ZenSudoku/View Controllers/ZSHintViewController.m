@@ -16,6 +16,7 @@
 #import "iCarousel.h"
 #import "MTLabel.h"
 #import "UIColor+ColorWithHex.h"
+#import "UIDevice+Resolutions.h"
 
 @interface ZSHintViewController () <iCarouselDataSource, iCarouselDelegate> {
 	NSArray *_hintDeck;
@@ -49,8 +50,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
+	UIDeviceResolution resolution = [UIDevice currentResolution];
+	
 	// Create progress dots.
-	_progressDots = [[ProgressDots alloc] initWithFrame:CGRectMake(165, 112, 0, 0)];
+	_progressDots = [[ProgressDots alloc] initWithFrame:resolution == UIDevice_iPhoneTallerHiRes ? CGRectMake(165, 114, 0, 0) : CGRectMake(165, 112, 0, 0)];
 	_progressDots.dotOffset = 5.0f;
 	[self.view addSubview:_progressDots];
 	

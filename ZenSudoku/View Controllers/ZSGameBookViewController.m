@@ -36,6 +36,9 @@
 	ZSChangeDifficultyRibbonViewController *_changeDifficultyRibbonViewController;
 	ZSGameOverRibbonViewController *_gameOverRibbonViewController;
 	
+	UIImageView *_pageCurlGradient;
+	UIImageView *_pageCurl;
+	
 	UISwipeGestureRecognizer *_downSwipeGestureRecognizer;
 	UITapGestureRecognizer *_hintTapGestureRecognizer;
 	
@@ -78,8 +81,7 @@
 	
 	// Create the splash page view.
 	_splashPageViewController = [[ZSSplashPageViewController alloc] init];
-	_splashPageViewController.foldedCornerVisibleOnLoad = YES;
-	_splashPageViewController.animateCornerWhenPromoted = NO;
+	_splashPageViewController.animateCornerWhenPromoted = YES;
 	_splashPageViewController.animationDelegate = self;
 	[self _addPage:_splashPageViewController];
 	
@@ -136,14 +138,16 @@
 	[_nextGameViewController hideTapToChangeDifficultyNoticeAnimated:NO];
 	
 	// Create the page curl gradient on the left.
-	UIImageView *pageCurlGradient = [[UIImageView alloc] initWithImage:[UIImage imageNamed:(resolution == UIDevice_iPhoneTallerHiRes ? @"PageCurlGradient-Tall@2x.png" : @"PageCurlGradient.png")]];
-	pageCurlGradient.frame = CGRectMake(0, 0, 17, resolution == UIDevice_iPhoneTallerHiRes ? 548 : 460);
-	[_innerBook addSubview:pageCurlGradient];
+	_pageCurlGradient = [[UIImageView alloc] initWithImage:[UIImage imageNamed:(resolution == UIDevice_iPhoneTallerHiRes ? @"PageCurlGradient-Tall@2x.png" : @"PageCurlGradient.png")]];
+	_pageCurlGradient.frame = CGRectMake(0, 0, 17, resolution == UIDevice_iPhoneTallerHiRes ? 548 : 460);
+	_pageCurlGradient.alpha = 0;
+	[_innerBook addSubview:_pageCurlGradient];
 	
 	// Create the page curl on the left. This needs to go over the top of the folded corner.
-	UIImageView *pageCurl = [[UIImageView alloc] initWithImage:[UIImage imageNamed:(resolution == UIDevice_iPhoneTallerHiRes ? @"PageCurl-Tall@2x.png" : @"PageCurl.png")]];
-	pageCurl.frame = CGRectMake(0, 0, 17, resolution == UIDevice_iPhoneTallerHiRes ? 548 : 460);
-	[_innerBook addSubview:pageCurl];
+	_pageCurl = [[UIImageView alloc] initWithImage:[UIImage imageNamed:(resolution == UIDevice_iPhoneTallerHiRes ? @"PageCurl-Tall@2x.png" : @"PageCurl.png")]];
+	_pageCurl.frame = CGRectMake(0, 0, 17, resolution == UIDevice_iPhoneTallerHiRes ? 548 : 460);
+	_pageCurl.alpha = 0;
+	[_innerBook addSubview:_pageCurl];
 	
 	// Create the hint.
 	_hintViewController = [[ZSHintViewController alloc] initWithNibName:@"ZSHintViewController" bundle:[NSBundle mainBundle]];
@@ -171,6 +175,16 @@
 	[super viewDidAppear:animated];
 	
 	[_splashPageViewController dismiss];
+	
+	[UIView
+	 animateWithDuration:0.4f
+	 delay:0.4f
+	 options:UIViewAnimationOptionCurveEaseOut
+	 animations:^{
+		 _pageCurlGradient.alpha = 1;
+		 _pageCurl.alpha = 1;
+	 }
+	 completion:NULL];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

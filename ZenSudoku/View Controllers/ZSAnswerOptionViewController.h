@@ -32,6 +32,9 @@
 
 @property (weak) id<ZSAnswerOptionTouchDelegate> delegate;
 
+@property (strong) UILabel *labelView;
+@property (strong) UIImageView *selectionView;
+
 - (id)initWithGameAnswerOption:(ZSAnswerOption)gameAnswerOption;
 - (void)setLabel;
 
@@ -44,3 +47,13 @@
 - (void)handleTap;
 
 @end
+
+extern NSString * const kTextColorAnswerOptionNormal;
+extern NSString * const kTextColorAnswerOptionDisabled;
+extern NSString * const kTextColorAnswerOptionToggledOn;
+extern NSString * const kTextColorAnswerOptionToggledOff;
+
+extern NSString * const kTextShadowColorAnswerOptionNormal;
+extern NSString * const kTextShadowColorAnswerOptionDisabled;
+extern NSString * const kTextShadowColorAnswerOptionToggledOn;
+extern NSString * const kTextShadowColorAnswerOptionToggledOff;

@@ -225,18 +225,34 @@ typedef struct {
 	boardViewController.touchDelegate = self;
 	[self.innerView addSubview:boardViewController.view];
 	
-	// Build the answer options.
-	gameAnswerOptionsViewController = [[ZSAnswerOptionsViewController alloc] initWithGameViewController:self];
-	gameAnswerOptionsViewController.view.frame = CGRectMake(6, 371, gameAnswerOptionsViewController.view.frame.size.width, gameAnswerOptionsViewController.view.frame.size.height);
-	gameAnswerOptionsViewController.touchDelegate = self;
-	[self.innerView addSubview:gameAnswerOptionsViewController.view];
-	[gameAnswerOptionsViewController reloadView];
+	// The tall iPhone needs some design tweaks.
+	UIDeviceResolution resolution = [UIDevice currentResolution];
+	
+	if (resolution == UIDevice_iPhoneTallerHiRes) {
+		UIImageView *horizontalRule = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HorizontalRule.png"]];
+		horizontalRule.frame = CGRectMake(36, 481, horizontalRule.frame.size.width, horizontalRule.frame.size.height);
+		[self.innerView addSubview:horizontalRule];
+		
+		// Build the answer options.
+		gameAnswerOptionsViewController = [[ZSAnswerOptionsTallViewController alloc] initWithGameViewController:self];
+		gameAnswerOptionsViewController.view.frame = CGRectMake(34, 376, gameAnswerOptionsViewController.view.frame.size.width, gameAnswerOptionsViewController.view.frame.size.height);
+		gameAnswerOptionsViewController.touchDelegate = self;
+		[self.innerView addSubview:gameAnswerOptionsViewController.view];
+		[gameAnswerOptionsViewController reloadView];
+	} else {
+		// Build the answer options.
+		gameAnswerOptionsViewController = [[ZSAnswerOptionsViewController alloc] initWithGameViewController:self];
+		gameAnswerOptionsViewController.view.frame = CGRectMake(6, 371, gameAnswerOptionsViewController.view.frame.size.width, gameAnswerOptionsViewController.view.frame.size.height);
+		gameAnswerOptionsViewController.touchDelegate = self;
+		[self.innerView addSubview:gameAnswerOptionsViewController.view];
+		[gameAnswerOptionsViewController reloadView];
+	}
 	
 	// Build pencil button.
 	pencilButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	
 	[pencilButton addTarget:self action:@selector(pencilButtonWasTouched) forControlEvents:UIControlEventTouchUpInside];
-	pencilButton.frame = CGRectMake(287, 371, 22, 32);
+	pencilButton.frame = resolution == UIDevice_iPhoneTallerHiRes ? CGRectMake(247, 433.5f, 22, 32) : CGRectMake(287, 371, 22, 32);
 	
 	[pencilButton setBackgroundImage:[UIImage imageNamed:@"Pencil"] forState:UIControlStateNormal];
 	[pencilButton setBackgroundImage:[UIImage imageNamed:@"PencilSelected"] forState:UIControlStateSelected];
@@ -249,7 +265,7 @@ typedef struct {
 	UIImage *undoButtonImage = [UIImage imageNamed:@"Undo"];
 	
 	[undoButton addTarget:self action:@selector(undoButtonWasTouched) forControlEvents:UIControlEventTouchUpInside];
-	undoButton.frame = CGRectMake(80, 409, undoButtonImage.size.width, undoButtonImage.size.height);
+	undoButton.frame = CGRectMake(80, resolution == UIDevice_iPhoneTallerHiRes ? 497 : 409, undoButtonImage.size.width, undoButtonImage.size.height);
 	
 	[undoButton setBackgroundImage:undoButtonImage forState:UIControlStateNormal];
 	[undoButton setBackgroundImage:[UIImage imageNamed:@"UndoHighlighted"] forState:UIControlStateHighlighted];
@@ -262,7 +278,7 @@ typedef struct {
 	UIImage *autoPencilImage = [UIImage imageNamed:@"AutoPencil"];
 	
 	[autoPencilButton addTarget:self action:@selector(autoPencilButtonWasTouched) forControlEvents:UIControlEventTouchUpInside];
-	autoPencilButton.frame = CGRectMake(140, 409, autoPencilImage.size.width, autoPencilImage.size.height);
+	autoPencilButton.frame = CGRectMake(140, resolution == UIDevice_iPhoneTallerHiRes ? 497 : 409, autoPencilImage.size.width, autoPencilImage.size.height);
 	
 	[autoPencilButton setBackgroundImage:autoPencilImage forState:UIControlStateNormal];
 	[autoPencilButton setBackgroundImage:[UIImage imageNamed:@"AutoPencilHighlighted"] forState:UIControlStateHighlighted];
@@ -272,6 +288,7 @@ typedef struct {
 	// Build the hints button.
 	hintButtonViewController = [[ZSHintButtonViewController alloc] init];
 	[self.innerView addSubview:hintButtonViewController.view];
+	hintButtonViewController.view.frame = CGRectMake(200, resolution == UIDevice_iPhoneTallerHiRes ? 497 : 409, hintButtonViewController.view.frame.size.width, hintButtonViewController.view.frame.size.height);
 	[hintButtonViewController.button addTarget:self action:@selector(hintButtonWasTouched) forControlEvents:UIControlEventTouchUpInside];
 	
 	// Reload errors.
