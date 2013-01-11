@@ -805,7 +805,7 @@ typedef enum {
 	_animationHelper.timingFunction = ZSAnimationTimingFunctionEaseOut;
 	
 	_animationHelper.startPoint = _foldPoint;
-	_animationHelper.endPoint = CGPointMake(self.view.frame.size.width, 0.1f);
+	_animationHelper.endPoint = CGPointMake(self.view.frame.size.width * 1.8f, 0.1f);
 	
 	[_animationHelper start];
 	
@@ -824,7 +824,7 @@ typedef enum {
 	_animationHelper.timingFunction = ZSAnimationTimingFunctionEaseOut;
 	
 	_animationHelper.startPoint = _foldPoint;
-	_animationHelper.endPoint = CGPointMake(self.view.frame.size.width, 30);
+	_animationHelper.endPoint = CGPointMake(self.view.frame.size.width * 1.8f, 30);
 	
 	[_animationHelper start];
 	
