@@ -41,7 +41,7 @@
 	// Create the title.
 	UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(67, 16, 180, 30)];
 	title.font = [UIFont fontWithName:@"ReklameScript-Medium" size:30.0f];
-	title.textAlignment = UITextAlignmentCenter;
+	title.textAlignment = NSTextAlignmentCenter;
 	title.text = @"Advertisement";
 	title.shadowColor = [UIColor whiteColor];
 	title.shadowOffset = CGSizeMake(0, 0.5f);
@@ -56,7 +56,7 @@
 	// Create the ad border.
 	self.innerAdText = [[UILabel alloc] initWithFrame:CGRectMake(7, 108, 300, 36)];
 	self.innerAdText.font = [UIFont fontWithName:@"ReklameScript-Medium" size:15.0f];
-	self.innerAdText.textAlignment = UITextAlignmentCenter;
+	self.innerAdText.textAlignment = NSTextAlignmentCenter;
 	self.innerAdText.shadowColor = [UIColor whiteColor];
 	self.innerAdText.shadowOffset = CGSizeMake(0, 0.5f);
 	self.innerAdText.backgroundColor = [UIColor clearColor];
@@ -68,7 +68,7 @@
 	// Create the label stating how much time is left before the page fold starts.
 	self.turnThePageNotice = [[UILabel alloc] initWithFrame:CGRectMake(7, 318, 300, 18)];
 	self.turnThePageNotice.font = [UIFont fontWithName:@"ReklameScript-Regular" size:15.0f];
-	self.turnThePageNotice.textAlignment = UITextAlignmentCenter;
+	self.turnThePageNotice.textAlignment = NSTextAlignmentCenter;
 	self.turnThePageNotice.shadowColor = [UIColor whiteColor];
 	self.turnThePageNotice.shadowOffset = CGSizeMake(0, 0.5f);
 	self.turnThePageNotice.backgroundColor = [UIColor clearColor];
@@ -126,7 +126,7 @@
 	bottomLabel.backgroundColor = [UIColor clearColor];
 	bottomLabel.font = [UIFont fontWithName:@"ReklameScript-Medium" size:17.0f];
 	bottomLabel.textColor = blackTextColor;
-	bottomLabel.textAlignment = UITextAlignmentCenter;
+	bottomLabel.textAlignment = NSTextAlignmentCenter;
 	bottomLabel.text = @"Sudo";
 	[adContainer addSubview:bottomLabel];
 	

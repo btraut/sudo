@@ -60,11 +60,6 @@ NSString * const kSavedGameFileName = @"SavedGame.plist";
 	return self;
 }
 
-- (void)dealloc {
-	dispatch_release(_cachePopulationDispatchGroup);
-	dispatch_release(_cachePopulationDispatchQueue);
-}
-
 #pragma mark Game Creation
 
 - (ZSGame *)fetchGameWithDifficulty:(ZSGameDifficulty)difficulty {

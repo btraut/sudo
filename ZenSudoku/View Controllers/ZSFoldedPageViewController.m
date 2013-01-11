@@ -52,7 +52,22 @@
 		_screenshotRenderDispatchQueue = dispatch_queue_create("com.tenfoursoftware.screenshotRenderQueue", NULL);
 		_screenshotRenderDispatchGroup = dispatch_group_create();
 		
-		innerViewImage = [UIImage imageNamed:@"ForwardsPage.png"];
+		UIDeviceResolution resolution = [UIDevice currentResolution];
+		
+		switch (resolution) {
+			case UIDevice_iPadStandardRes:
+			case UIDevice_iPadHiRes:
+				innerViewImage = [UIImage imageNamed:@"ForwardsPage-iPad.png"];
+				break;
+				
+			case UIDevice_iPhoneTallerHiRes:
+				innerViewImage = [UIImage imageNamed:@"ForwardsPage-Tall@2x.png"];
+				break;
+				
+			default:
+				innerViewImage = [UIImage imageNamed:@"ForwardsPage.png"];
+				break;
+		}
 		
 		animateCornerWhenPromoted = YES;
 	}
@@ -68,7 +83,21 @@
 
 - (void)loadView {
 	UIDeviceResolution resolution = [UIDevice currentResolution];
-	self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 314, resolution == UIDevice_iPhoneTallerHiRes ? 548 : 460)];
+
+	switch (resolution) {
+		case UIDevice_iPadStandardRes:
+		case UIDevice_iPadHiRes:
+			self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 753, 1004)];
+			break;
+			
+		case UIDevice_iPhoneTallerHiRes:
+			self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 314, 548)];
+			break;
+			
+		default:
+			self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 314, 460)];
+			break;
+	}
 }
 
 - (void)viewDidLoad {

@@ -14,6 +14,7 @@
 #import "ZSGame.h"
 #import "ZSBoard.h"
 #import "ZSPanBetweenSubviewsGestureRecognizer.h"
+#import "UIDevice+Resolutions.h"
 
 @interface ZSAnswerOptionsViewController () {
 	BOOL _answerOptionIsBeingTouched;
@@ -48,7 +49,15 @@
 #pragma mark - View Lifecycle
 
 - (void)loadView {
-	self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 31)];
+	UIDeviceResolution resolution = [UIDevice currentResolution];
+	bool isiPad = (resolution == UIDevice_iPadStandardRes || resolution == UIDevice_iPadHiRes);
+	
+	if (isiPad) {
+		self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 600, 64)];
+	} else {
+		self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 31)];
+	}
+	
 	self.view.userInteractionEnabled = YES;
 }
 
@@ -59,6 +68,9 @@
 }
 
 - (void)_buildButtons {
+	UIDeviceResolution resolution = [UIDevice currentResolution];
+	bool isiPad = (resolution == UIDevice_iPadStandardRes || resolution == UIDevice_iPadHiRes);
+	
 	// Create the gesture recognizer.
 	ZSPanBetweenSubviewsGestureRecognizer *panBetweenSubviewsGestureRecognizer = [[ZSPanBetweenSubviewsGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
 	[self.view addGestureRecognizer:panBetweenSubviewsGestureRecognizer];
@@ -80,7 +92,7 @@
 		
 		[panBetweenSubviewsGestureRecognizer addSubview:gameAnswerOptionViewController.view];
 		
-		xOffset += 31;
+		xOffset += isiPad ? 64 : 31;
 	}
 	
 	gameAnswerOptionViewControllers = [NSArray arrayWithArray:buttons];

@@ -11,6 +11,7 @@
 #import "ZSGame.h"
 #import "ZSBoard.h"
 #import "UIColor+ColorWithHex.h"
+#import "UIDevice+Resolutions.h"
 
 // Tile Color Constants
 NSString * const kTextColorAnswer = @"#FF2B2B2B";
@@ -103,11 +104,19 @@ NSString * const kTileColorHighlightHintD = @"#4CFFAE00";
 #pragma mark - View Lifecycle
 
 - (void)loadView {
-	self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 32, 32)];
+	UIDeviceResolution resolution = [UIDevice currentResolution];
+	bool isiPad = (resolution == UIDevice_iPadStandardRes || resolution == UIDevice_iPadHiRes);
+	
+	CGFloat tileSize = isiPad ? 64 : 32;
+	
+	self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tileSize, tileSize)];
 }
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
+	
+	UIDeviceResolution resolution = [UIDevice currentResolution];
+	bool isiPad = (resolution == UIDevice_iPadStandardRes || resolution == UIDevice_iPadHiRes);
 	
 	// Listen to the view's taps.
 	UITapGestureRecognizer *singleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget: self action:@selector(handleTap)];
@@ -117,20 +126,24 @@ NSString * const kTileColorHighlightHintD = @"#4CFFAE00";
 	// Create the pencil labels.
 	NSMutableArray *newPencils = [NSMutableArray array];
 	
+	CGFloat pencilSize = isiPad ? 20 : 10;
+	CGFloat pencilFontSize = isiPad ? 20 : 10;
+	CGFloat pencilShadowOffset = isiPad ? 2 : 1;
+	
 	for (NSInteger row = 0; row < 3; row++) {
 		for (NSInteger col = 0; col < 3; col++) {
-			UILabel *pencil = [[UILabel alloc] initWithFrame:CGRectMake(col * 11, row * 11, 10, 10)];
+			UILabel *pencil = [[UILabel alloc] initWithFrame:CGRectMake(col * (pencilSize + 1), row * (pencilSize + 1), pencilSize, pencilSize)];
 			
-			pencil.font = [UIFont fontWithName:@"ReklameScript-Regular" size:10.0f];
+			pencil.font = [UIFont fontWithName:@"ReklameScript-Regular" size:pencilFontSize];
 			pencil.text = [NSString stringWithFormat:@"%i", (row * 3) + col + 1];
-			pencil.textAlignment = UITextAlignmentCenter;
+			pencil.textAlignment = NSTextAlignmentCenter;
 			pencil.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
-			pencil.lineBreakMode = UILineBreakModeClip;
+			pencil.lineBreakMode = NSLineBreakByClipping;
 			pencil.textColor = [UIColor colorWithAlphaHexString:kTextColorPencil];
 			pencil.backgroundColor = [UIColor clearColor];
 			pencil.hidden = YES;
 			pencil.shadowColor = [UIColor colorWithAlphaHexString:kTextShadowColorGuess];
-			pencil.shadowOffset = CGSizeMake(0, 1);
+			pencil.shadowOffset = CGSizeMake(0, pencilShadowOffset);
 			
 			[newPencils addObject:pencil];
 			[self.view addSubview:pencil];
@@ -147,17 +160,21 @@ NSString * const kTileColorHighlightHintD = @"#4CFFAE00";
 	}
 	
 	// Create the guess label.
-	guessView = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 32, 32)];
+	CGFloat guessSize = isiPad ? 64 : 32;
+	CGFloat guessFontSize = isiPad ? 48 : 24;
+	CGFloat guessShadowOffset = isiPad ? 2 : 1;
 	
-	guessView.font = [UIFont fontWithName:@"ReklameScript-Regular" size:24.0f];
+	guessView = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, guessSize, guessSize)];
+	
+	guessView.font = [UIFont fontWithName:@"ReklameScript-Regular" size:guessFontSize];
 	guessView.text = @"0";
-	guessView.textAlignment = UITextAlignmentCenter;
+	guessView.textAlignment = NSTextAlignmentCenter;
 	guessView.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
-	guessView.lineBreakMode = UILineBreakModeClip;
+	guessView.lineBreakMode = NSLineBreakByClipping;
 	guessView.textColor = [UIColor colorWithAlphaHexString:kTextColorGuess];
 	guessView.backgroundColor = [UIColor clearColor];
 	guessView.shadowColor = [UIColor colorWithAlphaHexString:kTextShadowColorGuess];
-	guessView.shadowOffset = CGSizeMake(0, 1);
+	guessView.shadowOffset = CGSizeMake(0, guessShadowOffset);
 	guessView.hidden = YES;
 	
 	self.selected = NO;

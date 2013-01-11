@@ -10,6 +10,7 @@
 
 #import "ZSAppDelegate.h"
 #import "UIColor+colorWithHex.h"
+#import "UIDevice+Resolutions.h"
 
 @interface ZSChangeDifficultyRibbonViewController ()
 
@@ -46,6 +47,23 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	
+	UIDeviceResolution resolution = [UIDevice currentResolution];
+	bool isiPad = (resolution == UIDevice_iPadStandardRes || resolution == UIDevice_iPadHiRes);
+	
+	CGFloat labelFontSize;
+	CGFloat labelShadowOffset;
+	CGSize labelSize;
+	
+	if (isiPad) {
+		labelFontSize = 60;
+		labelShadowOffset = -1;
+		labelSize = CGSizeMake(375, 68);
+	} else {
+		labelFontSize = 35;
+		labelShadowOffset = -0.5f;
+		labelSize = CGSizeMake(198, 44);
+	}
+	
 	// Finish building the title.
 	titleLabel.text = @"New Game";
 	
@@ -58,9 +76,9 @@
 	// Build the difficulty buttons. The spaces in the titles are significant because the font gets clipped otherwise.
 	_easyButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	_easyButton.tag = ZSGameDifficultyEasy;
-	_easyButton.frame = CGRectMake(0, 66, 198, 44);
+	_easyButton.frame = CGRectMake(0, 66, labelSize.width, labelSize.height);
 	_easyButton.titleLabel.font = [UIFont fontWithName:@"ReklameScript-Regular" size:35.0f];
-	_easyButton.titleLabel.textAlignment = UITextAlignmentCenter;
+	_easyButton.titleLabel.textAlignment = NSTextAlignmentCenter;
 	_easyButton.titleLabel.shadowColor = shadowColor;
 	_easyButton.titleLabel.shadowOffset = CGSizeMake(0, -0.5f);
 	[_easyButton setTitleColor:textColorHighlighted forState:UIControlStateNormal];
@@ -72,9 +90,9 @@
 	_diabolicalButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	[_diabolicalButton addTarget:self action:@selector(_difficultyButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
 	_diabolicalButton.tag = ZSGameDifficultyDiabolical;
-	_diabolicalButton.frame = CGRectMake(0, 110, 198, 44);
+	_diabolicalButton.frame = CGRectMake(0, 110, labelSize.width, labelSize.height);
 	_diabolicalButton.titleLabel.font = [UIFont fontWithName:@"ReklameScript-Regular" size:35.0f];
-	_diabolicalButton.titleLabel.textAlignment = UITextAlignmentCenter;
+	_diabolicalButton.titleLabel.textAlignment = NSTextAlignmentCenter;
 	_diabolicalButton.titleLabel.shadowColor = shadowColor;
 	_diabolicalButton.titleLabel.shadowOffset = CGSizeMake(0, -0.5f);
 	[_diabolicalButton setTitleColor:textColor forState:UIControlStateNormal];
@@ -134,7 +152,7 @@
 	bottomLabel.backgroundColor = [UIColor clearColor];
 	bottomLabel.font = [UIFont fontWithName:@"ReklameScript-Medium" size:17.0f];
 	bottomLabel.textColor = [UIColor whiteColor];
-	bottomLabel.textAlignment = UITextAlignmentCenter;
+	bottomLabel.textAlignment = NSTextAlignmentCenter;
 	bottomLabel.text = @"Sudo";
 	[adContainer addSubview:bottomLabel];
 	
@@ -143,18 +161,18 @@
 	bottomLabel2.backgroundColor = [UIColor clearColor];
 	bottomLabel2.font = [UIFont fontWithName:@"ReklameScript-Regular" size:14.0f];
 	bottomLabel2.textColor = redTextColor;
-	bottomLabel2.textAlignment = UITextAlignmentCenter;
+	bottomLabel2.textAlignment = NSTextAlignmentCenter;
 	bottomLabel2.text = @"tap to visit app store";
 	[adContainer addSubview:bottomLabel2];
 #else
 	// Build the difficulty buttons. The spaces in the titles are significant because the font gets clipped otherwise.
 	_easyButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	_easyButton.tag = ZSGameDifficultyEasy;
-	_easyButton.frame = CGRectMake(0, 75, 198, 44);
-	_easyButton.titleLabel.font = [UIFont fontWithName:@"ReklameScript-Regular" size:35.0f];
-	_easyButton.titleLabel.textAlignment = UITextAlignmentCenter;
+	_easyButton.frame = CGRectMake(0, (isiPad ? 132 : 75), labelSize.width, labelSize.height);
+	_easyButton.titleLabel.font = [UIFont fontWithName:@"ReklameScript-Regular" size:labelFontSize];
+	_easyButton.titleLabel.textAlignment = NSTextAlignmentCenter;
 	_easyButton.titleLabel.shadowColor = shadowColor;
-	_easyButton.titleLabel.shadowOffset = CGSizeMake(0, -0.5f);
+	_easyButton.titleLabel.shadowOffset = CGSizeMake(0, labelShadowOffset);
 	[_easyButton setTitleColor:textColorHighlighted forState:UIControlStateNormal];
 	[_easyButton setTitleColor:textColorHighlighted forState:UIControlStateHighlighted];
 	[_easyButton setTitle:@" Easy " forState:UIControlStateNormal];
@@ -164,11 +182,11 @@
 	_moderateButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	[_moderateButton addTarget:self action:@selector(_difficultyButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
 	_moderateButton.tag = ZSGameDifficultyModerate;
-	_moderateButton.frame = CGRectMake(0, 121, 198, 44);
-	_moderateButton.titleLabel.font = [UIFont fontWithName:@"ReklameScript-Regular" size:35.0f];
-	_moderateButton.titleLabel.textAlignment = UITextAlignmentCenter;
+	_moderateButton.frame = CGRectMake(0, (isiPad ? 220 : 121), labelSize.width, labelSize.height);
+	_moderateButton.titleLabel.font = [UIFont fontWithName:@"ReklameScript-Regular" size:labelFontSize];
+	_moderateButton.titleLabel.textAlignment = NSTextAlignmentCenter;
 	_moderateButton.titleLabel.shadowColor = shadowColor;
-	_moderateButton.titleLabel.shadowOffset = CGSizeMake(0, -0.5f);
+	_moderateButton.titleLabel.shadowOffset = CGSizeMake(0, labelShadowOffset);
 	[_moderateButton setTitleColor:textColor forState:UIControlStateNormal];
 	[_moderateButton setTitleColor:textColorHighlighted forState:UIControlStateHighlighted];
 	[_moderateButton setTitle:@" Moderate " forState:UIControlStateNormal];
@@ -178,11 +196,11 @@
 	_challengingButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	[_challengingButton addTarget:self action:@selector(_difficultyButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
 	_challengingButton.tag = ZSGameDifficultyChallenging;
-	_challengingButton.frame = CGRectMake(0, 167, 198, 44);
-	_challengingButton.titleLabel.font = [UIFont fontWithName:@"ReklameScript-Regular" size:35.0f];
-	_challengingButton.titleLabel.textAlignment = UITextAlignmentCenter;
+	_challengingButton.frame = CGRectMake(0, (isiPad ? 308 : 167), labelSize.width, labelSize.height);
+	_challengingButton.titleLabel.font = [UIFont fontWithName:@"ReklameScript-Regular" size:labelFontSize];
+	_challengingButton.titleLabel.textAlignment = NSTextAlignmentCenter;
 	_challengingButton.titleLabel.shadowColor = shadowColor;
-	_challengingButton.titleLabel.shadowOffset = CGSizeMake(0, -0.5f);
+	_challengingButton.titleLabel.shadowOffset = CGSizeMake(0, labelShadowOffset);
 	[_challengingButton setTitleColor:textColor forState:UIControlStateNormal];
 	[_challengingButton setTitleColor:textColorHighlighted forState:UIControlStateHighlighted];
 	[_challengingButton setTitle:@" Challenging " forState:UIControlStateNormal];
@@ -192,11 +210,11 @@
 	_diabolicalButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	[_diabolicalButton addTarget:self action:@selector(_difficultyButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
 	_diabolicalButton.tag = ZSGameDifficultyDiabolical;
-	_diabolicalButton.frame = CGRectMake(0, 213, 198, 44);
-	_diabolicalButton.titleLabel.font = [UIFont fontWithName:@"ReklameScript-Regular" size:35.0f];
-	_diabolicalButton.titleLabel.textAlignment = UITextAlignmentCenter;
+	_diabolicalButton.frame = CGRectMake(0, (isiPad ? 396 : 213), labelSize.width, labelSize.height);
+	_diabolicalButton.titleLabel.font = [UIFont fontWithName:@"ReklameScript-Regular" size:labelFontSize];
+	_diabolicalButton.titleLabel.textAlignment = NSTextAlignmentCenter;
 	_diabolicalButton.titleLabel.shadowColor = shadowColor;
-	_diabolicalButton.titleLabel.shadowOffset = CGSizeMake(0, -0.5f);
+	_diabolicalButton.titleLabel.shadowOffset = CGSizeMake(0, labelShadowOffset);
 	[_diabolicalButton setTitleColor:textColor forState:UIControlStateNormal];
 	[_diabolicalButton setTitleColor:textColorHighlighted forState:UIControlStateHighlighted];
 	[_diabolicalButton setTitle:@" Diabolical " forState:UIControlStateNormal];
@@ -206,11 +224,11 @@
 	_insaneButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	[_insaneButton addTarget:self action:@selector(_difficultyButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
 	_insaneButton.tag = ZSGameDifficultyInsane;
-	_insaneButton.frame = CGRectMake(0, 259, 198, 44);
-	_insaneButton.titleLabel.font = [UIFont fontWithName:@"ReklameScript-Regular" size:35.0f];
-	_insaneButton.titleLabel.textAlignment = UITextAlignmentCenter;
+	_insaneButton.frame = CGRectMake(0, (isiPad ? 484 : 259), labelSize.width, labelSize.height);
+	_insaneButton.titleLabel.font = [UIFont fontWithName:@"ReklameScript-Regular" size:labelFontSize];
+	_insaneButton.titleLabel.textAlignment = NSTextAlignmentCenter;
 	_insaneButton.titleLabel.shadowColor = shadowColor;
-	_insaneButton.titleLabel.shadowOffset = CGSizeMake(0, -0.5f);
+	_insaneButton.titleLabel.shadowOffset = CGSizeMake(0, labelShadowOffset);
 	[_insaneButton setTitleColor:textColor forState:UIControlStateNormal];
 	[_insaneButton setTitleColor:textColorHighlighted forState:UIControlStateHighlighted];
 	[_insaneButton setTitle:@" Insane " forState:UIControlStateNormal];

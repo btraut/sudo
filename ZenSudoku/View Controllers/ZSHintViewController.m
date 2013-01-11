@@ -40,9 +40,13 @@
 @implementation ZSHintViewController
 
 - (void)loadView {
-	UIImage *hintPaperImage = [UIImage imageNamed:@"IndexCard.png"];
-	self.view = [[UIImageView alloc] initWithImage:hintPaperImage];
+	UIDeviceResolution resolution = [UIDevice currentResolution];
+	bool isiPad = (resolution == UIDevice_iPadStandardRes || resolution == UIDevice_iPadHiRes);
 	
+	NSString *hintPaperImageName = isiPad ? @"IndexCard-iPad.png" : @"IndexCard.png";
+	
+	UIImage *hintPaperImage = [UIImage imageNamed:hintPaperImageName];
+	self.view = [[UIImageView alloc] initWithImage:hintPaperImage];
 	self.view.frame = CGRectMake(0, 0, hintPaperImage.size.width, hintPaperImage.size.height);
 	self.view.userInteractionEnabled = YES;
 }
@@ -51,23 +55,44 @@
     [super viewDidLoad];
 	
 	UIDeviceResolution resolution = [UIDevice currentResolution];
+	bool isiPad = (resolution == UIDevice_iPadStandardRes || resolution == UIDevice_iPadHiRes);
 	
 	// Create progress dots.
-	_progressDots = [[ProgressDots alloc] initWithFrame:resolution == UIDevice_iPhoneTallerHiRes ? CGRectMake(165, 114, 0, 0) : CGRectMake(165, 112, 0, 0)];
-	_progressDots.dotOffset = 5.0f;
+	if (isiPad) {
+		_progressDots = [[ProgressDots alloc] initWithFrame:CGRectMake(330, 228, 0, 0)];
+		_progressDots.dotOffset = 8.0f;
+		_progressDots.dotImage = [UIImage imageNamed:@"LightBlueDot-iPad.png"];
+		_progressDots.selectedDotImage = [UIImage imageNamed:@"DarkBlueDot-iPad.png"];
+	} else {
+		_progressDots = [[ProgressDots alloc] initWithFrame:resolution == UIDevice_iPhoneTallerHiRes ? CGRectMake(165, 114, 0, 0) : CGRectMake(165, 112, 0, 0)];
+		_progressDots.dotOffset = 5.0f;
+	}
+	
 	[self.view addSubview:_progressDots];
 	
 	// Init the carousel.
+	UIView *carouselContainer = [[UIView alloc] init];
+	carouselContainer.clipsToBounds = YES;
+	
 	_cardLabels = [NSMutableArray array];
 	
-	_carousel = [[iCarousel alloc] initWithFrame:CGRectMake(5, 5, 320, 115)];
+	if (isiPad) {
+		carouselContainer.frame = CGRectMake(10, 10, 640, 228);
+		_carousel = [[iCarousel alloc] initWithFrame:CGRectMake(0, 0, 640, 225)];
+	} else {
+		carouselContainer.frame = self.view.frame;
+		_carousel = [[iCarousel alloc] initWithFrame:CGRectMake(5, 5, 320, 115)];
+	}
+	
     _carousel.type = iCarouselTypeLinear;
 	_carousel.delegate = self;
 	_carousel.dataSource = self;
 	_carousel.bounceDistance = 0.2f;
 	_carousel.scrollSpeed = 0.9f;
 	_carousel.decelerationRate = 0.15f;
-	[self.view addSubview:_carousel];
+	
+	[carouselContainer addSubview:_carousel];
+	[self.view addSubview:carouselContainer];
 }
 
 - (NSUInteger)numberOfItemsInCarousel:(iCarousel *)carousel {
@@ -103,22 +128,31 @@
 }
 
 - (void)beginHintDeck:(NSArray *)hintDeck forGameViewController:(ZSGameViewController *)gameViewController {
+	UIDeviceResolution resolution = [UIDevice currentResolution];
+	bool isiPad = (resolution == UIDevice_iPadStandardRes || resolution == UIDevice_iPadHiRes);
+	
 	_hintDeck = hintDeck;
 	_gameViewController = gameViewController;
 	
 	[_cardLabels removeAllObjects];
 	
-	NSInteger sidePadding = 16;
-	NSInteger topPadding = 12;
+	NSInteger sidePadding = isiPad ? 28 : 16;
+	NSInteger topPadding = isiPad ? 28 : 12;
 	
 	for (ZSHintCard *card in hintDeck) {
 		MTLabel *label = [[MTLabel alloc] initWithFrame:CGRectMake(sidePadding, topPadding, _carousel.frame.size.width - sidePadding * 2, _carousel.frame.size.height - topPadding * 2)];
 		label.backgroundColor = [UIColor clearColor];
 		label.shadowColor = [UIColor clearColor];
 		label.text = card.text;
-		label.font = [UIFont fontWithName:@"HelveticaNeue" size:16.0f];
 		label.fontColor = [UIColor colorWithHexString:@"#2e2e2e"];
-		label.lineHeight = 23.0f;
+		
+		if (isiPad) {
+			label.font = [UIFont fontWithName:@"HelveticaNeue" size:28.0f];
+			label.lineHeight = 46.0f;
+		} else {
+			label.font = [UIFont fontWithName:@"HelveticaNeue" size:16.0f];
+			label.lineHeight = 23.0f;
+		}
 		
 		UIView *container = [[UIView alloc] initWithFrame:CGRectMake(0, 0, _carousel.frame.size.width, _carousel.frame.size.height)];
 		[container addSubview:label];
@@ -134,7 +168,7 @@
 	_progressDots.totalDots = hintDeck.count;
 	_progressDots.selectedDot = 0;
 	
-	[gameViewController deselectTileView];
+	[gameViewController.boardViewController deselectTileView];
 	
 	_currentCard = 0;
 	_previousCard = -1;

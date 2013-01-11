@@ -13,6 +13,7 @@
 #import "ZSBoard.h"
 #import "ZSTile.h"
 #import "ZSAppDelegate.h"
+#import "UIDevice+Resolutions.h"
 
 #define DOUBLE_TAP_TIME_THRESHOLD 0.3f
 
@@ -82,20 +83,37 @@
 #pragma mark - View Lifecycle
 
 - (void)loadView {
-	self.view = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Board.png"]];
-	self.view.frame = CGRectMake(0, 0, 304, 304);
+	UIDeviceResolution resolution = [UIDevice currentResolution];
+	
+	switch (resolution) {
+		case UIDevice_iPadStandardRes:
+		case UIDevice_iPadHiRes:
+			self.view = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Board-iPad.png"]];
+			self.view.frame = CGRectMake(0, 0, 608, 610);
+			break;
+			
+		default:
+			self.view = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Board.png"]];
+			self.view.frame = CGRectMake(0, 0, 304, 304);
+			break;
+	}
+	
 	self.view.userInteractionEnabled = YES;
 }
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	
+	UIDeviceResolution resolution = [UIDevice currentResolution];
+	
+	bool isiPad = (resolution == UIDevice_iPadStandardRes || resolution == UIDevice_iPadHiRes);
+	
 	// Build the tiles.
 	NSMutableArray *rows = [NSMutableArray array];
-	NSInteger yOffset = 3;
+	NSInteger yOffset = isiPad ? 6 : 3;
 	
 	for (NSInteger row = 0; row < game.board.size; row++) {
-		NSInteger xOffset = 3;
+		NSInteger xOffset = isiPad ? 6 : 3;
 		
 		NSMutableArray *rowTiles = [NSMutableArray array];
 		
@@ -103,16 +121,25 @@
 			ZSTileViewController *tileViewController = [[ZSTileViewController alloc] initWithTile:[game.board getTileAtRow:row col:col]];
 			tileViewController.view.frame = CGRectMake(xOffset, yOffset, tileViewController.view.frame.size.width, tileViewController.view.frame.size.height);
 			tileViewController.touchDelegate = self;
+			tileViewController.view.backgroundColor = [UIColor redColor];
 			
 			[self.view addSubview:tileViewController.view];
 			[rowTiles addObject:tileViewController];
 			
-			xOffset += (col % 3 == 2) ? 34 : 33;
+			if (col % 3 == 2) {
+				xOffset += isiPad ? 68 : 34;
+			} else {
+				xOffset += isiPad ? 66 : 33;
+			}
 		}
 		
 		[rows addObject:rowTiles];
 		
-		yOffset += (row % 3 == 2) ? 34 : 33;
+		if (row % 3 == 2) {
+			yOffset += isiPad ? 68 : 34;
+		} else {
+			yOffset += isiPad ? 66 : 33;
+		}
 	}
 	
 	tileViews = rows;

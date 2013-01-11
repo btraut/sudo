@@ -7,6 +7,7 @@
 //
 
 #import "ZSHintButtonViewController.h"
+#import "UIDevice+Resolutions.h"
 
 @interface ZSHintButtonViewController () {
 	UIImageView *_background;
@@ -20,19 +21,42 @@
 @synthesize pulsing = _pulsing;
 
 - (void)loadView {
-	self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 36, 37)];
+	UIDeviceResolution resolution = [UIDevice currentResolution];
+	bool isiPad = (resolution == UIDevice_iPadStandardRes || resolution == UIDevice_iPadHiRes);
+	
+	if (isiPad) {
+		self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 59, 59)];
+	} else {
+		self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 36, 37)];
+	}
 }
 
 - (void)viewDidLoad {
-	UIImage *hintsImage = [UIImage imageNamed:@"Hints"];
+	UIDeviceResolution resolution = [UIDevice currentResolution];
+	bool isiPad = (resolution == UIDevice_iPadStandardRes || resolution == UIDevice_iPadHiRes);
 	
 	self.button = [UIButton buttonWithType:UIButtonTypeCustom];
-	self.button.frame = CGRectMake(0, 0, hintsImage.size.width, hintsImage.size.height);
+	
+	UIImage *hintsImage;
+	UIImage *hintsBackgroundImage;
+	
+	if (isiPad) {
+		hintsImage = [UIImage imageNamed:@"Hints-iPad"];
+		[self.button setBackgroundImage:[UIImage imageNamed:@"HintsHighlighted-iPad"] forState:UIControlStateHighlighted];
+		
+		hintsBackgroundImage = [UIImage imageNamed:@"HintsBackground-iPad"];
+	} else {
+		hintsImage = [UIImage imageNamed:@"Hints"];
+		[self.button setBackgroundImage:[UIImage imageNamed:@"HintsHighlighted"] forState:UIControlStateHighlighted];
+		
+		hintsBackgroundImage = [UIImage imageNamed:@"HintsBackground"];
+	}
+	
 	[self.button setBackgroundImage:hintsImage forState:UIControlStateNormal];
-	[self.button setBackgroundImage:[UIImage imageNamed:@"HintsHighlighted"] forState:UIControlStateHighlighted];
+	self.button.frame = CGRectMake(0, 0, hintsImage.size.width, hintsImage.size.height);
 	[self.view addSubview:self.button];
 	
-	_background = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HintsBackground"]];
+	_background = [[UIImageView alloc] initWithImage:hintsBackgroundImage];
 	_background.alpha = 0;
 	[self.view addSubview:_background];
 }

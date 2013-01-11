@@ -101,7 +101,6 @@
 - (void)setTitle;
 
 // Game Functions
-- (void)deselectTileView;
 - (void)setAutoPencils;
 - (void)solveMostOfThePuzzle;
 - (void)completeCoreGameOperation;

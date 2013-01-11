@@ -9,6 +9,7 @@
 #import "ZSFoldedCornerPlusButtonViewController.h"
 
 #import "UIColor+ColorWithHex.h"
+#import "UIDevice+Resolutions.h"
 
 NSString * const kTextColorPlusLabel = @"FFC1C1C1";
 NSString * const kTextShadowColorPlusLabel = @"66FFFFFF";
@@ -23,6 +24,9 @@ NSString * const kTextShadowColorPlusLabel = @"66FFFFFF";
 	
 	CGFloat _animationFontSizeStart;
 	CGFloat _animationFontSizeEnd;
+	
+	CGFloat _plusButtonFullSize;
+	CGFloat _plusButtonSmallSize;
 	
 	ZSAnimation *_animationHelper;
 	
@@ -44,15 +48,48 @@ NSString * const kTextShadowColorPlusLabel = @"66FFFFFF";
 		
 		_queuedState = ZSFoldedCornerPlusButtonStateNormal;
 		_animateQueuedState = NO;
+		
+		UIDeviceResolution resolution = [UIDevice currentResolution];
+		
+		switch (resolution) {
+			case UIDevice_iPadStandardRes:
+			case UIDevice_iPadHiRes:
+				_plusButtonFullSize = 27;
+				_plusButtonSmallSize = 24;
+				break;
+				
+			default:
+				_plusButtonFullSize = 18;
+				_plusButtonSmallSize = 16;
+				break;
+		}
 	}
 	
 	return self;
 }
 
 - (void)loadView {
+	UIDeviceResolution resolution = [UIDevice currentResolution];
+	
+	NSString *plusImageName;
+	CGRect plusFrame;
+	
+	switch (resolution) {
+		case UIDevice_iPadStandardRes:
+		case UIDevice_iPadHiRes:
+			plusImageName = @"Plus-iPad.png";
+			plusFrame = CGRectMake(710, 16, _plusButtonFullSize, _plusButtonFullSize);
+			break;
+			
+		default:
+			plusImageName = @"Plus.png";
+			plusFrame = CGRectMake(290, 5, _plusButtonFullSize, _plusButtonFullSize);
+			break;
+	}
+	
 	// Create the + button.
-	UIImageView *plus = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Plus.png"]];
-	plus.frame = CGRectMake(290, 5, 20, 20);
+	UIImageView *plus = [[UIImageView alloc] initWithImage:[UIImage imageNamed:plusImageName]];
+	plus.frame = plusFrame;
 	plus.contentMode = UIViewContentModeScaleAspectFit;
 	self.view = plus;
 }
@@ -81,7 +118,7 @@ NSString * const kTextShadowColorPlusLabel = @"66FFFFFF";
 - (void)resetToDefaultPosition {
 	[_animationHelper reset];
 	
-	[self setSize:18.0f];
+	[self setSize:_plusButtonFullSize];
 	
 	self.view.hidden = NO;
 	
@@ -143,7 +180,7 @@ NSString * const kTextShadowColorPlusLabel = @"66FFFFFF";
 			_animationState = ZSFoldedCornerPlusButtonAnimationStateAnimatingBigToNormal;
 			
 			_animationFontSizeStart = self.view.frame.size.width;
-			_animationFontSizeEnd = 16.0f;
+			_animationFontSizeEnd = _plusButtonSmallSize;
 			
 			_animationHelper.duration = 0.3f;
 			_animationHelper.timingFunction = ZSAnimationTimingFunctionEaseIn;
@@ -154,7 +191,7 @@ NSString * const kTextShadowColorPlusLabel = @"66FFFFFF";
 			_animationState = ZSFoldedCornerPlusButtonAnimationStateAnimatingStartStage1;
 			
 			_animationFontSizeStart = 0.1f;
-			_animationFontSizeEnd = 18.0f;
+			_animationFontSizeEnd = _plusButtonFullSize;
 			
 			[self setSize:0.1f];
 			self.view.hidden = NO;
@@ -168,7 +205,7 @@ NSString * const kTextShadowColorPlusLabel = @"66FFFFFF";
 			_animationState = ZSFoldedCornerPlusButtonAnimationStateAnimatingStartStage2;
 			
 			_animationFontSizeStart = self.view.frame.size.width;
-			_animationFontSizeEnd = 16.0f;
+			_animationFontSizeEnd = _plusButtonSmallSize;
 			
 			_animationHelper.duration = 0.15f;
 			_animationHelper.timingFunction = ZSAnimationTimingFunctionEaseIn;
@@ -179,7 +216,7 @@ NSString * const kTextShadowColorPlusLabel = @"66FFFFFF";
 		_state = ZSFoldedCornerPlusButtonStateNormal;
 		
 		self.view.hidden = NO;
-		[self setSize:16.0f];
+		[self setSize:_plusButtonSmallSize];
 	}
 }
 
@@ -190,7 +227,7 @@ NSString * const kTextShadowColorPlusLabel = @"66FFFFFF";
 		_animationState = ZSFoldedCornerPlusButtonAnimationStateAnimatingNormalToBig;
 		
 		_animationFontSizeStart = self.view.frame.size.width;
-		_animationFontSizeEnd = 18.0f;
+		_animationFontSizeEnd = _plusButtonFullSize;
 		
 		_animationHelper.duration = 0.3f;
 		_animationHelper.timingFunction = ZSAnimationTimingFunctionEaseIn;

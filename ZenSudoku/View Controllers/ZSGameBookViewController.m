@@ -69,10 +69,49 @@
     [super viewDidLoad];
 	
 	UIDeviceResolution resolution = [UIDevice currentResolution];
+	bool isiPad = (resolution == UIDevice_iPadStandardRes || resolution == UIDevice_iPadHiRes);
+	
+	NSString *innerBookImageName;
+	NSString *pageCurlGradientImageName;
+	NSString *pageCurlImageName;
+	
+	CGRect innerBookFrame;
+	CGRect pageCurlGradientFrame;
+	CGRect pageCurlFrame;
+	
+	switch (resolution) {
+		case UIDevice_iPadStandardRes:
+		case UIDevice_iPadHiRes:
+			innerBookImageName = @"PaperBackgroundWithBoard-iPad.png";
+			pageCurlGradientImageName = @"PageCurlGradient-iPad.png";
+			pageCurlImageName = @"PageCurl-iPad.png";
+			innerBookFrame = CGRectMake(0, 0, 768, 1004);
+			pageCurlGradientFrame = CGRectMake(0, 0, 32, 1004);
+			pageCurlFrame = CGRectMake(0, 0, 30, 1004);
+			break;
+			
+		case UIDevice_iPhoneTallerHiRes:
+			innerBookImageName = @"PaperBackgroundWithBoard-Tall@2x.png";
+			pageCurlGradientImageName = @"PageCurlGradient-Tall@2x.png";
+			pageCurlImageName = @"PageCurl-Tall@2x.png";
+			innerBookFrame = CGRectMake(0, 0, 320, 548);
+			pageCurlGradientFrame = CGRectMake(0, 0, 17, 548);
+			pageCurlFrame = CGRectMake(0, 0, 17, 548);
+			break;
+			
+		default:
+			innerBookImageName = @"PaperBackgroundWithBoard.png";
+			pageCurlGradientImageName = @"PageCurlGradient.png";
+			pageCurlImageName = @"PageCurl.png";
+			innerBookFrame = CGRectMake(0, 0, 320, 460);
+			pageCurlGradientFrame = CGRectMake(0, 0, 17, 460);
+			pageCurlFrame = CGRectMake(0, 0, 17, 460);
+			break;
+	}
 	
 	// Create the inner part of the book (containing all pages).
-	_innerBook = [[UIImageView alloc] initWithImage:[UIImage imageNamed:(resolution == UIDevice_iPhoneTallerHiRes ? @"PaperBackgroundWithBoard-Tall@2x.png" : @"PaperBackgroundWithBoard.png")]];
-	_innerBook.frame = CGRectMake(0, 0, 320, resolution == UIDevice_iPhoneTallerHiRes ? 548 : 460);
+	_innerBook = [[UIImageView alloc] initWithImage:[UIImage imageNamed:innerBookImageName]];
+	_innerBook.frame = innerBookFrame;
 	_innerBook.userInteractionEnabled = YES;
 	[self.view addSubview:_innerBook];
 	
@@ -138,20 +177,22 @@
 	[_nextGameViewController hideTapToChangeDifficultyNoticeAnimated:NO];
 	
 	// Create the page curl gradient on the left.
-	_pageCurlGradient = [[UIImageView alloc] initWithImage:[UIImage imageNamed:(resolution == UIDevice_iPhoneTallerHiRes ? @"PageCurlGradient-Tall@2x.png" : @"PageCurlGradient.png")]];
-	_pageCurlGradient.frame = CGRectMake(0, 0, 17, resolution == UIDevice_iPhoneTallerHiRes ? 548 : 460);
+	_pageCurlGradient = [[UIImageView alloc] initWithImage:[UIImage imageNamed:pageCurlGradientImageName]];
+	_pageCurlGradient.frame = pageCurlGradientFrame;
 	_pageCurlGradient.alpha = 0;
 	[_innerBook addSubview:_pageCurlGradient];
 	
 	// Create the page curl on the left. This needs to go over the top of the folded corner.
-	_pageCurl = [[UIImageView alloc] initWithImage:[UIImage imageNamed:(resolution == UIDevice_iPhoneTallerHiRes ? @"PageCurl-Tall@2x.png" : @"PageCurl.png")]];
-	_pageCurl.frame = CGRectMake(0, 0, 17, resolution == UIDevice_iPhoneTallerHiRes ? 548 : 460);
+	_pageCurl = [[UIImageView alloc] initWithImage:[UIImage imageNamed:pageCurlImageName]];
+	_pageCurl.frame = pageCurlFrame;
 	_pageCurl.alpha = 0;
 	[_innerBook addSubview:_pageCurl];
 	
 	// Create the hint.
+	CGFloat hintViewX = isiPad ? 42 : -5;
+	
 	_hintViewController = [[ZSHintViewController alloc] initWithNibName:@"ZSHintViewController" bundle:[NSBundle mainBundle]];
-	_hintViewController.view.frame = CGRectMake(-5, _innerBook.frame.size.height, _hintViewController.view.frame.size.width, _hintViewController.view.frame.size.height);
+	_hintViewController.view.frame = CGRectMake(hintViewX, _innerBook.frame.size.height, _hintViewController.view.frame.size.width, _hintViewController.view.frame.size.height);
 	[self.view addSubview:_hintViewController.view];
 	
 	_downSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(hideHint)];
@@ -248,12 +289,15 @@
 	 options:UIViewAnimationOptionCurveEaseOut
 	 animations:^{
 		 UIDeviceResolution resolution = [UIDevice currentResolution];
+		 bool isiPad = (resolution == UIDevice_iPadStandardRes || resolution == UIDevice_iPadHiRes);
 		 
 		 if (resolution != UIDevice_iPhoneTallerHiRes) {
 			 _innerBook.frame = CGRectMake(0, -45, _innerBook.frame.size.width, _innerBook.frame.size.height);
 		 }
 		 
-		 _hintViewController.view.frame = CGRectMake(-5, _innerBook.frame.size.height - 141, _hintViewController.view.frame.size.width, _hintViewController.view.frame.size.height);
+		 CGFloat hintViewY = isiPad ? _innerBook.frame.size.height - 282 : _innerBook.frame.size.height - 141;
+		 
+		 _hintViewController.view.frame = CGRectMake(_hintViewController.view.frame.origin.x, hintViewY, _hintViewController.view.frame.size.width, _hintViewController.view.frame.size.height);
 	 }
 	 completion:NULL];
 }
@@ -285,7 +329,7 @@
 			 _innerBook.frame = CGRectMake(0, 0, _innerBook.frame.size.width, _innerBook.frame.size.height);
 		 }
 		 
-		 _hintViewController.view.frame = CGRectMake(-5, _innerBook.frame.size.height, _hintViewController.view.frame.size.width, _hintViewController.view.frame.size.height);
+		 _hintViewController.view.frame = CGRectMake(_hintViewController.view.frame.origin.x, _innerBook.frame.size.height, _hintViewController.view.frame.size.width, _hintViewController.view.frame.size.height);
 	 }
 	 completion:NULL];
 }
@@ -518,6 +562,8 @@
 
 - (void)difficultyButtonWasPressedWithViewController:(ZSGameViewController *)viewController {
 	[self showChangeDifficultyRibbon];
+	
+	[self hideHint];
 	
 	_gamesInARowWithNoAction = 0;
 	[self _setHiddenOnTapToChangeDifficultyNotices];

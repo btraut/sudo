@@ -96,9 +96,21 @@ typedef enum {
 	
 	if (self) {
 		// Init the fold point defaults.
-		_foldDefaultPoint = CGPointMake(48, 51);
 		_foldPoint = _foldDefaultPoint;
 		_foldStartPoint = CGPointMake(0.01f, 0.01f);
+		
+		UIDeviceResolution resolution = [UIDevice currentResolution];
+		
+		switch (resolution) {
+			case UIDevice_iPadStandardRes:
+			case UIDevice_iPadHiRes:
+				_foldDefaultPoint = CGPointMake(96, 102);
+				break;
+				
+			default:
+				_foldDefaultPoint = CGPointMake(48, 51);
+				break;
+		}	
 		
 		// Calculate dimensions for the first time.
 		[self recalculateDimensions];
@@ -120,14 +132,28 @@ typedef enum {
 	return self;
 }
 
-- (void)dealloc {
-	dispatch_release(_translucentPageRenderDispatchQueue);
-}
-
 - (void)loadView {
-	// Create the GLKView.
 	UIDeviceResolution resolution = [UIDevice currentResolution];
-	ZSFoldedCornerView *view = [[ZSFoldedCornerView alloc] initWithFrame:CGRectMake(0, 0, 314, resolution == UIDevice_iPhoneTallerHiRes ? 548 : 460)];
+	
+	CGRect viewFrame;
+	
+	switch (resolution) {
+		case UIDevice_iPadStandardRes:
+		case UIDevice_iPadHiRes:
+			viewFrame = CGRectMake(0, 0, 753, 1004);
+			break;
+			
+		case UIDevice_iPhoneTallerHiRes:
+			viewFrame = CGRectMake(0, 0, 314, 548);
+			break;
+			
+		default:
+			viewFrame = CGRectMake(0, 0, 314, 460);
+			break;
+	}	
+	
+	// Create the GLKView.
+	ZSFoldedCornerView *view = [[ZSFoldedCornerView alloc] initWithFrame:viewFrame];
 	view.delegate = self;
 	view.hitTestDelegate = self;
 	self.view = view;
@@ -168,19 +194,37 @@ typedef enum {
 	// Load the images.
 	UIDeviceResolution resolution = [UIDevice currentResolution];
 	
-	self.backwardsPageImage = [UIImage imageNamed:(resolution == UIDevice_iPhoneTallerHiRes ? @"BackwardsPage-Tall@2x.png" : @"BackwardsPage.png")];
-	
 	if (resolution == UIDevice_iPhoneStandardRes) {
+		self.backwardsPageImage = [UIImage imageNamed:@"BackwardsPage.png"];
+		
 		self.backwardsPageSprite = [[ZSGLSprite alloc] initWithFile:@"BackwardsTranslucentPage.png" effect:self.effect];
 		self.backwardsTranslucentPageSprite = [[ZSGLSprite alloc] initWithFile:@"BackwardsTranslucentPage.png" effect:self.effect];
 		self.shadowBlobOpaqueSprite = [[ZSGLSprite alloc] initWithFile:@"ShadowBlobStraightOpaque.png" effect:self.effect];
 		self.shadowBlobSprite = [[ZSGLSprite alloc] initWithFile:@"ShadowBlobStraight.png" effect:self.effect];
 	} else if (resolution == UIDevice_iPhoneHiRes) {
+		self.backwardsPageImage = [UIImage imageNamed:@"BackwardsPage.png"];
+		
 		self.backwardsPageSprite = [[ZSGLSprite alloc] initWithFile:@"BackwardsTranslucentPage@2x.png" effect:self.effect];
 		self.backwardsTranslucentPageSprite = [[ZSGLSprite alloc] initWithFile:@"BackwardsTranslucentPage@2x.png" effect:self.effect];
 		self.shadowBlobOpaqueSprite = [[ZSGLSprite alloc] initWithFile:@"ShadowBlobStraightOpaque@2x.png" effect:self.effect];
 		self.shadowBlobSprite = [[ZSGLSprite alloc] initWithFile:@"ShadowBlobStraight@2x.png" effect:self.effect];
+	} else if (resolution == UIDevice_iPadStandardRes) {
+		self.backwardsPageImage = [UIImage imageNamed:@"BackwardsPage-iPad.png"];
+		
+		self.backwardsPageSprite = [[ZSGLSprite alloc] initWithFile:@"BackwardsTranslucentPage-iPad.png" effect:self.effect];
+		self.backwardsTranslucentPageSprite = [[ZSGLSprite alloc] initWithFile:@"BackwardsTranslucentPage-iPad.png" effect:self.effect];
+		self.shadowBlobOpaqueSprite = [[ZSGLSprite alloc] initWithFile:@"ShadowBlobStraightOpaque@2x.png" effect:self.effect];
+		self.shadowBlobSprite = [[ZSGLSprite alloc] initWithFile:@"ShadowBlobStraight@2x.png" effect:self.effect];
+	} else if (resolution == UIDevice_iPadHiRes) {
+		self.backwardsPageImage = [UIImage imageNamed:@"BackwardsPage-iPad.png"];
+		
+		self.backwardsPageSprite = [[ZSGLSprite alloc] initWithFile:@"BackwardsTranslucentPage-iPad@2x.png" effect:self.effect];
+		self.backwardsTranslucentPageSprite = [[ZSGLSprite alloc] initWithFile:@"BackwardsTranslucentPage-iPad@2x.png" effect:self.effect];
+		self.shadowBlobOpaqueSprite = [[ZSGLSprite alloc] initWithFile:@"ShadowBlobStraightOpaque@2x.png" effect:self.effect];
+		self.shadowBlobSprite = [[ZSGLSprite alloc] initWithFile:@"ShadowBlobStraight@2x.png" effect:self.effect];
 	} else {
+		self.backwardsPageImage = [UIImage imageNamed:@"BackwardsPage-Tall@2x.png"];
+		
 		self.backwardsPageSprite = [[ZSGLSprite alloc] initWithFile:@"BackwardsTranslucentPage-Tall@2x.png" effect:self.effect];
 		self.backwardsTranslucentPageSprite = [[ZSGLSprite alloc] initWithFile:@"BackwardsTranslucentPage-Tall@2x.png" effect:self.effect];
 		self.shadowBlobOpaqueSprite = [[ZSGLSprite alloc] initWithFile:@"ShadowBlobStraightOpaque@2x.png" effect:self.effect];
@@ -231,6 +275,13 @@ typedef enum {
 }
 
 - (void)loadNewTranslucentPageSprite {
+	// fix me - Looks like the iPad can't handle the memory requirements needed to generate this image over and over.
+	UIDeviceResolution resolution = [UIDevice currentResolution];
+	bool isiPad = (resolution == UIDevice_iPadStandardRes || resolution == UIDevice_iPadHiRes);
+	if (isiPad) {
+		return;
+	}
+	
 	// Cache the screenshot image in this function so if it gets changed while rendering, it doesn't break the render.
 	UIImage *image = self.screenshotImage;
 	
@@ -364,7 +415,23 @@ typedef enum {
 	}
 	
 	UIDeviceResolution resolution = [UIDevice currentResolution];
-	NSInteger pageHeight = resolution == UIDevice_iPhoneTallerHiRes ? 548 : 460;
+	
+	NSInteger pageHeight;
+	
+	switch (resolution) {
+		case UIDevice_iPadStandardRes:
+		case UIDevice_iPadHiRes:
+			pageHeight = 1004;
+			break;
+			
+		case UIDevice_iPhoneTallerHiRes:
+			pageHeight = 548;
+			break;
+			
+		default:
+			pageHeight = 460;
+			break;
+	}
 	
 	if (foldDimensions.height > pageHeight) {
 		_foldOverflowBottomWidth = foldDimensions.width - pageHeight * tanPhi;
@@ -738,7 +805,7 @@ typedef enum {
 	_animationHelper.timingFunction = ZSAnimationTimingFunctionEaseOut;
 	
 	_animationHelper.startPoint = _foldPoint;
-	_animationHelper.endPoint = CGPointMake(628, 0.1f);
+	_animationHelper.endPoint = CGPointMake(self.view.frame.size.width, 0.1f);
 	
 	[_animationHelper start];
 	
@@ -757,7 +824,7 @@ typedef enum {
 	_animationHelper.timingFunction = ZSAnimationTimingFunctionEaseOut;
 	
 	_animationHelper.startPoint = _foldPoint;
-	_animationHelper.endPoint = CGPointMake(628, 30);
+	_animationHelper.endPoint = CGPointMake(self.view.frame.size.width, 30);
 	
 	[_animationHelper start];
 	
@@ -820,7 +887,7 @@ typedef enum {
 	_animationHelper.timingFunction = ZSAnimationTimingFunctionEaseInOut;
 	
 	_animationHelper.startPoint = _foldPoint;
-	_animationHelper.endPoint = CGPointMake(_foldDefaultPoint.x + 7, _foldDefaultPoint.x + 11);
+	_animationHelper.endPoint = CGPointMake(_foldDefaultPoint.x * 1.39f, _foldDefaultPoint.x * 1.61f);
 	
 	[_animationHelper start];
 }
@@ -844,7 +911,7 @@ typedef enum {
 	_animationHelper.timingFunction = ZSAnimationTimingFunctionEaseInOut;
 	
 	_animationHelper.startPoint = _foldPoint;
-	_animationHelper.endPoint = CGPointMake(_foldDefaultPoint.x + 7, _foldDefaultPoint.x + 11);
+	_animationHelper.endPoint = CGPointMake(_foldDefaultPoint.x * 1.39f, _foldDefaultPoint.x * 1.61f);
 	
 	[_animationHelper start];
 }

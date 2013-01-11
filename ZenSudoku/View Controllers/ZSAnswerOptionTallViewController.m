@@ -21,11 +21,11 @@
 }
 
 - (void)_buildButton {
-	self.labelView = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 38, 38)];
+	self.labelView = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
 	self.labelView.font = [UIFont fontWithName:@"ReklameScript-Regular" size:44.0f];
-	self.labelView.textAlignment = UITextAlignmentCenter;
+	self.labelView.textAlignment = NSTextAlignmentCenter;
 	self.labelView.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
-	self.labelView.lineBreakMode = UILineBreakModeClip;
+	self.labelView.lineBreakMode = NSLineBreakByClipping;
 	self.labelView.textColor = [UIColor colorWithAlphaHexString:kTextColorAnswerOptionNormal];
 	self.labelView.backgroundColor = [UIColor clearColor];
 	self.labelView.shadowColor = [UIColor colorWithAlphaHexString:kTextShadowColorAnswerOptionNormal];

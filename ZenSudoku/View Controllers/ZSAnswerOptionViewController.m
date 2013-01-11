@@ -10,6 +10,7 @@
 #import "ZSAnswerOptionsViewController.h"
 #import "ZSGameViewController.h"
 #import "UIColor+ColorWithHex.h"
+#import "UIDevice+Resolutions.h"
 
 // Tile Color Constants
 NSString * const kTextColorAnswerOptionNormal = @"#FF000000";
@@ -62,7 +63,15 @@ NSString * const kTextShadowColorAnswerOptionToggledOff = @"77FFFFFF";
 #pragma mark - View Lifecycle
 
 - (void)loadView {
-	self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 31, 31)];
+	UIDeviceResolution resolution = [UIDevice currentResolution];
+	bool isiPad = (resolution == UIDevice_iPadStandardRes || resolution == UIDevice_iPadHiRes);
+	
+	if (isiPad) {
+		self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 64, 64)];
+	} else {
+		self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 31, 31)];
+	}
+	
 	self.view.clipsToBounds = NO;
 }
 
@@ -73,20 +82,34 @@ NSString * const kTextShadowColorAnswerOptionToggledOff = @"77FFFFFF";
 }
 
 - (void)_buildButton {
-	self.labelView = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 31, 31)];
-	self.labelView.font = [UIFont fontWithName:@"ReklameScript-Regular" size:34.0f];
-	self.labelView.textAlignment = UITextAlignmentCenter;
+	UIDeviceResolution resolution = [UIDevice currentResolution];
+	bool isiPad = (resolution == UIDevice_iPadStandardRes || resolution == UIDevice_iPadHiRes);
+	
+	CGFloat labelFontSize = isiPad ? 64 : 34;
+	CGFloat labelShadowSize = isiPad ? 2 : 1;
+
+	self.labelView = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+	self.labelView.font = [UIFont fontWithName:@"ReklameScript-Regular" size:labelFontSize];
+	self.labelView.textAlignment = NSTextAlignmentCenter;
 	self.labelView.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
-	self.labelView.lineBreakMode = UILineBreakModeClip;
+	self.labelView.lineBreakMode = NSLineBreakByClipping;
 	self.labelView.textColor = [UIColor colorWithAlphaHexString:kTextColorAnswerOptionNormal];
 	self.labelView.backgroundColor = [UIColor clearColor];
 	self.labelView.shadowColor = [UIColor colorWithAlphaHexString:kTextShadowColorAnswerOptionNormal];
-	self.labelView.shadowOffset = CGSizeMake(0, 1);
+	self.labelView.shadowOffset = CGSizeMake(0, labelShadowSize);
 	[self setLabel];
 	
-	UIImage *selectionImage = [UIImage imageNamed:@"BlueAnswerOptionSelection"];
+	NSString *selectionImageName = isiPad ? @"BlueAnswerOptionSelection-iPad" : @"BlueAnswerOptionSelection";
+	
+	UIImage *selectionImage = [UIImage imageNamed:selectionImageName];
 	self.selectionView = [[UIImageView alloc] initWithImage:selectionImage];
-	self.selectionView.frame = CGRectMake(-4, -4, self.selectionView.frame.size.width, self.selectionView.frame.size.height);
+	
+	if (isiPad) {
+		self.selectionView.frame = CGRectMake(-2, -10, self.selectionView.frame.size.width, self.selectionView.frame.size.height);
+	} else {
+		self.selectionView.frame = CGRectMake(-4, -4, self.selectionView.frame.size.width, self.selectionView.frame.size.height);
+	}
+	
 	self.selectionView.alpha = 0.4f;
 	self.selectionView.hidden = YES;
 	

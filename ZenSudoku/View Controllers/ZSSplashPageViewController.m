@@ -20,8 +20,29 @@
 	
 	UIDeviceResolution resolution = [UIDevice currentResolution];
 	
-	UIImageView *splashImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:(resolution == UIDevice_iPhoneTallerHiRes ? @"SplashPage-Tall@2x.png" : @"SplashPage.png")]];
-	splashImageView.frame = CGRectMake(self.innerView.frame.origin.x, self.innerView.frame.origin.y, 320, self.innerView.frame.size.height);
+	NSString *splashImageName;
+	CGRect splashImageViewFrame;
+	
+	switch (resolution) {
+		case UIDevice_iPadStandardRes:
+		case UIDevice_iPadHiRes:
+			splashImageName = @"Default-Portrait.png";
+			splashImageViewFrame = CGRectMake(0, 0, 768, 1004);
+			break;
+			
+		case UIDevice_iPhoneTallerHiRes:
+			splashImageName = @"SplashPage-Tall@2x.png";
+			splashImageViewFrame = CGRectMake(self.innerView.frame.origin.x, self.innerView.frame.origin.y, 320, 568);
+			break;
+			
+		default:
+			splashImageName = @"SplashPage.png";
+			splashImageViewFrame = CGRectMake(self.innerView.frame.origin.x, self.innerView.frame.origin.y, 320, 460);
+			break;
+	}
+	
+	UIImageView *splashImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:splashImageName]];
+	splashImageView.frame = splashImageViewFrame;
 	splashImageView.userInteractionEnabled = YES;
 	[self.innerView addSubview:splashImageView];
 	

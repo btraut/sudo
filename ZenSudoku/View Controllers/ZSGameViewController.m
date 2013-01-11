@@ -169,9 +169,6 @@ typedef struct {
 
 - (void)dealloc {
 	free(_pencilChangesSinceLastGuess);
-	
-	dispatch_release(_hintGenerationDispatchGroup);
-	dispatch_release(_hintGenerationDispatchQueue);
 }
 
 #pragma mark - View Lifecycle
@@ -180,12 +177,52 @@ typedef struct {
 	[super loadView];
 	
 	UIDeviceResolution resolution = [UIDevice currentResolution];
-	self.view.frame = CGRectMake(0, 0, 314, resolution == UIDevice_iPhoneTallerHiRes ? 548 : 460);
+	
+	switch (resolution) {
+		case UIDevice_iPadStandardRes:
+		case UIDevice_iPadHiRes:
+			self.view.frame = CGRectMake(0, 0, 753, 1004);
+			break;
+			
+		case UIDevice_iPhoneTallerHiRes:
+			self.view.frame = CGRectMake(0, 0, 314, 548);
+			break;
+			
+		default:
+			self.view.frame = CGRectMake(0, 0, 314, 460);
+			break;
+	}
 }
 
 - (void)viewDidLoad {
 	// Super duper!
 	[super viewDidLoad];
+	
+	// We need the resolution for a bunch of positioning and sizing.
+	UIDeviceResolution resolution = [UIDevice currentResolution];
+	bool isiPad = (resolution == UIDevice_iPadStandardRes || resolution == UIDevice_iPadHiRes);
+	
+	CGFloat difficultyButtonFontSize;
+	CGRect difficultyButtonFrame;
+	CGSize difficultyButtonShadowSize;
+	CGPoint boardPosition;
+	
+	switch (resolution) {
+		case UIDevice_iPadStandardRes:
+		case UIDevice_iPadHiRes:
+			difficultyButtonFontSize = 60.0f;
+			difficultyButtonFrame = CGRectMake(226, 32, 300, 68);
+			difficultyButtonShadowSize = CGSizeMake(0, 1.0f);
+			boardPosition = CGPointMake(72, 132);
+			break;
+			
+		default:
+			difficultyButtonFontSize = 30.0f;
+			difficultyButtonFrame = CGRectMake(70, 12, 180, 36);
+			difficultyButtonShadowSize = CGSizeMake(0, 0.5f);
+			boardPosition = CGPointMake(8, 54);
+			break;
+	}
 	
 	// Build the plus button.
 	self.foldedCornerPlusButtonViewController = [[ZSFoldedCornerPlusButtonViewController alloc] init];
@@ -197,16 +234,21 @@ typedef struct {
 	self.foldedCornerViewController.plusButtonViewController = self.foldedCornerPlusButtonViewController;
 	
 	// Build the reminder for how to change difficulty.
-	_tapToChangeDifficultyNotice = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TapToChangeDifficultyNotice.png"]];
+	if (isiPad) {
+		_tapToChangeDifficultyNotice = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TapToChangeDifficultyNotice-iPad.png"]];
+	} else {
+		_tapToChangeDifficultyNotice = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TapToChangeDifficultyNotice.png"]];
+	}
+	
 	[self.innerView addSubview:_tapToChangeDifficultyNotice];
 	
 	// Build the title.
 	_difficultyButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	[_difficultyButton addTarget:self action:@selector(_difficultyButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
-	_difficultyButton.frame = CGRectMake(70, 12, 180, 36);
-	_difficultyButton.titleLabel.font = [UIFont fontWithName:@"ReklameScript-Medium" size:30.0f];
-	_difficultyButton.titleLabel.textAlignment = UITextAlignmentCenter;
-	_difficultyButton.titleLabel.shadowOffset = CGSizeMake(0, 0.5f);
+	_difficultyButton.frame = difficultyButtonFrame;
+	_difficultyButton.titleLabel.font = [UIFont fontWithName:@"ReklameScript-Medium" size:difficultyButtonFontSize];
+	_difficultyButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+	_difficultyButton.titleLabel.shadowOffset = difficultyButtonShadowSize;
 	[_difficultyButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 	[_difficultyButton setTitleColor:[UIColor colorWithHexString:@"#e2412c"] forState:UIControlStateHighlighted];
 	[_difficultyButton setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -221,13 +263,11 @@ typedef struct {
 	
 	// Build the game board.
 	boardViewController = [[ZSBoardViewController alloc] initWithGame:game];
-	boardViewController.view.frame = CGRectMake(8, 54, boardViewController.view.frame.size.width, boardViewController.view.frame.size.height);
+	boardViewController.view.frame = CGRectMake(boardPosition.x, boardPosition.y, boardViewController.view.frame.size.width, boardViewController.view.frame.size.height);
 	boardViewController.touchDelegate = self;
 	[self.innerView addSubview:boardViewController.view];
 	
-	// The tall iPhone needs some design tweaks.
-	UIDeviceResolution resolution = [UIDevice currentResolution];
-	
+	// Different screen sizes call for different sizes/configurations of answer options.
 	if (resolution == UIDevice_iPhoneTallerHiRes) {
 		UIImageView *horizontalRule = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HorizontalRule.png"]];
 		horizontalRule.frame = CGRectMake(36, 481, horizontalRule.frame.size.width, horizontalRule.frame.size.height);
@@ -236,6 +276,13 @@ typedef struct {
 		// Build the answer options.
 		gameAnswerOptionsViewController = [[ZSAnswerOptionsTallViewController alloc] initWithGameViewController:self];
 		gameAnswerOptionsViewController.view.frame = CGRectMake(34, 376, gameAnswerOptionsViewController.view.frame.size.width, gameAnswerOptionsViewController.view.frame.size.height);
+		gameAnswerOptionsViewController.touchDelegate = self;
+		[self.innerView addSubview:gameAnswerOptionsViewController.view];
+		[gameAnswerOptionsViewController reloadView];
+	} else if (isiPad) {
+		// Build the answer options.
+		gameAnswerOptionsViewController = [[ZSAnswerOptionsViewController alloc] initWithGameViewController:self];
+		gameAnswerOptionsViewController.view.frame = CGRectMake(56, 790, gameAnswerOptionsViewController.view.frame.size.width, gameAnswerOptionsViewController.view.frame.size.height);
 		gameAnswerOptionsViewController.touchDelegate = self;
 		[self.innerView addSubview:gameAnswerOptionsViewController.view];
 		[gameAnswerOptionsViewController reloadView];
@@ -252,43 +299,77 @@ typedef struct {
 	pencilButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	
 	[pencilButton addTarget:self action:@selector(pencilButtonWasTouched) forControlEvents:UIControlEventTouchUpInside];
-	pencilButton.frame = resolution == UIDevice_iPhoneTallerHiRes ? CGRectMake(247, 433.5f, 22, 32) : CGRectMake(287, 371, 22, 32);
 	
-	[pencilButton setBackgroundImage:[UIImage imageNamed:@"Pencil"] forState:UIControlStateNormal];
-	[pencilButton setBackgroundImage:[UIImage imageNamed:@"PencilSelected"] forState:UIControlStateSelected];
+	if (isiPad) {
+		pencilButton.frame = CGRectMake(652, 796, 30, 48);
+		
+		[pencilButton setBackgroundImage:[UIImage imageNamed:@"Pencil-iPad"] forState:UIControlStateNormal];
+		[pencilButton setBackgroundImage:[UIImage imageNamed:@"PencilSelected-iPad"] forState:UIControlStateSelected];
+	} else {
+		pencilButton.frame = resolution == UIDevice_iPhoneTallerHiRes ? CGRectMake(247, 433.5f, 22, 32) : CGRectMake(287, 371, 22, 32);
+		
+		[pencilButton setBackgroundImage:[UIImage imageNamed:@"Pencil"] forState:UIControlStateNormal];
+		[pencilButton setBackgroundImage:[UIImage imageNamed:@"PencilSelected"] forState:UIControlStateSelected];
+	}
 	
 	[self.innerView addSubview:pencilButton];
 	
 	// Build the undo button.
 	undoButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	
-	UIImage *undoButtonImage = [UIImage imageNamed:@"Undo"];
-	
 	[undoButton addTarget:self action:@selector(undoButtonWasTouched) forControlEvents:UIControlEventTouchUpInside];
-	undoButton.frame = CGRectMake(80, resolution == UIDevice_iPhoneTallerHiRes ? 497 : 409, undoButtonImage.size.width, undoButtonImage.size.height);
 	
-	[undoButton setBackgroundImage:undoButtonImage forState:UIControlStateNormal];
-	[undoButton setBackgroundImage:[UIImage imageNamed:@"UndoHighlighted"] forState:UIControlStateHighlighted];
+	if (isiPad) {
+		UIImage *undoButtonImage = [UIImage imageNamed:@"Undo-iPad"];
+		
+		undoButton.frame = CGRectMake(228, 894, undoButtonImage.size.width, undoButtonImage.size.height);
+		
+		[undoButton setBackgroundImage:undoButtonImage forState:UIControlStateNormal];
+		[undoButton setBackgroundImage:[UIImage imageNamed:@"UndoHighlighted-iPad"] forState:UIControlStateHighlighted];
+	} else {
+		UIImage *undoButtonImage = [UIImage imageNamed:@"Undo"];
+		
+		undoButton.frame = CGRectMake(80, resolution == UIDevice_iPhoneTallerHiRes ? 497 : 409, undoButtonImage.size.width, undoButtonImage.size.height);
+		
+		[undoButton setBackgroundImage:undoButtonImage forState:UIControlStateNormal];
+		[undoButton setBackgroundImage:[UIImage imageNamed:@"UndoHighlighted"] forState:UIControlStateHighlighted];
+	}
 	
 	[self.innerView addSubview:undoButton];
 	
 	// Build the autopencil button.
 	autoPencilButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	
-	UIImage *autoPencilImage = [UIImage imageNamed:@"AutoPencil"];
-	
 	[autoPencilButton addTarget:self action:@selector(autoPencilButtonWasTouched) forControlEvents:UIControlEventTouchUpInside];
-	autoPencilButton.frame = CGRectMake(140, resolution == UIDevice_iPhoneTallerHiRes ? 497 : 409, autoPencilImage.size.width, autoPencilImage.size.height);
 	
-	[autoPencilButton setBackgroundImage:autoPencilImage forState:UIControlStateNormal];
-	[autoPencilButton setBackgroundImage:[UIImage imageNamed:@"AutoPencilHighlighted"] forState:UIControlStateHighlighted];
+	if (isiPad) {
+		UIImage *autoPencilImage = [UIImage imageNamed:@"AutoPencil-iPad"];
+		
+		autoPencilButton.frame = CGRectMake(347, 894, autoPencilImage.size.width, autoPencilImage.size.height);
+		
+		[autoPencilButton setBackgroundImage:autoPencilImage forState:UIControlStateNormal];
+		[autoPencilButton setBackgroundImage:[UIImage imageNamed:@"AutoPencilHighlighted-iPad"] forState:UIControlStateHighlighted];
+	} else {
+		UIImage *autoPencilImage = [UIImage imageNamed:@"AutoPencil"];
+		
+		autoPencilButton.frame = CGRectMake(140, resolution == UIDevice_iPhoneTallerHiRes ? 497 : 409, autoPencilImage.size.width, autoPencilImage.size.height);
+		
+		[autoPencilButton setBackgroundImage:autoPencilImage forState:UIControlStateNormal];
+		[autoPencilButton setBackgroundImage:[UIImage imageNamed:@"AutoPencilHighlighted"] forState:UIControlStateHighlighted];
+	}
 	
 	[self.innerView addSubview:autoPencilButton];
 	
 	// Build the hints button.
 	hintButtonViewController = [[ZSHintButtonViewController alloc] init];
 	[self.innerView addSubview:hintButtonViewController.view];
-	hintButtonViewController.view.frame = CGRectMake(200, resolution == UIDevice_iPhoneTallerHiRes ? 497 : 409, hintButtonViewController.view.frame.size.width, hintButtonViewController.view.frame.size.height);
+
+	if (isiPad) {
+		hintButtonViewController.view.frame = CGRectMake(464, 894, hintButtonViewController.view.frame.size.width, hintButtonViewController.view.frame.size.height);
+	} else {
+		hintButtonViewController.view.frame = CGRectMake(200, resolution == UIDevice_iPhoneTallerHiRes ? 497 : 409, hintButtonViewController.view.frame.size.width, hintButtonViewController.view.frame.size.height);
+	}
+		
 	[hintButtonViewController.button addTarget:self action:@selector(hintButtonWasTouched) forControlEvents:UIControlEventTouchUpInside];
 	
 	// Reload errors.
@@ -359,31 +440,37 @@ typedef struct {
 }
 
 - (void)setTitle {
+	UIDeviceResolution resolution = [UIDevice currentResolution];
+	bool isiPad = (resolution == UIDevice_iPadStandardRes || resolution == UIDevice_iPadHiRes);
+	
+	CGFloat tapToChangeDifficultyNoticeHeight = isiPad ? 38 : 14;
+	CGFloat tapToChangeDifficultyNoticeWidthFactor = isiPad ? 2.6 : 1;
+	
 	switch (game.difficulty) {
 		default:
 		case ZSGameDifficultyEasy:
 			[_difficultyButton setTitle:@" Easy " forState:UIControlStateNormal];
-			_tapToChangeDifficultyNotice.frame = CGRectMake(32, 14, _tapToChangeDifficultyNotice.frame.size.width, _tapToChangeDifficultyNotice.frame.size.height);
+			_tapToChangeDifficultyNotice.frame = CGRectMake(32 * tapToChangeDifficultyNoticeWidthFactor, tapToChangeDifficultyNoticeHeight, _tapToChangeDifficultyNotice.frame.size.width, _tapToChangeDifficultyNotice.frame.size.height);
 			break;
 			
 		case ZSGameDifficultyModerate:
 			[_difficultyButton setTitle:@" Moderate " forState:UIControlStateNormal];
-			_tapToChangeDifficultyNotice.frame = CGRectMake(18, 14, _tapToChangeDifficultyNotice.frame.size.width, _tapToChangeDifficultyNotice.frame.size.height);
+			_tapToChangeDifficultyNotice.frame = CGRectMake(18 * tapToChangeDifficultyNoticeWidthFactor, tapToChangeDifficultyNoticeHeight, _tapToChangeDifficultyNotice.frame.size.width, _tapToChangeDifficultyNotice.frame.size.height);
 			break;
 			
 		case ZSGameDifficultyChallenging:
 			[_difficultyButton setTitle:@" Challenging " forState:UIControlStateNormal];
-			_tapToChangeDifficultyNotice.frame = CGRectMake(12, 14, _tapToChangeDifficultyNotice.frame.size.width, _tapToChangeDifficultyNotice.frame.size.height);
+			_tapToChangeDifficultyNotice.frame = CGRectMake(12 * tapToChangeDifficultyNoticeWidthFactor, tapToChangeDifficultyNoticeHeight, _tapToChangeDifficultyNotice.frame.size.width, _tapToChangeDifficultyNotice.frame.size.height);
 			break;
 			
 		case ZSGameDifficultyDiabolical:
 			[_difficultyButton setTitle:@" Diabolical " forState:UIControlStateNormal];
-			_tapToChangeDifficultyNotice.frame = CGRectMake(14, 14, _tapToChangeDifficultyNotice.frame.size.width, _tapToChangeDifficultyNotice.frame.size.height);
+			_tapToChangeDifficultyNotice.frame = CGRectMake(14 * tapToChangeDifficultyNoticeWidthFactor, tapToChangeDifficultyNoticeHeight, _tapToChangeDifficultyNotice.frame.size.width, _tapToChangeDifficultyNotice.frame.size.height);
 			break;
 		
 		case ZSGameDifficultyInsane:
 			[_difficultyButton setTitle:@" Insane " forState:UIControlStateNormal];
-			_tapToChangeDifficultyNotice.frame = CGRectMake(28, 14, _tapToChangeDifficultyNotice.frame.size.width, _tapToChangeDifficultyNotice.frame.size.height);
+			_tapToChangeDifficultyNotice.frame = CGRectMake(28 * tapToChangeDifficultyNoticeWidthFactor, tapToChangeDifficultyNoticeHeight, _tapToChangeDifficultyNotice.frame.size.width, _tapToChangeDifficultyNotice.frame.size.height);
 			break;
 	}
 }
@@ -505,14 +592,6 @@ typedef struct {
 }
 
 #pragma mark - Game Functions
-
-- (void)deselectTileView {
-	[self.boardViewController deselectTileView];
-	
-	[self.gameAnswerOptionsViewController reloadView];
-	
-	self.needsScreenshotUpdate = YES;
-}
 
 - (void)setAutoPencils {
 	// Reset pencil changes.
