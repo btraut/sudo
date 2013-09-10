@@ -69,11 +69,18 @@ NSString * const kPreventScreenDimmingOptionKey = @"kPreventScreenDimmingOptionK
 	
 	ZSGameBookViewController *gameBookViewController = [[ZSGameBookViewController alloc] init];
 	
+	// iOS7 changed status bar behavior to overlap content. To avoid this, we position content
+	// 20px down from the top.
+	if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+		CGFloat statusBarHeight = application.statusBarFrame.size.height;
+		_window.frame = CGRectMake(0, statusBarHeight, _window.frame.size.width, _window.frame.size.height - statusBarHeight);
+		_window.clipsToBounds = YES;
+	}
+	
+	[application setStatusBarStyle:UIStatusBarStyleBlackOpaque];
+	
 	_window.rootViewController = gameBookViewController;
 	[_window makeKeyAndVisible];
-	
-	// Hide the menu bar.
-	[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackOpaque animated:YES];
 	
 	// Initialize Flurry.
 	[Flurry startSession:kFlurryAPIKey];

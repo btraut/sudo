@@ -288,7 +288,7 @@ NSString * const kTextShadowColorPlusLabel = @"66FFFFFF";
 			break;
 			
 		case ZSFoldedCornerPlusButtonAnimationStateAnimatingStartStage1:
-			_animationState = ZSFoldedCornerPlusButtonStateStartStage1;
+			_animationState = ZSFoldedCornerPlusButtonAnimationStateAnimatingStartStage1;
 			[self changeStateToNormalAnimated:YES];
 			dequeue = NO;
 			break;

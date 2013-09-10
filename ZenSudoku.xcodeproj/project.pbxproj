@@ -132,6 +132,8 @@
 		849B69DC14F263AB00870F09 /* ReklameScript-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 849B69D814F263AB00870F09 /* ReklameScript-Regular.ttf */; };
 		849B69F314F2666400870F09 /* PaperBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 849B69EE14F2666400870F09 /* PaperBackground.png */; };
 		849B69F414F2666400870F09 /* PaperBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 849B69EF14F2666400870F09 /* PaperBackground@2x.png */; };
+		849F85C117DEE87500938E7C /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 849F85C017DEE87500938E7C /* iCarousel.m */; };
+		849F85C217DEE87500938E7C /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 849F85C017DEE87500938E7C /* iCarousel.m */; };
 		84A097521548B22D0082C9D0 /* AutoPencil.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A0974A1548B22D0082C9D0 /* AutoPencil.png */; };
 		84A097531548B22D0082C9D0 /* AutoPencil@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A0974B1548B22D0082C9D0 /* AutoPencil@2x.png */; };
 		84A097541548B22D0082C9D0 /* AutoPencilHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A0974C1548B22D0082C9D0 /* AutoPencilHighlighted.png */; };
@@ -278,7 +280,6 @@
 		84AC005015C8BBC000E5AA6E /* ZSAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B11558158F274D00983B3A /* ZSAnimation.m */; };
 		84AC005115C8BBC000E5AA6E /* ZSPointAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B1155B158F36B900983B3A /* ZSPointAnimation.m */; };
 		84AC005215C8BBC000E5AA6E /* ZSFoldedCornerPlusButtonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8463D8E51595239100AED0B4 /* ZSFoldedCornerPlusButtonViewController.m */; };
-		84AC005315C8BBC000E5AA6E /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D2032715A3B02D00BA9CCF /* iCarousel.m */; };
 		84AC005415C8BBC000E5AA6E /* ProgressDots.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D2033015A64D4400BA9CCF /* ProgressDots.m */; };
 		84AC005515C8BBC000E5AA6E /* MTLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A8FB1315A6A06400D802C8 /* MTLabel.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		84AC005615C8BBC000E5AA6E /* ZSFoldedPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A8FB1F15AB738800D802C8 /* ZSFoldedPageViewController.m */; };
@@ -446,7 +447,6 @@
 		84D1CB1115703CB00027230B /* ZSHintGeneratorEliminatePencilsHiddenSubgroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D1CB1015703CB00027230B /* ZSHintGeneratorEliminatePencilsHiddenSubgroup.m */; };
 		84D1CB141571829E0027230B /* ZSHintGeneratorEliminatePencilsPointingPairs.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D1CB131571829E0027230B /* ZSHintGeneratorEliminatePencilsPointingPairs.m */; };
 		84D1CB171571A5280027230B /* ZSHintGeneratorEliminatePencilsBoxLineReduction.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D1CB161571A5280027230B /* ZSHintGeneratorEliminatePencilsBoxLineReduction.m */; };
-		84D2032815A3B02D00BA9CCF /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D2032715A3B02D00BA9CCF /* iCarousel.m */; };
 		84D2032C15A3C67F00BA9CCF /* IndexCard.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D2032A15A3C67F00BA9CCF /* IndexCard.png */; };
 		84D2032D15A3C67F00BA9CCF /* IndexCard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D2032B15A3C67F00BA9CCF /* IndexCard@2x.png */; };
 		84D2033115A64D4400BA9CCF /* ProgressDots.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D2033015A64D4400BA9CCF /* ProgressDots.m */; };
@@ -613,6 +613,8 @@
 		849B69D814F263AB00870F09 /* ReklameScript-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ReklameScript-Regular.ttf"; sourceTree = "<group>"; };
 		849B69EE14F2666400870F09 /* PaperBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PaperBackground.png; path = Resources/Images/Shared/PaperBackground.png; sourceTree = "<group>"; };
 		849B69EF14F2666400870F09 /* PaperBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "PaperBackground@2x.png"; path = "Resources/Images/Shared/PaperBackground@2x.png"; sourceTree = "<group>"; };
+		849F85BF17DEE87500938E7C /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
+		849F85C017DEE87500938E7C /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
 		84A0974A1548B22D0082C9D0 /* AutoPencil.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AutoPencil.png; path = Resources/Images/Shared/AutoPencil.png; sourceTree = "<group>"; };
 		84A0974B1548B22D0082C9D0 /* AutoPencil@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "AutoPencil@2x.png"; path = "Resources/Images/Shared/AutoPencil@2x.png"; sourceTree = "<group>"; };
 		84A0974C1548B22D0082C9D0 /* AutoPencilHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AutoPencilHighlighted.png; path = Resources/Images/Shared/AutoPencilHighlighted.png; sourceTree = "<group>"; };
@@ -764,8 +766,6 @@
 		84D1CB131571829E0027230B /* ZSHintGeneratorEliminatePencilsPointingPairs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSHintGeneratorEliminatePencilsPointingPairs.m; path = "ZenSudoku/Models/Hint Generators/ZSHintGeneratorEliminatePencilsPointingPairs.m"; sourceTree = SOURCE_ROOT; };
 		84D1CB151571A5270027230B /* ZSHintGeneratorEliminatePencilsBoxLineReduction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSHintGeneratorEliminatePencilsBoxLineReduction.h; path = "ZenSudoku/Models/Hint Generators/ZSHintGeneratorEliminatePencilsBoxLineReduction.h"; sourceTree = SOURCE_ROOT; };
 		84D1CB161571A5280027230B /* ZSHintGeneratorEliminatePencilsBoxLineReduction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSHintGeneratorEliminatePencilsBoxLineReduction.m; path = "ZenSudoku/Models/Hint Generators/ZSHintGeneratorEliminatePencilsBoxLineReduction.m"; sourceTree = SOURCE_ROOT; };
-		84D2032615A3B02D00BA9CCF /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
-		84D2032715A3B02D00BA9CCF /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
 		84D2032A15A3C67F00BA9CCF /* IndexCard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = IndexCard.png; path = Resources/Images/Shared/IndexCard.png; sourceTree = "<group>"; };
 		84D2032B15A3C67F00BA9CCF /* IndexCard@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "IndexCard@2x.png"; path = "Resources/Images/Shared/IndexCard@2x.png"; sourceTree = "<group>"; };
 		84D2032F15A64D4400BA9CCF /* ProgressDots.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProgressDots.h; path = External/ProgressDots/ProgressDots.h; sourceTree = "<group>"; };
@@ -937,12 +937,12 @@
 		8449D95B14833649003F6FB3 /* External */ = {
 			isa = PBXGroup;
 			children = (
+				849F85BE17DEE87500938E7C /* iCarousel */,
 				848A9BCC16044AFE00147642 /* UIDevice+Resolutions */,
 				8493F89515D482A4008F0BD2 /* InMobi */,
 				840E032115BFD22700F113D9 /* Flurry */,
 				84A8FB1115A6A06400D802C8 /* MTLabel */,
 				84D2032E15A64CF400BA9CCF /* ProgressDots */,
-				84D2032515A3B02D00BA9CCF /* iCarousel */,
 				84AC6B3D1508B2D000C2F192 /* UIColor+ColorWithHex */,
 				8426A79614ED16A3006DAD1C /* FMDB */,
 			);
@@ -1113,6 +1113,16 @@
 			);
 			name = Fonts;
 			path = Resources/Fonts;
+			sourceTree = "<group>";
+		};
+		849F85BE17DEE87500938E7C /* iCarousel */ = {
+			isa = PBXGroup;
+			children = (
+				849F85BF17DEE87500938E7C /* iCarousel.h */,
+				849F85C017DEE87500938E7C /* iCarousel.m */,
+			);
+			name = iCarousel;
+			path = External/iCarousel;
 			sourceTree = "<group>";
 		};
 		84A7263015DAEB6A008E00C1 /* Paid */ = {
@@ -1351,16 +1361,6 @@
 			name = Utilities;
 			sourceTree = "<group>";
 		};
-		84D2032515A3B02D00BA9CCF /* iCarousel */ = {
-			isa = PBXGroup;
-			children = (
-				84D2032615A3B02D00BA9CCF /* iCarousel.h */,
-				84D2032715A3B02D00BA9CCF /* iCarousel.m */,
-			);
-			name = iCarousel;
-			path = External/iCarousel;
-			sourceTree = "<group>";
-		};
 		84D2032E15A64CF400BA9CCF /* ProgressDots */ = {
 			isa = PBXGroup;
 			children = (
@@ -1569,7 +1569,7 @@
 		84D55006147F1C4A00A7934E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0500;
 			};
 			buildConfigurationList = 84D55009147F1C4A00A7934E /* Build configuration list for PBXProject "ZenSudoku" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1971,6 +1971,7 @@
 				84AC003D15C8BBC000E5AA6E /* UIColor+ColorWithHex.m in Sources */,
 				84AC003E15C8BBC000E5AA6E /* ZSGameBookViewController.m in Sources */,
 				84AC003F15C8BBC000E5AA6E /* ZSFastGameBoard.m in Sources */,
+				849F85C217DEE87500938E7C /* iCarousel.m in Sources */,
 				84AC004015C8BBC000E5AA6E /* ZSHintGenerator.m in Sources */,
 				84AC004115C8BBC000E5AA6E /* ZSHintViewController.m in Sources */,
 				84AC004215C8BBC000E5AA6E /* ZSHintCard.m in Sources */,
@@ -1990,7 +1991,6 @@
 				84AC005015C8BBC000E5AA6E /* ZSAnimation.m in Sources */,
 				84AC005115C8BBC000E5AA6E /* ZSPointAnimation.m in Sources */,
 				84AC005215C8BBC000E5AA6E /* ZSFoldedCornerPlusButtonViewController.m in Sources */,
-				84AC005315C8BBC000E5AA6E /* iCarousel.m in Sources */,
 				84AC005415C8BBC000E5AA6E /* ProgressDots.m in Sources */,
 				84AC005515C8BBC000E5AA6E /* MTLabel.m in Sources */,
 				84AC005615C8BBC000E5AA6E /* ZSFoldedPageViewController.m in Sources */,
@@ -2032,6 +2032,7 @@
 				841F854A14C40F5600DFFABC /* ZSStatisticsController.m in Sources */,
 				841F854E14C4287700DFFABC /* ZSStatisticsViewController.m in Sources */,
 				8492B77414CD69B10093B7AC /* ZSPuzzleFetcher.m in Sources */,
+				849F85C117DEE87500938E7C /* iCarousel.m in Sources */,
 				8426A79D14ED16A3006DAD1C /* FMDatabase.m in Sources */,
 				8426A79E14ED16A3006DAD1C /* FMDatabaseAdditions.m in Sources */,
 				8426A79F14ED16A3006DAD1C /* FMResultSet.m in Sources */,
@@ -2057,7 +2058,6 @@
 				84B11559158F274D00983B3A /* ZSAnimation.m in Sources */,
 				84B1155C158F36B900983B3A /* ZSPointAnimation.m in Sources */,
 				8463D8E61595239200AED0B4 /* ZSFoldedCornerPlusButtonViewController.m in Sources */,
-				84D2032815A3B02D00BA9CCF /* iCarousel.m in Sources */,
 				84D2033115A64D4400BA9CCF /* ProgressDots.m in Sources */,
 				84A8FB1515A6A06400D802C8 /* MTLabel.m in Sources */,
 				84A8FB2015AB738800D802C8 /* ZSFoldedPageViewController.m in Sources */,
@@ -2114,8 +2114,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Brent Traut";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Brent Traut";
 				COPY_PHASE_STRIP = NO;
@@ -2123,6 +2128,9 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
@@ -2204,10 +2212,6 @@
 		84AC00BE15C8BBC000E5AA6E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					armv6,
-					armv7,
-				);
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2256,8 +2260,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Brent Traut (JVF9ED5844)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Brent Traut (JVF9ED5844)";
 				COPY_PHASE_STRIP = NO;
@@ -2272,8 +2281,12 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "E11FC59F-3B6C-4E9A-9873-64D3979E572C";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E11FC59F-3B6C-4E9A-9873-64D3979E572C";
 				SDKROOT = iphoneos;
@@ -2285,8 +2298,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Brent Traut";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Brent Traut";
 				COPY_PHASE_STRIP = YES;
@@ -2294,6 +2312,9 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
@@ -2308,8 +2329,8 @@
 		84D5504C147F1C4B00A7934E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Brent Traut (JVF9ED5844)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Brent Traut (JVF9ED5844)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ZenSudoku/sudo-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
@@ -2321,8 +2342,8 @@
 					"\"$(SRCROOT)/ZenSudoku/External/InMobi\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "C1AB7425-0E02-4008-A81B-6D6136EA8900";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C1AB7425-0E02-4008-A81B-6D6136EA8900";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2331,10 +2352,6 @@
 		84D5504D147F1C4B00A7934E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					armv6,
-					armv7,
-				);
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Brent Traut";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Brent Traut";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

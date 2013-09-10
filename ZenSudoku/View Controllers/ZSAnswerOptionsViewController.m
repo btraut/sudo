@@ -18,6 +18,7 @@
 
 @interface ZSAnswerOptionsViewController () {
 	BOOL _answerOptionIsBeingTouched;
+	BOOL _previouslyTouched;
 	ZSAnswerOption _previousTouchedAnswerOption;
 }
 
@@ -36,7 +37,7 @@
 	if (self) {
 		gameViewController = newGameViewController;
 		
-		_previousTouchedAnswerOption = -1;
+		_previouslyTouched = NO;
 	}
 	
 	return self;
@@ -148,12 +149,12 @@
 #pragma mark - Handle Touches
 
 - (void)pan:(ZSPanBetweenSubviewsGestureRecognizer *)sender {
-	if (sender.selectedSubviewIndex != _previousTouchedAnswerOption) {
+	if (!_previouslyTouched || sender.selectedSubviewIndex != _previousTouchedAnswerOption) {
 		if (sender.selectedSubviewIndex == -1) {
 			ZSAnswerOptionViewController *previouslySelectedViewController = [self getGameAnswerOptionViewControllerForGameAnswerOption:_previousTouchedAnswerOption];
 			[previouslySelectedViewController handleTouchExit];
 		} else {
-			if (_previousTouchedAnswerOption != -1) {
+			if (_previouslyTouched) {
 				ZSAnswerOptionViewController *previouslySelectedViewController = [self getGameAnswerOptionViewControllerForGameAnswerOption:_previousTouchedAnswerOption];
 				[previouslySelectedViewController handleTouchExit];
 			}
@@ -163,6 +164,7 @@
 			
 		}
 		
+		_previouslyTouched = YES;
 		_previousTouchedAnswerOption = sender.selectedSubviewIndex;
 	}
 
@@ -171,7 +173,7 @@
 		[selectedViewController handleTouchExit];
 		[selectedViewController handleTap];
 		
-		_previousTouchedAnswerOption = -1;
+		_previouslyTouched = NO;
 	}
 }
 

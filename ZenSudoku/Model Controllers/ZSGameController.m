@@ -166,7 +166,7 @@ NSString * const kSavedGameFileName = @"SavedGame.plist";
 }
 
 - (void)saveCacheToUserDefaults {
-	NSMutableDictionary *defaultsCache = [NSDictionary dictionaryWithObjectsAndKeys:
+	NSDictionary *defaultsCache = [NSDictionary dictionaryWithObjectsAndKeys:
 										  self.standard9x9EasyCache, @"standard9x9EasyCache",
 										  self.standard9x9ModerateCache, @"standard9x9ModerateCache",
 										  self.standard9x9ChallengingCache, @"standard9x9ChallengingCache",

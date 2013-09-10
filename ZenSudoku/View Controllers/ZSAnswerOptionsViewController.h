@@ -11,6 +11,7 @@
 #import "ZSAnswerOptionViewController.h"
 
 @class ZSGameViewController;
+@class ZSPanBetweenSubviewsGestureRecognizer;
 
 @protocol ZSAnswerOptionsViewControllerTouchDelegate <NSObject>
 
@@ -37,6 +38,8 @@
 
 - (void)selectGameAnswerOptionView:(ZSAnswerOptionViewController *)gameAnswerOptionViewController;
 - (void)deselectGameAnswerOptionView;
+
+- (void)pan:(ZSPanBetweenSubviewsGestureRecognizer *)sender;
 
 @property (weak) ZSGameViewController *gameViewController;
 

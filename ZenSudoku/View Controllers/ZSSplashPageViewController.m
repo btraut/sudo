@@ -32,7 +32,7 @@
 			
 		case UIDevice_iPhoneTallerHiRes:
 			splashImageName = @"SplashPage-Tall@2x.png";
-			splashImageViewFrame = CGRectMake(self.innerView.frame.origin.x, self.innerView.frame.origin.y, 320, 568);
+			splashImageViewFrame = CGRectMake(self.innerView.frame.origin.x, self.innerView.frame.origin.y, 320, 548);
 			break;
 			
 		default:
