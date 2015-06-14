@@ -144,36 +144,36 @@ NSString * const kFastestGamePerInsaneKey = @"kFastestGamePerInsaneKey";
 	// Games
 	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 	
-	[dict setObject:[NSNumber numberWithInt:totalStartedGames] forKey:kTotalStartedGamesKey];
-	[dict setObject:[NSNumber numberWithInt:totalSolvedGames] forKey:kTotalSolvedGamesKey];
+	[dict setObject:[NSNumber numberWithInteger:totalStartedGames] forKey:kTotalStartedGamesKey];
+	[dict setObject:[NSNumber numberWithInteger:totalSolvedGames] forKey:kTotalSolvedGamesKey];
 	
-	[dict setObject:[NSNumber numberWithInt:gamesSolvedPerEasy] forKey:kGamesSolvedPerEasyKey];
-	[dict setObject:[NSNumber numberWithInt:gamesSolvedPerModerate] forKey:kGamesSolvedPerModerateKey];
-	[dict setObject:[NSNumber numberWithInt:gamesSolvedPerChallenging] forKey:kGamesSolvedPerChallengingKey];
-	[dict setObject:[NSNumber numberWithInt:gamesSolvedPerDiabolical] forKey:kGamesSolvedPerDiabolicalKey];
-	[dict setObject:[NSNumber numberWithInt:gamesSolvedPerInsane] forKey:kGamesSolvedPerInsaneKey];
+	[dict setObject:[NSNumber numberWithInteger:gamesSolvedPerEasy] forKey:kGamesSolvedPerEasyKey];
+	[dict setObject:[NSNumber numberWithInteger:gamesSolvedPerModerate] forKey:kGamesSolvedPerModerateKey];
+	[dict setObject:[NSNumber numberWithInteger:gamesSolvedPerChallenging] forKey:kGamesSolvedPerChallengingKey];
+	[dict setObject:[NSNumber numberWithInteger:gamesSolvedPerDiabolical] forKey:kGamesSolvedPerDiabolicalKey];
+	[dict setObject:[NSNumber numberWithInteger:gamesSolvedPerInsane] forKey:kGamesSolvedPerInsaneKey];
 	
 	// Answers
-	[dict setObject:[NSNumber numberWithInt:totalEnteredAnswers] forKey:kTotalEnteredAnswersKey];
-	[dict setObject:[NSNumber numberWithInt:totalStrikes] forKey:kTotalStrikesKey];
-	[dict setObject:[NSNumber numberWithInt:totalUndos] forKey:kTotalUndosKey];
-	[dict setObject:[NSNumber numberWithInt:totalRedos] forKey:kTotalRedosKey];
-	[dict setObject:[NSNumber numberWithInt:totalHints] forKey:kTotalHintsKey];
+	[dict setObject:[NSNumber numberWithInteger:totalEnteredAnswers] forKey:kTotalEnteredAnswersKey];
+	[dict setObject:[NSNumber numberWithInteger:totalStrikes] forKey:kTotalStrikesKey];
+	[dict setObject:[NSNumber numberWithInteger:totalUndos] forKey:kTotalUndosKey];
+	[dict setObject:[NSNumber numberWithInteger:totalRedos] forKey:kTotalRedosKey];
+	[dict setObject:[NSNumber numberWithInteger:totalHints] forKey:kTotalHintsKey];
 	
 	// Time
-	[dict setObject:[NSNumber numberWithInt:totalTimePlayed] forKey:kTotalTimePlayedKey];
+	[dict setObject:[NSNumber numberWithInteger:totalTimePlayed] forKey:kTotalTimePlayedKey];
 	
-	[dict setObject:[NSNumber numberWithInt:totalTimePlayedPerEasy] forKey:kTotalTimePlayedPerEasyKey];
-	[dict setObject:[NSNumber numberWithInt:totalTimePlayedPerModerate] forKey:kTotalTimePlayedPerModerateKey];
-	[dict setObject:[NSNumber numberWithInt:totalTimePlayedPerChallenging] forKey:kTotalTimePlayedPerChallengingKey];
-	[dict setObject:[NSNumber numberWithInt:totalTimePlayedPerDiabolical] forKey:kTotalTimePlayedPerDiabolicalKey];
-	[dict setObject:[NSNumber numberWithInt:totalTimePlayedPerInsane] forKey:kTotalTimePlayedPerInsaneKey];
+	[dict setObject:[NSNumber numberWithInteger:totalTimePlayedPerEasy] forKey:kTotalTimePlayedPerEasyKey];
+	[dict setObject:[NSNumber numberWithInteger:totalTimePlayedPerModerate] forKey:kTotalTimePlayedPerModerateKey];
+	[dict setObject:[NSNumber numberWithInteger:totalTimePlayedPerChallenging] forKey:kTotalTimePlayedPerChallengingKey];
+	[dict setObject:[NSNumber numberWithInteger:totalTimePlayedPerDiabolical] forKey:kTotalTimePlayedPerDiabolicalKey];
+	[dict setObject:[NSNumber numberWithInteger:totalTimePlayedPerInsane] forKey:kTotalTimePlayedPerInsaneKey];
 	
-	[dict setObject:[NSNumber numberWithInt:fastestGamePerEasy] forKey:kFastestGamePerEasyKey];
-	[dict setObject:[NSNumber numberWithInt:fastestGamePerModerate] forKey:kFastestGamePerModerateKey];
-	[dict setObject:[NSNumber numberWithInt:fastestGamePerChallenging] forKey:kFastestGamePerChallengingKey];
-	[dict setObject:[NSNumber numberWithInt:fastestGamePerDiabolical] forKey:kFastestGamePerDiabolicalKey];
-	[dict setObject:[NSNumber numberWithInt:fastestGamePerInsane] forKey:kFastestGamePerInsaneKey];
+	[dict setObject:[NSNumber numberWithInteger:fastestGamePerEasy] forKey:kFastestGamePerEasyKey];
+	[dict setObject:[NSNumber numberWithInteger:fastestGamePerModerate] forKey:kFastestGamePerModerateKey];
+	[dict setObject:[NSNumber numberWithInteger:fastestGamePerChallenging] forKey:kFastestGamePerChallengingKey];
+	[dict setObject:[NSNumber numberWithInteger:fastestGamePerDiabolical] forKey:kFastestGamePerDiabolicalKey];
+	[dict setObject:[NSNumber numberWithInteger:fastestGamePerInsane] forKey:kFastestGamePerInsaneKey];
 	
 	return dict;
 }

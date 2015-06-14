@@ -1,0 +1,15 @@
+PODS:
+  - FlurrySDK (6.5.0):
+    - FlurrySDK/FlurrySDK (= 6.5.0)
+  - FlurrySDK/FlurrySDK (6.5.0)
+  - iCarousel (1.8.1)
+
+DEPENDENCIES:
+  - FlurrySDK (~> 6.5)
+  - iCarousel (~> 1.8)
+
+SPEC CHECKSUMS:
+  FlurrySDK: 7e749c1bd22f4fb0a863663e38c58bc841980b25
+  iCarousel: dace1cb858e3f4dc2614bee3201041247f82feda
+
+COCOAPODS: 0.37.2

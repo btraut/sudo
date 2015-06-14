@@ -266,7 +266,7 @@
 
 - (void)addErrorHighlightsForTileView:(ZSTileViewController *)tileView {
 	// Get the user's setting for showing errors.
-	ZSShowErrorsOption showErrorsOption = [[NSUserDefaults standardUserDefaults] integerForKey:kShowErrorsOptionKey];
+	ZSShowErrorsOption showErrorsOption = (ZSShowErrorsOption)[[NSUserDefaults standardUserDefaults] integerForKey:kShowErrorsOptionKey];
 	
 	// If the user has set errors to never show, there's no need to highlight.
 	if (showErrorsOption == ZSShowErrorsOptionNever) {

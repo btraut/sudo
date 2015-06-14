@@ -36,9 +36,9 @@ NSString * const kDictionaryKeyHighlightType = @"kDictionaryKeyHighlightType";
 
 - (void)addInstructionHighlightPencil:(NSInteger)pencil forTileAtRow:(NSInteger)row col:(NSInteger)col highlightType:(ZSTilePencilTextHintHighlightType)pencilTextHintHighlightType {
 	NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
-						  [NSNumber numberWithInt:row], kDictionaryKeyTileRow,
-						  [NSNumber numberWithInt:col], kDictionaryKeyTileCol,
-						  [NSNumber numberWithInt:pencil], kDictionaryKeyTileValue,
+						  [NSNumber numberWithInteger:row], kDictionaryKeyTileRow,
+						  [NSNumber numberWithInteger:col], kDictionaryKeyTileCol,
+						  [NSNumber numberWithInteger:pencil], kDictionaryKeyTileValue,
 						  [NSNumber numberWithInt:pencilTextHintHighlightType], kDictionaryKeyHighlightType,
 						  nil];
 	[highlightPencils addObject:dict];
@@ -46,8 +46,8 @@ NSString * const kDictionaryKeyHighlightType = @"kDictionaryKeyHighlightType";
 
 - (void)addInstructionHighlightAnswerForTileAtRow:(NSInteger)row col:(NSInteger)col highlightType:(ZSTileTextHintHighlightType)textHintHighlightType {
 	NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
-						  [NSNumber numberWithInt:row], kDictionaryKeyTileRow,
-						  [NSNumber numberWithInt:col], kDictionaryKeyTileCol,
+						  [NSNumber numberWithInteger:row], kDictionaryKeyTileRow,
+						  [NSNumber numberWithInteger:col], kDictionaryKeyTileCol,
 						  [NSNumber numberWithInt:textHintHighlightType], kDictionaryKeyHighlightType,
 						  nil];
 	[highlightAnswers addObject:dict];
@@ -55,8 +55,8 @@ NSString * const kDictionaryKeyHighlightType = @"kDictionaryKeyHighlightType";
 
 - (void)addInstructionHighlightTileAtRow:(NSInteger)row col:(NSInteger)col highlightType:(ZSTileHintHighlightType)hintHighlightType {
 	NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
-						  [NSNumber numberWithInt:row], kDictionaryKeyTileRow,
-						  [NSNumber numberWithInt:col], kDictionaryKeyTileCol,
+						  [NSNumber numberWithInteger:row], kDictionaryKeyTileRow,
+						  [NSNumber numberWithInteger:col], kDictionaryKeyTileCol,
 						  [NSNumber numberWithInt:hintHighlightType], kDictionaryKeyHighlightType,
 						  nil];
 	[highlightTiles addObject:dict];
@@ -64,35 +64,35 @@ NSString * const kDictionaryKeyHighlightType = @"kDictionaryKeyHighlightType";
 
 - (void)addInstructionRemovePencil:(NSInteger)pencil forTileAtRow:(NSInteger)row col:(NSInteger)col {
 	NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
-						  [NSNumber numberWithInt:row], kDictionaryKeyTileRow,
-						  [NSNumber numberWithInt:col], kDictionaryKeyTileCol,
-						  [NSNumber numberWithInt:pencil], kDictionaryKeyTileValue,
+						  [NSNumber numberWithInteger:row], kDictionaryKeyTileRow,
+						  [NSNumber numberWithInteger:col], kDictionaryKeyTileCol,
+						  [NSNumber numberWithInteger:pencil], kDictionaryKeyTileValue,
 						  nil];
 	[removePencils addObject:dict];
 }
 
 - (void)addInstructionAddPencil:(NSInteger)pencil forTileAtRow:(NSInteger)row col:(NSInteger)col {
 	NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
-						  [NSNumber numberWithInt:row], kDictionaryKeyTileRow,
-						  [NSNumber numberWithInt:col], kDictionaryKeyTileCol,
-						  [NSNumber numberWithInt:pencil], kDictionaryKeyTileValue,
+						  [NSNumber numberWithInteger:row], kDictionaryKeyTileRow,
+						  [NSNumber numberWithInteger:col], kDictionaryKeyTileCol,
+						  [NSNumber numberWithInteger:pencil], kDictionaryKeyTileValue,
 						  nil];
 	[addPencils addObject:dict];
 }
 
 - (void)addInstructionRemoveGuessForTileAtRow:(NSInteger)row col:(NSInteger)col {
 	NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
-						  [NSNumber numberWithInt:row], kDictionaryKeyTileRow,
-						  [NSNumber numberWithInt:col], kDictionaryKeyTileCol,
+						  [NSNumber numberWithInteger:row], kDictionaryKeyTileRow,
+						  [NSNumber numberWithInteger:col], kDictionaryKeyTileCol,
 						  nil];
 	[removeGuess addObject:dict];
 }
 
 - (void)addInstructionSetGuess:(NSInteger)guess forTileAtRow:(NSInteger)row col:(NSInteger)col {
 	NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
-						  [NSNumber numberWithInt:row], kDictionaryKeyTileRow,
-						  [NSNumber numberWithInt:col], kDictionaryKeyTileCol,
-						  [NSNumber numberWithInt:guess], kDictionaryKeyTileValue,
+						  [NSNumber numberWithInteger:row], kDictionaryKeyTileRow,
+						  [NSNumber numberWithInteger:col], kDictionaryKeyTileCol,
+						  [NSNumber numberWithInteger:guess], kDictionaryKeyTileValue,
 						  nil];
 	[setGuess addObject:dict];
 }

@@ -128,7 +128,7 @@ NSString * const kTextShadowColorAnswerOptionToggledOff = @"77FFFFFF";
 		case ZSAnswerOption7:
 		case ZSAnswerOption8:
 		case ZSAnswerOption9:
-			self.labelView.text = [NSString stringWithFormat:@"%i", ((NSInteger)self.gameAnswerOption + 1)];
+			self.labelView.text = [NSString stringWithFormat:@"%li", ((NSInteger)self.gameAnswerOption + 1)];
 			break;
 		
 		default:

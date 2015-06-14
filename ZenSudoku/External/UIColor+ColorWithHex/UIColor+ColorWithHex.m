@@ -69,7 +69,7 @@
 		hex = strtol(cString, NULL, 16);
 	}
 	
-	return [UIColor colorWithHex: hex];
+	return [UIColor colorWithHex: (UInt32)hex];
 }
 
 + (UIColor *)colorWithAlphaHex:(UInt32)hexadecimal
@@ -99,7 +99,7 @@
 		hex = strtoll(cString, NULL, 16);
 	}
 	
-	return [UIColor colorWithAlphaHex: hex];
+	return [UIColor colorWithAlphaHex: (UInt32)hex];
 }
 
 + (NSString *)hexStringFromColor: (UIColor *)color
@@ -138,7 +138,7 @@
 	if (!generated)
 	{
 		generated = YES;
-		srandom(time(NULL));
+		srandom((unsigned int)time(NULL));
 	}
 	
 	// Generate a random number and divide it using the
@@ -219,19 +219,19 @@
 		{
 			case 0 :
 			{
-				const int value = [[hexConverted objectAtIndex: x] integerValue];
+				const NSInteger value = [[hexConverted objectAtIndex: x] integerValue];
 				red = value * 16 + [[hexConverted objectAtIndex: x + 1] integerValue];
 				break;
 			}
 			case 2 :
 			{
-				const int value = [[hexConverted objectAtIndex: x] integerValue];
+				const NSInteger value = [[hexConverted objectAtIndex: x] integerValue];
 				green = value * 16 + [[hexConverted objectAtIndex: x + 1] integerValue];
 				break;
 			}
 			case 4 :
 			{
-				const int value = [[hexConverted objectAtIndex: x] integerValue];
+				const NSInteger value = [[hexConverted objectAtIndex: x] integerValue];
 				blue = value * 16 + [[hexConverted objectAtIndex: x + 1] integerValue];
 				break;
 			}

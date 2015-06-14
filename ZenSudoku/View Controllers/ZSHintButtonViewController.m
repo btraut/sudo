@@ -59,6 +59,8 @@
 	_background = [[UIImageView alloc] initWithImage:hintsBackgroundImage];
 	_background.alpha = 0;
 	[self.view addSubview:_background];
+	
+	[super viewDidLoad];
 }
 
 - (void)startPulsing {

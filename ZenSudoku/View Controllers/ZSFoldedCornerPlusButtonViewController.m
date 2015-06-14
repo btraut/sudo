@@ -99,6 +99,8 @@ NSString * const kTextShadowColorPlusLabel = @"66FFFFFF";
 	
 	_animationHelper = [[ZSAnimation alloc] init];
 	_animationHelper.delegate = self;
+	
+	[super viewDidLoad];
 }
 
 - (void)pauseAnimation {

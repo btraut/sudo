@@ -131,7 +131,7 @@
 		currentGame = [[ZSGameController sharedInstance] loadSavedGame];
 		[[NSUserDefaults standardUserDefaults] setInteger:currentGame.difficulty forKey:kLastPlayedPuzzleDifficulty];
 	} else {
-		ZSGameDifficulty newGameDifficulty = [[NSUserDefaults standardUserDefaults] integerForKey:kLastPlayedPuzzleDifficulty];
+		ZSGameDifficulty newGameDifficulty = (ZSGameDifficulty)[[NSUserDefaults standardUserDefaults] integerForKey:kLastPlayedPuzzleDifficulty];
 		currentGame = [[ZSGameController sharedInstance] fetchGameWithDifficulty:newGameDifficulty];
 	}
 	
@@ -163,7 +163,7 @@
 #endif
 	
 	// Load the page behind the current. Yet another page will be loaded when the current page is done animating.
-	ZSGameDifficulty newGameDifficulty = [[NSUserDefaults standardUserDefaults] integerForKey:kLastPlayedPuzzleDifficulty];
+	ZSGameDifficulty newGameDifficulty = (ZSGameDifficulty)[[NSUserDefaults standardUserDefaults] integerForKey:kLastPlayedPuzzleDifficulty];
 	ZSGame *newGame = [[ZSGameController sharedInstance] fetchGameWithDifficulty:newGameDifficulty];
 	
 	_nextGameViewController = [[ZSGameViewController alloc] initWithGame:newGame];
@@ -243,7 +243,7 @@
 }
 
 - (void)_loadNewGame {
-	ZSGameDifficulty newGameDifficulty = [[NSUserDefaults standardUserDefaults] integerForKey:kLastPlayedPuzzleDifficulty];
+	ZSGameDifficulty newGameDifficulty = (ZSGameDifficulty)[[NSUserDefaults standardUserDefaults] integerForKey:kLastPlayedPuzzleDifficulty];
 	ZSGame *newGame = [[ZSGameController sharedInstance] fetchGameWithDifficulty:newGameDifficulty];
 	
 	if (_extraGameViewController) {

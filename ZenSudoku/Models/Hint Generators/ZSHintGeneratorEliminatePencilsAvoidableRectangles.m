@@ -49,7 +49,7 @@
 	// Step 3
 	ZSHintCard *card3 = [[ZSHintCard alloc] init];
 	
-	card3.text = [NSString stringWithFormat:@"Let's pretend that %i is the answer in the empty tile and that the rest of the puzzle could be solved from that position.", self.impossibleAnswer];
+	card3.text = [NSString stringWithFormat:@"Let's pretend that %li is the answer in the empty tile and that the rest of the puzzle could be solved from that position.", self.impossibleAnswer];
 	
 	[card3 addInstructionHighlightTileAtRow:hingeTile.row col:hingeTile.col highlightType:ZSTileHintHighlightTypeA];
 	[card3 addInstructionHighlightTileAtRow:pincer1.row col:pincer1.col highlightType:ZSTileHintHighlightTypeA];
@@ -61,7 +61,7 @@
 	// Step 4
 	ZSHintCard *card4 = [[ZSHintCard alloc] init];
 	
-	card4.text = [NSString stringWithFormat:@"Once the puzzle was solved, it would then be possible to swap the %is and %is, and the puzzle would still be valid.", self.impossibleAnswer, self.diagonalAnswer];
+	card4.text = [NSString stringWithFormat:@"Once the puzzle was solved, it would then be possible to swap the %lis and %lis, and the puzzle would still be valid.", self.impossibleAnswer, self.diagonalAnswer];
 	
 	[card4 addInstructionHighlightTileAtRow:hingeTile.row col:hingeTile.col highlightType:ZSTileHintHighlightTypeA];
 	[card4 addInstructionHighlightTileAtRow:pincer1.row col:pincer1.col highlightType:ZSTileHintHighlightTypeA];
@@ -85,7 +85,7 @@
 	// Step 6
 	ZSHintCard *card6 = [[ZSHintCard alloc] init];
 	
-	card6.text = [NSString stringWithFormat:@"Therefore, the empty tile cannot possibly be a %i. This is called an Avoidable Rectangle.", self.impossibleAnswer];
+	card6.text = [NSString stringWithFormat:@"Therefore, the empty tile cannot possibly be a %li. This is called an Avoidable Rectangle.", self.impossibleAnswer];
 	
 	[card6 addInstructionHighlightTileAtRow:hingeTile.row col:hingeTile.col highlightType:ZSTileHintHighlightTypeA];
 	[card6 addInstructionHighlightTileAtRow:pincer1.row col:pincer1.col highlightType:ZSTileHintHighlightTypeA];
@@ -99,7 +99,7 @@
 	// Step 7
 	ZSHintCard *card7 = [[ZSHintCard alloc] init];
 	
-	card7.text = [NSString stringWithFormat:@"%i has been eliminated as a possibility.", self.impossibleAnswer];
+	card7.text = [NSString stringWithFormat:@"%li has been eliminated as a possibility.", self.impossibleAnswer];
 	
 	[card7 addInstructionHighlightTileAtRow:hingeTile.row col:hingeTile.col highlightType:ZSTileHintHighlightTypeA];
 	[card7 addInstructionHighlightTileAtRow:pincer1.row col:pincer1.col highlightType:ZSTileHintHighlightTypeA];

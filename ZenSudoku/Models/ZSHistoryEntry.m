@@ -58,11 +58,11 @@ NSString * const kDictionaryRepresentationGameHistoryEntryPencilNumberKey = @"kD
 }
 
 - (void)encodeWithCoder:(NSCoder *)encoder {
-	[encoder encodeInt:type forKey:kDictionaryRepresentationGameHistoryEntryTypeKey];
-	[encoder encodeInt:row forKey:kDictionaryRepresentationGameHistoryEntryTileRowKey];
-	[encoder encodeInt:col forKey:kDictionaryRepresentationGameHistoryEntryTileColKey];
-	[encoder encodeInt:previousValue forKey:kDictionaryRepresentationGameHistoryEntryPreviousValueKey];
-	[encoder encodeInt:pencilNumber forKey:kDictionaryRepresentationGameHistoryEntryPencilNumberKey];
+	[encoder encodeInteger:type forKey:kDictionaryRepresentationGameHistoryEntryTypeKey];
+	[encoder encodeInteger:row forKey:kDictionaryRepresentationGameHistoryEntryTileRowKey];
+	[encoder encodeInteger:col forKey:kDictionaryRepresentationGameHistoryEntryTileColKey];
+	[encoder encodeInteger:previousValue forKey:kDictionaryRepresentationGameHistoryEntryPreviousValueKey];
+	[encoder encodeInteger:pencilNumber forKey:kDictionaryRepresentationGameHistoryEntryPencilNumberKey];
 }
 
 @end

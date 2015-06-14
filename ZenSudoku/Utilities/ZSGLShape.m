@@ -52,7 +52,7 @@
 	glVertexAttribPointer(GLKVertexAttribPosition, 2, GL_FLOAT, GL_FALSE, sizeof(ColoredVertex), (void *) (offset + offsetof(ColoredVertex, position)));
 	glVertexAttribPointer(GLKVertexAttribColor, 4, GL_FLOAT, GL_FALSE, sizeof(ColoredVertex), (void *) (offset + offsetof(ColoredVertex, color)));
 
-	glDrawArrays(GL_TRIANGLE_FAN, 0, size);
+	glDrawArrays(GL_TRIANGLE_FAN, 0, (int)size);
 
 	glDisableVertexAttribArray(GLKVertexAttribPosition);
 	glDisableVertexAttribArray(GLKVertexAttribColor);

@@ -65,16 +65,13 @@
 	UIDeviceResolution resolution = [UIDevice currentResolution];
 	bool isiPad = (resolution == UIDevice_iPadStandardRes || resolution == UIDevice_iPadHiRes);
 	
-	CGFloat labelShadowOffset;
 	CGSize labelSize;
 	CGSize labelSizeSmall;
 	
 	if (isiPad) {
-		labelShadowOffset = -1;
 		labelSize = CGSizeMake(375, 68);
 		labelSizeSmall = CGSizeMake(375, 32);
 	} else {
-		labelShadowOffset = -0.5f;
 		labelSize = CGSizeMake(198, 44);
 		labelSizeSmall = CGSizeMake(178, 20);
 	}
@@ -209,9 +206,9 @@
 	if (self.hintsUsed == 1) {
 		_totalHintsLabel.text = @"with only one hint";
 	} else if (self.hintsUsed > 1 && self.hintsUsed <= 3) {
-		_totalHintsLabel.text = [NSString stringWithFormat:@"with only %i hints", self.hintsUsed];
+		_totalHintsLabel.text = [NSString stringWithFormat:@"with only %li hints", self.hintsUsed];
 	} else if (self.hintsUsed > 3) {
-		_totalHintsLabel.text = [NSString stringWithFormat:@"with %i hints", self.hintsUsed];
+		_totalHintsLabel.text = [NSString stringWithFormat:@"with %li hints", self.hintsUsed];
 	} else {
 		_totalHintsLabel.text = @"without using any hints";
 	}
@@ -219,7 +216,7 @@
 	if (self.puzzlesSolved == 1) {
 		_totalPuzzlesLabel.text = @"1 puzzle!";
 	} else {
-		_totalPuzzlesLabel.text = [NSString stringWithFormat:@"%i puzzles!", self.puzzlesSolved];
+		_totalPuzzlesLabel.text = [NSString stringWithFormat:@"%li puzzles!", self.puzzlesSolved];
 	}
 	
 	[super showRibbon];
@@ -234,7 +231,7 @@
 		NSInteger totalDays = remainingInterval / (24 * 60 * 60);
 		remainingInterval -= totalDays * (24 * 60 * 60);
 		
-		[timeString appendString:[NSString stringWithFormat:@"%id", totalDays]];
+		[timeString appendString:[NSString stringWithFormat:@"%lid", totalDays]];
 	}
 	
 	// Hours
@@ -246,7 +243,7 @@
 			[timeString appendString:@" "];
 		}
 		
-		[timeString appendString:[NSString stringWithFormat:@"%ih", totalHours]];
+		[timeString appendString:[NSString stringWithFormat:@"%lih", totalHours]];
 	}
 	
 	// Minutes
@@ -258,7 +255,7 @@
 			[timeString appendString:@" "];
 		}
 		
-		[timeString appendString:[NSString stringWithFormat:@"%im", totalMinutes]];
+		[timeString appendString:[NSString stringWithFormat:@"%lim", totalMinutes]];
 	}
 	
 	// Seconds
@@ -269,7 +266,7 @@
 			[timeString appendString:@" "];
 		}
 		
-		[timeString appendString:[NSString stringWithFormat:@"%is", totalSeconds]];
+		[timeString appendString:[NSString stringWithFormat:@"%lis", totalSeconds]];
 	}
 	
 	return timeString;

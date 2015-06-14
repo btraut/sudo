@@ -119,32 +119,32 @@
 		switch (indexPath.row) {
 			case 0:
 				cell.textLabel.text = @"Easy";
-				cell.detailTextLabel.text = [NSString stringWithFormat:@"%i", [[ZSStatisticsController sharedInstance] gamesSolvedPerEasy]];
+				cell.detailTextLabel.text = [NSString stringWithFormat:@"%li", [[ZSStatisticsController sharedInstance] gamesSolvedPerEasy]];
 				break;
 				
 			case 1:
 				cell.textLabel.text = @"Moderate";
-				cell.detailTextLabel.text = [NSString stringWithFormat:@"%i", [[ZSStatisticsController sharedInstance] gamesSolvedPerModerate]];
+				cell.detailTextLabel.text = [NSString stringWithFormat:@"%li", [[ZSStatisticsController sharedInstance] gamesSolvedPerModerate]];
 				break;
 				
 			case 2:
 				cell.textLabel.text = @"Challenging";
-				cell.detailTextLabel.text = [NSString stringWithFormat:@"%i", [[ZSStatisticsController sharedInstance] gamesSolvedPerChallenging]];
+				cell.detailTextLabel.text = [NSString stringWithFormat:@"%li", [[ZSStatisticsController sharedInstance] gamesSolvedPerChallenging]];
 				break;
 				
 			case 3:
 				cell.textLabel.text = @"Diabolical";
-				cell.detailTextLabel.text = [NSString stringWithFormat:@"%i", [[ZSStatisticsController sharedInstance] gamesSolvedPerDiabolical]];
+				cell.detailTextLabel.text = [NSString stringWithFormat:@"%li", [[ZSStatisticsController sharedInstance] gamesSolvedPerDiabolical]];
 				break;
 				
 			case 4:
 				cell.textLabel.text = @"Insane";
-				cell.detailTextLabel.text = [NSString stringWithFormat:@"%i", [[ZSStatisticsController sharedInstance] gamesSolvedPerInsane]];
+				cell.detailTextLabel.text = [NSString stringWithFormat:@"%li", [[ZSStatisticsController sharedInstance] gamesSolvedPerInsane]];
 				break;
 				
 			case 5:
 				cell.textLabel.text = @"Total";
-				cell.detailTextLabel.text = [NSString stringWithFormat:@"%i", [[ZSStatisticsController sharedInstance] totalSolvedGames]];
+				cell.detailTextLabel.text = [NSString stringWithFormat:@"%li", [[ZSStatisticsController sharedInstance] totalSolvedGames]];
 				break;
 		}
 	} else if (indexPath.section == 1) {
@@ -155,12 +155,12 @@
 		switch (indexPath.row) {
 			case 0:
 				cell.textLabel.text = @"Answers";
-				cell.detailTextLabel.text = [NSString stringWithFormat:@"%i", answers];
+				cell.detailTextLabel.text = [NSString stringWithFormat:@"%li", answers];
 				break;
 				
 			case 1:
 				cell.textLabel.text = @"Strikes";
-				cell.detailTextLabel.text = [NSString stringWithFormat:@"%i", strikes];
+				cell.detailTextLabel.text = [NSString stringWithFormat:@"%li", strikes];
 				break;
 				
 			case 2:
@@ -190,13 +190,13 @@
 		secondsPlayed = remainingSeconds;
 		
 		if (daysPlayed) {
-			[timePlayedString appendFormat:@"%i days, %i hours", daysPlayed, hoursPlayed];
+			[timePlayedString appendFormat:@"%li days, %li hours", daysPlayed, hoursPlayed];
 		} else if (hoursPlayed) {
-			[timePlayedString appendFormat:@"%i hours, %i minutes", hoursPlayed, minutesPlayed];
+			[timePlayedString appendFormat:@"%li hours, %li minutes", hoursPlayed, minutesPlayed];
 		} else if (minutesPlayed) {
-			[timePlayedString appendFormat:@"%i minutes, %i seconds", minutesPlayed, secondsPlayed];
+			[timePlayedString appendFormat:@"%li minutes, %li seconds", minutesPlayed, secondsPlayed];
 		} else {
-			[timePlayedString appendFormat:@"%i seconds", secondsPlayed];
+			[timePlayedString appendFormat:@"%li seconds", secondsPlayed];
 		}
 		
 		cell.textLabel.text = @"Total";

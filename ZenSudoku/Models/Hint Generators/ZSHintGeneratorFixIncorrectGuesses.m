@@ -68,7 +68,7 @@
 	
 	NSString *isAreString = _totalIncorrectTiles == 1 ? @"is" : @"are";
 	NSString *pluralGuessesString = _totalIncorrectTiles == 1 ? @"guess" : @"guesses";
-	NSString *totalIncorrectTiles = _totalIncorrectTiles == 1 ? @"an" : [NSString stringWithFormat:@"%i", _totalIncorrectTiles];
+	NSString *totalIncorrectTiles = _totalIncorrectTiles == 1 ? @"an" : [NSString stringWithFormat:@"%li", _totalIncorrectTiles];
 	
 	card1.text = [NSString stringWithFormat:@"There %@ %@ incorrect %@ on the board.", isAreString, totalIncorrectTiles, pluralGuessesString];
 	

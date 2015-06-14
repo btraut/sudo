@@ -99,7 +99,7 @@
 	
 	NSString *collectionOfRowsColsString = (self.size == 2 ? @"both" : (self.size == 3 ? @"all three" : @"all four"));
 	NSString *numberOfSpotsString = (self.size == 2 ? @"two" : (self.size == 3 ? @"two or three" : @"two, three, or four"));
-	card2.text = [NSString stringWithFormat:@"The possibility %i exists in the same spots in %@ %@s, and only in those %@ spots. This forms %@ %@ for %i.", self.targetPencil, collectionOfRowsColsString, scopeName, numberOfSpotsString, aAnTechniqueName, techniqueName, self.targetPencil];
+	card2.text = [NSString stringWithFormat:@"The possibility %li exists in the same spots in %@ %@s, and only in those %@ spots. This forms %@ %@ for %li.", self.targetPencil, collectionOfRowsColsString, scopeName, numberOfSpotsString, aAnTechniqueName, techniqueName, self.targetPencil];
 	
 	for (NSInteger i = 0; i < _totalXWingTiles; ++i) {
 		for (NSInteger j = 0; j < 9; ++j) {
@@ -122,9 +122,9 @@
 	ZSHintCard *card3 = [[ZSHintCard alloc] init];
 	
 	if (self.size > 2) {
-		card3.text = [NSString stringWithFormat:@"If a %i goes in one spot in one %@, it must go in each of the other spots in each of the other %@s.", self.targetPencil, scopeName, scopeName];
+		card3.text = [NSString stringWithFormat:@"If a %li goes in one spot in one %@, it must go in each of the other spots in each of the other %@s.", self.targetPencil, scopeName, scopeName];
 	} else {
-		card3.text = [NSString stringWithFormat:@"If a %i goes in one spot in one %@, it must go in the other spot in the other %@.", self.targetPencil, scopeName, scopeName];
+		card3.text = [NSString stringWithFormat:@"If a %li goes in one spot in one %@, it must go in the other spot in the other %@.", self.targetPencil, scopeName, scopeName];
 	}
 	
 	for (NSInteger i = 0; i < _totalXWingTiles; ++i) {
@@ -148,7 +148,7 @@
 	ZSHintCard *card4 = [[ZSHintCard alloc] init];
 	
 	NSString *numberOfRowsColsString = (self.size == 2 ? @"two" : (self.size == 3 ? @"three" : @"four"));
-	card4.text = [NSString stringWithFormat:@"Either way, each %@ will have a %i somewhere within the %@ %@s.", oppositeScopeName, self.targetPencil, numberOfRowsColsString, scopeName];
+	card4.text = [NSString stringWithFormat:@"Either way, each %@ will have a %li somewhere within the %@ %@s.", oppositeScopeName, self.targetPencil, numberOfRowsColsString, scopeName];
 	
 	for (NSInteger i = 0; i < _totalXWingTiles; ++i) {
 		for (NSInteger j = 0; j < 9; ++j) {
@@ -181,7 +181,7 @@
 	ZSHintCard *card5 = [[ZSHintCard alloc] init];
 	
 	NSString *pencilsString = (_totalPencilsToEliminate == 1 ? @"pencil" : @"pencils");
-	card5.text = [NSString stringWithFormat:@"This means %i can't exist anywhere else in the %@ %@s influenced by the %@. You can eliminate %i %@.", self.targetPencil, numberOfRowsColsString, oppositeScopeName, techniqueName, _totalPencilsToEliminate, pencilsString];
+	card5.text = [NSString stringWithFormat:@"This means %li can't exist anywhere else in the %@ %@s influenced by the %@. You can eliminate %li %@.", self.targetPencil, numberOfRowsColsString, oppositeScopeName, techniqueName, _totalPencilsToEliminate, pencilsString];
 	
 	for (NSInteger i = 0; i < _totalXWingTiles; ++i) {
 		for (NSInteger j = 0; j < 9; ++j) {
@@ -220,7 +220,7 @@
 	
 	NSString *hasHaveString = (_totalPencilsToEliminate == 1 ? @"has" : @"have");
 	
-	card6.text = [NSString stringWithFormat:@"%i %@ %@ been eliminated.", _totalPencilsToEliminate, pencilsString, hasHaveString];
+	card6.text = [NSString stringWithFormat:@"%li %@ %@ been eliminated.", _totalPencilsToEliminate, pencilsString, hasHaveString];
 	
 	for (NSInteger i = 0; i < _totalXWingTiles; ++i) {
 		for (NSInteger j = 0; j < 9; ++j) {

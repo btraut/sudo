@@ -110,13 +110,13 @@
 	
 	if (_subgroupSize == 2) {
 		subgroupName = @"pair";
-		possibilities = [NSString stringWithFormat:@"%i and %i", _subgroupPencils[0], _subgroupPencils[1]];
+		possibilities = [NSString stringWithFormat:@"%li and %li", _subgroupPencils[0], _subgroupPencils[1]];
 	} else if (_subgroupSize == 3) {
 		subgroupName = @"triplet";
-		possibilities = [NSString stringWithFormat:@"%i, %i, and/or %i", _subgroupPencils[0], _subgroupPencils[1], _subgroupPencils[2]];
+		possibilities = [NSString stringWithFormat:@"%li, %li, and/or %li", _subgroupPencils[0], _subgroupPencils[1], _subgroupPencils[2]];
 	} else {
 		subgroupName = @"quad";
-		possibilities = [NSString stringWithFormat:@"%i, %i, %i, and/or %i", _subgroupPencils[0], _subgroupPencils[1], _subgroupPencils[2], _subgroupPencils[3]];
+		possibilities = [NSString stringWithFormat:@"%li, %li, %li, and/or %li", _subgroupPencils[0], _subgroupPencils[1], _subgroupPencils[2], _subgroupPencils[3]];
 	}
 	
 	NSMutableArray *hintCards = [NSMutableArray array];
@@ -151,7 +151,7 @@
 	// Step 3: Highlight pencils within scope.
 	ZSHintCard *card3 = [[ZSHintCard alloc] init];
 	NSString *totalPencilsPossibilities = (_totalPencilsToEliminate == 1 ? @"possibility" : @"possibilities");
-	card3.text = [NSString stringWithFormat:@"This allows us to eliminate %i %@ in the tiles that make up the hidden %@.", _totalPencilsToEliminate, totalPencilsPossibilities, subgroupName];
+	card3.text = [NSString stringWithFormat:@"This allows us to eliminate %li %@ in the tiles that make up the hidden %@.", _totalPencilsToEliminate, totalPencilsPossibilities, subgroupName];
 	
 	for (NSInteger i = 0; i < _totalGroupTiles; ++i) {
 		ZSHintGeneratorTileInstruction *instruction = &_groupTiles[i];
@@ -173,7 +173,7 @@
 	// Step 4: Remove tiles.
 	ZSHintCard *card4 = [[ZSHintCard alloc] init];
 	NSString *totalPencilsWere = (_totalPencilsToEliminate == 1 ? @"was" : @"were");
-	card4.text = [NSString stringWithFormat:@"%i %@ %@ eliminated.", _totalPencilsToEliminate, totalPencilsPossibilities, totalPencilsWere];
+	card4.text = [NSString stringWithFormat:@"%li %@ %@ eliminated.", _totalPencilsToEliminate, totalPencilsPossibilities, totalPencilsWere];
 	
 	for (NSInteger i = 0; i < _totalGroupTiles; ++i) {
 		ZSHintGeneratorTileInstruction *instruction = &_groupTiles[i];

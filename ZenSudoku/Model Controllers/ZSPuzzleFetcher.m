@@ -75,24 +75,24 @@ NSString * const kDBPuzzleDefinitionGroupMapKey = @"kDBPuzzleDefinitionGroupMapK
 	if (forcePuzzleById) {
 		// Fetch a specific puzzle.
 		NSString *puzzleQuery = @"SELECT `puzzle_id`, `puzzle_guesses`, `puzzle_answers`, `puzzle_group_map` FROM `puzzles` WHERE `puzzle_id` = ?";
-		result = [db executeQuery:puzzleQuery, [NSNumber numberWithInt:puzzleId]];
+		result = [db executeQuery:puzzleQuery, [NSNumber numberWithInteger:puzzleId]];
 	} else {
 		// Fetch some number of random puzzles.
 		NSString *puzzleQuery = @"SELECT `puzzle_id`, `puzzle_guesses`, `puzzle_answers`, `puzzle_group_map` FROM `puzzles` WHERE `puzzle_type` = ? AND `puzzle_size` = ? AND `puzzle_difficulty` = ? ORDER BY RANDOM() LIMIT ?";
-		result = [db executeQuery:puzzleQuery, [NSNumber numberWithInt:type], [NSNumber numberWithInt:size], [NSNumber numberWithInt:difficulty], [NSNumber numberWithInt:howMany]];
+		result = [db executeQuery:puzzleQuery, [NSNumber numberWithInteger:type], [NSNumber numberWithInteger:size], [NSNumber numberWithInteger:difficulty], [NSNumber numberWithInteger:howMany]];
 	}
 	
 	// Load the puzzle row into a dictionary.
 	while ([result next]) {
 		NSMutableDictionary *puzzleDefinition = [NSMutableDictionary dictionary];
 		
-		[puzzleDefinition setObject:[NSNumber numberWithInt:[result intForColumn:@"puzzle_id"]] forKey:kDBPuzzleDefinitionIdKey];
+		[puzzleDefinition setObject:[NSNumber numberWithInteger:[result intForColumn:@"puzzle_id"]] forKey:kDBPuzzleDefinitionIdKey];
 		[puzzleDefinition setObject:[result stringForColumn:@"puzzle_guesses"] forKey:kDBPuzzleDefinitionGuessesKey];
 		[puzzleDefinition setObject:[result stringForColumn:@"puzzle_answers"] forKey:kDBPuzzleDefinitionAnswersKey];
 		[puzzleDefinition setObject:[result stringForColumn:@"puzzle_group_map"] forKey:kDBPuzzleDefinitionGroupMapKey];
 		
 		[puzzleDefinition setObject:[NSNumber numberWithInt:type] forKey:kDBPuzzleDefinitionTypeKey];
-		[puzzleDefinition setObject:[NSNumber numberWithInt:size] forKey:kDBPuzzleDefinitionSizeKey];
+		[puzzleDefinition setObject:[NSNumber numberWithInteger:size] forKey:kDBPuzzleDefinitionSizeKey];
 		[puzzleDefinition setObject:[NSNumber numberWithInt:difficulty] forKey:kDBPuzzleDefinitionDifficultyKey];
 		
 		[puzzles addObject:puzzleDefinition];

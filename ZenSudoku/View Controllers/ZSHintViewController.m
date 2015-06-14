@@ -95,15 +95,15 @@
 	[self.view addSubview:carouselContainer];
 }
 
-- (NSUInteger)numberOfItemsInCarousel:(iCarousel *)carousel {
-    return [_cardLabels count];
+- (NSInteger)numberOfItemsInCarousel:(iCarousel *)carousel {
+    return _cardLabels.count;
 }
 
-- (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSUInteger)index reusingView:(UIView *)view {
+- (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view {
     return [_cardLabels objectAtIndex:index];
 }
 
-- (UIView *)carousel:(iCarousel *)carousel placeholderViewAtIndex:(NSUInteger)index reusingView:(UIView *)view {
+- (UIView *)carousel:(iCarousel *)carousel placeholderViewAtIndex:(NSInteger)index reusingView:(UIView *)view {
 	return nil;
 }
 

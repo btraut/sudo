@@ -159,17 +159,17 @@
 				[previouslySelectedViewController handleTouchExit];
 			}
 			
-			ZSAnswerOptionViewController *selectedViewController = [self getGameAnswerOptionViewControllerForGameAnswerOption:sender.selectedSubviewIndex];
+			ZSAnswerOptionViewController *selectedViewController = [self getGameAnswerOptionViewControllerForGameAnswerOption:(ZSAnswerOption)sender.selectedSubviewIndex];
 			[selectedViewController handleTouchEnter];
 			
 		}
 		
 		_previouslyTouched = YES;
-		_previousTouchedAnswerOption = sender.selectedSubviewIndex;
+		_previousTouchedAnswerOption = (ZSAnswerOption)sender.selectedSubviewIndex;
 	}
 
 	if (sender.state == UIGestureRecognizerStateEnded && sender.selectedSubviewIndex != -1) {
-		ZSAnswerOptionViewController *selectedViewController = [self getGameAnswerOptionViewControllerForGameAnswerOption:sender.selectedSubviewIndex];
+		ZSAnswerOptionViewController *selectedViewController = [self getGameAnswerOptionViewControllerForGameAnswerOption:(ZSAnswerOption)sender.selectedSubviewIndex];
 		[selectedViewController handleTouchExit];
 		[selectedViewController handleTap];
 		

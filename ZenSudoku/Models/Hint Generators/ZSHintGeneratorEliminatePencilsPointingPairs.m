@@ -110,7 +110,7 @@
 	
 	// Step 2: Tiles form a pointing pair.
 	ZSHintCard *card2 = [[ZSHintCard alloc] init];
-	card2.text = [NSString stringWithFormat:@"The highlighted tiles form a pointing pair. They are the only tiles in their region with possibility %i and they are in the same %@.", targetPencil, scopeName];
+	card2.text = [NSString stringWithFormat:@"The highlighted tiles form a pointing pair. They are the only tiles in their region with possibility %li and they are in the same %@.", targetPencil, scopeName];
 	
 	for (NSInteger i = 0; i < _totalGroupTiles; ++i) {
 		ZSHintGeneratorTileInstruction *instruction = &_groupTiles[i];
@@ -132,7 +132,7 @@
 	// Step 3: Highlight pencils within scope.
 	ZSHintCard *card3 = [[ZSHintCard alloc] init];
 	NSString *totalPencilsPossibilities = (_totalPencilsToEliminate == 1 ? @"possibility" : @"possibilities");
-	card3.text = [NSString stringWithFormat:@"The pointing pair helps eliminate %i %@ in the same %@.", _totalPencilsToEliminate, totalPencilsPossibilities, scopeName];
+	card3.text = [NSString stringWithFormat:@"The pointing pair helps eliminate %li %@ in the same %@.", _totalPencilsToEliminate, totalPencilsPossibilities, scopeName];
 	
 	for (NSInteger i = 0; i < _totalGroupTiles; ++i) {
 		ZSHintGeneratorTileInstruction *instruction = &_groupTiles[i];
@@ -159,7 +159,7 @@
 	// Step 4: Remove pencils.
 	ZSHintCard *card4 = [[ZSHintCard alloc] init];
 	NSString *totalPencilsWere = (_totalPencilsToEliminate == 1 ? @"was" : @"were");
-	card4.text = [NSString stringWithFormat:@"%i %@ %@ eliminated from the %@.", _totalPencilsToEliminate, totalPencilsPossibilities, totalPencilsWere, scopeName];
+	card4.text = [NSString stringWithFormat:@"%li %@ %@ eliminated from the %@.", _totalPencilsToEliminate, totalPencilsPossibilities, totalPencilsWere, scopeName];
 	
 	for (NSInteger i = 0; i < _totalGroupTiles; ++i) {
 		ZSHintGeneratorTileInstruction *instruction = &_groupTiles[i];

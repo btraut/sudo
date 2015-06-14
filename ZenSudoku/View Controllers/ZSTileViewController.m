@@ -135,7 +135,7 @@ NSString * const kTileColorHighlightHintD = @"#4CFFAE00";
 			UILabel *pencil = [[UILabel alloc] initWithFrame:CGRectMake(col * (pencilSize + 1), row * (pencilSize + 1), pencilSize, pencilSize)];
 			
 			pencil.font = [UIFont fontWithName:@"ReklameScript-Regular" size:pencilFontSize];
-			pencil.text = [NSString stringWithFormat:@"%i", (row * 3) + col + 1];
+			pencil.text = [NSString stringWithFormat:@"%li", (row * 3) + col + 1];
 			pencil.textAlignment = NSTextAlignmentCenter;
 			pencil.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
 			pencil.lineBreakMode = NSLineBreakByClipping;
@@ -236,7 +236,7 @@ NSString * const kTileColorHighlightHintD = @"#4CFFAE00";
 	
 	if (newValue != _previousValue) {
 		if (!waitToClearGuessText) {
-			guessView.text = [NSString stringWithFormat:@"%i", newValue];
+			guessView.text = [NSString stringWithFormat:@"%li", newValue];
 		}
 		
 		_previousValue = newValue;
@@ -459,7 +459,7 @@ NSString * const kTileColorHighlightHintD = @"#4CFFAE00";
 				 guessView.hidden = YES;
 				 guessView.alpha = 1;
 				 
-				 guessView.text = [NSString stringWithFormat:@"%i", _previousValue];
+				 guessView.text = [NSString stringWithFormat:@"%li", _previousValue];
 			 }
 		 }];
 	} else {

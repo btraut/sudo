@@ -110,7 +110,7 @@
 	
 	// Step 2: Tiles form a box line reduction.
 	ZSHintCard *card2 = [[ZSHintCard alloc] init];
-	card2.text = [NSString stringWithFormat:@"The highlighted tiles form a box line reduction. They are the only tiles in their %@ with possibility %i, and they share a region.", scopeName, targetPencil];
+	card2.text = [NSString stringWithFormat:@"The highlighted tiles form a box line reduction. They are the only tiles in their %@ with possibility %li, and they share a region.", scopeName, targetPencil];
 	
 	for (NSInteger i = 0; i < _totalGroupTiles; ++i) {
 		ZSHintGeneratorTileInstruction *instruction = &_groupTiles[i];
@@ -132,7 +132,7 @@
 	// Step 3: Highlight pencils within scope.
 	ZSHintCard *card3 = [[ZSHintCard alloc] init];
 	NSString *totalPencilsPossibilities = (_totalPencilsToEliminate == 1 ? @"possibility" : @"possibilities");
-	card3.text = [NSString stringWithFormat:@"Because a %i must exist in the %@, it can't possibly exist elsewhere in the region. %i %@ can be eliminated.", targetPencil, scopeName, _totalPencilsToEliminate, totalPencilsPossibilities];
+	card3.text = [NSString stringWithFormat:@"Because a %li must exist in the %@, it can't possibly exist elsewhere in the region. %li %@ can be eliminated.", targetPencil, scopeName, _totalPencilsToEliminate, totalPencilsPossibilities];
 	
 	for (NSInteger i = 0; i < _totalGroupTiles; ++i) {
 		ZSHintGeneratorTileInstruction *instruction = &_groupTiles[i];
@@ -159,7 +159,7 @@
 	// Step 4: Remove pencils.
 	ZSHintCard *card4 = [[ZSHintCard alloc] init];
 	NSString *totalPencilsWere = (_totalPencilsToEliminate == 1 ? @"was" : @"were");
-	card4.text = [NSString stringWithFormat:@"%i %@ %@ eliminated from the region.", _totalPencilsToEliminate, totalPencilsPossibilities, totalPencilsWere];
+	card4.text = [NSString stringWithFormat:@"%li %@ %@ eliminated from the region.", _totalPencilsToEliminate, totalPencilsPossibilities, totalPencilsWere];
 	
 	for (NSInteger i = 0; i < _totalGroupTiles; ++i) {
 		ZSHintGeneratorTileInstruction *instruction = &_groupTiles[i];

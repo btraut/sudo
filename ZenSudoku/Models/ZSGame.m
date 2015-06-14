@@ -157,11 +157,11 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 
 - (void)encodeWithCoder:(NSCoder *)encoder {
 	// Encode puzzle size.
-	[encoder encodeInt:board.size forKey:kDictionaryRepresentationGameSizeKey];
+	[encoder encodeInteger:board.size forKey:kDictionaryRepresentationGameSizeKey];
 	
 	// Encode game properties.
-	[encoder encodeInt:difficulty forKey:kDictionaryRepresentationGameDifficultyKey];
-	[encoder encodeInt:type forKey:kDictionaryRepresentationGameTypeKey];
+	[encoder encodeInteger:difficulty forKey:kDictionaryRepresentationGameDifficultyKey];
+	[encoder encodeInteger:type forKey:kDictionaryRepresentationGameTypeKey];
 	
 	// Encode tiles.
 	NSMutableArray *tileRowArray = [NSMutableArray array];
@@ -179,9 +179,9 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 	[encoder encodeObject:tileRowArray forKey:kDictionaryRepresentationGameTilesKey];
 	
 	// Encode game status.
-	[encoder encodeInt:timerCount forKey:kDictionaryRepresentationGameTimerCountKey];
-	[encoder encodeInt:totalStrikes forKey:kDictionaryRepresentationGameTotalStrikesKey];
-	[encoder encodeInt:totalHints forKey:kDictionaryRepresentationGameTotalHintsKey];
+	[encoder encodeInteger:timerCount forKey:kDictionaryRepresentationGameTimerCountKey];
+	[encoder encodeInteger:totalStrikes forKey:kDictionaryRepresentationGameTotalStrikesKey];
+	[encoder encodeInteger:totalHints forKey:kDictionaryRepresentationGameTotalHintsKey];
 	
 	// Encode game history.
 	[encoder encodeObject:_undoStack forKey:kDictionaryRepresentationGameUndoStackKey];
@@ -217,7 +217,7 @@ NSString * const kDictionaryRepresentationGameRedoStackKey = @"kDictionaryRepres
 			// Notify statistics.
 			[[ZSStatisticsController sharedInstance] strikeEntered];
 		}
-
+		
 		if (enterGuess) {
 			// Create a new history stop.
 			[self addUndoStop];

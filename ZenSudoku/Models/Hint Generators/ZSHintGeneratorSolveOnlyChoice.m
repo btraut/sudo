@@ -40,7 +40,7 @@
 	[hintCards addObject:card2];
 	
 	ZSHintCard *card3 = [[ZSHintCard alloc] init];
-	card3.text = [NSString stringWithFormat:@"The tile must be a %i because it cannot be any other choice.", _choice];
+	card3.text = [NSString stringWithFormat:@"The tile must be a %li because it cannot be any other choice.", _choice];
 	[card3 addInstructionSetGuess:_choice forTileAtRow:_row col:_col];
 	[hintCards addObject:card3];
 	

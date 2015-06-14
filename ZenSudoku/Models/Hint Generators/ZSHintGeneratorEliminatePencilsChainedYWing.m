@@ -96,7 +96,7 @@
 	// Step 2
 	ZSHintCard *card2 = [[ZSHintCard alloc] init];
 	
-	card2.text = [NSString stringWithFormat:@"These tiles form a Chained Y-Wing. The tile with possibilities %i and %i is called the “hinge” and the other two are called “pincers”.", self.hingePencil1, self.hingePencil2];
+	card2.text = [NSString stringWithFormat:@"These tiles form a Chained Y-Wing. The tile with possibilities %li and %li is called the “hinge” and the other two are called “pincers”.", self.hingePencil1, self.hingePencil2];
 	
 	[card2 addInstructionHighlightTileAtRow:hingeTile.row col:hingeTile.col	highlightType:ZSTileHintHighlightTypeD];
 	[card2 addInstructionHighlightTileAtRow:pincer1.row col:pincer1.col	highlightType:ZSTileHintHighlightTypeA];
@@ -123,7 +123,7 @@
 	// Step 4
 	ZSHintCard *card4 = [[ZSHintCard alloc] init];
 	
-	card4.text = [NSString stringWithFormat:@"If the hinge is a %i, one pincer will be a %i. If the hinge is a %i, the other pincer will be a %i. Either way, one of the pincers will be a %i.", self.hingePencil1, self.targetPencil, self.hingePencil2, self.targetPencil, self.targetPencil];
+	card4.text = [NSString stringWithFormat:@"If the hinge is a %li, one pincer will be a %li. If the hinge is a %li, the other pincer will be a %li. Either way, one of the pincers will be a %li.", self.hingePencil1, self.targetPencil, self.hingePencil2, self.targetPencil, self.targetPencil];
 	
 	[card4 addInstructionHighlightTileAtRow:hingeTile.row col:hingeTile.col	highlightType:ZSTileHintHighlightTypeD];
 	[card4 addInstructionHighlightTileAtRow:pincer1.row col:pincer1.col	highlightType:ZSTileHintHighlightTypeA];
@@ -139,7 +139,7 @@
 	// Step 5
 	ZSHintCard *card5 = [[ZSHintCard alloc] init];
 	
-	card5.text = [NSString stringWithFormat:@"This means that no tile on the board that is influenced by both pincers (or their chained links) can possibly be a %i.", self.targetPencil];
+	card5.text = [NSString stringWithFormat:@"This means that no tile on the board that is influenced by both pincers (or their chained links) can possibly be a %li.", self.targetPencil];
 	
 	[card5 addInstructionHighlightTileAtRow:hingeTile.row col:hingeTile.col	highlightType:ZSTileHintHighlightTypeD];
 	[card5 addInstructionHighlightTileAtRow:pincer1.row col:pincer1.col	highlightType:ZSTileHintHighlightTypeA];
@@ -157,7 +157,7 @@
 	
 	NSString *tilesString = (_totalPencilsToEliminate == 1 ? @"tile" : @"tiles");
 	
-	card6.text = [NSString stringWithFormat:@"You can eliminate %i as a possibility in %i such %@.", self.targetPencil, _totalPencilsToEliminate, tilesString];
+	card6.text = [NSString stringWithFormat:@"You can eliminate %li as a possibility in %li such %@.", self.targetPencil, _totalPencilsToEliminate, tilesString];
 	
 	[card6 addInstructionHighlightTileAtRow:hingeTile.row col:hingeTile.col	highlightType:ZSTileHintHighlightTypeD];
 	[card6 addInstructionHighlightTileAtRow:pincer1.row col:pincer1.col	highlightType:ZSTileHintHighlightTypeA];
@@ -186,7 +186,7 @@
 	NSString *pencilsString = (_totalPencilsToEliminate == 1 ? @"pencil" : @"pencils");
 	NSString *hasHaveString = (_totalPencilsToEliminate == 1 ? @"has" : @"have");
 	
-	card7.text = [NSString stringWithFormat:@"%i %@ %@ been eliminated.", _totalPencilsToEliminate, pencilsString, hasHaveString];
+	card7.text = [NSString stringWithFormat:@"%li %@ %@ been eliminated.", _totalPencilsToEliminate, pencilsString, hasHaveString];
 	
 	[card7 addInstructionHighlightTileAtRow:hingeTile.row col:hingeTile.col	highlightType:ZSTileHintHighlightTypeD];
 	[card7 addInstructionHighlightTileAtRow:pincer1.row col:pincer1.col	highlightType:ZSTileHintHighlightTypeA];

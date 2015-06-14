@@ -151,7 +151,7 @@
 	glVertexAttribPointer(GLKVertexAttribPosition, 2, GL_FLOAT, GL_FALSE, sizeof(TexturedVertex), (void *) (offset + offsetof(TexturedVertex, geometryVertex)));
 	glVertexAttribPointer(GLKVertexAttribTexCoord0, 2, GL_FLOAT, GL_FALSE, sizeof(TexturedVertex), (void *) (offset + offsetof(TexturedVertex, textureVertex)));
 	
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, size);
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, (int)size);
 	
 	glDisableVertexAttribArray(GLKVertexAttribPosition);
 	glDisableVertexAttribArray(GLKVertexAttribTexCoord0);

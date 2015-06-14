@@ -107,7 +107,7 @@
 	// Step 2
 	ZSHintCard *card2 = [[ZSHintCard alloc] init];
 	
-	card2.text = [NSString stringWithFormat:@"The highlighted tiles all have possibilities %i and %i and all influence each other in a chained fashion.", self.chainPencil1, self.chainPencil2];
+	card2.text = [NSString stringWithFormat:@"The highlighted tiles all have possibilities %li and %li and all influence each other in a chained fashion.", self.chainPencil1, self.chainPencil2];
 	
 	for (NSInteger i = 0; i < _totalEvenChainLinks; ++i) {
 		ZSHintGeneratorTileInstruction *instruction = &_evenChainLinks[i];
@@ -124,7 +124,7 @@
 	// Step 3
 	ZSHintCard *card3 = [[ZSHintCard alloc] init];
 	
-	card3.text = [NSString stringWithFormat:@"If the yellow tile is a %i, its neighbors must be %is. The neighbors of those tiles then must be %is.", self.chainPencil1, self.chainPencil2, self.chainPencil1];
+	card3.text = [NSString stringWithFormat:@"If the yellow tile is a %li, its neighbors must be %lis. The neighbors of those tiles then must be %lis.", self.chainPencil1, self.chainPencil2, self.chainPencil1];
 	
 	for (NSInteger i = 0; i < _totalEvenChainLinks; ++i) {
 		ZSHintGeneratorTileInstruction *instruction = &_evenChainLinks[i];
@@ -143,7 +143,7 @@
 	// Step 4
 	ZSHintCard *card4 = [[ZSHintCard alloc] init];
 	
-	card4.text = [NSString stringWithFormat:@"If, instead, the yellow tile is a %i, each “link” in the chain is reversed.", self.chainPencil2];
+	card4.text = [NSString stringWithFormat:@"If, instead, the yellow tile is a %li, each “link” in the chain is reversed.", self.chainPencil2];
 	
 	for (NSInteger i = 0; i < _totalEvenChainLinks; ++i) {
 		ZSHintGeneratorTileInstruction *instruction = &_evenChainLinks[i];
@@ -207,7 +207,7 @@
 	NSString *isAreString = (_totalPencilsToEliminate == 1 ? @"is" : @"are");
 	NSString *itThemString = (_totalPencilsToEliminate == 1 ? @"it" : @"them");
 	
-	card7.text = [NSString stringWithFormat:@"Because %@ %@ influenced by both even and odd links, both a %i and %i will influence %@.", itTheyString, isAreString, self.chainPencil1, self.chainPencil2, itThemString];
+	card7.text = [NSString stringWithFormat:@"Because %@ %@ influenced by both even and odd links, both a %li and %li will influence %@.", itTheyString, isAreString, self.chainPencil1, self.chainPencil2, itThemString];
 	
 	for (NSInteger i = 0; i < _totalEvenChainLinks; ++i) {
 		ZSHintGeneratorTileInstruction *instruction = &_evenChainLinks[i];
@@ -230,9 +230,9 @@
 	ZSHintCard *card8 = [[ZSHintCard alloc] init];
 	
 	if (_totalPencilsToEliminate == 1) {
-		card8.text = [NSString stringWithFormat:@"This means the orange tile cannot be a %i or a %i.", self.chainPencil1, self.chainPencil2];
+		card8.text = [NSString stringWithFormat:@"This means the orange tile cannot be a %li or a %li.", self.chainPencil1, self.chainPencil2];
 	} else {
-		card8.text = [NSString stringWithFormat:@"This means the orange tiles cannot be %is or %is.", self.chainPencil1, self.chainPencil2];
+		card8.text = [NSString stringWithFormat:@"This means the orange tiles cannot be %lis or %lis.", self.chainPencil1, self.chainPencil2];
 	}
 	
 	for (NSInteger i = 0; i < _totalEvenChainLinks; ++i) {
@@ -259,7 +259,7 @@
 	NSString *pencilsString = (_totalPencilsToEliminate == 1 ? @"pencil" : @"pencils");
 	NSString *hasHaveString = (_totalPencilsToEliminate == 1 ? @"has" : @"have");
 	
-	card9.text = [NSString stringWithFormat:@"%i %@ %@ been eliminated.", _totalPencilsToEliminate, pencilsString, hasHaveString];
+	card9.text = [NSString stringWithFormat:@"%li %@ %@ been eliminated.", _totalPencilsToEliminate, pencilsString, hasHaveString];
 	
 	for (NSInteger i = 0; i < _totalEvenChainLinks; ++i) {
 		ZSHintGeneratorTileInstruction *instruction = &_evenChainLinks[i];

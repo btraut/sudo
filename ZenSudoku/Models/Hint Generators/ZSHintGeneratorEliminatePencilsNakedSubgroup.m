@@ -108,7 +108,7 @@
 	// Step 2: Tiles form a naked pair/triplet/quad.
 	ZSHintCard *card2 = [[ZSHintCard alloc] init];
 	NSString *orFewerClause = (_subgroupSize == 2 ? @"" : @"(or fewer) ");
-	card2.text = [NSString stringWithFormat:@"The highlighted tiles form a naked %@ because they contain the same %i %@possibilities.", subgroupName, _subgroupSize, orFewerClause];
+	card2.text = [NSString stringWithFormat:@"The highlighted tiles form a naked %@ because they contain the same %li %@possibilities.", subgroupName, _subgroupSize, orFewerClause];
 	
 	for (NSInteger i = 0; i < _totalSubGroupTiles; ++i) {
 		ZSHintGeneratorTileInstruction *instruction = &_subGroupTiles[i];
@@ -139,7 +139,7 @@
 	// Step 4: Highlight pencils within influenced tiles.
 	ZSHintCard *card4 = [[ZSHintCard alloc] init];
 	NSString *totalPencilsPossibilities = (_totalPencilsToEliminate == 1 ? @"possibility" : @"possibilities");
-	card4.text = [NSString stringWithFormat:@"%i %@ in the same %@%@%@ as the naked %@ can be eliminated.", _totalPencilsToEliminate, totalPencilsPossibilities, mainGroupClause, andClause, groupClause, subgroupName];
+	card4.text = [NSString stringWithFormat:@"%li %@ in the same %@%@%@ as the naked %@ can be eliminated.", _totalPencilsToEliminate, totalPencilsPossibilities, mainGroupClause, andClause, groupClause, subgroupName];
 	
 	for (NSInteger i = 0; i < _totalGroupTiles; ++i) {
 		ZSHintGeneratorTileInstruction *instruction = &_groupTiles[i];
@@ -161,7 +161,7 @@
 	// Step 5: Remove tiles.
 	ZSHintCard *card5 = [[ZSHintCard alloc] init];
 	NSString *totalPencilsWere = (_totalPencilsToEliminate == 1 ? @"was" : @"were");
-	card5.text = [NSString stringWithFormat:@"%i %@ %@ eliminated.", _totalPencilsToEliminate, totalPencilsPossibilities, totalPencilsWere];
+	card5.text = [NSString stringWithFormat:@"%li %@ %@ eliminated.", _totalPencilsToEliminate, totalPencilsPossibilities, totalPencilsWere];
 	
 	for (NSInteger i = 0; i < _totalGroupTiles; ++i) {
 		ZSHintGeneratorTileInstruction *instruction = &_groupTiles[i];

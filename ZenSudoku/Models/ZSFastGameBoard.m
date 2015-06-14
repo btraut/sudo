@@ -356,7 +356,7 @@
 	for (NSInteger row = 0; row < size; ++row) {
 		for (NSInteger col = 0; col < size; ++col) {
 			if (grid[row][col].guess) {
-				[str appendString:[NSString stringWithFormat:@"%i", grid[row][col].guess]];
+				[str appendString:[NSString stringWithFormat:@"%li", grid[row][col].guess]];
 			} else {
 				[str appendString:@"."];
 			}
@@ -579,7 +579,7 @@
 		for (NSInteger col = 0; col < 9; ++col) {
 			for (NSInteger pencil = 0; pencil < 9; ++pencil) {
 				if (grid[row][col].pencils[pencil]) {
-					[rowString appendString:[NSString stringWithFormat:@"%i", (pencil + 1)]];
+					[rowString appendString:[NSString stringWithFormat:@"%li", (pencil + 1)]];
 				} else {
 					[rowString appendString:@"."];
 				}

@@ -40,7 +40,7 @@
 	// Step 6 actually does some work.
 	ZSHintCard *card6 = [[ZSHintCard alloc] init];
 	
-	card6.text = [NSString stringWithFormat:@"%i has been eliminated from the highlighted tile. Good luck!", self.randomEliminateInstruction.pencil];
+	card6.text = [NSString stringWithFormat:@"%li has been eliminated from the highlighted tile. Good luck!", self.randomEliminateInstruction.pencil];
 	
 	[card6 addInstructionHighlightTileAtRow:self.randomEliminateInstruction.row col:self.randomEliminateInstruction.col highlightType:ZSTileHintHighlightTypeA];
 	[card6 addInstructionHighlightPencil:self.randomEliminateInstruction.pencil forTileAtRow:self.randomEliminateInstruction.row col:self.randomEliminateInstruction.col highlightType:ZSTilePencilTextHintHighlightTypeA];

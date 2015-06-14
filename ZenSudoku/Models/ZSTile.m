@@ -106,13 +106,13 @@ NSString * const kDictionaryRepresentationGameTilePencilsKey = @"kDictionaryRepr
 }
 
 - (void)encodeWithCoder:(NSCoder *)encoder {
-	[encoder encodeInt:_size forKey:kDictionaryRepresentationGameTileSizeKey];
+	[encoder encodeInteger:_size forKey:kDictionaryRepresentationGameTileSizeKey];
 	
-	[encoder encodeInt:guess forKey:kDictionaryRepresentationGameTileGuessKey];
-	[encoder encodeInt:answer forKey:kDictionaryRepresentationGameTileAnswerKey];
+	[encoder encodeInteger:guess forKey:kDictionaryRepresentationGameTileGuessKey];
+	[encoder encodeInteger:answer forKey:kDictionaryRepresentationGameTileAnswerKey];
 	[encoder encodeBool:locked forKey:kDictionaryRepresentationGameTileLockedKey];
 	
-	[encoder encodeInt:groupId forKey:kDictionaryRepresentationGameTileGroupIdKey];
+	[encoder encodeInteger:groupId forKey:kDictionaryRepresentationGameTileGroupIdKey];
 	
 	NSMutableArray *pencilsArray = [NSMutableArray array];
 	

@@ -128,12 +128,16 @@
 	if (self.foldedCornerVisibleOnLoad) {
 		[foldedCornerViewController resetToDefaultPosition];
 	}
+	
+	[super viewDidLoad];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
 	// Queue the screenshot for update.
 	self.needsScreenshotUpdate = YES;
 	[self updateScreenshotSynchronous:NO];
+	
+	[super viewDidAppear:animated];
 }
 
 - (void)viewWasPromotedToFront {

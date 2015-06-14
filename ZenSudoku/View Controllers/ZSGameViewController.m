@@ -1148,7 +1148,7 @@ typedef struct {
 
 - (void)_setErrors {
 	// If the guess is wrong, depending on the error display settings, mark it incorrect.
-	ZSShowErrorsOption showErrorsOption = [[NSUserDefaults standardUserDefaults] integerForKey:kShowErrorsOptionKey];
+	ZSShowErrorsOption showErrorsOption = (ZSShowErrorsOption)[[NSUserDefaults standardUserDefaults] integerForKey:kShowErrorsOptionKey];
 	
 	// Loop over all tiles and check errors on the users' guesses.
 	for (NSInteger row = 0; row < game.board.size; row++) {

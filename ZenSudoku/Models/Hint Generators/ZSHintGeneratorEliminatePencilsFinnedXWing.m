@@ -120,7 +120,7 @@
 	// Step 2
 	ZSHintCard *card2 = [[ZSHintCard alloc] init];
 	
-	card2.text = [NSString stringWithFormat:@"The possibility %i exists in each of the highlighted squares, and in only those spots within their %@s.", self.targetPencil, scopeName];
+	card2.text = [NSString stringWithFormat:@"The possibility %li exists in each of the highlighted squares, and in only those spots within their %@s.", self.targetPencil, scopeName];
 	
 	for (NSInteger i = 0; i < _totalFinnedXWingTiles; ++i) {
 		for (NSInteger j = 0; j < 9; ++j) {
@@ -300,7 +300,7 @@
 	NSString *pencilsString = (_totalPencilsToEliminate == 1 ? @"pencil" : @"pencils");
 	NSString *hasHaveString = (_totalPencilsToEliminate == 1 ? @"has" : @"have");
 	
-	card7.text = [NSString stringWithFormat:@"%i %@ %@ been eliminated.", _totalPencilsToEliminate, pencilsString, hasHaveString];
+	card7.text = [NSString stringWithFormat:@"%li %@ %@ been eliminated.", _totalPencilsToEliminate, pencilsString, hasHaveString];
 	
 	for (NSInteger i = 0; i < _totalFinnedXWingTiles; ++i) {
 		for (NSInteger j = 0; j < 9; ++j) {

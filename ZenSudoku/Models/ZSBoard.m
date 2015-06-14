@@ -736,7 +736,7 @@ NSInteger standard9x9GroupMap[9][9] = {
 - (void)print9x9PuzzleAnswers {
 	NSLog(@" ");
 	for (NSInteger row = 0; row < 9; ++row) {
-		NSLog(@" %i %i %i | %i %i %i | %i %i %i", [self getTileAtRow:row col:0].answer, [self getTileAtRow:row col:1].answer,
+		NSLog(@" %li %li %li | %li %li %li | %li %li %li", [self getTileAtRow:row col:0].answer, [self getTileAtRow:row col:1].answer,
 			  [self getTileAtRow:row col:2].answer, [self getTileAtRow:row col:3].answer, [self getTileAtRow:row col:4].answer,
 			  [self getTileAtRow:row col:5].answer, [self getTileAtRow:row col:6].answer, [self getTileAtRow:row col:7].answer,
 			  [self getTileAtRow:row col:8].answer);
@@ -751,7 +751,7 @@ NSInteger standard9x9GroupMap[9][9] = {
 - (void)print9x9PuzzleGuesses {
 	NSLog(@" ");
 	for (NSInteger row = 0; row < 9; ++row) {
-		NSLog(@" %i %i %i | %i %i %i | %i %i %i", [self getTileAtRow:row col:0].guess, [self getTileAtRow:row col:1].guess,
+		NSLog(@" %li %li %li | %li %li %li | %li %li %li", [self getTileAtRow:row col:0].guess, [self getTileAtRow:row col:1].guess,
 			  [self getTileAtRow:row col:2].guess, [self getTileAtRow:row col:3].guess, [self getTileAtRow:row col:4].guess,
 			  [self getTileAtRow:row col:5].guess, [self getTileAtRow:row col:6].guess, [self getTileAtRow:row col:7].guess,
 			  [self getTileAtRow:row col:8].guess);
