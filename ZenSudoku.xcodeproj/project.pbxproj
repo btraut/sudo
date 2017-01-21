@@ -12,9 +12,6 @@
 		841F854E14C4287700DFFABC /* ZSStatisticsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841F854C14C4287600DFFABC /* ZSStatisticsViewController.m */; };
 		842311E515B628B500221E19 /* TapToChangeDifficultyNotice.png in Resources */ = {isa = PBXBuildFile; fileRef = 842311E315B628B500221E19 /* TapToChangeDifficultyNotice.png */; };
 		842311E615B628B500221E19 /* TapToChangeDifficultyNotice@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 842311E415B628B500221E19 /* TapToChangeDifficultyNotice@2x.png */; };
-		8426A79D14ED16A3006DAD1C /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 8426A79814ED16A3006DAD1C /* FMDatabase.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		8426A79E14ED16A3006DAD1C /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8426A79A14ED16A3006DAD1C /* FMDatabaseAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		8426A79F14ED16A3006DAD1C /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 8426A79C14ED16A3006DAD1C /* FMResultSet.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8428AD2B154A2C2D00BA8EE0 /* ZSFastGameBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 8428AD24154A2C2D00BA8EE0 /* ZSFastGameBoard.m */; };
 		8428AD2D154A2C2D00BA8EE0 /* ZSHintGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8428AD28154A2C2D00BA8EE0 /* ZSHintGenerator.m */; };
 		8428AD36154A48F700BA8EE0 /* ZSHintViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8428AD34154A48F700BA8EE0 /* ZSHintViewController.m */; };
@@ -230,7 +227,6 @@
 		84D55020147F1C4A00A7934E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D5501F147F1C4A00A7934E /* main.m */; };
 		84D55024147F1C4A00A7934E /* ZSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D55023147F1C4A00A7934E /* ZSAppDelegate.m */; };
 		84D55069147F3D7500A7934E /* ZSGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D55068147F3D7400A7934E /* ZSGameViewController.m */; };
-		84EE86271494ADEA004C0A16 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D5503A147F1C4B00A7934E /* SenTestingKit.framework */; };
 		84EE86281494ADEA004C0A16 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D55013147F1C4A00A7934E /* UIKit.framework */; };
 		84EE86291494ADEA004C0A16 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D55015147F1C4A00A7934E /* Foundation.framework */; };
 		84EE862F1494ADEA004C0A16 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84EE862D1494ADEA004C0A16 /* InfoPlist.strings */; };
@@ -240,11 +236,13 @@
 		84EEAA2F15C3D95A006C35B0 /* ZSHintGeneratorEliminatePencilsAvoidableRectangles.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EEAA2E15C3D959006C35B0 /* ZSHintGeneratorEliminatePencilsAvoidableRectangles.m */; };
 		84EEAA3215C3D968006C35B0 /* ZSHintGeneratorEliminatePencilsRemotePairs.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EEAA3115C3D968006C35B0 /* ZSHintGeneratorEliminatePencilsRemotePairs.m */; };
 		84F9EFFE1495CC81003DD297 /* ZSBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F9EFFD1495CC81003DD297 /* ZSBoard.m */; };
+		EF0514C73404EF70C5DD2238 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 72292060E1D2B63BF30817C6 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		09A8CCAC01E5E973F10F09BD /* Pods.ad hoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods.ad hoc.xcconfig"; path = "Pods/Target Support Files/Pods/Pods.ad hoc.xcconfig"; sourceTree = "<group>"; };
 		610B90A30A95EF7E0D360718 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		72292060E1D2B63BF30817C6 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		840216EE1538F15B00B16131 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		840E032515BFD75F00F113D9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		841F854614C2651600DFFABC /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -254,12 +252,6 @@
 		841F854C14C4287600DFFABC /* ZSStatisticsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSStatisticsViewController.m; path = "View Controllers/ZSStatisticsViewController.m"; sourceTree = "<group>"; };
 		842311E315B628B500221E19 /* TapToChangeDifficultyNotice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TapToChangeDifficultyNotice.png; path = Resources/Images/Shared/TapToChangeDifficultyNotice.png; sourceTree = "<group>"; };
 		842311E415B628B500221E19 /* TapToChangeDifficultyNotice@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TapToChangeDifficultyNotice@2x.png"; path = "Resources/Images/Shared/TapToChangeDifficultyNotice@2x.png"; sourceTree = "<group>"; };
-		8426A79714ED16A3006DAD1C /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
-		8426A79814ED16A3006DAD1C /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
-		8426A79914ED16A3006DAD1C /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
-		8426A79A14ED16A3006DAD1C /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
-		8426A79B14ED16A3006DAD1C /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
-		8426A79C14ED16A3006DAD1C /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
 		8428AD23154A2C2D00BA8EE0 /* ZSFastGameBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSFastGameBoard.h; path = Models/ZSFastGameBoard.h; sourceTree = "<group>"; };
 		8428AD24154A2C2D00BA8EE0 /* ZSFastGameBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSFastGameBoard.m; path = Models/ZSFastGameBoard.m; sourceTree = "<group>"; };
 		8428AD27154A2C2D00BA8EE0 /* ZSHintGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSHintGenerator.h; path = Models/ZSHintGenerator.h; sourceTree = "<group>"; };
@@ -540,10 +532,9 @@
 		84D55021147F1C4A00A7934E /* sudo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "sudo-Prefix.pch"; sourceTree = "<group>"; };
 		84D55022147F1C4A00A7934E /* ZSAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSAppDelegate.h; sourceTree = "<group>"; };
 		84D55023147F1C4A00A7934E /* ZSAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSAppDelegate.m; sourceTree = "<group>"; };
-		84D5503A147F1C4B00A7934E /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		84D55067147F3D7400A7934E /* ZSGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSGameViewController.h; path = "View Controllers/ZSGameViewController.h"; sourceTree = "<group>"; };
 		84D55068147F3D7400A7934E /* ZSGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSGameViewController.m; path = "View Controllers/ZSGameViewController.m"; sourceTree = "<group>"; };
-		84EE86261494ADEA004C0A16 /* ZenSudokuLogicTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZenSudokuLogicTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		84EE86261494ADEA004C0A16 /* ZenSudokuLogicTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZenSudokuLogicTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		84EE862C1494ADEA004C0A16 /* ZenSudokuLogicTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ZenSudokuLogicTests-Info.plist"; sourceTree = "<group>"; };
 		84EE862E1494ADEA004C0A16 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		84EE86331494ADEA004C0A16 /* ZenSudokuLogicTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ZenSudokuLogicTests-Prefix.pch"; sourceTree = "<group>"; };
@@ -579,6 +570,7 @@
 				845ABB241587ED5B006D2616 /* QuartzCore.framework in Frameworks */,
 				843947E41589D30C00463720 /* GLKit.framework in Frameworks */,
 				840216EF1538F15B00B16131 /* libz.dylib in Frameworks */,
+				EF0514C73404EF70C5DD2238 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -586,7 +578,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84EE86271494ADEA004C0A16 /* SenTestingKit.framework in Frameworks */,
 				84EE86281494ADEA004C0A16 /* UIKit.framework in Frameworks */,
 				84EE86291494ADEA004C0A16 /* Foundation.framework in Frameworks */,
 			);
@@ -603,20 +594,6 @@
 				09A8CCAC01E5E973F10F09BD /* Pods.ad hoc.xcconfig */,
 			);
 			name = Pods;
-			sourceTree = "<group>";
-		};
-		8426A79614ED16A3006DAD1C /* FMDB */ = {
-			isa = PBXGroup;
-			children = (
-				8426A79714ED16A3006DAD1C /* FMDatabase.h */,
-				8426A79814ED16A3006DAD1C /* FMDatabase.m */,
-				8426A79914ED16A3006DAD1C /* FMDatabaseAdditions.h */,
-				8426A79A14ED16A3006DAD1C /* FMDatabaseAdditions.m */,
-				8426A79B14ED16A3006DAD1C /* FMResultSet.h */,
-				8426A79C14ED16A3006DAD1C /* FMResultSet.m */,
-			);
-			name = FMDB;
-			path = External/FMDB;
 			sourceTree = "<group>";
 		};
 		8428AD22154A2C2D00BA8EE0 /* Logic Technique Hint Generators */ = {
@@ -664,7 +641,6 @@
 				84A8FB1115A6A06400D802C8 /* MTLabel */,
 				84D2032E15A64CF400BA9CCF /* ProgressDots */,
 				84AC6B3D1508B2D000C2F192 /* UIColor+ColorWithHex */,
-				8426A79614ED16A3006DAD1C /* FMDB */,
 			);
 			name = External;
 			sourceTree = "<group>";
@@ -1079,7 +1055,7 @@
 			isa = PBXGroup;
 			children = (
 				84D5500F147F1C4A00A7934E /* Sudo.app */,
-				84EE86261494ADEA004C0A16 /* ZenSudokuLogicTests.octest */,
+				84EE86261494ADEA004C0A16 /* ZenSudokuLogicTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1102,7 +1078,7 @@
 				84D55013147F1C4A00A7934E /* UIKit.framework */,
 				84D55015147F1C4A00A7934E /* Foundation.framework */,
 				84D55017147F1C4A00A7934E /* CoreGraphics.framework */,
-				84D5503A147F1C4B00A7934E /* SenTestingKit.framework */,
+				72292060E1D2B63BF30817C6 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1235,8 +1211,8 @@
 			);
 			name = ZenSudokuLogicTests;
 			productName = ZenSudokuLogicTests;
-			productReference = 84EE86261494ADEA004C0A16 /* ZenSudokuLogicTests.octest */;
-			productType = "com.apple.product-type.bundle.ocunit-test";
+			productReference = 84EE86261494ADEA004C0A16 /* ZenSudokuLogicTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -1244,8 +1220,8 @@
 		84D55006147F1C4A00A7934E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastTestingUpgradeCheck = 0630;
-				LastUpgradeCheck = 0630;
+				LastTestingUpgradeCheck = 0720;
+				LastUpgradeCheck = 0720;
 				TargetAttributes = {
 					84D5500E147F1C4A00A7934E = {
 						DevelopmentTeam = 5TV6R8Z3E6;
@@ -1516,9 +1492,6 @@
 				841F854A14C40F5600DFFABC /* ZSStatisticsController.m in Sources */,
 				841F854E14C4287700DFFABC /* ZSStatisticsViewController.m in Sources */,
 				8492B77414CD69B10093B7AC /* ZSPuzzleFetcher.m in Sources */,
-				8426A79D14ED16A3006DAD1C /* FMDatabase.m in Sources */,
-				8426A79E14ED16A3006DAD1C /* FMDatabaseAdditions.m in Sources */,
-				8426A79F14ED16A3006DAD1C /* FMResultSet.m in Sources */,
 				84AC6B411508B35F00C2F192 /* UIColor+ColorWithHex.m in Sources */,
 				84A0975F1549DDE40082C9D0 /* ZSGameBookViewController.m in Sources */,
 				8428AD2B154A2C2D00BA8EE0 /* ZSFastGameBoard.m in Sources */,
@@ -1642,6 +1615,7 @@
 				INFOPLIST_FILE = "ZenSudoku/sudo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sudoapp.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "3DD2A1DC-CDB2-4A7E-90D2-BB7BB0D00689";
@@ -1656,14 +1630,14 @@
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/ZenSudoku.app/ZenSudoku";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+					"$(inherited)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ZenSudokuLogicTests/ZenSudokuLogicTests-Prefix.pch";
 				INFOPLIST_FILE = "ZenSudokuLogicTests/ZenSudokuLogicTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "ZenSoftware.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = octest;
 			};
 			name = "Ad Hoc";
 		};
@@ -1683,6 +1657,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Brent Traut (JVF9ED5844)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1757,6 +1732,7 @@
 				INFOPLIST_FILE = "ZenSudoku/sudo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sudoapp.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -1777,6 +1753,7 @@
 				INFOPLIST_FILE = "ZenSudoku/sudo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sudoapp.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "34CCF3EC-9D43-4526-A72B-6DC062E4D9A9";
@@ -1791,14 +1768,14 @@
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/ZenSudoku.app/ZenSudoku";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+					"$(inherited)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ZenSudokuLogicTests/ZenSudokuLogicTests-Prefix.pch";
 				INFOPLIST_FILE = "ZenSudokuLogicTests/ZenSudokuLogicTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "ZenSoftware.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Debug;
 		};
@@ -1808,14 +1785,14 @@
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/ZenSudoku.app/ZenSudoku";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+					"$(inherited)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ZenSudokuLogicTests/ZenSudokuLogicTests-Prefix.pch";
 				INFOPLIST_FILE = "ZenSudokuLogicTests/ZenSudokuLogicTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "ZenSoftware.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Release;
 		};

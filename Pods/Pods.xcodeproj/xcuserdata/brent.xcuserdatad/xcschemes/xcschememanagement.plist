@@ -4,12 +4,27 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Pods-FMDB.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-Sudo-FMDB.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-Sudo-iCarousel.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
 		<key>Pods-Sudo.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-ZenSudokuLogicTests-FMDB.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -37,32 +52,47 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0CDE6A62EB5B4AA7302D627E</key>
+		<key>00F5A26E3959AA21F5326834</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>22DCE4B7FED046B923EB3D63</key>
+		<key>109FD3263A62AA05222B3FFD</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>65D6DCCA8B15E5CF4385EE98</key>
+		<key>129661F8458C3065519B06E0</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7F0635743C3C322D06648434</key>
+		<key>5115450DF6CB09282FC244FF</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A8ABDEC3948342AF44C1D989</key>
+		<key>8618959F6DE304D1E54DA741</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>EE60C4081DBF16ED78B2F4D5</key>
+		<key>A41BD35A69154A40F93AC3A4</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C076D6872644F0C67AC87930</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C1B1FB27BEF5793B7F25BCA0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CA2E950050D5EC2BECB11844</key>
 		<dict>
 			<key>primary</key>
 			<true/>
