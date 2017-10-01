@@ -525,7 +525,7 @@ CGRect CTLineGetTypographicBoundsAsRect(CTLineRef line, CGPoint lineOrigin) {
     
     [_text release]; _text = nil;
     [_fontColor release]; _fontColor = nil;
-    [_fontHighlightColor release], _fontHighlightColor = nil;
+	[_fontHighlightColor release]; _fontHighlightColor = nil;
     [_font release]; _font = nil;
     
     [super dealloc];
